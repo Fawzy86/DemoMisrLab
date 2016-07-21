@@ -1,0 +1,15 @@
+﻿<div class="alert alert-warning">
+    @ViewBag.ErrorMessage
+    <div></div>
+
+    <div class="text-right">
+
+        <button type="button" class="btn btn-warning" style="border-radius:0;" onclick="CloseErrorPopup();">Ok</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function CloseErrorPopup() {
+        window.location.href = "#";
+    }
+</script>

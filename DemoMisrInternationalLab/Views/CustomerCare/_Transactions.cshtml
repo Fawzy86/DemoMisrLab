@@ -1,0 +1,53 @@
+﻿@model DemoMisrInternationalLab.Models.PatientsRequestsStatusViewModel
+@using DemoMisrInternationalLab.ResourceFiles
+<div class="table-scrollb">
+    @if(Model.PatientRequestStatusWithAnalyzes.Any())
+    { 
+    <table class="table table-bordered" id="Transactions_Table">
+        <thead>
+            <tr>
+                <th width="10%">Request ID</th>
+                <th width="7%">Category</th>
+                <th width="25%">Name</th>
+                <th>Phone</th>
+                <th width="40%">Analysis</th>
+                <th width="20%">Date</th>
+                <th>Invoice</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.PatientRequestStatusWithAnalyzes.Count(); i++)
+            {
+                <tr>
+                    <td>@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestedRefID </td>
+                    <td>
+                        <span class="label label-warning">@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.Priority</span>
+                    </td>
+                    <td>@Model.PatientRequestStatusWithAnalyzes[i].PatientFullName</td>
+                    <td>@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.Mobile </td>
+                    <td>
+                        @{
+                            var AnalyzesList = String.Empty;
+                            if (Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalysis != null && Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalysis.Any())
+                            {
+                                 AnalyzesList = String.Join(", ", Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalysis.Select(a => a.AnalysisName));
+                            }
+                            @AnalyzesList
+                        }
+                    </td>
+                    <td>@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestDate</td>
+                    <td align="center" style="word-spacing:10px;">
+                        <a href='@Url.Action("OpenInvoice", "CustomerCare", new { RequestID = @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID })' target="_blank"><i class="fa fa-credit-card"></i></a>
+                    </td>
+                  
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+    else
+    {
+       <p> There are no transactions in this current date interval </p>
+    }
+</div>
+

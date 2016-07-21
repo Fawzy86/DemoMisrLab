@@ -1,0 +1,123 @@
+﻿@model DemoMisrInternationalLab.Models.ReceiveAndSampleViewModel
+
+<div class="col-md-12">
+    @using (Html.BeginForm())
+    {
+
+        <div class="col-md-3 col-sm-3">
+            <select name="select" class="form-control event-color">
+                <option value="bg-info">SELECT COLOR (default Info)</option>
+                <option value="bg-info">.bg-info</option>
+                <option value="bg-success">.bg-success</option>
+                <option value="bg-danger">.bg-danger</option>
+                <option value="bg-primary">.bg-primary</option>
+            </select>
+            <div id='external-events' class="sampling-height">
+                @if (Model.PendingPatientsRequests!=null)
+                { 
+                    for (int i = 0; i < Model.PendingPatientsRequests.Count; i++)
+                    {
+                        @Html.HiddenFor(x => Model.PendingPatientsRequests[i].RequestID)
+                        <div class="ck-button">
+                            <label>
+                                <input type="checkbox" name="SelectedPatientsRequestIDs"
+                                       id="@Model.PendingPatientsRequests[i].RequestID"
+                                       value="@Model.PendingPatientsRequests[i].RequestID"
+                                       @{if (Model.SelectedPatientsRequestIDs.Contains(@Model.PendingPatientsRequests[i].RequestID))
+                                         { <text> checked='checked' </text>  } } />
+
+
+
+                                <span>
+                                    @Html.DisplayFor(x => Model.PendingPatientsRequests[i].Patient.FirstName)
+                                     @Html.DisplayFor(x => Model.PendingPatientsRequests[i].Patient.LastName)
+                                </span>
+                            </label>
+                        </div>
+                    }
+                 }
+            </div>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <div class="text-center">
+                <div class="cen-btn">
+                    @*<a href="#" class="btn btn-primary btn-lgb btn-animate-demo"  name="ReceiveLinkAction">Receive</a>*@
+                    <input type="submit" value="Receive" name="ReceiveActionLink"
+                           class="btn btn-primary btn-lgb btn-animate-demo" />
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <select name="select" class="form-control event-color">
+                <option value="bg-info">SELECT COLOR (default Info)</option>
+                <option value="bg-info">.bg-info</option>
+                <option value="bg-success">.bg-success</option>
+                <option value="bg-danger">.bg-danger</option>
+                <option value="bg-primary">.bg-primary</option>
+            </select>
+            <div id='external-events' class="sampling-height">
+
+                    @for (int i = 0; i < Model.PendingAnalyzesForSampling.Count; i++)
+                    {
+                        @Html.HiddenFor(x => Model.PendingAnalyzesForSampling[i].RequestedAnalysisID)
+                        <div class="ck-button">
+                            <label>
+                                <input type="checkbox" name="SelectedAnalyzesIDs"
+                                       id="@Model.PendingAnalyzesForSampling[i].RequestedAnalysisID"
+                                       value="@Model.PendingAnalyzesForSampling[i].RequestedAnalysisID"
+                                       @{if (Model.SelectedAnalyzesIDs.Contains(@Model.PendingAnalyzesForSampling[i].RequestedAnalysisID)) { <text> checked='checked' </text>           } } />
+
+
+
+                                <span>
+                                    @Html.DisplayFor(x => Model.PendingAnalyzesForSampling[i].Analysis.AnalysisName)
+                                </span>
+                            </label>
+                        </div>
+                    }
+                
+            </div>
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <div class="text-center">
+                <div class="cen-btn">
+                    @*<a href="#" class="btn btn-primary btn-lgb btn-animate-demo" name="SampleLinkAction">Sample</a>*@
+                    <input type="submit" value="Sample" name="SampleActionLink"
+                           class="btn btn-primary btn-lgb btn-animate-demo" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <select name="select" class="form-control event-color">
+                <option value="bg-info">SELECT COLOR (default Info)</option>
+                <option value="bg-info">.bg-info</option>
+                <option value="bg-success">.bg-success</option>
+                <option value="bg-danger">.bg-danger</option>
+                <option value="bg-primary">.bg-primary</option>
+            </select>
+            <div id='external-events' class="sampling-height">
+                <div id="SampledAnalyzesDiv">
+                
+                    @for (int i = 0; i < Model.SampledAnalyzes.Count; i++)
+                    {
+                        <div class="ck-buttonb">
+                            <label>
+                                <span>
+                                    @Html.DisplayFor(x => Model.SampledAnalyzes[i].Analysis.AnalysisName)
+                                </span>
+                            </label>
+                        </div>
+                    }
+                
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@*@section Scripts 
+{
+    @Scripts.Render("~/bundles/jqueryunobt")
+}*@
+
+

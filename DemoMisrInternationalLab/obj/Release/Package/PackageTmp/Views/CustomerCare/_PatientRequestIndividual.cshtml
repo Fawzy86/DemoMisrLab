@@ -1,0 +1,547 @@
+﻿@model DemoMisrInternationalLab.Models.PatientRequestViewModel
+@using DemoMisrInternationalLab.ResourceFiles
+<div id="Individual_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Individual_PatientRequest_Form", enctype = "multipart/form-data" }))
+{
+    @*@Html.ValidationSummary("Invalid data")*@
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-6">
+            @Html.HiddenFor(m => Model.AttachmentSession, new { @id = "IndividualAttachmentSession" })
+            <h4 class="panel-titleb" style="margin-top:5px;">Patient Info</h4>
+            <div class="input-group row">
+
+                <div class="col-md-4 col-sm-4 col-xs-12" style="padding-right:0px;">
+                    <span class="input-group-addon namefirst"><i class="fa fa-user"></i></span>
+                    @Html.TextBoxFor(m => Model.PatientInfo.FirstName, new { @class = "form-control form-widthhh", @placeholder = @Html.DisplayNameFor(m => Model.PatientInfo.FirstName) })
+                    @*@Html.ValidationMessageFor(m => Model.PatientInfo.FirstName)*@
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    @Html.TextBoxFor(m => Model.PatientInfo.MiddleName, new { @class = "form-control formtop-mobile", @placeholder = @Html.DisplayNameFor(m => Model.PatientInfo.MiddleName) })
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    @Html.TextBoxFor(m => Model.PatientInfo.LastName, new { @class = "form-control formtop-mobile", @placeholder = @Html.DisplayNameFor(m => Model.PatientInfo.LastName) })
+                </div>
+
+            </div>
+            <div class="input-group">
+                <div id="Individual_Gender_text_radio">
+                    @Html.RadioButtonFor(m => Model.PatientInfo.Gender, Gender.Male,
+                                        new Dictionary<string, object>
+                                        {
+                                            {"id","Individual_PatientInfo_Gender_Male"},
+                                            {"name","Individual_PatientInfo_Gender_Male"},
+                                            { "class", "text-nicelabel" },
+                                            { "data-nicelabel", @"{""position_class"": ""text_radio"", ""checked_text"": ""Male"", ""unchecked_text"": ""Male""}"}
+                                        })
+                    @Html.RadioButtonFor(m => Model.PatientInfo.Gender, Gender.Female,
+                                        new Dictionary<string, object>
+                                        {
+                                            {"id","Individual_PatientInfo_Gender_Female"},
+                                            {"name","Individual_PatientInfo_Gender_Female"},
+                                            { "class", "text-nicelabel" },
+                                            { "data-nicelabel", @"{""position_class"": ""text_radio"", ""checked_text"": ""Female"", ""unchecked_text"": ""Female""}"}
+                                        })
+                    @Html.RadioButtonFor(m => Model.PatientInfo.Gender, Gender.Baby,
+                                        new Dictionary<string, object>
+                                        {
+                                            {"id","Individual_PatientInfo_Gender_Baby"},
+                                            {"name","Individual_PatientInfo_Gender_Baby"},
+                                            { "class", "text-nicelabel" },
+                                            { "data-nicelabel", @"{""position_class"": ""text_radio"", ""checked_text"": ""Baby"", ""unchecked_text"": ""Baby""}"}
+                                        })
+                </div>
+
+            </div>
+
+
+
+            <div class="input-group row">
+
+                <div class="col-md-4 col-sm-3 col-xs-12" style="padding-right:0px;">
+                    <span class="input-group-addon namefirst"><i class="fa fa-sort-numeric-desc"></i></span>
+                    @Html.TextBoxFor(m => Model.PatientInfo.Age, new { @id = "Individual_PatientInfo_Age", @class = "form-control form-widthhh", @placeholder = @Html.DisplayNameFor(m => Model.PatientInfo.Age) })
+                </div>
+
+                <div class="col-md-4 col-sm-3 col-xs-12">
+                    @Html.TextBoxFor(m => Model.PatientInfo.BirthMonth, new { @id = "Individual_PatientInfo_BirthMonth", @class = "form-control formtop-mobile", @placeholder = @Html.DisplayNameFor(m => Model.PatientInfo.BirthMonth) })
+                </div>
+
+                <div class="col-md-4 col-sm-3 col-xs-12">
+                    @Html.TextBoxFor(m => Model.PatientInfo.BirthYear, new { @id = "Individual_PatientInfo_BirthYear", @class = "form-control formtop-mobile", @placeholder = @Html.DisplayNameFor(m => Model.PatientInfo.BirthYear) })
+                </div>
+
+            </div>
+
+            <div class="input-group row">
+
+                <div class="col-md-4 col-sm-3 col-xs-12" style="padding-right:0px;">
+                    <span class="input-group-addon namefirst"><i class="fa fa-mobile"></i></span>
+                    @Html.TextBoxFor(m => Model.PatientInfo.Mobile, new { @class = "form-control form-widthhh", @placeholder = @Html.DisplayNameFor(m => Model.PatientInfo.Mobile) })
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    @Html.TextBoxFor(m => Model.PatientInfo.Phone, new { @class = "form-control formtop-mobile", @placeholder = @Html.DisplayNameFor(m => Model.PatientInfo.Phone) })
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    @Html.TextBoxFor(m => Model.PatientInfo.Email, new { @class = "form-control formtop-mobile", @placeholder = @Html.DisplayNameFor(m => Model.PatientInfo.Email) })
+                </div>
+
+            </div>
+
+            <div class="input-group row">
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <span class="input-group-addon namefirst"><i class="fa fa-globe"></i></span>
+                    @Html.DropDownListFor(p => Model.PatientInfo.Provinces.SelectedProvinceID,
+                                           Model.PatientInfo.Provinces.ProvincesIEnum, "-- Governate --",
+                                          new { @id = "Individual_PatientInfo_Provinces_SelectedProvinceID", @class = "form-control form-widthhh" })
+                </div>
+
+                <div id="Individual_PatientInfo_Cities_Content" class="col-md-4 col-sm-4 col-xs-12">
+                    @{Html.RenderAction("GetCityView", new { stateProvinceID = 0 });}
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    @Html.TextBoxFor(m => Model.PatientInfo.Address, new { @class = "form-control formtop-mobile", @placeholder = @Html.DisplayNameFor(m => Model.PatientInfo.Address) })
+                </div>
+
+            </div>
+
+            <div class="input-group row">
+
+                <div class="col-md-8" style="padding-right:0px;">
+                    <span class="input-group-addon namefirst"><i class="fa fa-stethoscope"></i></span>
+                    <div id="Individual_DoctorRef_Content">
+                        @{Html.RenderAction("GetDoctorsRefPartial");}
+                    </div>
+                </div>
+                <div class="col-md-4 add-icon" style="padding-right:0px;">
+                    <a href="" id="Individual_DoctorRef_Link"><i class="fa fa-plus-circle fa-2x"></i></a>
+                </div>
+            </div>
+            <div id="Individual_DoctorRef_Popup" class=" overlay ">
+                <div class=" popup">
+                    <a class="close" href="#">&times;</a>
+                    <div class="contentt" id="Individual_DoctorRef_Popup_Content"></div>
+                </div>
+            </div>
+            <div class="input-group">
+
+                <h4 class="panel-titleb">Pickup Analysis</h4>
+                @Html.DropDownListFor(p => Model.Analyzes.SelectedAnalyzesIDs,
+                                          Model.Analyzes.AnalyzesIEnum,
+                                      new
+                                      {
+                                          @id = "Individual_Analyzes_SelectedAnalyzesIDs",
+                                          @class = "chosen-select",
+                                          multiple = "multiple",
+                                          data_placeholder = "Pickup Analysis ...",
+                                      })
+
+            </div>
+            <div class="input-group">
+                <div id="Individual_Priority_text_radio">
+                    @Html.RadioButtonFor(m => Model.RequestPriority, Priority.Low,
+                                        new Dictionary<string, object>
+                                        {
+                                            {"id","Individual_Priority_Low"},
+                                            {"name","Individual_Priority_Low"},
+                                            { "class", "text-nicelabel" },
+                                            { "data-nicelabel", @"{""position_class"": ""text_radio"", ""checked_text"": ""Low"", ""unchecked_text"": ""Low""}"}
+                                        })
+                    @Html.RadioButtonFor(m => Model.RequestPriority, Priority.Medium,
+                                        new Dictionary<string, object>
+                                        {
+                                            {"id","Individual_Priority_Medium"},
+                                            {"name","Individual_Priority_Medium"},
+                                            { "class", "text-nicelabel" },
+                                            { "data-nicelabel", @"{""position_class"": ""text_radio"", ""checked_text"": ""Medium"", ""unchecked_text"": ""Medium""}"}
+                                        })
+                    @Html.RadioButtonFor(m => Model.RequestPriority, Priority.High,
+                                        new Dictionary<string, object>
+                                        {
+                                            {"id","Individual_Priority_High"},
+                                            {"name","Individual_Priority_High"},
+                                            { "class", "text-nicelabel" },
+                                            { "data-nicelabel", @"{""position_class"": ""text_radio"", ""checked_text"": ""High"", ""unchecked_text"": ""High""}"}
+                                        })
+                </div>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+
+        </div>
+
+
+        <div class="col-md-6">
+
+            <h4 class="panel-titleb" style="margin-top:5px;">Invoice Summary</h4>
+            <div class="input-group">
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td width="66.9%" style="background-color:#dddddd; color:#999999;">Total Invoice</td>
+                            @Html.Hidden("Individual_Total_Before_Charges")
+                            <td width="33.1%" style="background-color:#de8650; color:#fff;" id="Individual_Total_BeforeCharges_Display">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td style="background-color:#61aee2; color:#fff;">+ Discount</td>
+                            <td style="background-color:#dddddd; color:#999999;">+ Cost</td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#fff; color:#ccc;">
+                                @Html.TextBoxFor(m => Model.ExtraDiscount, new { @class = "form-control form-widthhh-summary", 
+                                                                                 @id="Individual_ExtraDiscount",
+                                                                                 @placeholder = @Html.DisplayNameFor(m => Model.ExtraDiscount), 
+                                                                                 @onchange = "IndividualCalculateTotalAnalyzesCost();" })
+                            </td>
+                            <td style="background-color:#fff; color:#ccc;">
+                                @Html.TextBoxFor(m => Model.ExtraCost, new { @class = "form-control form-widthhh-summary",
+                                                                             @id = "Individual_ExtraCost",
+                                                                             @placeholder = @Html.DisplayNameFor(m => Model.ExtraCost), 
+                                                                             @onchange = "IndividualCalculateTotalAnalyzesCost();" })
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td width="66.9%" style="background-color:#dddddd; color:#999999;">Total After Charges </td>
+                            @Html.HiddenFor(m => Model.TotalAfterCharges, new { @id = "Individual_Total_AfterCharges" })
+                            <td width="33.1%" style="background-color:#de8650; color:#fff;" id="Individual_Total_AfterCharges_Display">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td width="66.9%" style="background-color:#dddddd; color:#999999;">Paid </td>
+                            <td width="33.1%" style="background-color:#de8650; color:#fff;">
+                                @Html.TextBoxFor(m => Model.Paid, new { @id = "Individual_Paid",
+                                                                        @class = "form-control form-widthhh-summaryb", 
+                                                                        @placeholder = @Html.DisplayNameFor(m => Model.Paid), 
+                                                                        @onchange = "IndividualCalculateTotalAnalyzesCost();" })
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td width="66.9%" style="background-color:#dddddd; color:#999999;">Remain </td>
+                            @Html.HiddenFor(m => Model.Remain, new { @id = "Individual_Remain" })
+                            <td width="33.1%" style="background-color:#de8650; color:#fff;" id="Individual_Remain_Display">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <h4 class="panel-titleb panel-titleadd">Official Document</h4>
+
+
+                @*<div class="container" id="UploadAttachmentDiv___">
+                        <div class="col-md-12"></div>
+
+                        <input id="file-1" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
+
+                    </div>*@
+                <!--<div class="col-md-6 col-sm-6 col-xs-6 upload-img"><a href="#"><i class="fa fa-file"></i></a></div>-->
+                @*<div class="col-md-6 col-sm-6 col-xs-6 upload-img"><input type="file" multiple /></div>*@
+
+                <div class="col-md-6 col-sm-6 col-xs-6 id-img">
+                    <a href="#Individual_Upload_Attachment_Popup">
+                        <button type="button" class="btn btn-success" style="border-radius:0;">Upload</button>
+                    </a>
+                    <div id="Individual_Upload_Attachment_Popup" class="overlay">
+                        <div class="popup">
+                            <a class="close" href="#">&times;</a>
+
+                            <div class="contentt">
+
+                                <input id="Individual_Upload_AttachmentFile" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 id-img"><a href="#"><i class="fa fa-picture-o"></i></a></div>
+
+                   
+                </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="submit" id="Individual_Submit_PatientRequest" name="Individual_Submit_PatientRequest" class="btn btn-success" style="border-radius:0;">Submit</button>
+                        <button type="submit" id="CanccelIndividualPatientRequest" name="CanccelIndividualPatientRequest" class="btn btn-danger" style="border-radius:0;">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="Individual_Request_Result_Popup" class="overlay">
+        <div class="popup">
+            @*<a class="close" href="#">&times;</a>*@
+            <div class="contentt">
+                <div id="Individual_Request_Result_Popup_Content" style="z-index:9999 !important;"></div>
+            </div>
+        </div>
+    </div>
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="~/js/forms-custom.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ajaxStart(function () {
+        try {
+            $("#Individual_PatientRequest_Form").prop('disabled', true);
+            $("#Individual_PatientRequest_Form").hide();
+            $("#Individual_Loading").show();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    $(document).ajaxStop(function () {
+        try {
+            $("#Individual_PatientRequest_Form").prop('disabled', true);
+            $("#Individual_PatientRequest_Form").show();
+            $("#Individual_Loading").hide();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    // $.validator.unobtrusive.parse($("#entirepatientinfoformdiv"));
+    $(document).ready(function () {
+        $('#Individual_Gender_text_radio > input').nicelabel();
+        $('#Individual_Priority_text_radio > input').nicelabel();
+    });
+    ////////////////////////////////////////////////
+    $("#Individual_PatientInfo_Age").blur(function () {
+        if ($("#Individual_PatientInfo_Age").val().length > 0) {
+            var AgeValue = $("#Individual_PatientInfo_Age").val();
+            var DateNow = new Date();
+            var RoundedAge = Math.round(AgeValue);
+            $("#Individual_PatientInfo_BirthMonth").val("6");
+            $("#Individual_PatientInfo_BirthYear").val(DateNow.getFullYear() - RoundedAge);
+        }
+        else {
+            $("#Individual_PatientInfo_BirthMonth").val("");
+            $("#Individual_PatientInfo_BirthYear").val("");
+        }
+    });
+    ///////////////////////////////////////////////////
+    $("#Individual_PatientInfo_BirthYear").blur(function () {
+        if ($("#Individual_PatientInfo_BirthYear").val().length > 0) {
+            var YearValue = $("#Individual_PatientInfo_BirthYear").val();
+            var DateNow = new Date();
+            var RoundedYear = Math.round(YearValue);
+            $("#Individual_PatientInfo_BirthMonth").val("1");
+            $("#Individual_PatientInfo_Age").val(DateNow.getFullYear() - RoundedYear);
+        }
+        else {
+            $("#Individual_PatientInfo_BirthMonth").val("");
+            $("#Individual_PatientInfo_Age").val("");
+        }
+    });
+    ///////////////////////////////////////////////////////
+    $('#Individual_PatientInfo_Provinces_SelectedProvinceID').change(function () {
+        var selectedStateProvinceID = this.value;
+        try {
+            $("#Individual_PatientInfo_Cities_Content").load('@Url.Action("GetCityView","CustomerCare")?stateProvinceID=' + selectedStateProvinceID + "&Container=Individual");
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    ///////////////////////////////////////////////////
+    $('#Individual_DoctorRef_Link').on('click', function (event) {
+        event.preventDefault();
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "Get",
+            url: "/CustomerCare/LoadDoctorRefAddPartial?Category=" + '@CategoryType.Individual',//form.attr('action'),
+            success: function (data) {
+                $("#Individual_DoctorRef_Popup_Content").html(data);
+                window.location.href = "#Individual_DoctorRef_Popup";
+            },
+            error: function (xhr, desc, err) {
+                alert("Error: " + err + " " + desc + " " + xhr.responseText);
+            }
+        });
+    });
+    ///////////////////////////////////////////////////////
+    $("#Individual_Analyzes_SelectedAnalyzesIDs").on("change", function () {
+        var SelectedAnalyzesIDs = $("#Individual_Analyzes_SelectedAnalyzesIDs").val();
+        try {
+            if (SelectedAnalyzesIDs != null && SelectedAnalyzesIDs.length > 0) {
+                $.ajax({
+                    cache: false,
+                    async: true,
+                    type: "GET",
+                    url: "/CustomerCare/GetAnalyzesCost?analyzesIDs=" + SelectedAnalyzesIDs,//form.attr('action'),
+                    success: function (data) {
+                        $("#Individual_Total_Before_Charges").val(data);
+                        IndividualCalculateTotalAnalyzesCost();
+                    },
+                    error: function (xhr, desc, err) {
+                        alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                    }
+                });
+            }
+            else {
+                $("#Individual_Total_Before_Charges").val(0);
+                IndividualCalculateTotalAnalyzesCost();
+            }
+        }
+        catch (err) {
+            alert(err.message + err.description);
+        }
+    });
+    /////////////////////////////////////////////////////////////////
+    $("#Individual_Upload_AttachmentFile").fileinput({
+        uploadUrl: '@Url.Action("UploadAttachment", "CustomerCare", new { attachmentSession = @Model.AttachmentSession })', // you must set a valid URL here else you will get an error
+        type: "POST",
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        overwriteInitial: false,
+        maxFileSize: 1000,
+        maxFilesNum: 10,
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    ///////////////////////////////////////////////////////
+    $("#Individual_Submit_PatientRequest").on('click', function (event) {
+        event.preventDefault();
+        var form = $(this).closest("form");
+        try {
+            if ($("#Individual_Upload_AttachmentFile").val() != null && $("#Individual_Upload_AttachmentFile").val().length > 0) {
+                window.location.href = "#Individual_Upload_Attachment_Popup";
+            }
+            else {
+                if (form.valid()) {
+                    $.ajax({
+                        cache: false,
+                        async: true,
+                        type: "POST",
+                        url: "/CustomerCare/SubmitPatientRequest",//form.attr('action'),
+                        data: form.serialize() + "&Category=" + '@CategoryType.Individual',
+                        success: function (data) {
+                            IndividualOpenRequestResultPopup(data);
+                        },
+                        error: function (xhr, desc, err) {
+                            alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                        }
+                    });
+                }
+            }
+        }
+        catch (err) {
+            alert(err.message + err.description);
+        }
+    });
+    //////////////////////////////////////////////////////////
+    function IndividualOpenRequestResultPopup(data) {
+        // $("#RequestResultDiv").html(data);
+        $("#Individual_Request_Result_Popup_Content").html(data);
+        //$("#RequestResultDiv").dialog("open");
+        window.location.href = "#Individual_Request_Result_Popup";
+    }
+    /////////////////////////////////////////////////////////////
+    function IndividualCalculateTotalAnalyzesCost() {
+        var TotalAfterCharges = 0;
+        var Remain = 0;
+        try {
+            var TotalBeforeCharges = $("#Individual_Total_Before_Charges").val();
+            $("#Individual_Total_BeforeCharges_Display").html(TotalBeforeCharges);
+            if (TotalBeforeCharges.length > 0) {
+
+                TotalAfterCharges = parseFloat(TotalBeforeCharges);
+
+                var ExtraCost = parseFloat($("#Individual_ExtraCost").val());
+                if (ExtraCost > 0) {
+                    TotalAfterCharges += ExtraCost;
+                }
+                var ExtraDiscount = parseFloat($("#Individual_ExtraDiscount").val());
+                if (ExtraDiscount > 0) {
+                    if (ExtraDiscount < 1) {
+                        TotalAfterCharges *= (1 - ExtraDiscount);
+                    }
+                    else {
+                        TotalAfterCharges -= parseFloat(ExtraDiscount);
+                    }               
+                }
+                Remain = TotalAfterCharges;
+
+                var Paid = $("#Individual_Paid").val();
+                if (Paid.length > 0) {
+                    Remain -= parseFloat(Paid);
+                }
+            }
+            //// Total after charge
+            $("#Individual_Total_AfterCharges").val(TotalAfterCharges);
+            $("#Individual_Total_AfterCharges_Display").html(TotalAfterCharges);
+            //// Remain
+            $("#Individual_Remain").val(Remain);
+            $("#Individual_Remain_Display").html(Remain);
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    }
+    ///////////////////////////////////////////////////////
+    function IndividualReloadPatientRequest() {
+        try {
+            $('#individual').load('@Url.Action("loadPatientRequestIndividual", "CustomerCare")');
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    }
+
+
+</script>

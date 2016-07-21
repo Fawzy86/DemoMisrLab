@@ -1,0 +1,88 @@
+﻿@using Microsoft.AspNet.Identity
+
+<div class="welcome-login">
+    <ul class="nav navbar-nav user-menu navbar-right top-navbar-usermenu">
+        @if (Request.IsAuthenticated)
+        {
+            <li>
+                <a href="#" class="user dropdown-toggle" data-toggle="dropdown"><span class="username"> Welcome @User.Identity.GetUserName() ! </span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#"><i class="fa fa-user"></i> My Profile</a></li>
+                    @*<li><a href="#"><i class="fa fa-envelope"></i> Inbox</a></li>*@
+                    <li><a href="#"><i class="fa fa-cogs"></i> Settings</a></li>
+                    <li class="divider"></li>
+                    <li><a href="@Url.Action("LogOff", "Account")" class="text-danger"><i class="fa fa-lock"></i> Logout</a></li>
+                </ul>
+            </li>
+        }
+    </ul>
+</div>
+
+
+<div class="menuuu">
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <div class="nav">
+                <div class="btn-navb">
+                    <span class="icon-bar top"></span>
+                    <span class="icon-bar middle"></span>
+                    <span class="icon-bar bottom"></span>
+                </div>
+            </div>
+
+            <div class="nav-content hideNav hidden" id="Menu_Content">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="@Url.Action("Index", "Home")" class="item-anchor">Home</a></li>
+                    <li class="nav-item"><a href="@Url.Action("Index", "CustomerCare")" class="item-anchor">Customer Care</a></li>
+                    @*<li class="nav-item"><a href="@Url.Action("Contact","Home")" class="item-anchor">Contact</a></li>
+                        <li class="nav-item"><a href="@Url.Action("About", "Home")" class="item-anchor">About</a></li>*@
+                </ul>
+            </div>
+            <div id="Menu_Loading" style="display:none;height:200px;width:200px;"><i class="fa fa-spinner"></i></div>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    $(document).ajaxStart(function () {
+        try {
+            $("#Menu_Content").prop('disabled', true);
+            $("#Menu_Content").hide();
+            $("#Menu_Loading").show();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    $(document).ajaxStop(function () {
+        try {
+            $("#Menu_Content").prop('disabled', true);
+            $("#Menu_Content").show();
+            $("#Menu_Loading").hide();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+
+    $(window).load(function () {
+        $(".btn-nav").on("click tap", function () {
+            $(".nav-content").toggleClass("showNav hideNav").removeClass("hidden");
+            $(this).toggleClass("animated");
+        });
+    });
+    $(window).load(function () {
+        $(".btn-navb").on("click tap", function () {
+            $(".nav-content").toggleClass("showNav hideNav").removeClass("hidden");
+            $(this).toggleClass("animated");
+        });
+    });
+    $(window).load(function () {
+        $(".btn-navc").on("click tap", function () {
+            $(".nav-content").toggleClass("showNav hideNav").removeClass("hidden");
+            $(this).toggleClass("animated");
+        });
+    });
+    
+</script>
+

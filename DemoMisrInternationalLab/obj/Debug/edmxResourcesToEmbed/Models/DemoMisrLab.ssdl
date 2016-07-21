@@ -1,0 +1,1423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DemoMisrIntModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Analysis">
+    <Key>
+      <PropertyRef Name="AnalysisID" />
+    </Key>
+    <Property Name="AnalysisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AnalysisCode" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="AnalysisName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NormalRange" Type="nvarchar" MaxLength="50" />
+    <Property Name="SampleTypeID" Type="int" Nullable="false" />
+    <Property Name="MinimumValue" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="MaximumValue" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="CostPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnalysisResult">
+    <Key>
+      <PropertyRef Name="AnalysisResultID" />
+    </Key>
+    <Property Name="AnalysisResultID" Type="int" Nullable="false" />
+    <Property Name="RquestedAnalysisID" Type="int" Nullable="false" />
+    <Property Name="Result" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ExamineByEmployeeID" Type="int" Nullable="false" />
+    <Property Name="ExamineDate" Type="datetime" Nullable="false" />
+    <Property Name="IsApproved" Type="bit" />
+  </EntityType>
+  <EntityType Name="AnalysisResultStatus">
+    <Key>
+      <PropertyRef Name="AnalysisResultStatusID" />
+    </Key>
+    <Property Name="AnalysisResultStatusID" Type="int" Nullable="false" />
+    <Property Name="AnalysisResultID" Type="int" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="StatusID" Type="int" Nullable="false" />
+    <Property Name="StatusDate" Type="datetime" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="CategoryType">
+    <Key>
+      <PropertyRef Name="CategoryTypeID" />
+    </Key>
+    <Property Name="CategoryTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryTypeName" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProvinceID" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Condition">
+    <Key>
+      <PropertyRef Name="ConditionID" />
+    </Key>
+    <Property Name="ConditionID" Type="int" Nullable="false" />
+    <Property Name="ConditionName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RequiredData" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DoctorRef">
+    <Key>
+      <PropertyRef Name="DoctorRefID" />
+    </Key>
+    <Property Name="DoctorRefID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DoctorName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SpecialID" Type="int" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="Mobile" Type="varchar" MaxLength="50" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="InsertionDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DoctorSpecialization">
+    <Key>
+      <PropertyRef Name="SpecialID" />
+    </Key>
+    <Property Name="SpecialID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SpecialName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="JobDate" Type="datetime" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="BirthDay" Type="date" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CurrentBranchID" Type="int" Nullable="false" />
+    <Property Name="JobTitleID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Entity">
+    <Key>
+      <PropertyRef Name="EntityID" />
+    </Key>
+    <Property Name="EntityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EntityName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="EntityDescription" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="EntityAction">
+    <Key>
+      <PropertyRef Name="ActionID" />
+    </Key>
+    <Property Name="ActionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActionName" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="ActionDescription" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="JobTitle">
+    <Key>
+      <PropertyRef Name="JobTitleID" />
+    </Key>
+    <Property Name="JobTitleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JobCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="JobTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LabBranch">
+    <Key>
+      <PropertyRef Name="BranchID" />
+    </Key>
+    <Property Name="BranchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BranchName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="CityID" Type="int" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EstablishedDate" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Organization">
+    <Key>
+      <PropertyRef Name="OrganizationID" />
+    </Key>
+    <Property Name="OrganizationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganizationName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PackageID" Type="int" Nullable="false" />
+    <Property Name="InsertionDate" Type="datetime" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="PatientCanReceiveResult" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrganizationCondition">
+    <Key>
+      <PropertyRef Name="OrganizationConditionID" />
+    </Key>
+    <Property Name="OrganizationConditionID" Type="int" Nullable="false" />
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="ConditionID" Type="int" Nullable="false" />
+    <Property Name="IsFound" Type="bit" />
+  </EntityType>
+  <EntityType Name="OrganizationConsuming">
+    <Key>
+      <PropertyRef Name="OrganizationID" />
+      <PropertyRef Name="AnalysisID" />
+    </Key>
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="AnalysisID" Type="int" Nullable="false" />
+    <Property Name="ConsumingPercentage" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="OrganizationInfo">
+    <Key>
+      <PropertyRef Name="OrganizationInfoID" />
+    </Key>
+    <Property Name="OrganizationInfoID" Type="int" Nullable="false" />
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="Package">
+    <Key>
+      <PropertyRef Name="PackageID" />
+    </Key>
+    <Property Name="PackageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PackageName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PackageDiscription" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CategoryTypeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PackageCostList">
+    <Key>
+      <PropertyRef Name="PackageID" />
+      <PropertyRef Name="AnalysisID" />
+    </Key>
+    <Property Name="PackageID" Type="int" Nullable="false" />
+    <Property Name="AnalysisID" Type="int" Nullable="false" />
+    <Property Name="CurrentAnalysisDiscountRate" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="NewAnalysisDiscountRate" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="PatientID" />
+    </Key>
+    <Property Name="PatientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="NationalID" Type="nchar" MaxLength="16" />
+    <Property Name="BirthDate" Type="datetime" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="ReferenceID" Type="int" Nullable="false" />
+    <Property Name="RegisteredDate" Type="datetime" Nullable="false" />
+    <Property Name="LastDataModified" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.PatientRefID' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PatientRefID">
+    <Key>
+      <PropertyRef Name="LastPatientRefID" />
+    </Key>
+    <Property Name="LastPatientRefID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PatientRequest">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientID" Type="int" Nullable="false" />
+    <Property Name="RequestDate" Type="datetime" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+    <Property Name="DoctorRefID" Type="int" />
+    <Property Name="Priority" Type="varchar" MaxLength="10" />
+    <Property Name="OrganizationID" Type="int" />
+    <Property Name="RequestedRefID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="AttachmentSession" Type="varchar" MaxLength="50" />
+    <Property Name="ExtraDiscount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="PatientRequestAnalysis">
+    <Key>
+      <PropertyRef Name="RequestedAnalysisID" />
+    </Key>
+    <Property Name="RequestedAnalysisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RequestID" Type="int" Nullable="false" />
+    <Property Name="AnalysisID" Type="int" Nullable="false" />
+    <Property Name="RequestDate" Type="datetime" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="RunNumber" Type="int" />
+  </EntityType>
+  <EntityType Name="PatientRequestAnalysisStatus">
+    <Key>
+      <PropertyRef Name="RequestAnalysisStatusID" />
+    </Key>
+    <Property Name="RequestAnalysisStatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RequestedAnalysisID" Type="int" Nullable="false" />
+    <Property Name="StatusID" Type="int" Nullable="false" />
+    <Property Name="StatusDate" Type="datetime" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="PatientRequestPayment">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RequestID" Type="int" Nullable="false" />
+    <Property Name="PaidAmount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PaymentDate" Type="datetime" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="Comment" Type="text" />
+  </EntityType>
+  <EntityType Name="PatientRequestStatus">
+    <Key>
+      <PropertyRef Name="RequestStatusID" />
+    </Key>
+    <Property Name="RequestStatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RequestID" Type="int" Nullable="false" />
+    <Property Name="StatusID" Type="int" Nullable="false" />
+    <Property Name="StatusDate" Type="datetime" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="Comment" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="EntityID" />
+      <PropertyRef Name="ActionID" />
+    </Key>
+    <Property Name="EntityID" Type="int" Nullable="false" />
+    <Property Name="ActionID" Type="int" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="InsertionDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Priority">
+    <Key>
+      <PropertyRef Name="PriorityID" />
+    </Key>
+    <Property Name="PriorityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PriorityCode" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Province">
+    <Key>
+      <PropertyRef Name="ProvinceID" />
+    </Key>
+    <Property Name="ProvinceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="ProvinceName" Type="nchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="RoleDescription" Type="nvarchar" MaxLength="255" />
+    <Property Name="InsertionDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.RunNumber' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="RunNumber">
+    <Key>
+      <PropertyRef Name="RunNum" />
+    </Key>
+    <Property Name="RunNum" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SampleType">
+    <Key>
+      <PropertyRef Name="SampleTypeID" />
+    </Key>
+    <Property Name="SampleTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SampleType" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="StatusID" />
+    </Key>
+    <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StatusIdentifier" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastLoginDate" Type="datetime" Nullable="false" />
+    <Property Name="IsAdmin" Type="bit" />
+    <Property Name="RoleID" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Patient_PatientRequest">
+    <Key>
+      <PropertyRef Name="FirstName" />
+      <PropertyRef Name="ReferenceID" />
+      <PropertyRef Name="RegisteredDate" />
+      <PropertyRef Name="RequestID" />
+      <PropertyRef Name="RequestDate" />
+      <PropertyRef Name="EmployeeID" />
+      <PropertyRef Name="RequestedRefID" />
+      <PropertyRef Name="PatientID" />
+    </Key>
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="NationalID" Type="nchar" MaxLength="16" />
+    <Property Name="BirthDate" Type="datetime" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="ReferenceID" Type="int" Nullable="false" />
+    <Property Name="RegisteredDate" Type="datetime" Nullable="false" />
+    <Property Name="LastDataModified" Type="datetime" />
+    <Property Name="RequestID" Type="int" Nullable="false" />
+    <Property Name="RequestDate" Type="datetime" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+    <Property Name="DoctorRefID" Type="int" />
+    <Property Name="Priority" Type="varchar" MaxLength="10" />
+    <Property Name="OrganizationID" Type="int" />
+    <Property Name="RequestedRefID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="AttachmentSession" Type="varchar" MaxLength="50" />
+    <Property Name="PatientID" Type="int" Nullable="false" />
+    <Property Name="ExtraDiscount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_LastStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Patient_PatientRequest_LastStatus">
+    <Key>
+      <PropertyRef Name="RequestDate" />
+      <PropertyRef Name="PatientRequestEmployeeID" />
+      <PropertyRef Name="RequestedRefID" />
+      <PropertyRef Name="RequestStatusID" />
+      <PropertyRef Name="RequestID" />
+      <PropertyRef Name="StatusDate" />
+      <PropertyRef Name="PatientRequestStatusEmployeeID" />
+      <PropertyRef Name="StatusIdentifier" />
+      <PropertyRef Name="StatusName" />
+      <PropertyRef Name="PatientRequestStatusID" />
+      <PropertyRef Name="PatientID" />
+      <PropertyRef Name="FirstName" />
+      <PropertyRef Name="ReferenceID" />
+      <PropertyRef Name="RegisteredDate" />
+    </Key>
+    <Property Name="RequestDate" Type="datetime" Nullable="false" />
+    <Property Name="PatientRequestEmployeeID" Type="int" Nullable="false" />
+    <Property Name="PatientRequestComment" Type="nvarchar" MaxLength="255" />
+    <Property Name="DoctorRefID" Type="int" />
+    <Property Name="Priority" Type="varchar" MaxLength="10" />
+    <Property Name="OrganizationID" Type="int" />
+    <Property Name="RequestedRefID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="AttachmentSession" Type="varchar" MaxLength="50" />
+    <Property Name="RequestStatusID" Type="int" Nullable="false" />
+    <Property Name="RequestID" Type="int" Nullable="false" />
+    <Property Name="StatusDate" Type="datetime" Nullable="false" />
+    <Property Name="PatientRequestStatusEmployeeID" Type="int" Nullable="false" />
+    <Property Name="PatientRequestStatusComment" Type="varchar" MaxLength="255" />
+    <Property Name="StatusIdentifier" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" />
+    <Property Name="PatientRequestStatusID" Type="int" Nullable="false" />
+    <Property Name="PatientID" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="NationalID" Type="nchar" MaxLength="16" />
+    <Property Name="BirthDate" Type="datetime" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="ReferenceID" Type="int" Nullable="false" />
+    <Property Name="RegisteredDate" Type="datetime" Nullable="false" />
+    <Property Name="LastDataModified" Type="datetime" />
+    <Property Name="ExtraDiscount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PatientRequest_Analysis">
+    <Key>
+      <PropertyRef Name="RequestDate" />
+      <PropertyRef Name="PatientID" />
+      <PropertyRef Name="EmployeeID" />
+      <PropertyRef Name="RequestedRefID" />
+      <PropertyRef Name="RequestedAnalysisID" />
+      <PropertyRef Name="RequestID" />
+      <PropertyRef Name="AnalysisID" />
+      <PropertyRef Name="AnalysisRequestDate" />
+      <PropertyRef Name="RequestAnalysisEmployeeID" />
+      <PropertyRef Name="AnalysisCode" />
+      <PropertyRef Name="AnalysisName" />
+      <PropertyRef Name="SampleTypeID" />
+      <PropertyRef Name="MinimumValue" />
+      <PropertyRef Name="MaximumValue" />
+      <PropertyRef Name="CostPrice" />
+    </Key>
+    <Property Name="RequestDate" Type="datetime" Nullable="false" />
+    <Property Name="PatientID" Type="int" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+    <Property Name="DoctorRefID" Type="int" />
+    <Property Name="Priority" Type="varchar" MaxLength="10" />
+    <Property Name="OrganizationID" Type="int" />
+    <Property Name="RequestedRefID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="AttachmentSession" Type="varchar" MaxLength="50" />
+    <Property Name="RequestedAnalysisID" Type="int" Nullable="false" />
+    <Property Name="RequestID" Type="int" Nullable="false" />
+    <Property Name="AnalysisID" Type="int" Nullable="false" />
+    <Property Name="AnalysisRequestDate" Type="datetime" Nullable="false" />
+    <Property Name="RequestAnalysisEmployeeID" Type="int" Nullable="false" />
+    <Property Name="RunNumber" Type="int" />
+    <Property Name="AnalysisCode" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="AnalysisName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NormalRange" Type="nvarchar" MaxLength="50" />
+    <Property Name="SampleTypeID" Type="int" Nullable="false" />
+    <Property Name="MinimumValue" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="MaximumValue" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="CostPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ExtraDiscount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PatientRequest_Payment">
+    <Key>
+      <PropertyRef Name="PatientID" />
+      <PropertyRef Name="RequestDate" />
+      <PropertyRef Name="PatientRequestEmployeeID" />
+      <PropertyRef Name="RequestedRefID" />
+      <PropertyRef Name="PaymentID" />
+      <PropertyRef Name="RequestID" />
+      <PropertyRef Name="PaymentDate" />
+      <PropertyRef Name="PaymentEmployeeID" />
+    </Key>
+    <Property Name="PatientID" Type="int" Nullable="false" />
+    <Property Name="RequestDate" Type="datetime" Nullable="false" />
+    <Property Name="PatientRequestEmployeeID" Type="int" Nullable="false" />
+    <Property Name="RequestComment" Type="nvarchar" MaxLength="255" />
+    <Property Name="DoctorRefID" Type="int" />
+    <Property Name="Priority" Type="varchar" MaxLength="10" />
+    <Property Name="OrganizationID" Type="int" />
+    <Property Name="RequestedRefID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="AttachmentSession" Type="varchar" MaxLength="50" />
+    <Property Name="ExtraDiscount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PaymentID" Type="int" Nullable="false" />
+    <Property Name="RequestID" Type="int" Nullable="false" />
+    <Property Name="PaidAmount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PaymentDate" Type="datetime" Nullable="false" />
+    <Property Name="PaymentEmployeeID" Type="int" Nullable="false" />
+    <Property Name="PaymentComment" Type="text" />
+  </EntityType>
+  <Association Name="FK_Analysis_SampleType">
+    <End Role="SampleType" Type="Self.SampleType" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Analysis" Type="Self.Analysis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SampleType">
+        <PropertyRef Name="SampleTypeID" />
+      </Principal>
+      <Dependent Role="Analysis">
+        <PropertyRef Name="SampleTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AnalysisResult_ExaminedEmployee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="AnalysisResult" Type="Self.AnalysisResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="AnalysisResult">
+        <PropertyRef Name="ExamineByEmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AnalysisResultStatus_AnalysisResult">
+    <End Role="AnalysisResult" Type="Self.AnalysisResult" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AnalysisResultStatus" Type="Self.AnalysisResultStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AnalysisResult">
+        <PropertyRef Name="AnalysisResultID" />
+      </Principal>
+      <Dependent Role="AnalysisResultStatus">
+        <PropertyRef Name="AnalysisResultID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AnalysisResultStatus_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="AnalysisResultStatus" Type="Self.AnalysisResultStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="AnalysisResultStatus">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AnalysisResultStatus_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AnalysisResultStatus" Type="Self.AnalysisResultStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="AnalysisResultStatus">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_City_Province">
+    <End Role="Province" Type="Self.Province" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Province">
+        <PropertyRef Name="ProvinceID" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="ProvinceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DoctorRef_City">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="DoctorRef" Type="Self.DoctorRef" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="DoctorRef">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DoctorRef_DoctorSpecialization">
+    <End Role="DoctorSpecialization" Type="Self.DoctorSpecialization" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DoctorRef" Type="Self.DoctorRef" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DoctorSpecialization">
+        <PropertyRef Name="SpecialID" />
+      </Principal>
+      <Dependent Role="DoctorRef">
+        <PropertyRef Name="SpecialID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_City">
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobTitle">
+        <PropertyRef Name="JobTitleID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="JobTitleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_LabBranch">
+    <End Role="LabBranch" Type="Self.LabBranch" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LabBranch">
+        <PropertyRef Name="BranchID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="CurrentBranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LabBranch_City">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="LabBranch" Type="Self.LabBranch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="LabBranch">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Organization_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="Organization">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Organization_Package">
+    <End Role="Package" Type="Self.Package" Multiplicity="1" />
+    <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="PackageID" />
+      </Principal>
+      <Dependent Role="Organization">
+        <PropertyRef Name="PackageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationCondition_Condition">
+    <End Role="Condition" Type="Self.Condition" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OrganizationCondition" Type="Self.OrganizationCondition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Condition">
+        <PropertyRef Name="ConditionID" />
+      </Principal>
+      <Dependent Role="OrganizationCondition">
+        <PropertyRef Name="ConditionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationCondition_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="OrganizationCondition" Type="Self.OrganizationCondition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="OrganizationCondition">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationInfo_City">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="OrganizationInfo" Type="Self.OrganizationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="OrganizationInfo">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationInfo_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="OrganizationInfo" Type="Self.OrganizationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="OrganizationInfo">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Package_CategoryType">
+    <End Role="CategoryType" Type="Self.CategoryType" Multiplicity="1" />
+    <End Role="Package" Type="Self.Package" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryType">
+        <PropertyRef Name="CategoryTypeID" />
+      </Principal>
+      <Dependent Role="Package">
+        <PropertyRef Name="CategoryTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PackageCostList_Analysis">
+    <End Role="Analysis" Type="Self.Analysis" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PackageCostList" Type="Self.PackageCostList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Analysis">
+        <PropertyRef Name="AnalysisID" />
+      </Principal>
+      <Dependent Role="PackageCostList">
+        <PropertyRef Name="AnalysisID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PackageCostList_Package">
+    <End Role="Package" Type="Self.Package" Multiplicity="1" />
+    <End Role="PackageCostList" Type="Self.PackageCostList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="PackageID" />
+      </Principal>
+      <Dependent Role="PackageCostList">
+        <PropertyRef Name="PackageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Patient_City">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Patient_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequest_DoctorRef">
+    <End Role="DoctorRef" Type="Self.DoctorRef" Multiplicity="0..1" />
+    <End Role="PatientRequest" Type="Self.PatientRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DoctorRef">
+        <PropertyRef Name="DoctorRefID" />
+      </Principal>
+      <Dependent Role="PatientRequest">
+        <PropertyRef Name="DoctorRefID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequest_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="PatientRequest" Type="Self.PatientRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="PatientRequest">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequest_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+    <End Role="PatientRequest" Type="Self.PatientRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="OrganizationID" />
+      </Principal>
+      <Dependent Role="PatientRequest">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequest_Patient">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="PatientRequest" Type="Self.PatientRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientID" />
+      </Principal>
+      <Dependent Role="PatientRequest">
+        <PropertyRef Name="PatientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequestAnalysis_Analysis">
+    <End Role="Analysis" Type="Self.Analysis" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PatientRequestAnalysis" Type="Self.PatientRequestAnalysis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Analysis">
+        <PropertyRef Name="AnalysisID" />
+      </Principal>
+      <Dependent Role="PatientRequestAnalysis">
+        <PropertyRef Name="AnalysisID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequestAnalysis_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="PatientRequestAnalysis" Type="Self.PatientRequestAnalysis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="PatientRequestAnalysis">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequestAnalysis_PatientRequest">
+    <End Role="PatientRequest" Type="Self.PatientRequest" Multiplicity="1" />
+    <End Role="PatientRequestAnalysis" Type="Self.PatientRequestAnalysis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PatientRequest">
+        <PropertyRef Name="RequestID" />
+      </Principal>
+      <Dependent Role="PatientRequestAnalysis">
+        <PropertyRef Name="RequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequestAnalysisStatus_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="PatientRequestAnalysisStatus" Type="Self.PatientRequestAnalysisStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="PatientRequestAnalysisStatus">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequestAnalysisStatus_PatientRequestAnalysis">
+    <End Role="PatientRequestAnalysis" Type="Self.PatientRequestAnalysis" Multiplicity="1" />
+    <End Role="PatientRequestAnalysisStatus" Type="Self.PatientRequestAnalysisStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PatientRequestAnalysis">
+        <PropertyRef Name="RequestedAnalysisID" />
+      </Principal>
+      <Dependent Role="PatientRequestAnalysisStatus">
+        <PropertyRef Name="RequestedAnalysisID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequestAnalysisStatus_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="PatientRequestAnalysisStatus" Type="Self.PatientRequestAnalysisStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="PatientRequestAnalysisStatus">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequestPayment_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="PatientRequestPayment" Type="Self.PatientRequestPayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="PatientRequestPayment">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequestPayment_PatientRequest">
+    <End Role="PatientRequest" Type="Self.PatientRequest" Multiplicity="1" />
+    <End Role="PatientRequestPayment" Type="Self.PatientRequestPayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PatientRequest">
+        <PropertyRef Name="RequestID" />
+      </Principal>
+      <Dependent Role="PatientRequestPayment">
+        <PropertyRef Name="RequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequestStatus_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="PatientRequestStatus" Type="Self.PatientRequestStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="PatientRequestStatus">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequestStatus_PatientRequest">
+    <End Role="PatientRequest" Type="Self.PatientRequest" Multiplicity="1" />
+    <End Role="PatientRequestStatus" Type="Self.PatientRequestStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PatientRequest">
+        <PropertyRef Name="RequestID" />
+      </Principal>
+      <Dependent Role="PatientRequestStatus">
+        <PropertyRef Name="RequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PatientRequestStatus_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="PatientRequestStatus" Type="Self.PatientRequestStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="PatientRequestStatus">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Permission_Entity">
+    <End Role="Entity" Type="Self.Entity" Multiplicity="1" />
+    <End Role="Permission" Type="Self.Permission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Entity">
+        <PropertyRef Name="EntityID" />
+      </Principal>
+      <Dependent Role="Permission">
+        <PropertyRef Name="EntityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Permission_EntityAction">
+    <End Role="EntityAction" Type="Self.EntityAction" Multiplicity="1" />
+    <End Role="Permission" Type="Self.Permission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EntityAction">
+        <PropertyRef Name="ActionID" />
+      </Principal>
+      <Dependent Role="Permission">
+        <PropertyRef Name="ActionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Permission_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="Permission" Type="Self.Permission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Permission">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="GetAnalysisRunNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetPatientRefID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="DemoMisrIntModelStoreContainer">
+    <EntitySet Name="Analysis" EntityType="Self.Analysis" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnalysisResult" EntityType="Self.AnalysisResult" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnalysisResultStatus" EntityType="Self.AnalysisResultStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CategoryType" EntityType="Self.CategoryType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Condition" EntityType="Self.Condition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DoctorRef" EntityType="Self.DoctorRef" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DoctorSpecialization" EntityType="Self.DoctorSpecialization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Entity" EntityType="Self.Entity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EntityAction" EntityType="Self.EntityAction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JobTitle" EntityType="Self.JobTitle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LabBranch" EntityType="Self.LabBranch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrganizationCondition" EntityType="Self.OrganizationCondition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrganizationConsuming" EntityType="Self.OrganizationConsuming" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrganizationInfo" EntityType="Self.OrganizationInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PackageCostList" EntityType="Self.PackageCostList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PatientRequest" EntityType="Self.PatientRequest" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PatientRequestAnalysis" EntityType="Self.PatientRequestAnalysis" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PatientRequestAnalysisStatus" EntityType="Self.PatientRequestAnalysisStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PatientRequestPayment" EntityType="Self.PatientRequestPayment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PatientRequestStatus" EntityType="Self.PatientRequestStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Province" EntityType="Self.Province" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SampleType" EntityType="Self.SampleType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PatientRefID" EntityType="Self.PatientRefID" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PatientRefID].[LastPatientRefID] AS [LastPatientRefID]
+    FROM [dbo].[PatientRefID] AS [PatientRefID]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="RunNumber" EntityType="Self.RunNumber" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [RunNumber].[RunNum] AS [RunNum]
+    FROM [dbo].[RunNumber] AS [RunNumber]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Patient_PatientRequest" EntityType="Self.Patient_PatientRequest" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Patient_PatientRequest].[FirstName] AS [FirstName], 
+    [Patient_PatientRequest].[MiddleName] AS [MiddleName], 
+    [Patient_PatientRequest].[LastName] AS [LastName], 
+    [Patient_PatientRequest].[Gender] AS [Gender], 
+    [Patient_PatientRequest].[Address] AS [Address], 
+    [Patient_PatientRequest].[CityID] AS [CityID], 
+    [Patient_PatientRequest].[NationalID] AS [NationalID], 
+    [Patient_PatientRequest].[BirthDate] AS [BirthDate], 
+    [Patient_PatientRequest].[Mobile] AS [Mobile], 
+    [Patient_PatientRequest].[Phone] AS [Phone], 
+    [Patient_PatientRequest].[Email] AS [Email], 
+    [Patient_PatientRequest].[ReferenceID] AS [ReferenceID], 
+    [Patient_PatientRequest].[RegisteredDate] AS [RegisteredDate], 
+    [Patient_PatientRequest].[LastDataModified] AS [LastDataModified], 
+    [Patient_PatientRequest].[RequestID] AS [RequestID], 
+    [Patient_PatientRequest].[RequestDate] AS [RequestDate], 
+    [Patient_PatientRequest].[EmployeeID] AS [EmployeeID], 
+    [Patient_PatientRequest].[Comment] AS [Comment], 
+    [Patient_PatientRequest].[DoctorRefID] AS [DoctorRefID], 
+    [Patient_PatientRequest].[Priority] AS [Priority], 
+    [Patient_PatientRequest].[OrganizationID] AS [OrganizationID], 
+    [Patient_PatientRequest].[RequestedRefID] AS [RequestedRefID], 
+    [Patient_PatientRequest].[AttachmentSession] AS [AttachmentSession], 
+    [Patient_PatientRequest].[PatientID] AS [PatientID], 
+    [Patient_PatientRequest].[ExtraDiscount] AS [ExtraDiscount], 
+    [Patient_PatientRequest].[ExtraCost] AS [ExtraCost], 
+    [Patient_PatientRequest].[TotalPatientCost] AS [TotalPatientCost], 
+    [Patient_PatientRequest].[TotalOrganizationCost] AS [TotalOrganizationCost]
+    FROM [dbo].[Patient_PatientRequest] AS [Patient_PatientRequest]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Patient_PatientRequest_LastStatus" EntityType="Self.Patient_PatientRequest_LastStatus" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Patient_PatientRequest_LastStatus].[RequestDate] AS [RequestDate], 
+    [Patient_PatientRequest_LastStatus].[PatientRequestEmployeeID] AS [PatientRequestEmployeeID], 
+    [Patient_PatientRequest_LastStatus].[PatientRequestComment] AS [PatientRequestComment], 
+    [Patient_PatientRequest_LastStatus].[DoctorRefID] AS [DoctorRefID], 
+    [Patient_PatientRequest_LastStatus].[Priority] AS [Priority], 
+    [Patient_PatientRequest_LastStatus].[OrganizationID] AS [OrganizationID], 
+    [Patient_PatientRequest_LastStatus].[RequestedRefID] AS [RequestedRefID], 
+    [Patient_PatientRequest_LastStatus].[AttachmentSession] AS [AttachmentSession], 
+    [Patient_PatientRequest_LastStatus].[RequestStatusID] AS [RequestStatusID], 
+    [Patient_PatientRequest_LastStatus].[RequestID] AS [RequestID], 
+    [Patient_PatientRequest_LastStatus].[StatusDate] AS [StatusDate], 
+    [Patient_PatientRequest_LastStatus].[PatientRequestStatusEmployeeID] AS [PatientRequestStatusEmployeeID], 
+    [Patient_PatientRequest_LastStatus].[PatientRequestStatusComment] AS [PatientRequestStatusComment], 
+    [Patient_PatientRequest_LastStatus].[StatusIdentifier] AS [StatusIdentifier], 
+    [Patient_PatientRequest_LastStatus].[StatusName] AS [StatusName], 
+    [Patient_PatientRequest_LastStatus].[Description] AS [Description], 
+    [Patient_PatientRequest_LastStatus].[PatientRequestStatusID] AS [PatientRequestStatusID], 
+    [Patient_PatientRequest_LastStatus].[PatientID] AS [PatientID], 
+    [Patient_PatientRequest_LastStatus].[FirstName] AS [FirstName], 
+    [Patient_PatientRequest_LastStatus].[MiddleName] AS [MiddleName], 
+    [Patient_PatientRequest_LastStatus].[LastName] AS [LastName], 
+    [Patient_PatientRequest_LastStatus].[Gender] AS [Gender], 
+    [Patient_PatientRequest_LastStatus].[Address] AS [Address], 
+    [Patient_PatientRequest_LastStatus].[CityID] AS [CityID], 
+    [Patient_PatientRequest_LastStatus].[NationalID] AS [NationalID], 
+    [Patient_PatientRequest_LastStatus].[BirthDate] AS [BirthDate], 
+    [Patient_PatientRequest_LastStatus].[Mobile] AS [Mobile], 
+    [Patient_PatientRequest_LastStatus].[Phone] AS [Phone], 
+    [Patient_PatientRequest_LastStatus].[Email] AS [Email], 
+    [Patient_PatientRequest_LastStatus].[ReferenceID] AS [ReferenceID], 
+    [Patient_PatientRequest_LastStatus].[RegisteredDate] AS [RegisteredDate], 
+    [Patient_PatientRequest_LastStatus].[LastDataModified] AS [LastDataModified], 
+    [Patient_PatientRequest_LastStatus].[ExtraDiscount] AS [ExtraDiscount], 
+    [Patient_PatientRequest_LastStatus].[ExtraCost] AS [ExtraCost], 
+    [Patient_PatientRequest_LastStatus].[TotalPatientCost] AS [TotalPatientCost], 
+    [Patient_PatientRequest_LastStatus].[TotalOrganizationCost] AS [TotalOrganizationCost]
+    FROM [dbo].[Patient_PatientRequest_LastStatus] AS [Patient_PatientRequest_LastStatus]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PatientRequest_Analysis" EntityType="Self.PatientRequest_Analysis" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PatientRequest_Analysis].[RequestDate] AS [RequestDate], 
+    [PatientRequest_Analysis].[PatientID] AS [PatientID], 
+    [PatientRequest_Analysis].[EmployeeID] AS [EmployeeID], 
+    [PatientRequest_Analysis].[Comment] AS [Comment], 
+    [PatientRequest_Analysis].[DoctorRefID] AS [DoctorRefID], 
+    [PatientRequest_Analysis].[Priority] AS [Priority], 
+    [PatientRequest_Analysis].[OrganizationID] AS [OrganizationID], 
+    [PatientRequest_Analysis].[RequestedRefID] AS [RequestedRefID], 
+    [PatientRequest_Analysis].[AttachmentSession] AS [AttachmentSession], 
+    [PatientRequest_Analysis].[RequestedAnalysisID] AS [RequestedAnalysisID], 
+    [PatientRequest_Analysis].[RequestID] AS [RequestID], 
+    [PatientRequest_Analysis].[AnalysisID] AS [AnalysisID], 
+    [PatientRequest_Analysis].[AnalysisRequestDate] AS [AnalysisRequestDate], 
+    [PatientRequest_Analysis].[RequestAnalysisEmployeeID] AS [RequestAnalysisEmployeeID], 
+    [PatientRequest_Analysis].[RunNumber] AS [RunNumber], 
+    [PatientRequest_Analysis].[AnalysisCode] AS [AnalysisCode], 
+    [PatientRequest_Analysis].[AnalysisName] AS [AnalysisName], 
+    [PatientRequest_Analysis].[NormalRange] AS [NormalRange], 
+    [PatientRequest_Analysis].[SampleTypeID] AS [SampleTypeID], 
+    [PatientRequest_Analysis].[MinimumValue] AS [MinimumValue], 
+    [PatientRequest_Analysis].[MaximumValue] AS [MaximumValue], 
+    [PatientRequest_Analysis].[CostPrice] AS [CostPrice], 
+    [PatientRequest_Analysis].[ExtraDiscount] AS [ExtraDiscount], 
+    [PatientRequest_Analysis].[ExtraCost] AS [ExtraCost], 
+    [PatientRequest_Analysis].[TotalPatientCost] AS [TotalPatientCost], 
+    [PatientRequest_Analysis].[TotalOrganizationCost] AS [TotalOrganizationCost]
+    FROM [dbo].[PatientRequest_Analysis] AS [PatientRequest_Analysis]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PatientRequest_Payment" EntityType="Self.PatientRequest_Payment" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PatientRequest_Payment].[PatientID] AS [PatientID], 
+    [PatientRequest_Payment].[RequestDate] AS [RequestDate], 
+    [PatientRequest_Payment].[PatientRequestEmployeeID] AS [PatientRequestEmployeeID], 
+    [PatientRequest_Payment].[RequestComment] AS [RequestComment], 
+    [PatientRequest_Payment].[DoctorRefID] AS [DoctorRefID], 
+    [PatientRequest_Payment].[Priority] AS [Priority], 
+    [PatientRequest_Payment].[OrganizationID] AS [OrganizationID], 
+    [PatientRequest_Payment].[RequestedRefID] AS [RequestedRefID], 
+    [PatientRequest_Payment].[AttachmentSession] AS [AttachmentSession], 
+    [PatientRequest_Payment].[ExtraDiscount] AS [ExtraDiscount], 
+    [PatientRequest_Payment].[ExtraCost] AS [ExtraCost], 
+    [PatientRequest_Payment].[TotalPatientCost] AS [TotalPatientCost], 
+    [PatientRequest_Payment].[TotalOrganizationCost] AS [TotalOrganizationCost], 
+    [PatientRequest_Payment].[PaymentID] AS [PaymentID], 
+    [PatientRequest_Payment].[RequestID] AS [RequestID], 
+    [PatientRequest_Payment].[PaidAmount] AS [PaidAmount], 
+    [PatientRequest_Payment].[PaymentDate] AS [PaymentDate], 
+    [PatientRequest_Payment].[PaymentEmployeeID] AS [PaymentEmployeeID], 
+    [PatientRequest_Payment].[PaymentComment] AS [PaymentComment]
+    FROM [dbo].[PatientRequest_Payment] AS [PatientRequest_Payment]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Analysis_SampleType" Association="Self.FK_Analysis_SampleType">
+      <End Role="SampleType" EntitySet="SampleType" />
+      <End Role="Analysis" EntitySet="Analysis" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AnalysisResult_ExaminedEmployee" Association="Self.FK_AnalysisResult_ExaminedEmployee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="AnalysisResult" EntitySet="AnalysisResult" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AnalysisResultStatus_AnalysisResult" Association="Self.FK_AnalysisResultStatus_AnalysisResult">
+      <End Role="AnalysisResult" EntitySet="AnalysisResult" />
+      <End Role="AnalysisResultStatus" EntitySet="AnalysisResultStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AnalysisResultStatus_Employee" Association="Self.FK_AnalysisResultStatus_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="AnalysisResultStatus" EntitySet="AnalysisResultStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AnalysisResultStatus_Status" Association="Self.FK_AnalysisResultStatus_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="AnalysisResultStatus" EntitySet="AnalysisResultStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_City_Province" Association="Self.FK_City_Province">
+      <End Role="Province" EntitySet="Province" />
+      <End Role="City" EntitySet="City" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DoctorRef_City" Association="Self.FK_DoctorRef_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="DoctorRef" EntitySet="DoctorRef" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DoctorRef_DoctorSpecialization" Association="Self.FK_DoctorRef_DoctorSpecialization">
+      <End Role="DoctorSpecialization" EntitySet="DoctorSpecialization" />
+      <End Role="DoctorRef" EntitySet="DoctorRef" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_City" Association="Self.FK_Employee_City">
+      <End Role="JobTitle" EntitySet="JobTitle" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_LabBranch" Association="Self.FK_Employee_LabBranch">
+      <End Role="LabBranch" EntitySet="LabBranch" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LabBranch_City" Association="Self.FK_LabBranch_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="LabBranch" EntitySet="LabBranch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Organization_Employee" Association="Self.FK_Organization_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Organization" EntitySet="Organization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Organization_Package" Association="Self.FK_Organization_Package">
+      <End Role="Package" EntitySet="Package" />
+      <End Role="Organization" EntitySet="Organization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationCondition_Condition" Association="Self.FK_OrganizationCondition_Condition">
+      <End Role="Condition" EntitySet="Condition" />
+      <End Role="OrganizationCondition" EntitySet="OrganizationCondition" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationCondition_Organization" Association="Self.FK_OrganizationCondition_Organization">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="OrganizationCondition" EntitySet="OrganizationCondition" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationInfo_City" Association="Self.FK_OrganizationInfo_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="OrganizationInfo" EntitySet="OrganizationInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationInfo_Organization" Association="Self.FK_OrganizationInfo_Organization">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="OrganizationInfo" EntitySet="OrganizationInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Package_CategoryType" Association="Self.FK_Package_CategoryType">
+      <End Role="CategoryType" EntitySet="CategoryType" />
+      <End Role="Package" EntitySet="Package" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PackageCostList_Analysis" Association="Self.FK_PackageCostList_Analysis">
+      <End Role="Analysis" EntitySet="Analysis" />
+      <End Role="PackageCostList" EntitySet="PackageCostList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PackageCostList_Package" Association="Self.FK_PackageCostList_Package">
+      <End Role="Package" EntitySet="Package" />
+      <End Role="PackageCostList" EntitySet="PackageCostList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patient_City" Association="Self.FK_Patient_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patient_Employee" Association="Self.FK_Patient_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequest_DoctorRef" Association="Self.FK_PatientRequest_DoctorRef">
+      <End Role="DoctorRef" EntitySet="DoctorRef" />
+      <End Role="PatientRequest" EntitySet="PatientRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequest_Employee" Association="Self.FK_PatientRequest_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="PatientRequest" EntitySet="PatientRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequest_Organization" Association="Self.FK_PatientRequest_Organization">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="PatientRequest" EntitySet="PatientRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequest_Patient" Association="Self.FK_PatientRequest_Patient">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="PatientRequest" EntitySet="PatientRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequestAnalysis_Analysis" Association="Self.FK_PatientRequestAnalysis_Analysis">
+      <End Role="Analysis" EntitySet="Analysis" />
+      <End Role="PatientRequestAnalysis" EntitySet="PatientRequestAnalysis" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequestAnalysis_Employee" Association="Self.FK_PatientRequestAnalysis_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="PatientRequestAnalysis" EntitySet="PatientRequestAnalysis" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequestAnalysis_PatientRequest" Association="Self.FK_PatientRequestAnalysis_PatientRequest">
+      <End Role="PatientRequest" EntitySet="PatientRequest" />
+      <End Role="PatientRequestAnalysis" EntitySet="PatientRequestAnalysis" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequestAnalysisStatus_Employee" Association="Self.FK_PatientRequestAnalysisStatus_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="PatientRequestAnalysisStatus" EntitySet="PatientRequestAnalysisStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequestAnalysisStatus_PatientRequestAnalysis" Association="Self.FK_PatientRequestAnalysisStatus_PatientRequestAnalysis">
+      <End Role="PatientRequestAnalysis" EntitySet="PatientRequestAnalysis" />
+      <End Role="PatientRequestAnalysisStatus" EntitySet="PatientRequestAnalysisStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequestAnalysisStatus_Status" Association="Self.FK_PatientRequestAnalysisStatus_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="PatientRequestAnalysisStatus" EntitySet="PatientRequestAnalysisStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequestPayment_Employee" Association="Self.FK_PatientRequestPayment_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="PatientRequestPayment" EntitySet="PatientRequestPayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequestPayment_PatientRequest" Association="Self.FK_PatientRequestPayment_PatientRequest">
+      <End Role="PatientRequest" EntitySet="PatientRequest" />
+      <End Role="PatientRequestPayment" EntitySet="PatientRequestPayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequestStatus_Employee" Association="Self.FK_PatientRequestStatus_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="PatientRequestStatus" EntitySet="PatientRequestStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequestStatus_PatientRequest" Association="Self.FK_PatientRequestStatus_PatientRequest">
+      <End Role="PatientRequest" EntitySet="PatientRequest" />
+      <End Role="PatientRequestStatus" EntitySet="PatientRequestStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PatientRequestStatus_Status" Association="Self.FK_PatientRequestStatus_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="PatientRequestStatus" EntitySet="PatientRequestStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Permission_Entity" Association="Self.FK_Permission_Entity">
+      <End Role="Entity" EntitySet="Entity" />
+      <End Role="Permission" EntitySet="Permission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Permission_EntityAction" Association="Self.FK_Permission_EntityAction">
+      <End Role="EntityAction" EntitySet="EntityAction" />
+      <End Role="Permission" EntitySet="Permission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Permission_Role" Association="Self.FK_Permission_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Permission" EntitySet="Permission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Employee" Association="Self.FK_User_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
