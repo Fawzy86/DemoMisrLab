@@ -45,15 +45,10 @@ namespace DemoMisrInternationalLab.Controllers
         public ActionResult loadPatientRequestStatus()
         {
             PatientsRequestsStatusViewModel PatientRequestStatus = new PatientsRequestsStatusViewModel();
-            PatientRequestStatus.PatientRequestStatusWithAnalyzes = GetPendingPatientsRequest();
+            PatientRequestStatus.PatientRequestStatusWithAnalyzes = DbFunctions.GetPatientsRequestWithStatus(ResourceFiles.Status.PatientRequestPending);
             return PartialView("_PatientRequestStatus", PatientRequestStatus);
         }
         
-        [NonAction]
-        private List<Patient_Request_Status_Analysis_ViewModel> GetPendingPatientsRequest()
-        {
-            return DbFunctions.GetPendingPatientsRequest();
-        }
 
         public ActionResult loadPatientRequestTranactions()
         {
@@ -89,6 +84,7 @@ namespace DemoMisrInternationalLab.Controllers
             PatientRequest.AttachmentSession = Guid.NewGuid().ToString("N");
             return PatientRequest;
         }
+
         [NonAction]
         private PatientInfoViewModel GetPatientInfo(int? patientID)
         {
@@ -271,11 +267,6 @@ namespace DemoMisrInternationalLab.Controllers
             if (ModelState.IsValid)
             {
                 ViewBag.Container = Category;
-                if (String.IsNullOrWhiteSpace(HttpContext.User.Identity.Name))
-                {
-                    ViewBag.ErrorMessage = "Please login first";
-                    return PartialView("_Error", ViewBag.ErrorMessage);
-                }
                 if (!String.IsNullOrWhiteSpace(Category))
                 {
                     if (Category != ResourceFiles.CategoryType.Individual && model.Organizations.SelectedOrganizationID == 0)

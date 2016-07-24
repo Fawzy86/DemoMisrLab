@@ -10,7 +10,10 @@ namespace DemoMisrInternationalLab.Models
         public PatientsRequestsStatusViewModel()
         {
             PatientRequestStatusWithAnalyzes = new List<Patient_Request_Status_Analysis_ViewModel>();
+            SelectedPatientsRequestIDs = new List<int>();
         }
         public List<Patient_Request_Status_Analysis_ViewModel> PatientRequestStatusWithAnalyzes { get; set; }
+
+        public List<int> SelectedPatientsRequestIDs { get; set; }
     }
 }

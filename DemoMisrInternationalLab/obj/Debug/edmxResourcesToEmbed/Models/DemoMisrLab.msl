@@ -27,6 +27,7 @@
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="DemoMisrIntModel.Store.sp_upgraddiagrams" />
     <FunctionImportMapping FunctionImportName="GetAnalysisRunNumber" FunctionName="DemoMisrIntModel.Store.GetAnalysisRunNumber" />
     <FunctionImportMapping FunctionImportName="GetPatientRefID" FunctionName="DemoMisrIntModel.Store.GetPatientRefID" />
+    <FunctionImportMapping FunctionImportName="GetRequestNumber" FunctionName="DemoMisrIntModel.Store.GetRequestNumber" />
     <EntitySetMapping Name="Analyses">
       <EntityTypeMapping TypeName="DemoMisrIntModel.Analysis">
         <MappingFragment StoreEntitySet="Analysis">
@@ -255,6 +256,7 @@
     <EntitySetMapping Name="PatientRequests">
       <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequest">
         <MappingFragment StoreEntitySet="PatientRequest">
+          <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
           <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
           <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
           <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
@@ -395,6 +397,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="RequestNumbers">
+      <EntityTypeMapping TypeName="DemoMisrIntModel.RequestNumber">
+        <MappingFragment StoreEntitySet="RequestNumber">
+          <ScalarProperty Name="Request_Number" ColumnName="Request_Number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="RunNumbers">
       <EntityTypeMapping TypeName="DemoMisrIntModel.RunNumber">
         <MappingFragment StoreEntitySet="RunNumber">
@@ -405,6 +414,7 @@
     <EntitySetMapping Name="Patient_PatientRequest">
       <EntityTypeMapping TypeName="DemoMisrIntModel.Patient_PatientRequest">
         <MappingFragment StoreEntitySet="Patient_PatientRequest">
+          <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
           <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
           <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
           <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
@@ -439,6 +449,7 @@
     <EntitySetMapping Name="Patient_PatientRequest_LastStatus">
       <EntityTypeMapping TypeName="DemoMisrIntModel.Patient_PatientRequest_LastStatus">
         <MappingFragment StoreEntitySet="Patient_PatientRequest_LastStatus">
+          <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
           <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
           <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
           <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
@@ -481,6 +492,7 @@
     <EntitySetMapping Name="PatientRequest_Analysis">
       <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequest_Analysis">
         <MappingFragment StoreEntitySet="PatientRequest_Analysis">
+          <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
           <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
           <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
           <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
@@ -513,6 +525,7 @@
     <EntitySetMapping Name="PatientRequest_Payment">
       <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequest_Payment">
         <MappingFragment StoreEntitySet="PatientRequest_Payment">
+          <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
           <ScalarProperty Name="PaymentComment" ColumnName="PaymentComment" />
           <ScalarProperty Name="PaymentEmployeeID" ColumnName="PaymentEmployeeID" />
           <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />

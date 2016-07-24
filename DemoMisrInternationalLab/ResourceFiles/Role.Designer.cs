@@ -61,6 +61,15 @@ namespace DemoMisrInternationalLab.ResourceFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Admin.
+        /// </summary>
+        public static string Admin {
+            get {
+                return ResourceManager.GetString("Admin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chemist.
         /// </summary>
         public static string Chemist {

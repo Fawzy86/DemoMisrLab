@@ -40,5 +40,6 @@ namespace DemoMisrInternationalLab.Models
         public Nullable<decimal> ExtraCost { get; set; }
         public Nullable<decimal> TotalPatientCost { get; set; }
         public Nullable<decimal> TotalOrganizationCost { get; set; }
+        public Nullable<int> RequestNumber { get; set; }
     }
 }

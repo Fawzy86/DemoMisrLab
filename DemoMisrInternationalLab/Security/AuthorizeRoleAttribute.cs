@@ -20,10 +20,19 @@ namespace DemoMisrInternationalLab.Security
             {
                 return false;
             }
-            foreach (var roles in userAssignedRoles)
+            foreach (var role in userAssignedRoles)
             {
-                 bool authorize = DbFunctions.IsUserInRole(httpContext.User.Identity.Name, roles);
+                if (role.ToLower().Trim() == "all")
+                {
+                    return true;
+                }
+               /* bool authorize = DbFunctions.GetUserInRole(httpContext.User.Identity.Name, roles);
                 if (authorize)
+                {
+                    return true;
+                }*/
+                string UserRole = DbFunctions.GetUserRole(httpContext.User.Identity.Name);
+                if (UserRole.ToLower() == "admin" || role.Trim() == UserRole)
                 {
                     return true;
                 }

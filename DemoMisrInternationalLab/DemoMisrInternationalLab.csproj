@@ -169,7 +169,7 @@
     <Compile Include="Controllers\CustomerCareController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PreservationController.cs" />
-    <Compile Include="Controllers\ReceiveAndSampleController.cs" />
+    <Compile Include="Controllers\ChemistController.cs" />
     <Compile Include="Controllers\TestBarCodeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -195,7 +195,6 @@
     <Compile Include="Models\Condition.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CustomerCareViewModel.cs" />
     <Compile Include="Models\DemoMisrLab.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -270,6 +269,7 @@
     <Compile Include="Models\PatientRequestAnalysisStatu.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PatientRequestAnalysisViewModel.cs" />
     <Compile Include="Models\PatientRequestInputsDataModel.cs" />
     <Compile Include="Models\PatientRequestPayment.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
@@ -304,10 +304,11 @@
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AnalyzesViewModel.cs" />
-    <Compile Include="Models\RequestedAnalysisViewModel.cs" />
-    <Compile Include="Models\RequestedAnalyzesViewModel.cs" />
     <Compile Include="Models\ProvincesViewModel.cs" />
-    <Compile Include="Models\ReceiveAndSampleViewModel.cs" />
+    <Compile Include="Models\ReceiveAndSamplingViewModel.cs" />
+    <Compile Include="Models\RequestNumber.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Role.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
@@ -869,8 +870,8 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\ReceiveAndSample\Index.cshtml" />
-    <Content Include="Views\ReceiveAndSample\_ReceiveRequestAndSample.cshtml" />
+    <Content Include="Views\Chemist\Index.cshtml" />
+    <Content Include="Views\Chemist\_ReceiveRequestAndSample.cshtml" />
     <Content Include="Views\Account\_Login_Partial.cshtml" />
     <Content Include="Views\CustomerCare\Index.cshtml" />
     <Content Include="Views\CustomerCare\_City.cshtml" />
@@ -893,10 +894,14 @@
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Shared\_LayoutNew.cshtml" />
+    <Content Include="Views\Chemist\_ReceivePatientRequest.cshtml" />
+    <Content Include="Views\Chemist\_PendingAnalyzesForSampling.cshtml" />
+    <Content Include="Views\Chemist\_SampledAnalyzesAfterReceive.cshtml" />
+    <Content Include="Views\Chemist\_Preservation.cshtml" />
+    <Content Include="Views\Chemist\_SampledAnalyzesForPreservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Preservation\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

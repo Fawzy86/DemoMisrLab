@@ -233,6 +233,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRefID' does not have a prim
     <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="RequestNumber" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="PatientRequestAnalysis">
     <Key>
@@ -302,6 +303,14 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRefID' does not have a prim
     <Property Name="ProvinceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CountryID" Type="int" Nullable="false" />
     <Property Name="ProvinceName" Type="nchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.RequestNumber' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="RequestNumber">
+    <Key>
+      <PropertyRef Name="Request_Number" />
+    </Key>
+    <Property Name="Request_Number" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -389,6 +398,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest' does not h
     <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="RequestNumber" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_LastStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -445,6 +455,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_LastStatus'
     <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="RequestNumber" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -492,6 +503,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not 
     <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="RequestNumber" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -525,6 +537,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     <Property Name="PaymentDate" Type="datetime" Nullable="false" />
     <Property Name="PaymentEmployeeID" Type="int" Nullable="false" />
     <Property Name="PaymentComment" Type="text" />
+    <Property Name="RequestNumber" Type="int" />
   </EntityType>
   <Association Name="FK_Analysis_SampleType">
     <End Role="SampleType" Type="Self.SampleType" Multiplicity="1">
@@ -1053,6 +1066,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="GetAnalysisRunNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="GetPatientRefID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetRequestNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
     <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -1121,6 +1135,11 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [PatientRefID].[LastPatientRefID] AS [LastPatientRefID]
     FROM [dbo].[PatientRefID] AS [PatientRefID]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="RequestNumber" EntityType="Self.RequestNumber" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [RequestNumber].[Request_Number] AS [Request_Number]
+    FROM [dbo].[RequestNumber] AS [RequestNumber]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="RunNumber" EntityType="Self.RunNumber" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [RunNumber].[RunNum] AS [RunNum]
@@ -1155,7 +1174,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [Patient_PatientRequest].[ExtraDiscount] AS [ExtraDiscount], 
     [Patient_PatientRequest].[ExtraCost] AS [ExtraCost], 
     [Patient_PatientRequest].[TotalPatientCost] AS [TotalPatientCost], 
-    [Patient_PatientRequest].[TotalOrganizationCost] AS [TotalOrganizationCost]
+    [Patient_PatientRequest].[TotalOrganizationCost] AS [TotalOrganizationCost], 
+    [Patient_PatientRequest].[RequestNumber] AS [RequestNumber]
     FROM [dbo].[Patient_PatientRequest] AS [Patient_PatientRequest]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="Patient_PatientRequest_LastStatus" EntityType="Self.Patient_PatientRequest_LastStatus" store:Type="Views" store:Schema="dbo">
@@ -1195,7 +1215,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [Patient_PatientRequest_LastStatus].[ExtraDiscount] AS [ExtraDiscount], 
     [Patient_PatientRequest_LastStatus].[ExtraCost] AS [ExtraCost], 
     [Patient_PatientRequest_LastStatus].[TotalPatientCost] AS [TotalPatientCost], 
-    [Patient_PatientRequest_LastStatus].[TotalOrganizationCost] AS [TotalOrganizationCost]
+    [Patient_PatientRequest_LastStatus].[TotalOrganizationCost] AS [TotalOrganizationCost], 
+    [Patient_PatientRequest_LastStatus].[RequestNumber] AS [RequestNumber]
     FROM [dbo].[Patient_PatientRequest_LastStatus] AS [Patient_PatientRequest_LastStatus]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="PatientRequest_Analysis" EntityType="Self.PatientRequest_Analysis" store:Type="Views" store:Schema="dbo">
@@ -1225,7 +1246,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [PatientRequest_Analysis].[ExtraDiscount] AS [ExtraDiscount], 
     [PatientRequest_Analysis].[ExtraCost] AS [ExtraCost], 
     [PatientRequest_Analysis].[TotalPatientCost] AS [TotalPatientCost], 
-    [PatientRequest_Analysis].[TotalOrganizationCost] AS [TotalOrganizationCost]
+    [PatientRequest_Analysis].[TotalOrganizationCost] AS [TotalOrganizationCost], 
+    [PatientRequest_Analysis].[RequestNumber] AS [RequestNumber]
     FROM [dbo].[PatientRequest_Analysis] AS [PatientRequest_Analysis]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="PatientRequest_Payment" EntityType="Self.PatientRequest_Payment" store:Type="Views" store:Schema="dbo">
@@ -1248,7 +1270,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [PatientRequest_Payment].[PaidAmount] AS [PaidAmount], 
     [PatientRequest_Payment].[PaymentDate] AS [PaymentDate], 
     [PatientRequest_Payment].[PaymentEmployeeID] AS [PaymentEmployeeID], 
-    [PatientRequest_Payment].[PaymentComment] AS [PaymentComment]
+    [PatientRequest_Payment].[PaymentComment] AS [PaymentComment], 
+    [PatientRequest_Payment].[RequestNumber] AS [RequestNumber]
     FROM [dbo].[PatientRequest_Payment] AS [PatientRequest_Payment]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_Analysis_SampleType" Association="Self.FK_Analysis_SampleType">

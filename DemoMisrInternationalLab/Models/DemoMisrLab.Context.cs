@@ -60,6 +60,7 @@ namespace DemoMisrInternationalLab.Models
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<PatientRefID> PatientRefIDs { get; set; }
+        public virtual DbSet<RequestNumber> RequestNumbers { get; set; }
         public virtual DbSet<RunNumber> RunNumbers { get; set; }
         public virtual DbSet<Patient_PatientRequest> Patient_PatientRequest { get; set; }
         public virtual DbSet<Patient_PatientRequest_LastStatus> Patient_PatientRequest_LastStatus { get; set; }
@@ -177,6 +178,11 @@ namespace DemoMisrInternationalLab.Models
         public virtual ObjectResult<Nullable<int>> GetPatientRefID()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetPatientRefID");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetRequestNumber()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetRequestNumber");
         }
     }
 }

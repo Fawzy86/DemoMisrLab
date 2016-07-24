@@ -238,6 +238,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRefID' does not have a prim
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PatientRequestAnalysis">
           <Key>
@@ -307,6 +308,14 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRefID' does not have a prim
           <Property Name="ProvinceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CountryID" Type="int" Nullable="false" />
           <Property Name="ProvinceName" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.RequestNumber' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RequestNumber">
+          <Key>
+            <PropertyRef Name="Request_Number" />
+          </Key>
+          <Property Name="Request_Number" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -394,6 +403,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest' does not h
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_LastStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -450,6 +460,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_LastStatus'
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -497,6 +508,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not 
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -530,6 +542,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="PaymentDate" Type="datetime" Nullable="false" />
           <Property Name="PaymentEmployeeID" Type="int" Nullable="false" />
           <Property Name="PaymentComment" Type="text" />
+          <Property Name="RequestNumber" Type="int" />
         </EntityType>
         <Association Name="FK_Analysis_SampleType">
           <End Role="SampleType" Type="Self.SampleType" Multiplicity="1">
@@ -1058,6 +1071,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetAnalysisRunNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetPatientRefID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetRequestNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -1126,6 +1140,11 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [PatientRefID].[LastPatientRefID] AS [LastPatientRefID]
     FROM [dbo].[PatientRefID] AS [PatientRefID]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="RequestNumber" EntityType="Self.RequestNumber" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [RequestNumber].[Request_Number] AS [Request_Number]
+    FROM [dbo].[RequestNumber] AS [RequestNumber]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="RunNumber" EntityType="Self.RunNumber" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [RunNumber].[RunNum] AS [RunNum]
@@ -1160,7 +1179,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [Patient_PatientRequest].[ExtraDiscount] AS [ExtraDiscount], 
     [Patient_PatientRequest].[ExtraCost] AS [ExtraCost], 
     [Patient_PatientRequest].[TotalPatientCost] AS [TotalPatientCost], 
-    [Patient_PatientRequest].[TotalOrganizationCost] AS [TotalOrganizationCost]
+    [Patient_PatientRequest].[TotalOrganizationCost] AS [TotalOrganizationCost], 
+    [Patient_PatientRequest].[RequestNumber] AS [RequestNumber]
     FROM [dbo].[Patient_PatientRequest] AS [Patient_PatientRequest]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Patient_PatientRequest_LastStatus" EntityType="Self.Patient_PatientRequest_LastStatus" store:Type="Views" store:Schema="dbo">
@@ -1200,7 +1220,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [Patient_PatientRequest_LastStatus].[ExtraDiscount] AS [ExtraDiscount], 
     [Patient_PatientRequest_LastStatus].[ExtraCost] AS [ExtraCost], 
     [Patient_PatientRequest_LastStatus].[TotalPatientCost] AS [TotalPatientCost], 
-    [Patient_PatientRequest_LastStatus].[TotalOrganizationCost] AS [TotalOrganizationCost]
+    [Patient_PatientRequest_LastStatus].[TotalOrganizationCost] AS [TotalOrganizationCost], 
+    [Patient_PatientRequest_LastStatus].[RequestNumber] AS [RequestNumber]
     FROM [dbo].[Patient_PatientRequest_LastStatus] AS [Patient_PatientRequest_LastStatus]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PatientRequest_Analysis" EntityType="Self.PatientRequest_Analysis" store:Type="Views" store:Schema="dbo">
@@ -1230,7 +1251,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [PatientRequest_Analysis].[ExtraDiscount] AS [ExtraDiscount], 
     [PatientRequest_Analysis].[ExtraCost] AS [ExtraCost], 
     [PatientRequest_Analysis].[TotalPatientCost] AS [TotalPatientCost], 
-    [PatientRequest_Analysis].[TotalOrganizationCost] AS [TotalOrganizationCost]
+    [PatientRequest_Analysis].[TotalOrganizationCost] AS [TotalOrganizationCost], 
+    [PatientRequest_Analysis].[RequestNumber] AS [RequestNumber]
     FROM [dbo].[PatientRequest_Analysis] AS [PatientRequest_Analysis]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PatientRequest_Payment" EntityType="Self.PatientRequest_Payment" store:Type="Views" store:Schema="dbo">
@@ -1253,7 +1275,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [PatientRequest_Payment].[PaidAmount] AS [PaidAmount], 
     [PatientRequest_Payment].[PaymentDate] AS [PaymentDate], 
     [PatientRequest_Payment].[PaymentEmployeeID] AS [PaymentEmployeeID], 
-    [PatientRequest_Payment].[PaymentComment] AS [PaymentComment]
+    [PatientRequest_Payment].[PaymentComment] AS [PaymentComment], 
+    [PatientRequest_Payment].[RequestNumber] AS [RequestNumber]
     FROM [dbo].[PatientRequest_Payment] AS [PatientRequest_Payment]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Analysis_SampleType" Association="Self.FK_Analysis_SampleType">
@@ -1462,6 +1485,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="GetAnalysisRunNumber" ReturnType="Collection(Int32)" />
           <FunctionImport Name="GetPatientRefID" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="GetRequestNumber" ReturnType="Collection(Int32)" />
           <EntitySet Name="Analyses" EntityType="DemoMisrIntModel.Analysis" />
           <EntitySet Name="AnalysisResults" EntityType="DemoMisrIntModel.AnalysisResult" />
           <EntitySet Name="AnalysisResultStatus" EntityType="DemoMisrIntModel.AnalysisResultStatu" />
@@ -1495,6 +1519,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <EntitySet Name="Status" EntityType="DemoMisrIntModel.Status" />
           <EntitySet Name="Users" EntityType="DemoMisrIntModel.User" />
           <EntitySet Name="PatientRefIDs" EntityType="DemoMisrIntModel.PatientRefID" />
+          <EntitySet Name="RequestNumbers" EntityType="DemoMisrIntModel.RequestNumber" />
           <EntitySet Name="RunNumbers" EntityType="DemoMisrIntModel.RunNumber" />
           <EntitySet Name="Patient_PatientRequest" EntityType="DemoMisrIntModel.Patient_PatientRequest" />
           <EntitySet Name="Patient_PatientRequest_LastStatus" EntityType="DemoMisrIntModel.Patient_PatientRequest_LastStatus" />
@@ -1958,6 +1983,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
           <NavigationProperty Name="DoctorRef" Relationship="DemoMisrIntModel.FK_PatientRequest_DoctorRef" FromRole="PatientRequest" ToRole="DoctorRef" />
           <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_PatientRequest_Employee" FromRole="PatientRequest" ToRole="Employee" />
           <NavigationProperty Name="Organization" Relationship="DemoMisrIntModel.FK_PatientRequest_Organization" FromRole="PatientRequest" ToRole="Organization" />
@@ -2102,6 +2128,12 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           </Key>
           <Property Name="LastPatientRefID" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="RequestNumber">
+          <Key>
+            <PropertyRef Name="Request_Number" />
+          </Key>
+          <Property Name="Request_Number" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="RunNumber">
           <Key>
             <PropertyRef Name="RunNum" />
@@ -2147,6 +2179,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="Int32" />
         </EntityType>
         <EntityType Name="Patient_PatientRequest_LastStatus">
           <Key>
@@ -2201,6 +2234,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="Int32" />
         </EntityType>
         <EntityType Name="PatientRequest_Analysis">
           <Key>
@@ -2246,6 +2280,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="Int32" />
         </EntityType>
         <EntityType Name="PatientRequest_Payment">
           <Key>
@@ -2277,6 +2312,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PaymentEmployeeID" Type="Int32" Nullable="false" />
           <Property Name="PaymentComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RequestNumber" Type="Int32" />
         </EntityType>
         <Association Name="FK_Analysis_SampleType">
           <End Type="DemoMisrIntModel.SampleType" Role="SampleType" Multiplicity="1">
@@ -2834,6 +2870,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="DemoMisrIntModel.Store.sp_upgraddiagrams" />
           <FunctionImportMapping FunctionImportName="GetAnalysisRunNumber" FunctionName="DemoMisrIntModel.Store.GetAnalysisRunNumber" />
           <FunctionImportMapping FunctionImportName="GetPatientRefID" FunctionName="DemoMisrIntModel.Store.GetPatientRefID" />
+          <FunctionImportMapping FunctionImportName="GetRequestNumber" FunctionName="DemoMisrIntModel.Store.GetRequestNumber" />
           <EntitySetMapping Name="Analyses">
             <EntityTypeMapping TypeName="DemoMisrIntModel.Analysis">
               <MappingFragment StoreEntitySet="Analysis">
@@ -3062,6 +3099,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <EntitySetMapping Name="PatientRequests">
             <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequest">
               <MappingFragment StoreEntitySet="PatientRequest">
+                <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
                 <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
                 <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
                 <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
@@ -3202,6 +3240,13 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="RequestNumbers">
+            <EntityTypeMapping TypeName="DemoMisrIntModel.RequestNumber">
+              <MappingFragment StoreEntitySet="RequestNumber">
+                <ScalarProperty Name="Request_Number" ColumnName="Request_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="RunNumbers">
             <EntityTypeMapping TypeName="DemoMisrIntModel.RunNumber">
               <MappingFragment StoreEntitySet="RunNumber">
@@ -3212,6 +3257,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <EntitySetMapping Name="Patient_PatientRequest">
             <EntityTypeMapping TypeName="DemoMisrIntModel.Patient_PatientRequest">
               <MappingFragment StoreEntitySet="Patient_PatientRequest">
+                <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
                 <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
                 <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
                 <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
@@ -3246,6 +3292,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <EntitySetMapping Name="Patient_PatientRequest_LastStatus">
             <EntityTypeMapping TypeName="DemoMisrIntModel.Patient_PatientRequest_LastStatus">
               <MappingFragment StoreEntitySet="Patient_PatientRequest_LastStatus">
+                <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
                 <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
                 <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
                 <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
@@ -3288,6 +3335,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <EntitySetMapping Name="PatientRequest_Analysis">
             <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequest_Analysis">
               <MappingFragment StoreEntitySet="PatientRequest_Analysis">
+                <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
                 <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
                 <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
                 <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
@@ -3320,6 +3368,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <EntitySetMapping Name="PatientRequest_Payment">
             <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequest_Payment">
               <MappingFragment StoreEntitySet="PatientRequest_Payment">
+                <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
                 <ScalarProperty Name="PaymentComment" ColumnName="PaymentComment" />
                 <ScalarProperty Name="PaymentEmployeeID" ColumnName="PaymentEmployeeID" />
                 <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />

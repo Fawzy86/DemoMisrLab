@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace DemoMisrInternationalLab.Controllers
 {
-    [AuthorizeRoles("CS")]
+    [AuthorizeRoles("All")]
     public class HomeController : Controller
     {
         public ActionResult Index()

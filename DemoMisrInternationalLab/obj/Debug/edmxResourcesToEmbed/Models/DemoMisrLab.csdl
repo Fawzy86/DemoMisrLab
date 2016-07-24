@@ -33,6 +33,7 @@
     <FunctionImport Name="sp_upgraddiagrams" />
     <FunctionImport Name="GetAnalysisRunNumber" ReturnType="Collection(Int32)" />
     <FunctionImport Name="GetPatientRefID" ReturnType="Collection(Int32)" />
+    <FunctionImport Name="GetRequestNumber" ReturnType="Collection(Int32)" />
     <EntitySet Name="Analyses" EntityType="DemoMisrIntModel.Analysis" />
     <EntitySet Name="AnalysisResults" EntityType="DemoMisrIntModel.AnalysisResult" />
     <EntitySet Name="AnalysisResultStatus" EntityType="DemoMisrIntModel.AnalysisResultStatu" />
@@ -66,6 +67,7 @@
     <EntitySet Name="Status" EntityType="DemoMisrIntModel.Status" />
     <EntitySet Name="Users" EntityType="DemoMisrIntModel.User" />
     <EntitySet Name="PatientRefIDs" EntityType="DemoMisrIntModel.PatientRefID" />
+    <EntitySet Name="RequestNumbers" EntityType="DemoMisrIntModel.RequestNumber" />
     <EntitySet Name="RunNumbers" EntityType="DemoMisrIntModel.RunNumber" />
     <EntitySet Name="Patient_PatientRequest" EntityType="DemoMisrIntModel.Patient_PatientRequest" />
     <EntitySet Name="Patient_PatientRequest_LastStatus" EntityType="DemoMisrIntModel.Patient_PatientRequest_LastStatus" />
@@ -529,6 +531,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="RequestNumber" Type="Int32" Nullable="false" />
     <NavigationProperty Name="DoctorRef" Relationship="DemoMisrIntModel.FK_PatientRequest_DoctorRef" FromRole="PatientRequest" ToRole="DoctorRef" />
     <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_PatientRequest_Employee" FromRole="PatientRequest" ToRole="Employee" />
     <NavigationProperty Name="Organization" Relationship="DemoMisrIntModel.FK_PatientRequest_Organization" FromRole="PatientRequest" ToRole="Organization" />
@@ -673,6 +676,12 @@
     </Key>
     <Property Name="LastPatientRefID" Type="Int32" Nullable="false" />
   </EntityType>
+  <EntityType Name="RequestNumber">
+    <Key>
+      <PropertyRef Name="Request_Number" />
+    </Key>
+    <Property Name="Request_Number" Type="Int32" Nullable="false" />
+  </EntityType>
   <EntityType Name="RunNumber">
     <Key>
       <PropertyRef Name="RunNum" />
@@ -718,6 +727,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="RequestNumber" Type="Int32" />
   </EntityType>
   <EntityType Name="Patient_PatientRequest_LastStatus">
     <Key>
@@ -772,6 +782,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="RequestNumber" Type="Int32" />
   </EntityType>
   <EntityType Name="PatientRequest_Analysis">
     <Key>
@@ -817,6 +828,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="RequestNumber" Type="Int32" />
   </EntityType>
   <EntityType Name="PatientRequest_Payment">
     <Key>
@@ -848,6 +860,7 @@
     <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="PaymentEmployeeID" Type="Int32" Nullable="false" />
     <Property Name="PaymentComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RequestNumber" Type="Int32" />
   </EntityType>
   <Association Name="FK_Analysis_SampleType">
     <End Type="DemoMisrIntModel.SampleType" Role="SampleType" Multiplicity="1">

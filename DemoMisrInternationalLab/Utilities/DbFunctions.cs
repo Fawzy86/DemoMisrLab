@@ -19,7 +19,7 @@ namespace DemoMisrInternationalLab.Utilities
         {
             using (DemoMisrIntEntities db = new DemoMisrIntEntities())
             {
-                User _User = db.Users.Where(u => u.UserName.ToLower().Trim() == LoginName.ToLower().Trim() 
+                User _User = db.Users.Where(u => u.UserName.ToLower().Trim() == LoginName.ToLower().Trim()
                                             && u.UserPassword.Trim() == Password.Trim()).SingleOrDefault();
                 return _User;
             }
@@ -30,7 +30,7 @@ namespace DemoMisrInternationalLab.Utilities
         /// <param name="LoginName"></param>
         /// <param name="RoleName"></param>
         /// <returns></returns>
-        public static bool IsUserInRole(string LoginName, string RoleName)
+        public static string GetUserRole(string LoginName)
         {
             using (DemoMisrIntEntities db = new DemoMisrIntEntities())
             {
@@ -41,14 +41,15 @@ namespace DemoMisrInternationalLab.Utilities
                                 join r in db.LOOKUPRoles on q.LOOKUPRoleID equals r.LOOKUPRoleID
                                 where r.RoleName.Equals(roleName) && q.SYSUserID.Equals(SU.SYSUserID)
                                 select r.RoleName;*/
-                    if (_User.Role.RoleName == RoleName)
+                    /*if (_User.Role.RoleName == RoleName)
                     {
                         return true;
-                    }
+                    }*/
+                    return _User.Role.RoleName != null ? _User.Role.RoleName.Trim() : null;
                 }
 
             }
-            return false;
+            return null;
         }
         /// <summary>
         /// ////////////////////////////////////
@@ -84,7 +85,7 @@ namespace DemoMisrInternationalLab.Utilities
             using (DemoMisrIntEntities db = new DemoMisrIntEntities())
             {
                 var DoctorsRef = (from s in db.DoctorRefs
-                              select s).ToList();
+                                  select s).ToList();
                 return DoctorsRef;
             }
         }
@@ -139,7 +140,7 @@ namespace DemoMisrInternationalLab.Utilities
             }
         }
 
-        public static decimal GetAnalyzesCost(string AnalyzesIDs,string PackageName)
+        public static decimal GetAnalyzesCost(string AnalyzesIDs, string PackageName)
         {
             using (DemoMisrIntEntities db = new DemoMisrIntEntities())
             {
@@ -171,7 +172,7 @@ namespace DemoMisrInternationalLab.Utilities
                 Analysis _analysis = null;
                 var SelectedAnalysis = (from p in db.Analyses
                                         where p.AnalysisID == AnalysisID
-                                       select p).SingleOrDefault();
+                                        select p).SingleOrDefault();
                 if (SelectedAnalysis != null)
                 {
                     _analysis = SelectedAnalysis;
@@ -551,6 +552,8 @@ namespace DemoMisrInternationalLab.Utilities
                     }
                 }
                 PatientRequest _PatientRequest = new PatientRequest();
+                int? RequestNumber = db.GetRequestNumber().FirstOrDefault();
+                _PatientRequest.RequestNumber = RequestNumber.Value;
                 _PatientRequest.Comment = PatientRequestInputs.Comment;
                 _PatientRequest.DoctorRefID = PatientRequestInputs.DoctorRefID;
                 _PatientRequest.EmployeeID = EmployeeID;
@@ -601,7 +604,7 @@ namespace DemoMisrInternationalLab.Utilities
                     _PatientRequestAnalysi.EmployeeID = EmployeeID;
                     _PatientRequestAnalysi.RequestDate = DateTime.Now;
                     _PatientRequestAnalysi.RequestID = _PatientRequest.RequestID;
-                    _PatientRequestAnalysi.RunNumber = RunNumber;
+                    _PatientRequestAnalysi.RunNumber = RunNumber.Value;
                     db.PatientRequestAnalysis.Add(_PatientRequestAnalysi);
                     db.SaveChanges();
                 }
@@ -621,12 +624,12 @@ namespace DemoMisrInternationalLab.Utilities
         }
 
 
-        public static List<Patient_Request_Status_Analysis_ViewModel> GetPendingPatientsRequest()
+        public static List<Patient_Request_Status_Analysis_ViewModel> GetPatientsRequestWithStatus(string RequestStatus)
         {
             using (DemoMisrIntEntities db = new DemoMisrIntEntities())
             {
                 var _PatientRequest_LastStatus = (from p in db.Patient_PatientRequest_LastStatus
-                                                  where p.StatusIdentifier == ResourceFiles.Status.PatientRequestPending
+                                                  where p.StatusIdentifier == RequestStatus
                                                   select p).ToList(); /// using paging
                 var PendingRequestIDs = _PatientRequest_LastStatus.Select(p => p.RequestID).ToList();
                 var _PatientRequest_Analysis = (from p in db.PatientRequest_Analysis
@@ -642,7 +645,7 @@ namespace DemoMisrInternationalLab.Utilities
             List<Patient_PatientRequest_LastStatus> _PatientRequest_LastStatus,
             List<PatientRequest_Analysis> _PatientRequest_Analysis)
         {
-            List<Patient_Request_Status_Analysis_ViewModel> PendingPatientsRequest = new List<Patient_Request_Status_Analysis_ViewModel>(); 
+            List<Patient_Request_Status_Analysis_ViewModel> PendingPatientsRequest = new List<Patient_Request_Status_Analysis_ViewModel>();
             if (_PatientRequest_LastStatus != null)
             {
                 foreach (var Request in _PatientRequest_LastStatus)
@@ -784,8 +787,8 @@ namespace DemoMisrInternationalLab.Utilities
             using (DemoMisrIntEntities db = new DemoMisrIntEntities())
             {
                 var PatientRequestPayments = (from p in db.PatientRequestPayments
-                                          where p.RequestID == RequestID
-                                          select p).ToList();
+                                              where p.RequestID == RequestID
+                                              select p).ToList();
                 return PatientRequestPayments;
             }
         }
@@ -864,26 +867,26 @@ namespace DemoMisrInternationalLab.Utilities
                 PatientsRequestTransactions = PatientsRequestTransactions.OrderByDescending(p => p.PatientRequestStatus.RequestDate).ThenBy(p => p.PriorityOrder).ToList();
                 return PatientsRequestTransactions;
             }
-        }       
+        }
         /// <summary>
         /// ///////////////////////////
         /// </summary>
         /// <returns></returns>
-        public static List<PatientRequestAnalysi> GetPendingAnalyzes()
+        public static List<PatientRequestAnalysi> GetRequestAnalyzesWithStatus(string StatusIdentifier)
         {
             using (DemoMisrIntEntities db = new DemoMisrIntEntities())
             {
-                List<PatientRequestAnalysi> PendingAnalyzes=new List<PatientRequestAnalysi>();
-                var _PendingAnalyzes = (from r in db.PatientRequestAnalysisStatus
-                                       group r by r.RequestedAnalysisID into G
-                                       from g in G
-                                       let MaxStatusID = G.Max(s => s.RequestAnalysisStatusID)
-                                       where g.RequestAnalysisStatusID == MaxStatusID
-                                       && g.Status.StatusIdentifier == ResourceFiles.Status.AnalysisPendingForSampling
-                                       select g.PatientRequestAnalysi);
-                foreach (var analysis in _PendingAnalyzes)
+                List<PatientRequestAnalysi> RequestAnalyzes = new List<PatientRequestAnalysi>();
+                var _RequestAnalyzes = (from r in db.PatientRequestAnalysisStatus
+                                        group r by r.RequestedAnalysisID into G
+                                        from g in G
+                                        let MaxStatusID = G.Max(s => s.RequestAnalysisStatusID)
+                                        where g.RequestAnalysisStatusID == MaxStatusID
+                                        && g.Status.StatusIdentifier == StatusIdentifier
+                                        select g.PatientRequestAnalysi);
+                foreach (var analysis in _RequestAnalyzes)
                 {
-                    PendingAnalyzes.Add(new PatientRequestAnalysi()
+                    RequestAnalyzes.Add(new PatientRequestAnalysi()
                                     {
                                         Analysis = analysis.Analysis,
                                         AnalysisID = analysis.AnalysisID,
@@ -893,44 +896,10 @@ namespace DemoMisrInternationalLab.Utilities
                                         PatientRequestAnalysisStatus = analysis.PatientRequestAnalysisStatus,
                                         RequestDate = analysis.RequestDate,
                                         RequestedAnalysisID = analysis.RequestedAnalysisID,
-                                        RequestID = analysis.RequestID
+                                        RequestID = analysis.RequestID,
                                     });
                 }
-                return PendingAnalyzes;
-            }
-        }
-        /// <summary>
-        /// //////////////////////////////////////
-        /// </summary>
-        /// <returns></returns>
-        public static List<PatientRequestAnalysi> GetSampledAnalyzes()
-        {
-            using (DemoMisrIntEntities db = new DemoMisrIntEntities())
-            {
-                List<PatientRequestAnalysi> SampledAnalyzes = new List<PatientRequestAnalysi>();
-                var _SampledAnalyzes = (from r in db.PatientRequestAnalysisStatus
-                                        group r by r.RequestedAnalysisID into G
-                                        from g in G
-                                        let MaxStatusID = G.Max(s => s.RequestAnalysisStatusID)
-                                        where g.RequestAnalysisStatusID == MaxStatusID
-                                        && g.Status.StatusIdentifier == ResourceFiles.Status.AnalysisSampled
-                                        select g.PatientRequestAnalysi);
-                foreach (var analysis in _SampledAnalyzes)
-                {
-                    SampledAnalyzes.Add(new PatientRequestAnalysi()
-                    {
-                        Analysis = analysis.Analysis,
-                        AnalysisID = analysis.AnalysisID,
-                        Employee = analysis.Employee,
-                        EmployeeID = analysis.EmployeeID,
-                        PatientRequest = analysis.PatientRequest,
-                        PatientRequestAnalysisStatus = analysis.PatientRequestAnalysisStatus,
-                        RequestDate = analysis.RequestDate,
-                        RequestedAnalysisID = analysis.RequestedAnalysisID,
-                        RequestID = analysis.RequestID
-                    });
-                }
-                return SampledAnalyzes;
+                return RequestAnalyzes;
             }
         }
         /// <summary>
@@ -938,42 +907,68 @@ namespace DemoMisrInternationalLab.Utilities
         /// </summary>
         /// <param name="RequestID"></param>
         /// <param name="ChemistEmployee"></param>
-        public static void ReceivePatientRequest(int RequestID, Employee ChemistEmployee)
+        public static void ReceivePatientRequest(List<int> RequestsIDs, string UserName)
         {
             using (DemoMisrIntEntities db = new DemoMisrIntEntities())
             {
-                var PatientRequest = db.PatientRequests.Where(r => r.RequestID == RequestID).FirstOrDefault();
-                if (PatientRequest != null)
+                if (RequestsIDs != null && RequestsIDs.Any())
                 {
-                    var PatientRequestReceivedStatus = db.Status.Where(s => s.StatusIdentifier == ResourceFiles.Status.PatientRequestReceived).FirstOrDefault();
-                    var AnalysisPendingForSamplingStatus = db.Status.Where(s => s.StatusIdentifier == ResourceFiles.Status.AnalysisPendingForSampling).FirstOrDefault();
-                    if (PatientRequestReceivedStatus != null && AnalysisPendingForSamplingStatus != null)
+                    int EmployeeID = 0;
+                    if (!String.IsNullOrWhiteSpace(UserName))
                     {
-                        //// add the received status for the patient request
-                        PatientRequestStatu RequestStatus = new PatientRequestStatu()
+                        var _User = db.Users.Where(u => u.UserName.Trim().ToLower() == UserName.Trim().ToLower()).SingleOrDefault();
+                        if (_User != null)
                         {
-                            EmployeeID = ChemistEmployee.EmployeeID,
-                            Comment = "Patient request is received by " + ChemistEmployee.FirstName + " " + ChemistEmployee.LastName,// employee name 
-                            RequestID = PatientRequest.RequestID,
-                            StatusDate = DateTime.Now,
-                            StatusID = PatientRequestReceivedStatus.StatusID
-                        };
-                        db.PatientRequestStatus.Add(RequestStatus);
-                        //// add the pending status for the requested analyzes
-                        var RequestedAnalyzes = db.PatientRequestAnalysis.Where(r => r.RequestID == PatientRequest.RequestID);
-                        foreach (var analysis in RequestedAnalyzes)
-                        {
-                            PatientRequestAnalysisStatu AnalysisStatus = new PatientRequestAnalysisStatu()
-                            {
-                                EmployeeID = ChemistEmployee.EmployeeID,
-                                Comment = "Patient requested analyzes is pending for sampling by " + ChemistEmployee.FirstName + " " + ChemistEmployee.LastName,// employee name 
-                                RequestedAnalysisID = analysis.RequestedAnalysisID,
-                                StatusDate = DateTime.Now,
-                                StatusID = AnalysisPendingForSamplingStatus.StatusID
-                            };
-                            db.PatientRequestAnalysisStatus.Add(AnalysisStatus);
+                            EmployeeID = _User.EmployeeID;
                         }
-                        db.SaveChanges();
+                    }
+                    if (EmployeeID == 0)
+                    {
+                        throw new Exception("There is no user with username: " + UserName);
+                    }
+                    foreach (var requestID in RequestsIDs)
+                    {
+                        try
+                        {
+                            var PatientRequest = db.PatientRequests.Where(r => r.RequestID == requestID).FirstOrDefault();
+                            if (PatientRequest != null)
+                            {
+                                var PatientRequestReceivedStatus = db.Status.Where(s => s.StatusIdentifier == ResourceFiles.Status.PatientRequestReceived).FirstOrDefault();
+                                var AnalysisPendingForSamplingStatus = db.Status.Where(s => s.StatusIdentifier == ResourceFiles.Status.AnalysisPendingForSampling).FirstOrDefault();
+                                if (PatientRequestReceivedStatus != null && AnalysisPendingForSamplingStatus != null)
+                                {
+                                    //// add the received status for the patient request
+                                    PatientRequestStatu RequestStatus = new PatientRequestStatu()
+                                    {
+                                        EmployeeID = EmployeeID,
+                                        //   Comment = "Patient request is received by " + EmployeeID.FirstName + " " + EmployeeID.LastName,// employee name 
+                                        RequestID = PatientRequest.RequestID,
+                                        StatusDate = DateTime.Now,
+                                        StatusID = PatientRequestReceivedStatus.StatusID
+                                    };
+                                    db.PatientRequestStatus.Add(RequestStatus);
+                                    //// add the pending status for the requested analyzes
+                                    var RequestedAnalyzes = db.PatientRequestAnalysis.Where(r => r.RequestID == PatientRequest.RequestID);
+                                    foreach (var analysis in RequestedAnalyzes)
+                                    {
+                                        PatientRequestAnalysisStatu AnalysisStatus = new PatientRequestAnalysisStatu()
+                                        {
+                                            EmployeeID = EmployeeID,
+                                            //     Comment = "Patient requested analyzes is pending for sampling by " + EmployeeID.FirstName + " " + EmployeeID.LastName,// employee name 
+                                            RequestedAnalysisID = analysis.RequestedAnalysisID,
+                                            StatusDate = DateTime.Now,
+                                            StatusID = AnalysisPendingForSamplingStatus.StatusID
+                                        };
+                                        db.PatientRequestAnalysisStatus.Add(AnalysisStatus);
+                                    }
+                                    db.SaveChanges();
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            continue;
+                        }
                     }
                 }
             }
@@ -983,32 +978,56 @@ namespace DemoMisrInternationalLab.Utilities
         /// </summary>
         /// <param name="RequestedAnalysisID"></param>
         /// <param name="ChemistEmployee"></param>
-        public static void SampleAnalysis(int RequestedAnalysisID, Employee ChemistEmployee)
+        public static void SampleRequestAnalyzes(List<int> RequestedAnalyzesIDs, string UserName)
         {
             using (DemoMisrIntEntities db = new DemoMisrIntEntities())
             {
-                var RequestedAnalsis = db.PatientRequestAnalysis.Where(r => r.RequestedAnalysisID == RequestedAnalysisID).FirstOrDefault();
-                if (RequestedAnalsis != null)
+                if (RequestedAnalyzesIDs != null && RequestedAnalyzesIDs.Any())
                 {
-                    var Status = db.Status.Where(s => s.StatusIdentifier == ResourceFiles.Status.AnalysisSampled).FirstOrDefault();
-                    if (Status != null)
+                    int EmployeeID = 0;
+                    if (!String.IsNullOrWhiteSpace(UserName))
                     {
-                        PatientRequestAnalysisStatu RequestedAnalysisStatus = new PatientRequestAnalysisStatu()
+                        var _User = db.Users.Where(u => u.UserName.Trim().ToLower() == UserName.Trim().ToLower()).SingleOrDefault();
+                        if (_User != null)
                         {
-                            EmployeeID = ChemistEmployee.EmployeeID,
-                            Comment = "Requested analysis is sampled by " + ChemistEmployee.FirstName + " " + ChemistEmployee.LastName,// employee name 
-                            RequestedAnalysisID = RequestedAnalsis.RequestedAnalysisID,
-                            StatusDate = DateTime.Now,
-                            StatusID = Status.StatusID
-                        };
-                        db.PatientRequestAnalysisStatus.Add(RequestedAnalysisStatus);
-                        db.SaveChanges();
+                            EmployeeID = _User.EmployeeID;
+                        }
+                    }
+                    if (EmployeeID == 0)
+                    {
+                        throw new Exception("There is no user with username: " + UserName);
+                    }
+                    foreach (var requestedAnalysisID in RequestedAnalyzesIDs)
+                    {
+                        try
+                        {
+                            var RequestedAnalsis = db.PatientRequestAnalysis.Where(r => r.RequestedAnalysisID == requestedAnalysisID).FirstOrDefault();
+                            if (RequestedAnalsis != null)
+                            {
+
+                                var Status = db.Status.Where(s => s.StatusIdentifier == ResourceFiles.Status.AnalysisSampled).FirstOrDefault();
+                                if (Status != null)
+                                {
+                                    PatientRequestAnalysisStatu RequestedAnalysisStatus = new PatientRequestAnalysisStatu()
+                                    {
+                                        EmployeeID = EmployeeID,
+                                        //   Comment = "Requested analysis is sampled by " + ChemistEmployee.FirstName + " " + ChemistEmployee.LastName,// employee name 
+                                        RequestedAnalysisID = RequestedAnalsis.RequestedAnalysisID,
+                                        StatusDate = DateTime.Now,
+                                        StatusID = Status.StatusID
+                                    };
+                                    db.PatientRequestAnalysisStatus.Add(RequestedAnalysisStatus);
+                                    db.SaveChanges();
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            continue;
+                        }
                     }
                 }
             }
         }
-
-       
-
     }
 }

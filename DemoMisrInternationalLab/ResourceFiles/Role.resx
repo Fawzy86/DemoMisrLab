@@ -133,4 +133,8 @@
     <value>DoctorApply</value>
     <comment>Manage analyzes results pagae</comment>
   </data>
+  <data name="Admin" xml:space="preserve">
+    <value>Admin</value>
+    <comment>The system admin</comment>
+  </data>
 </root>
