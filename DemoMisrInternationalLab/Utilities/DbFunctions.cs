@@ -872,34 +872,14 @@ namespace DemoMisrInternationalLab.Utilities
         /// ///////////////////////////
         /// </summary>
         /// <returns></returns>
-        public static List<PatientRequestAnalysi> GetRequestAnalyzesWithStatus(string StatusIdentifier)
+        public static List<PatientRequest_PatientRequestAnalysis_LastStatus> GetRequestAnalyzesWithStatus(string StatusIdentifier)
         {
             using (DemoMisrIntEntities db = new DemoMisrIntEntities())
             {
-                List<PatientRequestAnalysi> RequestAnalyzes = new List<PatientRequestAnalysi>();
-                var _RequestAnalyzes = (from r in db.PatientRequestAnalysisStatus
-                                        group r by r.RequestedAnalysisID into G
-                                        from g in G
-                                        let MaxStatusID = G.Max(s => s.RequestAnalysisStatusID)
-                                        where g.RequestAnalysisStatusID == MaxStatusID
-                                        && g.Status.StatusIdentifier == StatusIdentifier
-                                        select g.PatientRequestAnalysi);
-                foreach (var analysis in _RequestAnalyzes)
-                {
-                    RequestAnalyzes.Add(new PatientRequestAnalysi()
-                                    {
-                                        Analysis = analysis.Analysis,
-                                        AnalysisID = analysis.AnalysisID,
-                                        Employee = analysis.Employee,
-                                        EmployeeID = analysis.EmployeeID,
-                                        PatientRequest = analysis.PatientRequest,
-                                        PatientRequestAnalysisStatus = analysis.PatientRequestAnalysisStatus,
-                                        RequestDate = analysis.RequestDate,
-                                        RequestedAnalysisID = analysis.RequestedAnalysisID,
-                                        RequestID = analysis.RequestID,
-                                    });
-                }
-                return RequestAnalyzes;
+                var _RequestAnalyzes = (from r in db.PatientRequest_PatientRequestAnalysis_LastStatus
+                                        where r.StatusIdentifier == StatusIdentifier
+                                        select r).ToList();
+                return _RequestAnalyzes;
             }
         }
         /// <summary>
@@ -978,7 +958,7 @@ namespace DemoMisrInternationalLab.Utilities
         /// </summary>
         /// <param name="RequestedAnalysisID"></param>
         /// <param name="ChemistEmployee"></param>
-        public static void SampleRequestAnalyzes(List<int> RequestedAnalyzesIDs, string UserName)
+        public static void AddNewRequestAnalyzesStatus(List<int> RequestedAnalyzesIDs, string StatusIdentifier, string UserName)
         {
             using (DemoMisrIntEntities db = new DemoMisrIntEntities())
             {
@@ -1005,7 +985,7 @@ namespace DemoMisrInternationalLab.Utilities
                             if (RequestedAnalsis != null)
                             {
 
-                                var Status = db.Status.Where(s => s.StatusIdentifier == ResourceFiles.Status.AnalysisSampled).FirstOrDefault();
+                                var Status = db.Status.Where(s => s.StatusIdentifier == StatusIdentifier).FirstOrDefault();
                                 if (Status != null)
                                 {
                                     PatientRequestAnalysisStatu RequestedAnalysisStatus = new PatientRequestAnalysisStatu()

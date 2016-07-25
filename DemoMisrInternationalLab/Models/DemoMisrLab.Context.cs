@@ -65,6 +65,7 @@ namespace DemoMisrInternationalLab.Models
         public virtual DbSet<Patient_PatientRequest> Patient_PatientRequest { get; set; }
         public virtual DbSet<Patient_PatientRequest_LastStatus> Patient_PatientRequest_LastStatus { get; set; }
         public virtual DbSet<PatientRequest_Analysis> PatientRequest_Analysis { get; set; }
+        public virtual DbSet<PatientRequest_PatientRequestAnalysis_LastStatus> PatientRequest_PatientRequestAnalysis_LastStatus { get; set; }
         public virtual DbSet<PatientRequest_Payment> PatientRequest_Payment { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

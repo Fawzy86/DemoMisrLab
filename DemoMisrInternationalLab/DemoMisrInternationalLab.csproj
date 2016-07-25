@@ -282,6 +282,9 @@
     <Compile Include="Models\PatientRequest_Analysis.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PatientRequest_PatientRequestAnalysis_LastStatus.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PatientRequest_Payment.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
@@ -899,6 +902,9 @@
     <Content Include="Views\Chemist\_SampledAnalyzesAfterReceive.cshtml" />
     <Content Include="Views\Chemist\_Preservation.cshtml" />
     <Content Include="Views\Chemist\_SampledAnalyzesForPreservation.cshtml" />
+    <Content Include="Views\Chemist\_SaveSamples.cshtml" />
+    <Content Include="Views\Chemist\_TransferredSamples.cshtml" />
+    <Content Include="Views\Chemist\_Transaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

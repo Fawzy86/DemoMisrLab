@@ -1,30 +1,33 @@
 ﻿@model DemoMisrInternationalLab.Models.PatientRequestAnalysisViewModel
-@if (Model.PatientRequestAnalyzes != null)
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Sampled_Analyzes_ForPreservation_Form" }))
 {
-    for (int i = 0; i < Model.PatientRequestAnalyzes.Count; i++)
+     @Html.AntiForgeryToken()
+    if (Model.PatientRequestAnalyzes != null)
     {
-        @Html.HiddenFor(x => Model.PatientRequestAnalyzes[i].RequestedAnalysisID)
-        <div class="ck-button">
-            <label>
-                <input type="checkbox" name="SelectedRequestAnalyzesIDs"
-                       id="@Model.PatientRequestAnalyzes[i].RequestedAnalysisID"
-                       value="@Model.PatientRequestAnalyzes[i].RequestedAnalysisID"
-                       @{if (Model.SelectedRequestAnalyzesIDs.Contains(@Model.PatientRequestAnalyzes[i].RequestedAnalysisID)) { <text> checked='checked' </text>                   } } />
+        for (int i = 0; i < Model.PatientRequestAnalyzes.Count; i++)
+        {
+            @Html.HiddenFor(x => Model.PatientRequestAnalyzes[i].RequestedAnalysisID)
+            <div class="ck-button">
+                <label>
+                    <input type="checkbox" name="SelectedRequestAnalyzesIDs"
+                           id="@Model.PatientRequestAnalyzes[i].RequestedAnalysisID"
+                           value="@Model.PatientRequestAnalyzes[i].RequestedAnalysisID"
+                           @{if (Model.SelectedRequestAnalyzesIDs.Contains(@Model.PatientRequestAnalyzes[i].RequestedAnalysisID)) { <text> checked='checked' </text>                    } } />
 
-                <span>
+                    <span>
 
-                    <table width="100%">
+                        <table width="100%">
 
-                        <tr>
-                            <td width="8%">@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequest.RequestNumber)</td>
-                            <td width="82%">@Html.DisplayFor(x => Model.PatientRequestAnalyzes[i].Analysis.AnalysisName)</td>
-                            <td width="10%"></td>
-                        </tr>
+                            <tr>
+                                <td width="8%">@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].RequestNumber)</td>
+                                <td width="82%">@Html.DisplayFor(x => Model.PatientRequestAnalyzes[i].AnalysisName)</td>
+                                <td width="10%"></td>
+                            </tr>
 
-                    </table>
-                </span>
-            </label>
-        </div>
+                        </table>
+                    </span>
+                </label>
+            </div>
+        }
     }
 }
-

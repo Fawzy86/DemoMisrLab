@@ -72,6 +72,7 @@
     <EntitySet Name="Patient_PatientRequest" EntityType="DemoMisrIntModel.Patient_PatientRequest" />
     <EntitySet Name="Patient_PatientRequest_LastStatus" EntityType="DemoMisrIntModel.Patient_PatientRequest_LastStatus" />
     <EntitySet Name="PatientRequest_Analysis" EntityType="DemoMisrIntModel.PatientRequest_Analysis" />
+    <EntitySet Name="PatientRequest_PatientRequestAnalysis_LastStatus" EntityType="DemoMisrIntModel.PatientRequest_PatientRequestAnalysis_LastStatus" />
     <EntitySet Name="PatientRequest_Payment" EntityType="DemoMisrIntModel.PatientRequest_Payment" />
     <AssociationSet Name="FK_Analysis_SampleType" Association="DemoMisrIntModel.FK_Analysis_SampleType">
       <End Role="SampleType" EntitySet="SampleTypes" />
@@ -829,6 +830,62 @@
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="RequestNumber" Type="Int32" />
+  </EntityType>
+  <EntityType Name="PatientRequest_PatientRequestAnalysis_LastStatus">
+    <Key>
+      <PropertyRef Name="RequestID" />
+      <PropertyRef Name="AnalysisID" />
+      <PropertyRef Name="EmployeeID" />
+      <PropertyRef Name="StatusIdentifier" />
+      <PropertyRef Name="StatusName" />
+      <PropertyRef Name="StatusID" />
+      <PropertyRef Name="StatusDate" />
+      <PropertyRef Name="PatientRequestAnalysisStatusEmployeeId" />
+      <PropertyRef Name="RequestAnalysisStatusID" />
+      <PropertyRef Name="RequestedAnalysisID" />
+      <PropertyRef Name="AnalysisCode" />
+      <PropertyRef Name="AnalysisName" />
+      <PropertyRef Name="SampleTypeID" />
+      <PropertyRef Name="MinimumValue" />
+      <PropertyRef Name="MaximumValue" />
+      <PropertyRef Name="CostPrice" />
+      <PropertyRef Name="PatientID" />
+      <PropertyRef Name="RequestDate" />
+      <PropertyRef Name="RequestedRefID" />
+      <PropertyRef Name="RequestNumber" />
+    </Key>
+    <Property Name="RequestID" Type="Int32" Nullable="false" />
+    <Property Name="AnalysisID" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+    <Property Name="RunNumber" Type="Int32" />
+    <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="StatusID" Type="Int32" Nullable="false" />
+    <Property Name="StatusDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PatientRequestAnalysisStatusEmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="PatientRequestAnalysisStatusComment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="RequestAnalysisStatusID" Type="Int32" Nullable="false" />
+    <Property Name="RequestedAnalysisID" Type="Int32" Nullable="false" />
+    <Property Name="AnalysisCode" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="AnalysisName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NormalRange" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SampleTypeID" Type="Int32" Nullable="false" />
+    <Property Name="MinimumValue" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="MaximumValue" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="CostPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="PatientID" Type="Int32" Nullable="false" />
+    <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DoctorRefID" Type="Int32" />
+    <Property Name="Priority" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="OrganizationID" Type="Int32" />
+    <Property Name="RequestedRefID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AttachmentSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ExtraDiscount" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="RequestNumber" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="PatientRequest_Payment">
     <Key>

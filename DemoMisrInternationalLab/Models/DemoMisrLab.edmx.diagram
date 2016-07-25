@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="aee5537099984fc7921afd6f17e89bb5" Name="Diagram1">
-        <EntityTypeShape EntityType="DemoMisrIntModel.Analysis" Width="1.5" PointX="12.75" PointY="9" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.Analysis" Width="1.5" PointX="12.75" PointY="36" />
         <EntityTypeShape EntityType="DemoMisrIntModel.AnalysisResult" Width="1.5" PointX="9.75" PointY="31.75" />
         <EntityTypeShape EntityType="DemoMisrIntModel.AnalysisResultStatu" Width="1.5" PointX="12" PointY="26.625" />
         <EntityTypeShape EntityType="DemoMisrIntModel.CategoryType" Width="1.5" PointX="5.25" PointY="25.375" />
@@ -14,8 +14,8 @@
         <EntityTypeShape EntityType="DemoMisrIntModel.DoctorRef" Width="1.5" PointX="5.25" PointY="14.75" />
         <EntityTypeShape EntityType="DemoMisrIntModel.DoctorSpecialization" Width="1.5" PointX="3" PointY="12.5" />
         <EntityTypeShape EntityType="DemoMisrIntModel.Employee" Width="1.5" PointX="7.5" PointY="17.625" />
-        <EntityTypeShape EntityType="DemoMisrIntModel.Entity" Width="1.5" PointX="10.5" PointY="40.625" />
-        <EntityTypeShape EntityType="DemoMisrIntModel.EntityAction" Width="1.5" PointX="10.5" PointY="38" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.Entity" Width="1.5" PointX="13.5" PointY="6" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.EntityAction" Width="1.5" PointX="13.5" PointY="2.625" />
         <EntityTypeShape EntityType="DemoMisrIntModel.JobTitle" Width="1.5" PointX="5.25" PointY="22.375" />
         <EntityTypeShape EntityType="DemoMisrIntModel.LabBranch" Width="1.5" PointX="5.25" PointY="19" />
         <EntityTypeShape EntityType="DemoMisrIntModel.Organization" Width="1.5" PointX="9.75" PointY="22.625" />
@@ -23,19 +23,19 @@
         <EntityTypeShape EntityType="DemoMisrIntModel.OrganizationConsuming" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="DemoMisrIntModel.OrganizationInfo" Width="1.5" PointX="12" PointY="13.25" />
         <EntityTypeShape EntityType="DemoMisrIntModel.Package" Width="1.5" PointX="7.5" PointY="25" />
-        <EntityTypeShape EntityType="DemoMisrIntModel.PackageCostList" Width="1.5" PointX="18" PointY="14.125" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.PackageCostList" Width="1.5" PointX="15" PointY="31" />
         <EntityTypeShape EntityType="DemoMisrIntModel.Patient" Width="1.5" PointX="12.75" PointY="16.625" />
         <EntityTypeShape EntityType="DemoMisrIntModel.PatientRequest" Width="1.5" PointX="9.75" PointY="16.125" />
-        <EntityTypeShape EntityType="DemoMisrIntModel.PatientRequestAnalysi" Width="1.5" PointX="15" PointY="14" />
-        <EntityTypeShape EntityType="DemoMisrIntModel.PatientRequestAnalysisStatu" Width="1.5" PointX="17.25" PointY="17.125" />
-        <EntityTypeShape EntityType="DemoMisrIntModel.PatientRequestPayment" Width="1.5" PointX="15" PointY="18.25" />
-        <EntityTypeShape EntityType="DemoMisrIntModel.PatientRequestStatu" Width="1.5" PointX="15" PointY="22.125" />
-        <EntityTypeShape EntityType="DemoMisrIntModel.Permission" Width="1.5" PointX="12.75" PointY="35" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.PatientRequestAnalysi" Width="1.5" PointX="15" PointY="22" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.PatientRequestAnalysisStatu" Width="1.5" PointX="17.25" PointY="19.875" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.PatientRequestPayment" Width="1.5" PointX="15" PointY="14.25" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.PatientRequestStatu" Width="1.5" PointX="15" PointY="18.125" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.Permission" Width="1.5" PointX="15.75" PointY="10" />
         <EntityTypeShape EntityType="DemoMisrIntModel.Priority" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="DemoMisrIntModel.Province" Width="1.5" PointX="0.75" PointY="15.5" />
-        <EntityTypeShape EntityType="DemoMisrIntModel.Role" Width="1.5" PointX="10.5" PointY="35.125" />
-        <EntityTypeShape EntityType="DemoMisrIntModel.SampleType" Width="1.5" PointX="10.5" PointY="9.75" />
-        <EntityTypeShape EntityType="DemoMisrIntModel.Status" Width="1.5" PointX="15" PointY="10.25" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.Role" Width="1.5" PointX="10.5" PointY="10.125" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.SampleType" Width="1.5" PointX="10.5" PointY="36.75" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.Status" Width="1.5" PointX="12.75" PointY="9.375" />
         <EntityTypeShape EntityType="DemoMisrIntModel.User" Width="1.5" PointX="12.75" PointY="22.875" />
         <EntityTypeShape EntityType="DemoMisrIntModel.PatientRefID" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="DemoMisrIntModel.RequestNumber" Width="1.5" PointX="2.75" PointY="3.75" />
@@ -43,6 +43,7 @@
         <EntityTypeShape EntityType="DemoMisrIntModel.Patient_PatientRequest" Width="1.5" PointX="4.75" PointY="2.75" />
         <EntityTypeShape EntityType="DemoMisrIntModel.Patient_PatientRequest_LastStatus" Width="1.5" PointX="6.75" PointY="0.75" />
         <EntityTypeShape EntityType="DemoMisrIntModel.PatientRequest_Analysis" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DemoMisrIntModel.PatientRequest_PatientRequestAnalysis_LastStatus" Width="1.5" PointX="10.75" PointY="0.75" />
         <EntityTypeShape EntityType="DemoMisrIntModel.PatientRequest_Payment" Width="1.5" PointX="0.75" PointY="5.75" />
         <AssociationConnector Association="DemoMisrIntModel.FK_Analysis_SampleType" />
         <AssociationConnector Association="DemoMisrIntModel.FK_PackageCostList_Analysis" />

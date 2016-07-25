@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AnalysisMovedToLab" xml:space="preserve">
+    <value>AnalysisMovedToLab</value>
+    <comment>Analysis move to lab to analysis</comment>
+  </data>
   <data name="AnalysisPendingForSampling" xml:space="preserve">
     <value>AnalysisPendingForSampling</value>
     <comment>The analysis is pending until taking the sample for it</comment>
@@ -124,6 +128,14 @@
   <data name="AnalysisSampled" xml:space="preserve">
     <value>AnalysisSampled</value>
     <comment>The sample is taken for that analysis</comment>
+  </data>
+  <data name="AnalysisSaved" xml:space="preserve">
+    <value>AnalysisSaved</value>
+    <comment>Analysis save in bridge to take decistion later</comment>
+  </data>
+  <data name="AnalysisTransferred" xml:space="preserve">
+    <value>AnalysisTransferred</value>
+    <comment>Analysis transferred to another lab to analysis</comment>
   </data>
   <data name="PatientRequestPending" xml:space="preserve">
     <value>PatientRequestPending</value>

@@ -1,5 +1,6 @@
 ﻿<div class="row">
-    <div class="col-md-12">
+    <div id="Preservation_Samples_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
+    <div class="col-md-12" id="Preservation_Samples_Div">
 
         <div class="row">
 
@@ -14,330 +15,60 @@
 
                             </div>
 
-
                         </li>
                     </ul>
                 </div>
             </div>
 
             <div class="col-md-1 text-center">
-                <div class="cen-btnc"><a href="#" class="btn btn-primary btn-lgb btn-animate-demo"><i class="fa fa-angle-double-right"></i></a></div>
-                <div class="cen-btncc"><a href="#" class="btn btn-primary btn-lgb btn-animate-demo"><i class="fa fa-angle-double-right"></i></a></div>
-                <div class="cen-btnccc"><a href="#" class="btn btn-primary btn-lgb btn-animate-demo"><i class="fa fa-angle-double-right"></i></a></div>
+                <div class="cen-btnc">
+                    <a href="" class="btn btn-primary btn-lgb btn-animate-demo" id="Save_Samples_Link"><i class="fa fa-angle-double-right"></i></a>
+                </div>
+                <div class="cen-btncc">
+                    <a href="" class="btn btn-primary btn-lgb btn-animate-demo" id="Move_To_Lab_Samples_Link"><i class="fa fa-angle-double-right"></i></a>
+                </div>
+                <div class="cen-btnccc">
+                    <a href="" class="btn btn-primary btn-lgb btn-animate-demo" id="Transferred_Samples_Link"><i class="fa fa-angle-double-right"></i></a>
+                </div>
 
             </div>
+
+
+
 
             <div class="col-md-3">
 
                 <div id='external-events' class="sampling-heightd scrolll">
-                    <ul class="list-group text-center">
-                        <li>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-buttonb">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-buttonb">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-buttonb">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-buttonb">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-buttonb">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-buttonb">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                        </li>
-                    </ul>
+                    <div id="Save_Samples_Container">
+                        @{Html.RenderAction("GetSavedSampledRequestAnalyzes");}
+                    </div>
                 </div>
 
                 <div id='external-events' class="sampling-heightdd scrolll">
-                    <ul class="list-group text-center">
-                        <li>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-buttonb">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-buttonb">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-buttonb">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-buttonb">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-buttonb">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-buttonb">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-                        </li>
-                    </ul>
+                    <div id="Transferred_Samples_Container">
+                        @{Html.RenderAction("GetTransferredSampledRequestAnalyzes");}
+                    </div>
                 </div>
 
             </div>
 
 
             <div class="col-md-1 text-center">
-                <div class="cen-btnc"><a href="#" class="btn btn-primary btn-lgb btn-animate-demo"><i class="fa fa-angle-double-right"></i></a></div>
-                <div class="cen-btncccc"><a href="#" class="btn btn-primary btn-lgb btn-animate-demo"><i class="fa fa-angle-double-right"></i></a></div>
+                <div class="cen-btnc">
+                    <a href="#" class="btn btn-primary btn-lgb btn-animate-demo" id="Move_Saved_Samples_To_Lab_Link"><i class="fa fa-angle-double-right"></i></a>
+                </div>
+                <div class="cen-btncccc">
+                    <a href="#" class="btn btn-primary btn-lgb btn-animate-demo" id="Move_Transferrerd_Samples_To_Lab_Link"><i class="fa fa-angle-double-right"></i></a>
+                </div>
 
             </div>
 
 
             <div class="col-md-3">
                 <div id='external-events' class="sampling-heightc scrolll">
-                    <ul class="list-group text-center">
-                        <li>
-
-                            <div class="col-md-12">
-
-                                <div class="ck-button">
-                                    <label>
-                                        <input type="checkbox" value="1">
-                                        <span>red</span>
-                                    </label>
-                                </div>
-
-                            </div>
-
-
-                        </li>
-                    </ul>
+                    <div id="Lab_Samples_Container">
+                        @{Html.RenderAction("GetLabbedSampledRequestAnalyzes");}
+                    </div>
                 </div>
             </div>
 
@@ -348,3 +79,191 @@
     </div>
 
 </div>
+<script type="text/javascript">
+    $(document).ajaxStart(function () {
+        try {
+            $("#Preservation_Samples_Div").prop('disabled', true);
+            // $("#Receive_And_Sampling_Form").hide();
+            $("#Preservation_Samples_Loading").show();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    $(document).ajaxStop(function () {
+        try {
+            $("#Preservation_Samples_Div").prop('disabled', false);
+            // $("#Receive_And_Sampling_Form").show();
+            $("#Preservation_Samples_Loading").hide();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    ////////////////////////////////////////////////////////////////
+    $('#Save_Samples_Link').on('click', function (event) {
+        try {
+            event.preventDefault();
+            var form = $("#Sampled_Analyzes_ForPreservation_Form");
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "Post",
+                url: "/Chemist/SaveSelectedSampledRequestAnalyzes",
+                data: form.serialize(),
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        $("#Save_Samples_Container").html(data);
+                        GetSamplesAfterReceive();
+                        GetSamplesForPreservation();
+                    }
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                }
+            });
+        } catch (err) {
+            alert(err.message);
+        }
+    });
+    /////////////////////////////////////////////////////////////////////////////
+    $('#Move_To_Lab_Samples_Link').on('click', function (event) {
+        try {
+            event.preventDefault();
+            var form = $("#Sampled_Analyzes_ForPreservation_Form");
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "Post",
+                url: "/Chemist/MoveToLabSelectedSampledRequestAnalyzes",
+                data: form.serialize(),
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        $("#Lab_Samples_Container").html(data);
+                        GetSamplesAfterReceive();
+                        GetSamplesForPreservation();
+                    }
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                }
+            });
+        } catch (err) {
+            alert(err.message);
+        }
+    });
+    /////////////////////////////////////////////////////////////////////////////
+    $('#Transferred_Samples_Link').on('click', function (event) {
+        try {
+            event.preventDefault();
+            var form = $("#Sampled_Analyzes_ForPreservation_Form");
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "Post",
+                url: "/Chemist/TransferredSelectedSampledRequestAnalyzes",
+                data: form.serialize(),
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        $("#Transferred_Samples_Container").html(data);
+                        GetSamplesAfterReceive();
+                        GetSamplesForPreservation();
+                    }
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                }
+            });
+        } catch (err) {
+            alert(err.message);
+        }
+    });
+    /////////////////////////////////////////////////////////////////////////////
+    $('#Move_Saved_Samples_To_Lab_Link').on('click', function (event) {
+        try {
+            event.preventDefault();
+            var form = $("#Saved_Samples_Form");
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "Post",
+                url: "/Chemist/MoveToLabSelectedSampledRequestAnalyzes",
+                data: form.serialize(),
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        $("#Lab_Samples_Container").html(data);
+                        GetSavedSampledRequestAnalyzes();
+                    }
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                }
+            });
+        } catch (err) {
+            alert(err.message);
+        }
+    });
+    /////////////////////////////////////////////////////////////////////////////
+    $('#Move_Transferrerd_Samples_To_Lab_Link').on('click', function (event) {
+        try {
+            event.preventDefault();
+            var form = $("#Transferred_Samples_Form");
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "Post",
+                url: "/Chemist/MoveToLabSelectedSampledRequestAnalyzes",
+                data: form.serialize(),
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        $("#Lab_Samples_Container").html(data);
+                        GetTransferredSampledRequestAnalyzes();
+                    }
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                }
+            });
+        } catch (err) {
+            alert(err.message);
+        }
+    });
+    ///////////////////////////////////////////////////////////////////////////
+    function GetSavedSampledRequestAnalyzes() {
+        try {
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "Get",
+                url: "/Chemist/GetSavedSampledRequestAnalyzes",
+                success: function (data) {
+                    $("#Save_Samples_Container").html(data);
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err.message + " " + desc + " " + xhr.responseText);
+                }
+            });
+        } catch (err) {
+            alert(err.message);
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////
+    function GetTransferredSampledRequestAnalyzes() {
+        try {
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "Get",
+                url: "/Chemist/GetTransferredSampledRequestAnalyzes",
+                success: function (data) {
+                    $("#Transferred_Samples_Container").html(data);
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err.message + " " + desc + " " + xhr.responseText);
+                }
+            });
+        } catch (err) {
+            alert(err.message);
+        }
+    }
+</script>

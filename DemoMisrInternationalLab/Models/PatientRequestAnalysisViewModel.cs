@@ -9,10 +9,11 @@ namespace DemoMisrInternationalLab.Models
     {
         public PatientRequestAnalysisViewModel()
         {
-            PatientRequestAnalyzes = new List<PatientRequestAnalysi>();
+            PatientRequestAnalyzes = new List<PatientRequest_PatientRequestAnalysis_LastStatus>();
             SelectedRequestAnalyzesIDs = new List<int>();
         }
-        public List<PatientRequestAnalysi> PatientRequestAnalyzes { get; set; }
+
+        public List<PatientRequest_PatientRequestAnalysis_LastStatus> PatientRequestAnalyzes { get; set; }
         public List<int> SelectedRequestAnalyzesIDs { get; set; }
     }
 }

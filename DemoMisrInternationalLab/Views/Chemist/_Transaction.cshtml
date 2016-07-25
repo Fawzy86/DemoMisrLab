@@ -1,0 +1,34 @@
+﻿@model DemoMisrInternationalLab.Models.PatientRequestAnalysisViewModel
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Chemist_Transaction_Form" }))
+{
+    @Html.AntiForgeryToken()
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th width="10%">Request ID</th>
+                <th width="7%">Category</th>
+                <th>chemist Name</th>
+                <th>Status</th>
+                <th width="50%">Analysis</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.PatientRequestAnalyzes != null)
+            {
+                for (int i = 0; i < Model.PatientRequestAnalyzes.Count; i++)
+                {
+                    <tr>
+                        <td>@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].RequestedRefID) </td>
+                        <td><span class="label label-warning">@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].or)</span></td>
+                        <td>Amr Ali </td>
+                        <td>01008767899 </td>
+                        <td>H2so4,H2so4,H2so4 </td>
+                        <td>3/6/2016</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}

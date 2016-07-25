@@ -1,80 +1,72 @@
 ﻿<div class="row">
     <div id="ReceiveAndSampling_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
-    @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Receive_And_Sampling_Form" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="col-md-12">
-            <div class="col-md-4">
-                <div id='external-events' class="sampling-heightc scrolll">
-                    <ul class="list-group text-center">
-                        <li>
-                            <div class="col-md-12" id="Receive_PatientRequest_Container">
-                                @{Html.RenderAction("GetPendingPatientRequest");}
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-1 col-sm-1">
-                <div class="text-center">
-                    <div class="cen-btn">
-                        <div class="cen-btn" style="margin-top: 200px;">
-                            <a href="#" id="Receive_PatientRequest_Link" class="btn btn-primary btn-lgb btn-animate-demo"><i class="fa fa-angle-double-right"></i></a>
+    <div class="col-md-12" id="Receive_And_Sample_Div">
+        <div class="col-md-4">
+            <div id='external-events' class="sampling-heightc scrolll">
+                <ul class="list-group text-center">
+                    <li>
+                        <div class="col-md-12" id="Receive_PatientRequest_Container">
+                            @{Html.RenderAction("GetPendingPatientRequest");}
                         </div>
-                        @*<input type="submit" value="Receive" name="ReceiveActionLink"
-                            class="btn btn-primary btn-lgb btn-animate-demo" />*@
-                    </div>
-
-                </div>
+                    </li>
+                </ul>
             </div>
-            <div class="col-md-3">
-                <div id='external-events' class="sampling-heightc scrolll">
-                    <ul class="list-group text-center">
-                        <li>
-
-                            <div class="col-md-12" id="Receive_RequestedAnalyzes_Container">
-
-                                @{Html.RenderAction("GetPendingRequestAnalyzes");}
-
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-1">
-                <div class="text-center">
+        </div>
+        <div class="col-md-1 col-sm-1">
+            <div class="text-center">
+                <div class="cen-btn">
                     <div class="cen-btn" style="margin-top: 200px;">
-                        <a href="#" id="Receive_RequestedAnalyzes_Link" class="btn btn-primary btn-lgb btn-animate-demo"><i class="fa fa-angle-double-right"></i></a>
+                        <a href="" id="Receive_PatientRequest_Link" class="btn btn-primary btn-lgb btn-animate-demo"><i class="fa fa-angle-double-right"></i></a>
                     </div>
-                    @*<input type="submit" value="Sample" name="SampleActionLink"
-                        class="btn btn-primary btn-lgb btn-animate-demo" />*@
                 </div>
+
             </div>
+        </div>
+        <div class="col-md-3">
+            <div id='external-events' class="sampling-heightc scrolll">
+                <ul class="list-group text-center">
+                    <li>
 
+                        <div class="col-md-12" id="Receive_RequestedAnalyzes_Container">
 
-            <div class="col-md-3">
-                <div id='external-events' class="sampling-heightc scrolll">
-                    <ul class="list-group text-center">
-                        <li>
+                            @{Html.RenderAction("GetPendingRequestAnalyzes");}
 
-                            <div class="col-md-12" id="Sample_AfterReceive_Container">
-
-                                @{Html.RenderAction("GetSampledRequestAnalyzesAfterReceive");}
-
-                            </div>
-                        </li>
-                    </ul>
-
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="text-center">
+                <div class="cen-btn" style="margin-top: 200px;">
+                    <a href="" id="Receive_RequestedAnalyzes_Link" class="btn btn-primary btn-lgb btn-animate-demo"><i class="fa fa-angle-double-right"></i></a>
                 </div>
             </div>
         </div>
-    }
+
+
+        <div class="col-md-3">
+            <div id='external-events' class="sampling-heightc scrolll">
+                <ul class="list-group text-center">
+                    <li>
+
+                        <div class="col-md-12" id="Sample_AfterReceive_Container">
+
+                            @{Html.RenderAction("GetSampledRequestAnalyzesAfterReceive");}
+
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
     $(document).ajaxStart(function () {
         try {
-            $("#Receive_And_Sampling_Form").prop('disabled', true);
-            $("#Receive_And_Sampling_Form").hide();
+            $("#Receive_And_Sample_Div").prop('disabled', true);
+           // $("#Receive_And_Sampling_Form").hide();
             $("#ReceiveAndSampling_Loading").show();
         }
         catch (err) {
@@ -83,8 +75,8 @@
     });
     $(document).ajaxStop(function () {
         try {
-            $("#Receive_And_Sampling_Form").prop('disabled', true);
-            $("#Receive_And_Sampling_Form").show();
+            $("#Receive_And_Sample_Div").prop('disabled', false);
+           // $("#Receive_And_Sampling_Form").show();
             $("#ReceiveAndSampling_Loading").hide();
         }
         catch (err) {
@@ -92,30 +84,38 @@
         }
     });
     ////////////////////////////////////////////////////////////////
-    $('#Receive_PatientRequest_Link').on('click', function (event) {
-        event.preventDefault();
-        var form = $(this).closest("form");
-        $.ajax({
-            cache: false,
-            async: true,
-            type: "Post",
-            url: "/Chemist/ReceiveSelectedPatientsRequest",
-            data: form.serialize(),
-            success: function (data) {
-                if (data != null && data.length > 0) {
-                    $("#Receive_PatientRequest_Container").html(data);
-                    GetPendingRequestAnalyzes();
-                }
-            },
-            error: function (xhr, desc, err) {
-                alert("Error: " + err + " " + desc + " " + xhr.responseText);
+    $(function () {
+        $('#Receive_PatientRequest_Link').on('click', function (event) {
+            try {
+                event.preventDefault();
+                var form = $("#Receive_PatientRequest_ForSampling_Form");
+                $.ajax({
+                    cache: false,
+                    async: true,
+                    type: "Post",
+                    url: "/Chemist/ReceiveSelectedPatientsRequest",
+                    data: form.serialize(),
+                    success: function (data) {
+                        if (data != null && data.length > 0) {
+                            $("#Receive_PatientRequest_Container").html(data);
+                            GetPendingRequestAnalyzes();
+                        }
+                    },
+                    error: function (xhr, desc, err) {
+                        alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                    }
+                });
+            } catch (err) {
+                alert(err.message);
             }
         });
     });
     /////////////////////////////////////////////////////////////////////////////
     $('#Receive_RequestedAnalyzes_Link').on('click', function (event) {
+        try {
         event.preventDefault();
-        var form = $(this).closest("form");
+        // var form = $(this).closest("form");
+        var form = $("#Pending_Analyzes_ForSampling_Form");
         $.ajax({
             cache: false,
             async: true,
@@ -123,16 +123,17 @@
             url: "/Chemist/SampleSelectedRequestAnalyzes",
             data: form.serialize(),
             success: function (data) {
-                if (data != null && data.length > 0) {
-                    GetSamplesAfterReceive(data);
-                    GetSamplesForPreservation(data);
-                    GetPendingRequestAnalyzes();
-                }
+                GetSamplesAfterReceive();
+                GetSamplesForPreservation();
+                GetPendingRequestAnalyzes();
             },
             error: function (xhr, desc, err) {
                 alert("Error: " + err + " " + desc + " " + xhr.responseText);
             }
         });
+        } catch (err) {
+            alert(err.message);
+        }
     });
     ///////////////////////////////////////////////////////////////////////////
     function GetPendingRequestAnalyzes() {
@@ -154,13 +155,13 @@
         }
     }
     ///////////////////////////////////////////////////////////////////////////
-    function GetSamplesAfterReceive(samples) {
+    function GetSamplesAfterReceive() {
         try {
             $.ajax({
                 cache: false,
                 async: true,
                 type: "Get",
-                url: "/Chemist/GetSampledRequestAnalyzesAfterReceive?Analyzes=" + JSON.stringify(samples),
+                url: "/Chemist/GetSampledRequestAnalyzesAfterReceive",
                 success: function (data) {
                     $("#Sample_AfterReceive_Container").html(data);
                 },
@@ -173,13 +174,13 @@
         }
     }
     //////////////////////////////////////////////////////////////////
-    function GetSamplesForPreservation(samples) {
+    function GetSamplesForPreservation() {
         try {
             $.ajax({
                 cache: false,
                 async: true,
                 type: "Get",
-                url: "/Chemist/GetSampledRequestAnalyzesForPreservation?Analyzes=" + JSON.stringify(samples),
+                url: "/Chemist/GetSampledRequestAnalyzesForPreservation",
                 success: function (data) {
                     $("#Sample_ForPreservation_Container").html(data);
                 },

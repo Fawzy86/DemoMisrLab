@@ -1,36 +1,40 @@
 ﻿@model DemoMisrInternationalLab.Models.PatientsRequestsStatusViewModel
-@if (Model.PatientRequestStatusWithAnalyzes != null)
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Receive_PatientRequest_ForSampling_Form", @name = "Receive_PatientRequest_ForSampling_Form" }))
 {
-    for (int i = 0; i < Model.PatientRequestStatusWithAnalyzes.Count; i++)
+     @Html.AntiForgeryToken()
+    if (Model.PatientRequestStatusWithAnalyzes != null)
     {
-        @Html.HiddenFor(m => Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID)
-        <div class="ck-button">
-            <label>
+        for (int i = 0; i < Model.PatientRequestStatusWithAnalyzes.Count; i++)
+        {
+            @Html.HiddenFor(m => Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID)
+            <div class="ck-button">
+                <label>
 
-                <input type="checkbox" name="SelectedPatientsRequestIDs"
-                       id="@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID"
-                       value="@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID"
-                       @{if (Model.SelectedPatientsRequestIDs.Contains(@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID)) { <text> checked='checked' </text>             } } />
-                <span>
+                    <input type="checkbox" name="SelectedPatientsRequestIDs"
+                           id="@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID"
+                           value="@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID"
+                           @{if (Model.SelectedPatientsRequestIDs.Contains(@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID)) { <text> checked='checked' </text>              } } />
+                    <span>
 
-                    <table width="100%">
+                        <table width="100%">
 
-                        <tr>
-                            <td width="12%">@Html.DisplayTextFor(m => Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestNumber)</td>
-                            <td width="70%">@Html.DisplayFor(x => Model.PatientRequestStatusWithAnalyzes[i].PatientFullName)</td>
-                            <td width="10%">@Html.DisplayTextFor(m => Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalysis.Count)</td>
-                            <td width="8%"></td>
-                        </tr>
+                            <tr>
+                                <td width="12%">@Html.DisplayTextFor(m => Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestNumber)</td>
+                                <td width="70%">@Html.DisplayFor(x => Model.PatientRequestStatusWithAnalyzes[i].PatientFullName)</td>
+                                <td width="10%">@Html.DisplayTextFor(m => Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalysis.Count)</td>
+                                <td width="8%"></td>
+                            </tr>
 
-                    </table>
-
-
+                        </table>
 
 
-                </span>
 
-            </label>
-        </div>
 
+                    </span>
+
+                </label>
+            </div>
+
+        }
     }
 }

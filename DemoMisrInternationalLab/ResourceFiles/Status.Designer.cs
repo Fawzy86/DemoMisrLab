@@ -61,6 +61,15 @@ namespace DemoMisrInternationalLab.ResourceFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AnalysisMovedToLab.
+        /// </summary>
+        public static string AnalysisMovedToLab {
+            get {
+                return ResourceManager.GetString("AnalysisMovedToLab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AnalysisPendingForSampling.
         /// </summary>
         public static string AnalysisPendingForSampling {
@@ -75,6 +84,24 @@ namespace DemoMisrInternationalLab.ResourceFiles {
         public static string AnalysisSampled {
             get {
                 return ResourceManager.GetString("AnalysisSampled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AnalysisSaved.
+        /// </summary>
+        public static string AnalysisSaved {
+            get {
+                return ResourceManager.GetString("AnalysisSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AnalysisTransferred.
+        /// </summary>
+        public static string AnalysisTransferred {
+            get {
+                return ResourceManager.GetString("AnalysisTransferred", resourceCulture);
             }
         }
         
