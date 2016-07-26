@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DemoMisrInternationalLab.ResourceFiles {
+namespace DemoMisrInternationalLab.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace DemoMisrInternationalLab.ResourceFiles {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DemoMisrInternationalLab.ResourceFiles.Package", typeof(Package).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DemoMisrInternationalLab.Resources.Package", typeof(Package).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

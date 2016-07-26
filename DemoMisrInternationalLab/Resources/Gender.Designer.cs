@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DemoMisrInternationalLab.ResourceFiles {
+namespace DemoMisrInternationalLab.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace DemoMisrInternationalLab.ResourceFiles {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class CategoryType {
+    public class Gender {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal CategoryType() {
+        internal Gender() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DemoMisrInternationalLab.ResourceFiles {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DemoMisrInternationalLab.ResourceFiles.CategoryType", typeof(CategoryType).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DemoMisrInternationalLab.Resources.Gender", typeof(Gender).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,29 @@ namespace DemoMisrInternationalLab.ResourceFiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contract.
+        ///   Looks up a localized string similar to Baby.
         /// </summary>
-        public static string Contract {
+        public static string Baby {
             get {
-                return ResourceManager.GetString("Contract", resourceCulture);
+                return ResourceManager.GetString("Baby", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Individual.
+        ///   Looks up a localized string similar to Female.
         /// </summary>
-        public static string Individual {
+        public static string Female {
             get {
-                return ResourceManager.GetString("Individual", resourceCulture);
+                return ResourceManager.GetString("Female", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LabToLab.
+        ///   Looks up a localized string similar to Male.
         /// </summary>
-        public static string LabToLab {
+        public static string Male {
             get {
-                return ResourceManager.GetString("LabToLab", resourceCulture);
+                return ResourceManager.GetString("Male", resourceCulture);
             }
         }
     }

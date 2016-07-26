@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DemoMisrInternationalLab.ResourceFiles {
+namespace DemoMisrInternationalLab.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace DemoMisrInternationalLab.ResourceFiles {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Gender {
+    public class Status {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Gender() {
+        internal Status() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DemoMisrInternationalLab.ResourceFiles {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DemoMisrInternationalLab.ResourceFiles.Gender", typeof(Gender).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DemoMisrInternationalLab.Resources.Status", typeof(Status).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,65 @@ namespace DemoMisrInternationalLab.ResourceFiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Baby.
+        ///   Looks up a localized string similar to AnalysisMovedToLab.
         /// </summary>
-        public static string Baby {
+        public static string AnalysisMovedToLab {
             get {
-                return ResourceManager.GetString("Baby", resourceCulture);
+                return ResourceManager.GetString("AnalysisMovedToLab", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Female.
+        ///   Looks up a localized string similar to AnalysisPendingForSampling.
         /// </summary>
-        public static string Female {
+        public static string AnalysisPendingForSampling {
             get {
-                return ResourceManager.GetString("Female", resourceCulture);
+                return ResourceManager.GetString("AnalysisPendingForSampling", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Male.
+        ///   Looks up a localized string similar to AnalysisSampled.
         /// </summary>
-        public static string Male {
+        public static string AnalysisSampled {
             get {
-                return ResourceManager.GetString("Male", resourceCulture);
+                return ResourceManager.GetString("AnalysisSampled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AnalysisSaved.
+        /// </summary>
+        public static string AnalysisSaved {
+            get {
+                return ResourceManager.GetString("AnalysisSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AnalysisTransferred.
+        /// </summary>
+        public static string AnalysisTransferred {
+            get {
+                return ResourceManager.GetString("AnalysisTransferred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PatientRequestPending.
+        /// </summary>
+        public static string PatientRequestPending {
+            get {
+                return ResourceManager.GetString("PatientRequestPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PatientRequestReceivedForSampling.
+        /// </summary>
+        public static string PatientRequestReceived {
+            get {
+                return ResourceManager.GetString("PatientRequestReceived", resourceCulture);
             }
         }
     }

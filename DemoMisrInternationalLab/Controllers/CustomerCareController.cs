@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -24,28 +25,28 @@ namespace DemoMisrInternationalLab.Controllers
 
         public ActionResult loadPatientRequestIndividual()
         {
-            PatientRequestViewModel PatientRequest = GetPatientRequestView();
+            PatientRequestViewModel PatientRequest =  GetPatientRequestView();
             return PartialView("_PatientRequestIndividual", PatientRequest);
         }
 
         public ActionResult loadPatientRequestContract()
         {
-            PatientRequestViewModel PatientRequest = GetPatientRequestView();
-            PatientRequest.Organizations.OrganizationsList = DbFunctions.GetOrganizationsByCategoryType(ResourceFiles.CategoryType.Contract);
+            PatientRequestViewModel PatientRequest =  GetPatientRequestView();
+            PatientRequest.Organizations.OrganizationsList =  DbFunctions.GetOrganizationsByCategoryType(Resources.CategoryType.Contract);
             return PartialView("_PatientRequestContract", PatientRequest);
         }
 
         public ActionResult loadPatientRequestLabToLab()
         {
-            PatientRequestViewModel PatientRequest = GetPatientRequestView();
-            PatientRequest.Organizations.OrganizationsList = DbFunctions.GetOrganizationsByCategoryType(ResourceFiles.CategoryType.LabToLab);
+            PatientRequestViewModel PatientRequest =  GetPatientRequestView();
+            PatientRequest.Organizations.OrganizationsList =  DbFunctions.GetOrganizationsByCategoryType(Resources.CategoryType.LabToLab);
             return PartialView("_PatientRequestLabToLab", PatientRequest);
         }
 
         public ActionResult loadPatientRequestStatus()
         {
             PatientsRequestsStatusViewModel PatientRequestStatus = new PatientsRequestsStatusViewModel();
-            PatientRequestStatus.PatientRequestStatusWithAnalyzes = DbFunctions.GetPatientsRequestWithStatus(ResourceFiles.Status.PatientRequestPending);
+            PatientRequestStatus.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestWithStatus(Resources.Status.PatientRequestPending);
             return PartialView("_PatientRequestStatus", PatientRequestStatus);
         }
         
@@ -57,14 +58,14 @@ namespace DemoMisrInternationalLab.Controllers
 
         public ActionResult loadInvoices()
         {
-            PatientRequestViewModel PatientRequest = GetPatientRequestView();
+            PatientRequestViewModel PatientRequest =  GetPatientRequestView();
             return PartialView("_Invoices", PatientRequest);
         }
 
         public ActionResult loadReports()
         {
             PatientsRequestsStatusViewModel PatientRequestStatus = new PatientsRequestsStatusViewModel();
-            PatientRequestStatus.PatientRequestStatusWithAnalyzes = DbFunctions.GetPatientsRequestTransactions(null, new DateTime(1986, 1, 1), new DateTime(2020, 1, 1));
+            PatientRequestStatus.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestTransactions(null, new DateTime(1986, 1, 1), new DateTime(2020, 1, 1));
             return PartialView("_Reports", PatientRequestStatus);
         }
 
@@ -73,14 +74,11 @@ namespace DemoMisrInternationalLab.Controllers
         {
             PatientRequestViewModel PatientRequest = new PatientRequestViewModel();
             //// Get Provinces
-            var ProvincesList = DbFunctions.GetProvinces();
-            PatientRequest.PatientInfo.Provinces.ProvincesList = ProvincesList;
+            PatientRequest.PatientInfo.Provinces.ProvincesList =  DbFunctions.GetProvinces();
             //// Get DoctorsRef
-            var DoctorsRefList = GetDoctorsRef();
-            PatientRequest.DoctorsRef.DoctorsRefList = DoctorsRefList;
+            PatientRequest.DoctorsRef.DoctorsRefList =   DbFunctions.GetDoctorsRef();
             //// Get Analyzes
-            var AnalyzesList = DbFunctions.GetAnalyzes();
-            PatientRequest.Analyzes.AnalyzesList = AnalyzesList;
+            PatientRequest.Analyzes.AnalyzesList =  DbFunctions.GetAnalyzes();
             PatientRequest.AttachmentSession = Guid.NewGuid().ToString("N");
             return PatientRequest;
         }
@@ -89,10 +87,10 @@ namespace DemoMisrInternationalLab.Controllers
         private PatientInfoViewModel GetPatientInfo(int? patientID)
         {
             PatientInfoViewModel _Patient = new PatientInfoViewModel();
-            _Patient.Provinces.ProvincesList = DbFunctions.GetProvinces();
+            _Patient.Provinces.ProvincesList =  DbFunctions.GetProvinces();
             if (patientID != null && patientID != 0)
             {
-                var MatchedPatient = DbFunctions.GetPatient(patientID.Value);
+                var MatchedPatient =  DbFunctions.GetPatient(patientID.Value);
                 if (MatchedPatient != null)
                 {
                     _Patient.PatientID = MatchedPatient.PatientID;
@@ -131,7 +129,7 @@ namespace DemoMisrInternationalLab.Controllers
             {
                 if (model != null)
                 {
-                    _MatchingPatients = DbFunctions.GetPatients(model, true);
+                    _MatchingPatients =  DbFunctions.GetPatients(model, true);
                 }
                 if (_MatchingPatients == null || !_MatchingPatients.Any())
                 {
@@ -149,26 +147,22 @@ namespace DemoMisrInternationalLab.Controllers
             }
         }
 
-        public ActionResult GetCityView(int? stateProvinceID,string Container)
+        public ActionResult GetCityView(int? stateProvinceID, string Container)
         {
             CitiesViewModel Cities = new CitiesViewModel();
             if (stateProvinceID != null && stateProvinceID != 0)
             {
-                Cities.CitiesList = GetCities(stateProvinceID.Value);
+                Cities.CitiesList =  DbFunctions.GetCities(stateProvinceID.Value);
             }
             ViewBag.DivContainer = Container;
             return PartialView("_City", Cities);
         }
 
-        [NonAction]
-        private List<City> GetCities(int StateProvinceID)
-        {
-            return DbFunctions.GetCities(StateProvinceID);
-        }
+
         public ActionResult GetDoctorsRefPartial(int? DocrtorRefID)
         {
             DoctorsRefViewModel DoctorsRef = new DoctorsRefViewModel();
-            DoctorsRef.DoctorsRefList = GetDoctorsRef();
+            DoctorsRef.DoctorsRefList =  DbFunctions.GetDoctorsRef();
             DoctorsRef.SelectedDoctorRefID = DocrtorRefID;
             return PartialView("_DoctorRef", DoctorsRef);
         }
@@ -176,8 +170,8 @@ namespace DemoMisrInternationalLab.Controllers
         public ActionResult LoadDoctorRefAddPartial(string Category)
         {
             DoctorRefViewModel DoctorRef = new DoctorRefViewModel();
-            DoctorRef.DoctorsSpecializations.DoctorsSpecializationsList = DbFunctions.GetDoctorsSpecialization();
-            DoctorRef.Provinces.ProvincesList = DbFunctions.GetProvinces();
+            DoctorRef.DoctorsSpecializations.DoctorsSpecializationsList =  DbFunctions.GetDoctorsSpecialization();
+            DoctorRef.Provinces.ProvincesList =  DbFunctions.GetProvinces();
             ViewBag.Container = Category;
             return PartialView("_DoctorRefAdd", DoctorRef);
         }
@@ -189,8 +183,8 @@ namespace DemoMisrInternationalLab.Controllers
             if (ModelState.IsValid)
             {
                 model.SelectedCityID = form["SelectedCityID"];
-                int DocrtorRefID = DbFunctions.AddNewDoctorRef(model);
-                return GetDoctorsRefPartial(DocrtorRefID);
+                int DocrtorRefID =  DbFunctions.AddNewDoctorRef(model);
+                return  GetDoctorsRefPartial(DocrtorRefID);
             }
             else
             {
@@ -200,17 +194,12 @@ namespace DemoMisrInternationalLab.Controllers
             }
         }
 
-        [NonAction]
-        private List<DoctorRef> GetDoctorsRef()
-        {
-            return DbFunctions.GetDoctorsRef();
-        }
         public decimal GetAnalyzesCost(string analyzesIDs)
         {
             decimal TotalCost = 0;
             if (!String.IsNullOrWhiteSpace(analyzesIDs))
             {
-                TotalCost = DbFunctions.GetAnalyzesCost(analyzesIDs, ResourceFiles.Package.Individual);
+                TotalCost =  DbFunctions.GetAnalyzesCost(analyzesIDs, Resources.Package.Individual);
             }
             return TotalCost;
         }
@@ -266,45 +255,53 @@ namespace DemoMisrInternationalLab.Controllers
         {
             if (ModelState.IsValid)
             {
-                ViewBag.Container = Category;
-                if (!String.IsNullOrWhiteSpace(Category))
+                try
                 {
-                    if (Category != ResourceFiles.CategoryType.Individual && model.Organizations.SelectedOrganizationID == 0)
+                    ViewBag.Container = Category;
+                    if (!String.IsNullOrWhiteSpace(Category))
                     {
-                        ViewBag.ErrorMessage = "Please select your " + Category;
+                        if (Category != Resources.CategoryType.Individual && model.Organizations.SelectedOrganizationID == 0)
+                        {
+                            ViewBag.ErrorMessage = "Please select your " + Category;
+                            return PartialView("_Error", ViewBag.ErrorMessage);
+                        }
+                    }
+                    if (model.Analyzes.SelectedAnalyzesIDs == null || !model.Analyzes.SelectedAnalyzesIDs.Any())
+                    {
+                        ViewBag.ErrorMessage = "Please select analyzes first";
                         return PartialView("_Error", ViewBag.ErrorMessage);
                     }
-                }
-                if (model.Analyzes.SelectedAnalyzesIDs == null || !model.Analyzes.SelectedAnalyzesIDs.Any())
-                {
-                    ViewBag.ErrorMessage = "Please select analyzes first";
-                    return PartialView("_Error", ViewBag.ErrorMessage);
-                }
-                model.PatientInfo.SelectedCityID = form["SelectedCityID"];
-                if (model.DoctorsRef.SelectedDoctorRefID == null || model.DoctorsRef.SelectedDoctorRefID == 0)
-                {
-                    string SelectedDoctorRefID = form["SelectedDoctorRefID"];
-                    int DoctorRefID = 0;
-                    if (Int32.TryParse(SelectedDoctorRefID, out DoctorRefID))
+
+                    model.PatientInfo.SelectedCityID = form["SelectedCityID"];
+                    if (model.DoctorsRef.SelectedDoctorRefID == null || model.DoctorsRef.SelectedDoctorRefID == 0)
                     {
-                        model.DoctorsRef.SelectedDoctorRefID = DoctorRefID;
+                        string SelectedDoctorRefID = form["SelectedDoctorRefID"];
+                        int DoctorRefID = 0;
+                        if (Int32.TryParse(SelectedDoctorRefID, out DoctorRefID))
+                        {
+                            model.DoctorsRef.SelectedDoctorRefID = DoctorRefID;
+                        }
                     }
+
+                    List<PatientRequest> MatchedPatients = DbFunctions.GetMatchingPatients(model.PatientInfo);
+
+                    model.PatientInfo.PatientID = DbFunctions.AddNewPatient(model.PatientInfo, HttpContext.User.Identity.Name);
+                    AddPatientRequest(model, HttpContext.User.Identity.Name);
+                    MoveAttachments(model.AttachmentSession);
+
+                    if (MatchedPatients.Any())
+                    {
+                        model.MatchingPatients = MatchedPatients;
+
+                        return PartialView("_MatchingPatientsForRequest", model);
+                    }
+                    return PatientRequestSucceeded("Well done! Your request has been created successfully.", Category);
                 }
-
-                List<PatientRequest> MatchedPatients = DbFunctions.GetMatchingPatients(model.PatientInfo);
-
-                model.PatientInfo.PatientID = DbFunctions.AddNewPatient(model.PatientInfo, HttpContext.User.Identity.Name);
-                AddPatientRequest(model, HttpContext.User.Identity.Name);
-                MoveAttachments(model.AttachmentSession);
-
-                if (MatchedPatients.Any())
+                catch (Exception ex)
                 {
-                    model.MatchingPatients = MatchedPatients;
-                    
-                    return PartialView("_MatchingPatientsForRequest", model);
+                    ViewBag.ErrorMessage = ex.Message;
+                    return PartialView("_Error");
                 }
-                return PatientRequestSucceeded("Well done! Your request has been created successfully.", Category);
-
             }
             else
             {
@@ -327,8 +324,10 @@ namespace DemoMisrInternationalLab.Controllers
             PatientRequestInputs.Priority = model.RequestPriority;
             PatientRequestInputs.TotalOrganizationCost = 0;
             PatientRequestInputs.TotalPatientCost = model.TotalAfterCharges;
+            PatientRequestInputs.ExtraCost = model.ExtraCost;
+            PatientRequestInputs.ExtraDiscount = model.ExtraDiscount;
             PatientRequestInputs.AttachmentSession = model.AttachmentSession;
-            return DbFunctions.AddPatientRequest(PatientRequestInputs, UserName);
+            return  DbFunctions.AddPatientRequest(PatientRequestInputs, UserName);
         }
 
         [NonAction]
@@ -362,7 +361,7 @@ namespace DemoMisrInternationalLab.Controllers
             {
                 if (model != null && model.PatientInfo != null && model.PatientInfo.PatientID != 0)
                 {
-                    DbFunctions.UpdatePatientRefID(model.PatientInfo.PatientID, PatientRefID, HttpContext.User.Identity.Name);
+                     DbFunctions.UpdatePatientRefID(model.PatientInfo.PatientID, PatientRefID, HttpContext.User.Identity.Name);
                     return PatientRequestSucceeded("Well done! Your request has been created successfully, and assigned to an existing patient.", Category);
                 }
                 else
@@ -401,7 +400,7 @@ namespace DemoMisrInternationalLab.Controllers
                     }
                 }
             }
-            PatientRequestStatus.PatientRequestStatusWithAnalyzes = DbFunctions.GetPatientsRequestTransactions(SearchPattern, DateFrom, DateTo);
+            PatientRequestStatus.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestTransactions(SearchPattern, DateFrom, DateTo);
             return PartialView("_Transactions", PatientRequestStatus);
         }
 

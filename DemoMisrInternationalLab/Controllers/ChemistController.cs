@@ -4,6 +4,7 @@ using DemoMisrInternationalLab.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -22,21 +23,21 @@ namespace DemoMisrInternationalLab.Controllers
         public ActionResult GetPendingPatientRequest()
         {
             PatientsRequestsStatusViewModel PendingPatientRequest = new PatientsRequestsStatusViewModel();
-            PendingPatientRequest.PatientRequestStatusWithAnalyzes = DbFunctions.GetPatientsRequestWithStatus(ResourceFiles.Status.PatientRequestPending);
+            PendingPatientRequest.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestWithStatus(Resources.Status.PatientRequestPending);
             return PartialView("_ReceivePatientRequest", PendingPatientRequest);
         }
 
         public ActionResult GetPendingRequestAnalyzes()
         {
             PatientRequestAnalysisViewModel PendingRequestAnalyzes = new PatientRequestAnalysisViewModel();
-            PendingRequestAnalyzes.PatientRequestAnalyzes = DbFunctions.GetRequestAnalyzesWithStatus(ResourceFiles.Status.AnalysisPendingForSampling);
+            PendingRequestAnalyzes.PatientRequestAnalyzes =  DbFunctions.GetRequestAnalyzesWithStatus(Resources.Status.AnalysisPendingForSampling);
             return PartialView("_PendingAnalyzesForSampling", PendingRequestAnalyzes);
         }
 
         public ActionResult GetSampledRequestAnalyzesAfterReceive()
         {
             PatientRequestAnalysisViewModel SampledRequestAnalyzes = new PatientRequestAnalysisViewModel();
-            SampledRequestAnalyzes.PatientRequestAnalyzes = DbFunctions.GetRequestAnalyzesWithStatus(ResourceFiles.Status.AnalysisSampled);
+            SampledRequestAnalyzes.PatientRequestAnalyzes =  DbFunctions.GetRequestAnalyzesWithStatus(Resources.Status.AnalysisSampled);
             return PartialView("_SampledAnalyzesAfterReceive", SampledRequestAnalyzes);
         }
 
@@ -46,8 +47,8 @@ namespace DemoMisrInternationalLab.Controllers
         {
             if (model.SelectedPatientsRequestIDs != null && model.SelectedPatientsRequestIDs.Any())
             {
-                DbFunctions.ReceivePatientRequest(model.SelectedPatientsRequestIDs, HttpContext.User.Identity.Name);
-                return GetPendingPatientRequest();
+                 DbFunctions.ReceivePatientRequest(model.SelectedPatientsRequestIDs, HttpContext.User.Identity.Name);
+                return   GetPendingPatientRequest();
             }
             return null;
         }
@@ -60,8 +61,8 @@ namespace DemoMisrInternationalLab.Controllers
             if (model.SelectedRequestAnalyzesIDs != null && model.SelectedRequestAnalyzesIDs.Any())
             {
 
-                DbFunctions.AddNewRequestAnalyzesStatus(model.SelectedRequestAnalyzesIDs, ResourceFiles.Status.AnalysisSampled, HttpContext.User.Identity.Name);
-               // List<PatientRequestAnalysis_LastStatus> PatientRequestAnalyzes = DbFunctions.GetRequestAnalyzesWithStatus(ResourceFiles.Status.AnalysisSampled);
+                 DbFunctions.AddNewRequestAnalyzesStatus(model.SelectedRequestAnalyzesIDs, Resources.Status.AnalysisSampled, HttpContext.User.Identity.Name);
+               // List<PatientRequestAnalysis_LastStatus> PatientRequestAnalyzes = DbFunctions.GetRequestAnalyzesWithStatus(Resources.Status.AnalysisSampled);
                // return PatientRequestAnalyzes;
             }
             return null;
@@ -77,28 +78,28 @@ namespace DemoMisrInternationalLab.Controllers
         public ActionResult GetSampledRequestAnalyzesForPreservation()
         {
             PatientRequestAnalysisViewModel SampledRequestAnalyzes = new PatientRequestAnalysisViewModel();
-            SampledRequestAnalyzes.PatientRequestAnalyzes = DbFunctions.GetRequestAnalyzesWithStatus(ResourceFiles.Status.AnalysisSampled);
+            SampledRequestAnalyzes.PatientRequestAnalyzes =  DbFunctions.GetRequestAnalyzesWithStatus(Resources.Status.AnalysisSampled);
             return PartialView("_SampledAnalyzesForPreservation", SampledRequestAnalyzes);
         }
 
         public ActionResult GetSavedSampledRequestAnalyzes()
         {
             PatientRequestAnalysisViewModel SavedSampledRequestAnalyzes = new PatientRequestAnalysisViewModel();
-            SavedSampledRequestAnalyzes.PatientRequestAnalyzes = DbFunctions.GetRequestAnalyzesWithStatus(ResourceFiles.Status.AnalysisSaved);
+            SavedSampledRequestAnalyzes.PatientRequestAnalyzes =  DbFunctions.GetRequestAnalyzesWithStatus(Resources.Status.AnalysisSaved);
             return PartialView("_SaveSamples", SavedSampledRequestAnalyzes);
         }
 
         public ActionResult GetTransferredSampledRequestAnalyzes()
         {
             PatientRequestAnalysisViewModel TransferredSampledRequestAnalyzes = new PatientRequestAnalysisViewModel();
-            TransferredSampledRequestAnalyzes.PatientRequestAnalyzes = DbFunctions.GetRequestAnalyzesWithStatus(ResourceFiles.Status.AnalysisTransferred);
+            TransferredSampledRequestAnalyzes.PatientRequestAnalyzes =  DbFunctions.GetRequestAnalyzesWithStatus(Resources.Status.AnalysisTransferred);
             return PartialView("_TransferredSamples", TransferredSampledRequestAnalyzes);
         }
 
         public ActionResult GetLabbedSampledRequestAnalyzes()
         {
             PatientRequestAnalysisViewModel LabbedSampledRequestAnalyzes = new PatientRequestAnalysisViewModel();
-            LabbedSampledRequestAnalyzes.PatientRequestAnalyzes = DbFunctions.GetRequestAnalyzesWithStatus(ResourceFiles.Status.AnalysisMovedToLab);
+            LabbedSampledRequestAnalyzes.PatientRequestAnalyzes =  DbFunctions.GetRequestAnalyzesWithStatus(Resources.Status.AnalysisMovedToLab);
             return PartialView("_SampledAnalyzesAfterReceive", LabbedSampledRequestAnalyzes);
         }
 
@@ -110,8 +111,8 @@ namespace DemoMisrInternationalLab.Controllers
             if (model.SelectedRequestAnalyzesIDs != null && model.SelectedRequestAnalyzesIDs.Any())
             {
 
-                DbFunctions.AddNewRequestAnalyzesStatus(model.SelectedRequestAnalyzesIDs, ResourceFiles.Status.AnalysisSaved, HttpContext.User.Identity.Name);
-                return GetSavedSampledRequestAnalyzes();
+                 DbFunctions.AddNewRequestAnalyzesStatus(model.SelectedRequestAnalyzesIDs, Resources.Status.AnalysisSaved, HttpContext.User.Identity.Name);
+                return  GetSavedSampledRequestAnalyzes();
             }
             return null;
         }
@@ -124,8 +125,8 @@ namespace DemoMisrInternationalLab.Controllers
             if (model.SelectedRequestAnalyzesIDs != null && model.SelectedRequestAnalyzesIDs.Any())
             {
 
-                DbFunctions.AddNewRequestAnalyzesStatus(model.SelectedRequestAnalyzesIDs, ResourceFiles.Status.AnalysisTransferred, HttpContext.User.Identity.Name);
-                return GetTransferredSampledRequestAnalyzes();
+                 DbFunctions.AddNewRequestAnalyzesStatus(model.SelectedRequestAnalyzesIDs, Resources.Status.AnalysisTransferred, HttpContext.User.Identity.Name);
+                return  GetTransferredSampledRequestAnalyzes();
             }
             return null;
         }
@@ -138,10 +139,16 @@ namespace DemoMisrInternationalLab.Controllers
             if (model.SelectedRequestAnalyzesIDs != null && model.SelectedRequestAnalyzesIDs.Any())
             {
 
-                DbFunctions.AddNewRequestAnalyzesStatus(model.SelectedRequestAnalyzesIDs, ResourceFiles.Status.AnalysisMovedToLab, HttpContext.User.Identity.Name);
-                return GetLabbedSampledRequestAnalyzes();
+                 DbFunctions.AddNewRequestAnalyzesStatus(model.SelectedRequestAnalyzesIDs, Resources.Status.AnalysisMovedToLab, HttpContext.User.Identity.Name);
+                return  GetLabbedSampledRequestAnalyzes();
             }
             return null;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////
+        public ActionResult GetTransactions()
+        {
+            return PartialView("_Transaction");
         }
 	}
 }

@@ -14,7 +14,7 @@ namespace DemoMisrInternationalLab.Models
             MatchingPatients = new List<PatientRequest>();
             DoctorsRef = new DoctorsRefViewModel();
             Analyzes = new AnalyzesViewModel();
-            RequestPriority = ResourceFiles.Priority.Low;
+            RequestPriority = Resources.Priority.Low;
             Organizations = new OrganizationsViewModel();
         }
         public PatientInfoViewModel PatientInfo { get; set; }

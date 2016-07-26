@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DemoMisrInternationalLab.ResourceFiles {
+namespace DemoMisrInternationalLab.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace DemoMisrInternationalLab.ResourceFiles {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Role {
+    public class Priority {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Role() {
+        internal Priority() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DemoMisrInternationalLab.ResourceFiles {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DemoMisrInternationalLab.ResourceFiles.Role", typeof(Role).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DemoMisrInternationalLab.Resources.Priority", typeof(Priority).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,29 @@ namespace DemoMisrInternationalLab.ResourceFiles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Admin.
+        ///   Looks up a localized string similar to High.
         /// </summary>
-        public static string Admin {
+        public static string High {
             get {
-                return ResourceManager.GetString("Admin", resourceCulture);
+                return ResourceManager.GetString("High", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chemist.
+        ///   Looks up a localized string similar to Low.
         /// </summary>
-        public static string Chemist {
+        public static string Low {
             get {
-                return ResourceManager.GetString("Chemist", resourceCulture);
+                return ResourceManager.GetString("Low", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CS.
+        ///   Looks up a localized string similar to Medium.
         /// </summary>
-        public static string CS {
+        public static string Medium {
             get {
-                return ResourceManager.GetString("CS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DoctorAnalytic.
-        /// </summary>
-        public static string DoctorAnalytic {
-            get {
-                return ResourceManager.GetString("DoctorAnalytic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DoctorApply.
-        /// </summary>
-        public static string DoctorApply {
-            get {
-                return ResourceManager.GetString("DoctorApply", resourceCulture);
+                return ResourceManager.GetString("Medium", resourceCulture);
             }
         }
     }

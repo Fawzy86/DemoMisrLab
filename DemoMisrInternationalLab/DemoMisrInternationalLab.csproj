@@ -334,37 +334,37 @@
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceFiles\CategoryType.Designer.cs">
+    <Compile Include="Resources\CategoryType.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CategoryType.resx</DependentUpon>
     </Compile>
-    <Compile Include="ResourceFiles\Gender.Designer.cs">
+    <Compile Include="Resources\Gender.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Gender.resx</DependentUpon>
     </Compile>
-    <Compile Include="ResourceFiles\JobTitle.Designer.cs">
+    <Compile Include="Resources\JobTitle.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>JobTitle.resx</DependentUpon>
     </Compile>
-    <Compile Include="ResourceFiles\Package.Designer.cs">
+    <Compile Include="Resources\Package.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Package.resx</DependentUpon>
     </Compile>
-    <Compile Include="ResourceFiles\Priority.Designer.cs">
+    <Compile Include="Resources\Priority.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Priority.resx</DependentUpon>
     </Compile>
-    <Compile Include="ResourceFiles\Role.Designer.cs">
+    <Compile Include="Resources\Role.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Role.resx</DependentUpon>
     </Compile>
-    <Compile Include="ResourceFiles\Status.Designer.cs">
+    <Compile Include="Resources\Status.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Status.resx</DependentUpon>
@@ -920,31 +920,31 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ResourceFiles\CategoryType.resx">
+    <EmbeddedResource Include="Resources\CategoryType.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CategoryType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ResourceFiles\Gender.resx">
+    <EmbeddedResource Include="Resources\Gender.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Gender.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ResourceFiles\JobTitle.resx">
+    <EmbeddedResource Include="Resources\JobTitle.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>JobTitle.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ResourceFiles\Package.resx">
+    <EmbeddedResource Include="Resources\Package.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Package.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ResourceFiles\Priority.resx">
+    <EmbeddedResource Include="Resources\Priority.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Priority.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ResourceFiles\Role.resx">
+    <EmbeddedResource Include="Resources\Role.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Role.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ResourceFiles\Status.resx">
+    <EmbeddedResource Include="Resources\Status.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Status.Designer.cs</LastGenOutput>
     </EmbeddedResource>
