@@ -63,10 +63,14 @@ namespace DemoMisrInternationalLab.Models
         public virtual DbSet<RequestNumber> RequestNumbers { get; set; }
         public virtual DbSet<RunNumber> RunNumbers { get; set; }
         public virtual DbSet<Patient_PatientRequest> Patient_PatientRequest { get; set; }
+        public virtual DbSet<Patient_PatientRequest_AllStatuses> Patient_PatientRequest_AllStatuses { get; set; }
         public virtual DbSet<Patient_PatientRequest_LastStatus> Patient_PatientRequest_LastStatus { get; set; }
         public virtual DbSet<PatientRequest_Analysis> PatientRequest_Analysis { get; set; }
+        public virtual DbSet<PatientRequest_PatientRequestAnalysis_AllStatuses> PatientRequest_PatientRequestAnalysis_AllStatuses { get; set; }
         public virtual DbSet<PatientRequest_PatientRequestAnalysis_LastStatus> PatientRequest_PatientRequestAnalysis_LastStatus { get; set; }
         public virtual DbSet<PatientRequest_Payment> PatientRequest_Payment { get; set; }
+        public virtual DbSet<PatientRequestAnalysis_AllStatuses> PatientRequestAnalysis_AllStatuses { get; set; }
+        public virtual DbSet<PatientRequestAnalysis_LastStatus> PatientRequestAnalysis_LastStatus { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -184,6 +188,59 @@ namespace DemoMisrInternationalLab.Models
         public virtual ObjectResult<Nullable<int>> GetRequestNumber()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetRequestNumber");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> AddPatientRequest(Nullable<int> patientId, Nullable<int> doctorRefId, Nullable<int> organizationId, string comment, string priority, Nullable<decimal> paid, Nullable<decimal> totalOrganizationCost, Nullable<decimal> totalPatientCost, Nullable<decimal> extraDiscount, Nullable<decimal> extraCost, string attachmentSession, string analyzesIds)
+        {
+            var patientIdParameter = patientId.HasValue ?
+                new ObjectParameter("patientId", patientId) :
+                new ObjectParameter("patientId", typeof(int));
+    
+            var doctorRefIdParameter = doctorRefId.HasValue ?
+                new ObjectParameter("doctorRefId", doctorRefId) :
+                new ObjectParameter("doctorRefId", typeof(int));
+    
+            var organizationIdParameter = organizationId.HasValue ?
+                new ObjectParameter("organizationId", organizationId) :
+                new ObjectParameter("organizationId", typeof(int));
+    
+            var commentParameter = comment != null ?
+                new ObjectParameter("comment", comment) :
+                new ObjectParameter("comment", typeof(string));
+    
+            var priorityParameter = priority != null ?
+                new ObjectParameter("priority", priority) :
+                new ObjectParameter("priority", typeof(string));
+    
+            var paidParameter = paid.HasValue ?
+                new ObjectParameter("paid", paid) :
+                new ObjectParameter("paid", typeof(decimal));
+    
+            var totalOrganizationCostParameter = totalOrganizationCost.HasValue ?
+                new ObjectParameter("totalOrganizationCost", totalOrganizationCost) :
+                new ObjectParameter("totalOrganizationCost", typeof(decimal));
+    
+            var totalPatientCostParameter = totalPatientCost.HasValue ?
+                new ObjectParameter("totalPatientCost", totalPatientCost) :
+                new ObjectParameter("totalPatientCost", typeof(decimal));
+    
+            var extraDiscountParameter = extraDiscount.HasValue ?
+                new ObjectParameter("extraDiscount", extraDiscount) :
+                new ObjectParameter("extraDiscount", typeof(decimal));
+    
+            var extraCostParameter = extraCost.HasValue ?
+                new ObjectParameter("extraCost", extraCost) :
+                new ObjectParameter("extraCost", typeof(decimal));
+    
+            var attachmentSessionParameter = attachmentSession != null ?
+                new ObjectParameter("attachmentSession", attachmentSession) :
+                new ObjectParameter("attachmentSession", typeof(string));
+    
+            var analyzesIdsParameter = analyzesIds != null ?
+                new ObjectParameter("analyzesIds", analyzesIds) :
+                new ObjectParameter("analyzesIds", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("AddPatientRequest", patientIdParameter, doctorRefIdParameter, organizationIdParameter, commentParameter, priorityParameter, paidParameter, totalOrganizationCostParameter, totalPatientCostParameter, extraDiscountParameter, extraCostParameter, attachmentSessionParameter, analyzesIdsParameter);
         }
     }
 }

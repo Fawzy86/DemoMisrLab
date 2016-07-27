@@ -24,7 +24,7 @@ namespace DemoMisrInternationalLab.Models
         public int AnalysisID { get; set; }
         public System.DateTime RequestDate { get; set; }
         public int EmployeeID { get; set; }
-        public Nullable<int> RunNumber { get; set; }
+        public string RunNumber { get; set; }
     
         public virtual Analysis Analysis { get; set; }
         public virtual Employee Employee { get; set; }

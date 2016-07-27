@@ -270,6 +270,12 @@
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PatientRequestAnalysisViewModel.cs" />
+    <Compile Include="Models\PatientRequestAnalysis_AllStatuses.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PatientRequestAnalysis_LastStatus.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PatientRequestInputsDataModel.cs" />
     <Compile Include="Models\PatientRequestPayment.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
@@ -282,14 +288,21 @@
     <Compile Include="Models\PatientRequest_Analysis.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PatientRequest_Analysis_Status_ViewModel.cs" />
+    <Compile Include="Models\PatientRequest_PatientRequestAnalysis_AllStatuses.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PatientRequest_PatientRequestAnalysis_LastStatus.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PatientRequest_Payment.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PatientsRequestsStatusViewModel.cs" />
+    <Compile Include="Models\PatientsRequestsAllViewModel.cs" />
     <Compile Include="Models\Patient_PatientRequest.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Patient_PatientRequest_AllStatuses.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Patient_PatientRequest_LastStatus.cs">
@@ -308,7 +321,6 @@
     </Compile>
     <Compile Include="Models\AnalyzesViewModel.cs" />
     <Compile Include="Models\ProvincesViewModel.cs" />
-    <Compile Include="Models\ReceiveAndSamplingViewModel.cs" />
     <Compile Include="Models\RequestNumber.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
@@ -905,6 +917,7 @@
     <Content Include="Views\Chemist\_SaveSamples.cshtml" />
     <Content Include="Views\Chemist\_TransferredSamples.cshtml" />
     <Content Include="Views\Chemist\_Transaction.cshtml" />
+    <Content Include="Views\Chemist\_ChemistTransactions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -22,7 +22,7 @@ namespace DemoMisrInternationalLab.Controllers
 
         public ActionResult GetPendingPatientRequest()
         {
-            PatientsRequestsStatusViewModel PendingPatientRequest = new PatientsRequestsStatusViewModel();
+            PatientsRequestsAllViewModel PendingPatientRequest = new PatientsRequestsAllViewModel();
             PendingPatientRequest.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestWithStatus(Resources.Status.PatientRequestPending);
             return PartialView("_ReceivePatientRequest", PendingPatientRequest);
         }
@@ -43,7 +43,7 @@ namespace DemoMisrInternationalLab.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ReceiveSelectedPatientsRequest(FormCollection form, PatientsRequestsStatusViewModel model)
+        public ActionResult ReceiveSelectedPatientsRequest(FormCollection form, PatientsRequestsAllViewModel model)
         {
             if (model.SelectedPatientsRequestIDs != null && model.SelectedPatientsRequestIDs.Any())
             {
@@ -146,9 +146,25 @@ namespace DemoMisrInternationalLab.Controllers
         }
 
         /////////////////////////////////////////////////////////////////////////////////
-        public ActionResult GetTransactions()
+        public ActionResult LoadTransactions(string SearchPattern, string DateRange)
         {
-            return PartialView("_Transaction");
+            PatientsRequestsAllViewModel PatientRequestStatus = new PatientsRequestsAllViewModel();
+            DateTime DateFrom = DateTime.Now.Date;
+            DateTime DateTo = DateTime.Now.AddDays(1).Date;
+            if (!String.IsNullOrWhiteSpace(DateRange))
+            {
+                string[] DateRangeArray = DateRange.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+                DateTime.TryParse(DateRangeArray[0], out DateFrom);
+                if (DateRangeArray.Length > 1)
+                {
+                    if (DateTime.TryParse(DateRangeArray[1], out DateTo))
+                    {
+                        DateTo = DateTo.AddDays(1).Date;
+                    }
+                }
+            }
+            PatientRequestStatus.PatientRequestStatusWithAnalyzes = DbFunctions.GetPatientsRequestTransactionsForChemist(SearchPattern, DateFrom, DateTo);
+            return PartialView("_Transaction", PatientRequestStatus);
         }
 	}
 }

@@ -249,7 +249,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRefID' does not have a prim
           <Property Name="AnalysisID" Type="int" Nullable="false" />
           <Property Name="RequestDate" Type="datetime" Nullable="false" />
           <Property Name="EmployeeID" Type="int" Nullable="false" />
-          <Property Name="RunNumber" Type="int" />
+          <Property Name="RunNumber" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="PatientRequestAnalysisStatus">
           <Key>
@@ -374,6 +374,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest' does not h
             <PropertyRef Name="EmployeeID" />
             <PropertyRef Name="RequestedRefID" />
             <PropertyRef Name="PatientID" />
+            <PropertyRef Name="RequestNumber" />
           </Key>
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
@@ -403,11 +404,11 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest' does not h
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="int" />
+          <Property Name="RequestNumber" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_LastStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Patient_PatientRequest_LastStatus">
+warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_AllStatuses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Patient_PatientRequest_AllStatuses">
           <Key>
             <PropertyRef Name="RequestDate" />
             <PropertyRef Name="PatientRequestEmployeeID" />
@@ -423,6 +424,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_LastStatus'
             <PropertyRef Name="FirstName" />
             <PropertyRef Name="ReferenceID" />
             <PropertyRef Name="RegisteredDate" />
+            <PropertyRef Name="RequestNumber" />
           </Key>
           <Property Name="RequestDate" Type="datetime" Nullable="false" />
           <Property Name="PatientRequestEmployeeID" Type="int" Nullable="false" />
@@ -460,7 +462,65 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_LastStatus'
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="int" />
+          <Property Name="RequestNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_LastStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Patient_PatientRequest_LastStatus">
+          <Key>
+            <PropertyRef Name="RequestDate" />
+            <PropertyRef Name="PatientRequestEmployeeID" />
+            <PropertyRef Name="RequestedRefID" />
+            <PropertyRef Name="RequestStatusID" />
+            <PropertyRef Name="RequestID" />
+            <PropertyRef Name="StatusDate" />
+            <PropertyRef Name="PatientRequestStatusEmployeeID" />
+            <PropertyRef Name="StatusIdentifier" />
+            <PropertyRef Name="StatusName" />
+            <PropertyRef Name="PatientRequestStatusID" />
+            <PropertyRef Name="PatientID" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="ReferenceID" />
+            <PropertyRef Name="RegisteredDate" />
+            <PropertyRef Name="RequestNumber" />
+          </Key>
+          <Property Name="RequestDate" Type="datetime" Nullable="false" />
+          <Property Name="PatientRequestEmployeeID" Type="int" Nullable="false" />
+          <Property Name="PatientRequestComment" Type="nvarchar" MaxLength="255" />
+          <Property Name="DoctorRefID" Type="int" />
+          <Property Name="Priority" Type="varchar" MaxLength="10" />
+          <Property Name="OrganizationID" Type="int" />
+          <Property Name="RequestedRefID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="AttachmentSession" Type="varchar" MaxLength="50" />
+          <Property Name="RequestStatusID" Type="int" Nullable="false" />
+          <Property Name="RequestID" Type="int" Nullable="false" />
+          <Property Name="StatusDate" Type="datetime" Nullable="false" />
+          <Property Name="PatientRequestStatusEmployeeID" Type="int" Nullable="false" />
+          <Property Name="PatientRequestStatusComment" Type="varchar" MaxLength="255" />
+          <Property Name="StatusIdentifier" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="PatientRequestStatusID" Type="int" Nullable="false" />
+          <Property Name="PatientID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="CityID" Type="int" />
+          <Property Name="NationalID" Type="nchar" MaxLength="16" />
+          <Property Name="BirthDate" Type="datetime" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReferenceID" Type="int" Nullable="false" />
+          <Property Name="RegisteredDate" Type="datetime" Nullable="false" />
+          <Property Name="LastDataModified" Type="datetime" />
+          <Property Name="ExtraDiscount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -475,12 +535,14 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not 
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="AnalysisRequestDate" />
             <PropertyRef Name="RequestAnalysisEmployeeID" />
+            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="AnalysisCode" />
             <PropertyRef Name="AnalysisName" />
             <PropertyRef Name="SampleTypeID" />
             <PropertyRef Name="MinimumValue" />
             <PropertyRef Name="MaximumValue" />
             <PropertyRef Name="CostPrice" />
+            <PropertyRef Name="RequestNumber" />
           </Key>
           <Property Name="RequestDate" Type="datetime" Nullable="false" />
           <Property Name="PatientID" Type="int" Nullable="false" />
@@ -496,7 +558,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not 
           <Property Name="AnalysisID" Type="int" Nullable="false" />
           <Property Name="AnalysisRequestDate" Type="datetime" Nullable="false" />
           <Property Name="RequestAnalysisEmployeeID" Type="int" Nullable="false" />
-          <Property Name="RunNumber" Type="int" />
+          <Property Name="RunNumber" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="AnalysisCode" Type="nchar" MaxLength="20" Nullable="false" />
           <Property Name="AnalysisName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="NormalRange" Type="nvarchar" MaxLength="50" />
@@ -508,15 +570,17 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not 
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="int" />
+          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="SampleType" Type="nchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_PatientRequestAnalysis_LastStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="PatientRequest_PatientRequestAnalysis_LastStatus">
+warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_PatientRequestAnalysis_AllStatuses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PatientRequest_PatientRequestAnalysis_AllStatuses">
           <Key>
             <PropertyRef Name="RequestID" />
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="StatusIdentifier" />
             <PropertyRef Name="StatusName" />
             <PropertyRef Name="StatusID" />
@@ -538,7 +602,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_PatientRequestAnaly
           <Property Name="RequestID" Type="int" Nullable="false" />
           <Property Name="AnalysisID" Type="int" Nullable="false" />
           <Property Name="EmployeeID" Type="int" Nullable="false" />
-          <Property Name="RunNumber" Type="int" />
+          <Property Name="RunNumber" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="StatusIdentifier" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
@@ -567,6 +631,67 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_PatientRequestAnaly
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="SampleType" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_PatientRequestAnalysis_LastStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PatientRequest_PatientRequestAnalysis_LastStatus">
+          <Key>
+            <PropertyRef Name="RequestID" />
+            <PropertyRef Name="AnalysisID" />
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="RunNumber" />
+            <PropertyRef Name="StatusIdentifier" />
+            <PropertyRef Name="StatusName" />
+            <PropertyRef Name="StatusID" />
+            <PropertyRef Name="StatusDate" />
+            <PropertyRef Name="PatientRequestAnalysisStatusEmployeeId" />
+            <PropertyRef Name="RequestAnalysisStatusID" />
+            <PropertyRef Name="RequestedAnalysisID" />
+            <PropertyRef Name="AnalysisCode" />
+            <PropertyRef Name="AnalysisName" />
+            <PropertyRef Name="SampleTypeID" />
+            <PropertyRef Name="MinimumValue" />
+            <PropertyRef Name="MaximumValue" />
+            <PropertyRef Name="CostPrice" />
+            <PropertyRef Name="PatientID" />
+            <PropertyRef Name="RequestDate" />
+            <PropertyRef Name="RequestedRefID" />
+            <PropertyRef Name="RequestNumber" />
+          </Key>
+          <Property Name="RequestID" Type="int" Nullable="false" />
+          <Property Name="AnalysisID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="RunNumber" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="StatusIdentifier" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="StatusDate" Type="datetime" Nullable="false" />
+          <Property Name="PatientRequestAnalysisStatusEmployeeId" Type="int" Nullable="false" />
+          <Property Name="PatientRequestAnalysisStatusComment" Type="nvarchar" MaxLength="255" />
+          <Property Name="RequestAnalysisStatusID" Type="int" Nullable="false" />
+          <Property Name="RequestedAnalysisID" Type="int" Nullable="false" />
+          <Property Name="AnalysisCode" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="AnalysisName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NormalRange" Type="nvarchar" MaxLength="50" />
+          <Property Name="SampleTypeID" Type="int" Nullable="false" />
+          <Property Name="MinimumValue" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="MaximumValue" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CostPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PatientID" Type="int" Nullable="false" />
+          <Property Name="RequestDate" Type="datetime" Nullable="false" />
+          <Property Name="DoctorRefID" Type="int" />
+          <Property Name="Priority" Type="varchar" MaxLength="10" />
+          <Property Name="OrganizationID" Type="int" />
+          <Property Name="RequestedRefID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="AttachmentSession" Type="varchar" MaxLength="50" />
+          <Property Name="ExtraDiscount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="SampleType" Type="nchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -601,6 +726,126 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="PaymentEmployeeID" Type="int" Nullable="false" />
           <Property Name="PaymentComment" Type="text" />
           <Property Name="RequestNumber" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_AllStatuses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PatientRequestAnalysis_AllStatuses">
+          <Key>
+            <PropertyRef Name="RequestID" />
+            <PropertyRef Name="AnalysisID" />
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="RunNumber" />
+            <PropertyRef Name="StatusIdentifier" />
+            <PropertyRef Name="StatusName" />
+            <PropertyRef Name="StatusID" />
+            <PropertyRef Name="StatusDate" />
+            <PropertyRef Name="PatientRequestAnalysisStatusEmployeeId" />
+            <PropertyRef Name="RequestAnalysisStatusID" />
+            <PropertyRef Name="RequestedAnalysisID" />
+            <PropertyRef Name="AnalysisCode" />
+            <PropertyRef Name="AnalysisName" />
+            <PropertyRef Name="SampleTypeID" />
+            <PropertyRef Name="MinimumValue" />
+            <PropertyRef Name="MaximumValue" />
+            <PropertyRef Name="CostPrice" />
+            <PropertyRef Name="PatientID" />
+            <PropertyRef Name="RequestDate" />
+            <PropertyRef Name="RequestedRefID" />
+            <PropertyRef Name="RequestNumber" />
+          </Key>
+          <Property Name="RequestID" Type="int" Nullable="false" />
+          <Property Name="AnalysisID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="RunNumber" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="StatusIdentifier" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="StatusDate" Type="datetime" Nullable="false" />
+          <Property Name="PatientRequestAnalysisStatusEmployeeId" Type="int" Nullable="false" />
+          <Property Name="PatientRequestAnalysisStatusComment" Type="nvarchar" MaxLength="255" />
+          <Property Name="RequestAnalysisStatusID" Type="int" Nullable="false" />
+          <Property Name="RequestedAnalysisID" Type="int" Nullable="false" />
+          <Property Name="AnalysisCode" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="AnalysisName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NormalRange" Type="nvarchar" MaxLength="50" />
+          <Property Name="SampleTypeID" Type="int" Nullable="false" />
+          <Property Name="MinimumValue" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="MaximumValue" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CostPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PatientID" Type="int" Nullable="false" />
+          <Property Name="RequestDate" Type="datetime" Nullable="false" />
+          <Property Name="DoctorRefID" Type="int" />
+          <Property Name="Priority" Type="varchar" MaxLength="10" />
+          <Property Name="OrganizationID" Type="int" />
+          <Property Name="RequestedRefID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="AttachmentSession" Type="varchar" MaxLength="50" />
+          <Property Name="ExtraDiscount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="SampleType" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PatientRequestAnalysis_LastStatus">
+          <Key>
+            <PropertyRef Name="RequestID" />
+            <PropertyRef Name="AnalysisID" />
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="RunNumber" />
+            <PropertyRef Name="StatusIdentifier" />
+            <PropertyRef Name="StatusName" />
+            <PropertyRef Name="StatusID" />
+            <PropertyRef Name="StatusDate" />
+            <PropertyRef Name="PatientRequestAnalysisStatusEmployeeId" />
+            <PropertyRef Name="RequestAnalysisStatusID" />
+            <PropertyRef Name="RequestedAnalysisID" />
+            <PropertyRef Name="AnalysisCode" />
+            <PropertyRef Name="AnalysisName" />
+            <PropertyRef Name="SampleTypeID" />
+            <PropertyRef Name="MinimumValue" />
+            <PropertyRef Name="MaximumValue" />
+            <PropertyRef Name="CostPrice" />
+            <PropertyRef Name="PatientID" />
+            <PropertyRef Name="RequestDate" />
+            <PropertyRef Name="RequestedRefID" />
+            <PropertyRef Name="RequestNumber" />
+          </Key>
+          <Property Name="RequestID" Type="int" Nullable="false" />
+          <Property Name="AnalysisID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="RunNumber" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="StatusIdentifier" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="StatusDate" Type="datetime" Nullable="false" />
+          <Property Name="PatientRequestAnalysisStatusEmployeeId" Type="int" Nullable="false" />
+          <Property Name="PatientRequestAnalysisStatusComment" Type="nvarchar" MaxLength="255" />
+          <Property Name="RequestAnalysisStatusID" Type="int" Nullable="false" />
+          <Property Name="RequestedAnalysisID" Type="int" Nullable="false" />
+          <Property Name="AnalysisCode" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="AnalysisName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NormalRange" Type="nvarchar" MaxLength="50" />
+          <Property Name="SampleTypeID" Type="int" Nullable="false" />
+          <Property Name="MinimumValue" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="MaximumValue" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CostPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PatientID" Type="int" Nullable="false" />
+          <Property Name="RequestDate" Type="datetime" Nullable="false" />
+          <Property Name="DoctorRefID" Type="int" />
+          <Property Name="Priority" Type="varchar" MaxLength="10" />
+          <Property Name="OrganizationID" Type="int" />
+          <Property Name="RequestedRefID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="AttachmentSession" Type="varchar" MaxLength="50" />
+          <Property Name="ExtraDiscount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="SampleType" Type="nchar" MaxLength="20" />
         </EntityType>
         <Association Name="FK_Analysis_SampleType">
           <End Role="SampleType" Type="Self.SampleType" Multiplicity="1">
@@ -1126,6 +1371,20 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="AddPatientRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="patientId" Type="int" Mode="In" />
+          <Parameter Name="doctorRefId" Type="int" Mode="In" />
+          <Parameter Name="organizationId" Type="int" Mode="In" />
+          <Parameter Name="comment" Type="nvarchar" Mode="In" />
+          <Parameter Name="priority" Type="varchar" Mode="In" />
+          <Parameter Name="paid" Type="decimal" Mode="In" />
+          <Parameter Name="totalOrganizationCost" Type="decimal" Mode="In" />
+          <Parameter Name="totalPatientCost" Type="decimal" Mode="In" />
+          <Parameter Name="extraDiscount" Type="decimal" Mode="In" />
+          <Parameter Name="extraCost" Type="decimal" Mode="In" />
+          <Parameter Name="attachmentSession" Type="varchar" Mode="In" />
+          <Parameter Name="analyzesIds" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetAnalysisRunNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetPatientRefID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -1241,6 +1500,47 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [Patient_PatientRequest].[RequestNumber] AS [RequestNumber]
     FROM [dbo].[Patient_PatientRequest] AS [Patient_PatientRequest]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Patient_PatientRequest_AllStatuses" EntityType="Self.Patient_PatientRequest_AllStatuses" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Patient_PatientRequest_AllStatuses].[RequestDate] AS [RequestDate], 
+    [Patient_PatientRequest_AllStatuses].[PatientRequestEmployeeID] AS [PatientRequestEmployeeID], 
+    [Patient_PatientRequest_AllStatuses].[PatientRequestComment] AS [PatientRequestComment], 
+    [Patient_PatientRequest_AllStatuses].[DoctorRefID] AS [DoctorRefID], 
+    [Patient_PatientRequest_AllStatuses].[Priority] AS [Priority], 
+    [Patient_PatientRequest_AllStatuses].[OrganizationID] AS [OrganizationID], 
+    [Patient_PatientRequest_AllStatuses].[RequestedRefID] AS [RequestedRefID], 
+    [Patient_PatientRequest_AllStatuses].[AttachmentSession] AS [AttachmentSession], 
+    [Patient_PatientRequest_AllStatuses].[RequestStatusID] AS [RequestStatusID], 
+    [Patient_PatientRequest_AllStatuses].[RequestID] AS [RequestID], 
+    [Patient_PatientRequest_AllStatuses].[StatusDate] AS [StatusDate], 
+    [Patient_PatientRequest_AllStatuses].[PatientRequestStatusEmployeeID] AS [PatientRequestStatusEmployeeID], 
+    [Patient_PatientRequest_AllStatuses].[PatientRequestStatusComment] AS [PatientRequestStatusComment], 
+    [Patient_PatientRequest_AllStatuses].[StatusIdentifier] AS [StatusIdentifier], 
+    [Patient_PatientRequest_AllStatuses].[StatusName] AS [StatusName], 
+    [Patient_PatientRequest_AllStatuses].[Description] AS [Description], 
+    [Patient_PatientRequest_AllStatuses].[PatientRequestStatusID] AS [PatientRequestStatusID], 
+    [Patient_PatientRequest_AllStatuses].[PatientID] AS [PatientID], 
+    [Patient_PatientRequest_AllStatuses].[FirstName] AS [FirstName], 
+    [Patient_PatientRequest_AllStatuses].[MiddleName] AS [MiddleName], 
+    [Patient_PatientRequest_AllStatuses].[LastName] AS [LastName], 
+    [Patient_PatientRequest_AllStatuses].[Gender] AS [Gender], 
+    [Patient_PatientRequest_AllStatuses].[Address] AS [Address], 
+    [Patient_PatientRequest_AllStatuses].[CityID] AS [CityID], 
+    [Patient_PatientRequest_AllStatuses].[NationalID] AS [NationalID], 
+    [Patient_PatientRequest_AllStatuses].[BirthDate] AS [BirthDate], 
+    [Patient_PatientRequest_AllStatuses].[Mobile] AS [Mobile], 
+    [Patient_PatientRequest_AllStatuses].[Phone] AS [Phone], 
+    [Patient_PatientRequest_AllStatuses].[Email] AS [Email], 
+    [Patient_PatientRequest_AllStatuses].[ReferenceID] AS [ReferenceID], 
+    [Patient_PatientRequest_AllStatuses].[RegisteredDate] AS [RegisteredDate], 
+    [Patient_PatientRequest_AllStatuses].[LastDataModified] AS [LastDataModified], 
+    [Patient_PatientRequest_AllStatuses].[ExtraDiscount] AS [ExtraDiscount], 
+    [Patient_PatientRequest_AllStatuses].[ExtraCost] AS [ExtraCost], 
+    [Patient_PatientRequest_AllStatuses].[TotalPatientCost] AS [TotalPatientCost], 
+    [Patient_PatientRequest_AllStatuses].[TotalOrganizationCost] AS [TotalOrganizationCost], 
+    [Patient_PatientRequest_AllStatuses].[RequestNumber] AS [RequestNumber]
+    FROM [dbo].[Patient_PatientRequest_AllStatuses] AS [Patient_PatientRequest_AllStatuses]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Patient_PatientRequest_LastStatus" EntityType="Self.Patient_PatientRequest_LastStatus" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Patient_PatientRequest_LastStatus].[RequestDate] AS [RequestDate], 
@@ -1310,8 +1610,46 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [PatientRequest_Analysis].[ExtraCost] AS [ExtraCost], 
     [PatientRequest_Analysis].[TotalPatientCost] AS [TotalPatientCost], 
     [PatientRequest_Analysis].[TotalOrganizationCost] AS [TotalOrganizationCost], 
-    [PatientRequest_Analysis].[RequestNumber] AS [RequestNumber]
+    [PatientRequest_Analysis].[RequestNumber] AS [RequestNumber], 
+    [PatientRequest_Analysis].[SampleType] AS [SampleType]
     FROM [dbo].[PatientRequest_Analysis] AS [PatientRequest_Analysis]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PatientRequest_PatientRequestAnalysis_AllStatuses" EntityType="Self.PatientRequest_PatientRequestAnalysis_AllStatuses" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[RequestID] AS [RequestID], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[AnalysisID] AS [AnalysisID], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[EmployeeID] AS [EmployeeID], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[RunNumber] AS [RunNumber], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[StatusIdentifier] AS [StatusIdentifier], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[StatusName] AS [StatusName], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[Description] AS [Description], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[StatusID] AS [StatusID], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[StatusDate] AS [StatusDate], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[PatientRequestAnalysisStatusEmployeeId] AS [PatientRequestAnalysisStatusEmployeeId], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[PatientRequestAnalysisStatusComment] AS [PatientRequestAnalysisStatusComment], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[RequestAnalysisStatusID] AS [RequestAnalysisStatusID], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[RequestedAnalysisID] AS [RequestedAnalysisID], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[AnalysisCode] AS [AnalysisCode], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[AnalysisName] AS [AnalysisName], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[NormalRange] AS [NormalRange], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[SampleTypeID] AS [SampleTypeID], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[MinimumValue] AS [MinimumValue], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[MaximumValue] AS [MaximumValue], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[CostPrice] AS [CostPrice], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[PatientID] AS [PatientID], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[RequestDate] AS [RequestDate], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[DoctorRefID] AS [DoctorRefID], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[Priority] AS [Priority], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[OrganizationID] AS [OrganizationID], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[RequestedRefID] AS [RequestedRefID], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[AttachmentSession] AS [AttachmentSession], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[ExtraDiscount] AS [ExtraDiscount], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[ExtraCost] AS [ExtraCost], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[TotalPatientCost] AS [TotalPatientCost], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[TotalOrganizationCost] AS [TotalOrganizationCost], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[RequestNumber] AS [RequestNumber], 
+    [PatientRequest_PatientRequestAnalysis_AllStatuses].[SampleType] AS [SampleType]
+    FROM [dbo].[PatientRequest_PatientRequestAnalysis_AllStatuses] AS [PatientRequest_PatientRequestAnalysis_AllStatuses]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PatientRequest_PatientRequestAnalysis_LastStatus" EntityType="Self.PatientRequest_PatientRequestAnalysis_LastStatus" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1346,7 +1684,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [PatientRequest_PatientRequestAnalysis_LastStatus].[ExtraCost] AS [ExtraCost], 
     [PatientRequest_PatientRequestAnalysis_LastStatus].[TotalPatientCost] AS [TotalPatientCost], 
     [PatientRequest_PatientRequestAnalysis_LastStatus].[TotalOrganizationCost] AS [TotalOrganizationCost], 
-    [PatientRequest_PatientRequestAnalysis_LastStatus].[RequestNumber] AS [RequestNumber]
+    [PatientRequest_PatientRequestAnalysis_LastStatus].[RequestNumber] AS [RequestNumber], 
+    [PatientRequest_PatientRequestAnalysis_LastStatus].[SampleType] AS [SampleType]
     FROM [dbo].[PatientRequest_PatientRequestAnalysis_LastStatus] AS [PatientRequest_PatientRequestAnalysis_LastStatus]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PatientRequest_Payment" EntityType="Self.PatientRequest_Payment" store:Type="Views" store:Schema="dbo">
@@ -1372,6 +1711,80 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
     [PatientRequest_Payment].[PaymentComment] AS [PaymentComment], 
     [PatientRequest_Payment].[RequestNumber] AS [RequestNumber]
     FROM [dbo].[PatientRequest_Payment] AS [PatientRequest_Payment]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PatientRequestAnalysis_AllStatuses" EntityType="Self.PatientRequestAnalysis_AllStatuses" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PatientRequestAnalysis_AllStatuses].[RequestID] AS [RequestID], 
+    [PatientRequestAnalysis_AllStatuses].[AnalysisID] AS [AnalysisID], 
+    [PatientRequestAnalysis_AllStatuses].[EmployeeID] AS [EmployeeID], 
+    [PatientRequestAnalysis_AllStatuses].[RunNumber] AS [RunNumber], 
+    [PatientRequestAnalysis_AllStatuses].[StatusIdentifier] AS [StatusIdentifier], 
+    [PatientRequestAnalysis_AllStatuses].[StatusName] AS [StatusName], 
+    [PatientRequestAnalysis_AllStatuses].[Description] AS [Description], 
+    [PatientRequestAnalysis_AllStatuses].[StatusID] AS [StatusID], 
+    [PatientRequestAnalysis_AllStatuses].[StatusDate] AS [StatusDate], 
+    [PatientRequestAnalysis_AllStatuses].[PatientRequestAnalysisStatusEmployeeId] AS [PatientRequestAnalysisStatusEmployeeId], 
+    [PatientRequestAnalysis_AllStatuses].[PatientRequestAnalysisStatusComment] AS [PatientRequestAnalysisStatusComment], 
+    [PatientRequestAnalysis_AllStatuses].[RequestAnalysisStatusID] AS [RequestAnalysisStatusID], 
+    [PatientRequestAnalysis_AllStatuses].[RequestedAnalysisID] AS [RequestedAnalysisID], 
+    [PatientRequestAnalysis_AllStatuses].[AnalysisCode] AS [AnalysisCode], 
+    [PatientRequestAnalysis_AllStatuses].[AnalysisName] AS [AnalysisName], 
+    [PatientRequestAnalysis_AllStatuses].[NormalRange] AS [NormalRange], 
+    [PatientRequestAnalysis_AllStatuses].[SampleTypeID] AS [SampleTypeID], 
+    [PatientRequestAnalysis_AllStatuses].[MinimumValue] AS [MinimumValue], 
+    [PatientRequestAnalysis_AllStatuses].[MaximumValue] AS [MaximumValue], 
+    [PatientRequestAnalysis_AllStatuses].[CostPrice] AS [CostPrice], 
+    [PatientRequestAnalysis_AllStatuses].[PatientID] AS [PatientID], 
+    [PatientRequestAnalysis_AllStatuses].[RequestDate] AS [RequestDate], 
+    [PatientRequestAnalysis_AllStatuses].[DoctorRefID] AS [DoctorRefID], 
+    [PatientRequestAnalysis_AllStatuses].[Priority] AS [Priority], 
+    [PatientRequestAnalysis_AllStatuses].[OrganizationID] AS [OrganizationID], 
+    [PatientRequestAnalysis_AllStatuses].[RequestedRefID] AS [RequestedRefID], 
+    [PatientRequestAnalysis_AllStatuses].[AttachmentSession] AS [AttachmentSession], 
+    [PatientRequestAnalysis_AllStatuses].[ExtraDiscount] AS [ExtraDiscount], 
+    [PatientRequestAnalysis_AllStatuses].[ExtraCost] AS [ExtraCost], 
+    [PatientRequestAnalysis_AllStatuses].[TotalPatientCost] AS [TotalPatientCost], 
+    [PatientRequestAnalysis_AllStatuses].[TotalOrganizationCost] AS [TotalOrganizationCost], 
+    [PatientRequestAnalysis_AllStatuses].[RequestNumber] AS [RequestNumber], 
+    [PatientRequestAnalysis_AllStatuses].[SampleType] AS [SampleType]
+    FROM [dbo].[PatientRequestAnalysis_AllStatuses] AS [PatientRequestAnalysis_AllStatuses]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PatientRequestAnalysis_LastStatus" EntityType="Self.PatientRequestAnalysis_LastStatus" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PatientRequestAnalysis_LastStatus].[RequestID] AS [RequestID], 
+    [PatientRequestAnalysis_LastStatus].[AnalysisID] AS [AnalysisID], 
+    [PatientRequestAnalysis_LastStatus].[EmployeeID] AS [EmployeeID], 
+    [PatientRequestAnalysis_LastStatus].[RunNumber] AS [RunNumber], 
+    [PatientRequestAnalysis_LastStatus].[StatusIdentifier] AS [StatusIdentifier], 
+    [PatientRequestAnalysis_LastStatus].[StatusName] AS [StatusName], 
+    [PatientRequestAnalysis_LastStatus].[Description] AS [Description], 
+    [PatientRequestAnalysis_LastStatus].[StatusID] AS [StatusID], 
+    [PatientRequestAnalysis_LastStatus].[StatusDate] AS [StatusDate], 
+    [PatientRequestAnalysis_LastStatus].[PatientRequestAnalysisStatusEmployeeId] AS [PatientRequestAnalysisStatusEmployeeId], 
+    [PatientRequestAnalysis_LastStatus].[PatientRequestAnalysisStatusComment] AS [PatientRequestAnalysisStatusComment], 
+    [PatientRequestAnalysis_LastStatus].[RequestAnalysisStatusID] AS [RequestAnalysisStatusID], 
+    [PatientRequestAnalysis_LastStatus].[RequestedAnalysisID] AS [RequestedAnalysisID], 
+    [PatientRequestAnalysis_LastStatus].[AnalysisCode] AS [AnalysisCode], 
+    [PatientRequestAnalysis_LastStatus].[AnalysisName] AS [AnalysisName], 
+    [PatientRequestAnalysis_LastStatus].[NormalRange] AS [NormalRange], 
+    [PatientRequestAnalysis_LastStatus].[SampleTypeID] AS [SampleTypeID], 
+    [PatientRequestAnalysis_LastStatus].[MinimumValue] AS [MinimumValue], 
+    [PatientRequestAnalysis_LastStatus].[MaximumValue] AS [MaximumValue], 
+    [PatientRequestAnalysis_LastStatus].[CostPrice] AS [CostPrice], 
+    [PatientRequestAnalysis_LastStatus].[PatientID] AS [PatientID], 
+    [PatientRequestAnalysis_LastStatus].[RequestDate] AS [RequestDate], 
+    [PatientRequestAnalysis_LastStatus].[DoctorRefID] AS [DoctorRefID], 
+    [PatientRequestAnalysis_LastStatus].[Priority] AS [Priority], 
+    [PatientRequestAnalysis_LastStatus].[OrganizationID] AS [OrganizationID], 
+    [PatientRequestAnalysis_LastStatus].[RequestedRefID] AS [RequestedRefID], 
+    [PatientRequestAnalysis_LastStatus].[AttachmentSession] AS [AttachmentSession], 
+    [PatientRequestAnalysis_LastStatus].[ExtraDiscount] AS [ExtraDiscount], 
+    [PatientRequestAnalysis_LastStatus].[ExtraCost] AS [ExtraCost], 
+    [PatientRequestAnalysis_LastStatus].[TotalPatientCost] AS [TotalPatientCost], 
+    [PatientRequestAnalysis_LastStatus].[TotalOrganizationCost] AS [TotalOrganizationCost], 
+    [PatientRequestAnalysis_LastStatus].[RequestNumber] AS [RequestNumber], 
+    [PatientRequestAnalysis_LastStatus].[SampleType] AS [SampleType]
+    FROM [dbo].[PatientRequestAnalysis_LastStatus] AS [PatientRequestAnalysis_LastStatus]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Analysis_SampleType" Association="Self.FK_Analysis_SampleType">
             <End Role="SampleType" EntitySet="SampleType" />
@@ -1580,6 +1993,20 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <FunctionImport Name="GetAnalysisRunNumber" ReturnType="Collection(Int32)" />
           <FunctionImport Name="GetPatientRefID" ReturnType="Collection(Int32)" />
           <FunctionImport Name="GetRequestNumber" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="AddPatientRequest" ReturnType="Collection(Int32)">
+            <Parameter Name="patientId" Mode="In" Type="Int32" />
+            <Parameter Name="doctorRefId" Mode="In" Type="Int32" />
+            <Parameter Name="organizationId" Mode="In" Type="Int32" />
+            <Parameter Name="comment" Mode="In" Type="String" />
+            <Parameter Name="priority" Mode="In" Type="String" />
+            <Parameter Name="paid" Mode="In" Type="Decimal" />
+            <Parameter Name="totalOrganizationCost" Mode="In" Type="Decimal" />
+            <Parameter Name="totalPatientCost" Mode="In" Type="Decimal" />
+            <Parameter Name="extraDiscount" Mode="In" Type="Decimal" />
+            <Parameter Name="extraCost" Mode="In" Type="Decimal" />
+            <Parameter Name="attachmentSession" Mode="In" Type="String" />
+            <Parameter Name="analyzesIds" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="Analyses" EntityType="DemoMisrIntModel.Analysis" />
           <EntitySet Name="AnalysisResults" EntityType="DemoMisrIntModel.AnalysisResult" />
           <EntitySet Name="AnalysisResultStatus" EntityType="DemoMisrIntModel.AnalysisResultStatu" />
@@ -1616,10 +2043,14 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <EntitySet Name="RequestNumbers" EntityType="DemoMisrIntModel.RequestNumber" />
           <EntitySet Name="RunNumbers" EntityType="DemoMisrIntModel.RunNumber" />
           <EntitySet Name="Patient_PatientRequest" EntityType="DemoMisrIntModel.Patient_PatientRequest" />
+          <EntitySet Name="Patient_PatientRequest_AllStatuses" EntityType="DemoMisrIntModel.Patient_PatientRequest_AllStatuses" />
           <EntitySet Name="Patient_PatientRequest_LastStatus" EntityType="DemoMisrIntModel.Patient_PatientRequest_LastStatus" />
           <EntitySet Name="PatientRequest_Analysis" EntityType="DemoMisrIntModel.PatientRequest_Analysis" />
+          <EntitySet Name="PatientRequest_PatientRequestAnalysis_AllStatuses" EntityType="DemoMisrIntModel.PatientRequest_PatientRequestAnalysis_AllStatuses" />
           <EntitySet Name="PatientRequest_PatientRequestAnalysis_LastStatus" EntityType="DemoMisrIntModel.PatientRequest_PatientRequestAnalysis_LastStatus" />
           <EntitySet Name="PatientRequest_Payment" EntityType="DemoMisrIntModel.PatientRequest_Payment" />
+          <EntitySet Name="PatientRequestAnalysis_AllStatuses" EntityType="DemoMisrIntModel.PatientRequestAnalysis_AllStatuses" />
+          <EntitySet Name="PatientRequestAnalysis_LastStatus" EntityType="DemoMisrIntModel.PatientRequestAnalysis_LastStatus" />
           <AssociationSet Name="FK_Analysis_SampleType" Association="DemoMisrIntModel.FK_Analysis_SampleType">
             <End Role="SampleType" EntitySet="SampleTypes" />
             <End Role="Analysis" EntitySet="Analyses" />
@@ -2096,7 +2527,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="AnalysisID" Type="Int32" Nullable="false" />
           <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-          <Property Name="RunNumber" Type="Int32" />
+          <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Analysis" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysis_Analysis" FromRole="PatientRequestAnalysi" ToRole="Analysis" />
           <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysis_Employee" FromRole="PatientRequestAnalysi" ToRole="Employee" />
           <NavigationProperty Name="PatientRequest" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysis_PatientRequest" FromRole="PatientRequestAnalysi" ToRole="PatientRequest" />
@@ -2245,6 +2676,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
             <PropertyRef Name="EmployeeID" />
             <PropertyRef Name="RequestedRefID" />
             <PropertyRef Name="PatientID" />
+            <PropertyRef Name="RequestNumber" />
           </Key>
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2274,9 +2706,9 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="Int32" />
+          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="Patient_PatientRequest_LastStatus">
+        <EntityType Name="Patient_PatientRequest_AllStatuses">
           <Key>
             <PropertyRef Name="RequestDate" />
             <PropertyRef Name="PatientRequestEmployeeID" />
@@ -2292,6 +2724,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
             <PropertyRef Name="FirstName" />
             <PropertyRef Name="ReferenceID" />
             <PropertyRef Name="RegisteredDate" />
+            <PropertyRef Name="RequestNumber" />
           </Key>
           <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PatientRequestEmployeeID" Type="Int32" Nullable="false" />
@@ -2329,7 +2762,63 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="Int32" />
+          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patient_PatientRequest_LastStatus">
+          <Key>
+            <PropertyRef Name="RequestDate" />
+            <PropertyRef Name="PatientRequestEmployeeID" />
+            <PropertyRef Name="RequestedRefID" />
+            <PropertyRef Name="RequestStatusID" />
+            <PropertyRef Name="RequestID" />
+            <PropertyRef Name="StatusDate" />
+            <PropertyRef Name="PatientRequestStatusEmployeeID" />
+            <PropertyRef Name="StatusIdentifier" />
+            <PropertyRef Name="StatusName" />
+            <PropertyRef Name="PatientRequestStatusID" />
+            <PropertyRef Name="PatientID" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="ReferenceID" />
+            <PropertyRef Name="RegisteredDate" />
+            <PropertyRef Name="RequestNumber" />
+          </Key>
+          <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PatientRequestEmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="PatientRequestComment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorRefID" Type="Int32" />
+          <Property Name="Priority" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OrganizationID" Type="Int32" />
+          <Property Name="RequestedRefID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AttachmentSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RequestStatusID" Type="Int32" Nullable="false" />
+          <Property Name="RequestID" Type="Int32" Nullable="false" />
+          <Property Name="StatusDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PatientRequestStatusEmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="PatientRequestStatusComment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PatientRequestStatusID" Type="Int32" Nullable="false" />
+          <Property Name="PatientID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="NationalID" Type="String" MaxLength="16" FixedLength="true" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceID" Type="Int32" Nullable="false" />
+          <Property Name="RegisteredDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastDataModified" Type="DateTime" Precision="3" />
+          <Property Name="ExtraDiscount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="PatientRequest_Analysis">
           <Key>
@@ -2342,12 +2831,14 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="AnalysisRequestDate" />
             <PropertyRef Name="RequestAnalysisEmployeeID" />
+            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="AnalysisCode" />
             <PropertyRef Name="AnalysisName" />
             <PropertyRef Name="SampleTypeID" />
             <PropertyRef Name="MinimumValue" />
             <PropertyRef Name="MaximumValue" />
             <PropertyRef Name="CostPrice" />
+            <PropertyRef Name="RequestNumber" />
           </Key>
           <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PatientID" Type="Int32" Nullable="false" />
@@ -2363,7 +2854,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="AnalysisID" Type="Int32" Nullable="false" />
           <Property Name="AnalysisRequestDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RequestAnalysisEmployeeID" Type="Int32" Nullable="false" />
-          <Property Name="RunNumber" Type="Int32" />
+          <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="AnalysisCode" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Name="AnalysisName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NormalRange" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2375,13 +2866,15 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="Int32" />
+          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
         </EntityType>
-        <EntityType Name="PatientRequest_PatientRequestAnalysis_LastStatus">
+        <EntityType Name="PatientRequest_PatientRequestAnalysis_AllStatuses">
           <Key>
             <PropertyRef Name="RequestID" />
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="StatusIdentifier" />
             <PropertyRef Name="StatusName" />
             <PropertyRef Name="StatusID" />
@@ -2403,7 +2896,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="RequestID" Type="Int32" Nullable="false" />
           <Property Name="AnalysisID" Type="Int32" Nullable="false" />
           <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-          <Property Name="RunNumber" Type="Int32" />
+          <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -2432,6 +2925,65 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PatientRequest_PatientRequestAnalysis_LastStatus">
+          <Key>
+            <PropertyRef Name="RequestID" />
+            <PropertyRef Name="AnalysisID" />
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="RunNumber" />
+            <PropertyRef Name="StatusIdentifier" />
+            <PropertyRef Name="StatusName" />
+            <PropertyRef Name="StatusID" />
+            <PropertyRef Name="StatusDate" />
+            <PropertyRef Name="PatientRequestAnalysisStatusEmployeeId" />
+            <PropertyRef Name="RequestAnalysisStatusID" />
+            <PropertyRef Name="RequestedAnalysisID" />
+            <PropertyRef Name="AnalysisCode" />
+            <PropertyRef Name="AnalysisName" />
+            <PropertyRef Name="SampleTypeID" />
+            <PropertyRef Name="MinimumValue" />
+            <PropertyRef Name="MaximumValue" />
+            <PropertyRef Name="CostPrice" />
+            <PropertyRef Name="PatientID" />
+            <PropertyRef Name="RequestDate" />
+            <PropertyRef Name="RequestedRefID" />
+            <PropertyRef Name="RequestNumber" />
+          </Key>
+          <Property Name="RequestID" Type="Int32" Nullable="false" />
+          <Property Name="AnalysisID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="StatusDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PatientRequestAnalysisStatusEmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="PatientRequestAnalysisStatusComment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RequestAnalysisStatusID" Type="Int32" Nullable="false" />
+          <Property Name="RequestedAnalysisID" Type="Int32" Nullable="false" />
+          <Property Name="AnalysisCode" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="AnalysisName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NormalRange" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SampleTypeID" Type="Int32" Nullable="false" />
+          <Property Name="MinimumValue" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="MaximumValue" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="CostPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="PatientID" Type="Int32" Nullable="false" />
+          <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DoctorRefID" Type="Int32" />
+          <Property Name="Priority" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OrganizationID" Type="Int32" />
+          <Property Name="RequestedRefID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AttachmentSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExtraDiscount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="PatientRequest_Payment">
           <Key>
@@ -2464,6 +3016,122 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="PaymentEmployeeID" Type="Int32" Nullable="false" />
           <Property Name="PaymentComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="RequestNumber" Type="Int32" />
+        </EntityType>
+        <EntityType Name="PatientRequestAnalysis_AllStatuses">
+          <Key>
+            <PropertyRef Name="RequestID" />
+            <PropertyRef Name="AnalysisID" />
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="RunNumber" />
+            <PropertyRef Name="StatusIdentifier" />
+            <PropertyRef Name="StatusName" />
+            <PropertyRef Name="StatusID" />
+            <PropertyRef Name="StatusDate" />
+            <PropertyRef Name="PatientRequestAnalysisStatusEmployeeId" />
+            <PropertyRef Name="RequestAnalysisStatusID" />
+            <PropertyRef Name="RequestedAnalysisID" />
+            <PropertyRef Name="AnalysisCode" />
+            <PropertyRef Name="AnalysisName" />
+            <PropertyRef Name="SampleTypeID" />
+            <PropertyRef Name="MinimumValue" />
+            <PropertyRef Name="MaximumValue" />
+            <PropertyRef Name="CostPrice" />
+            <PropertyRef Name="PatientID" />
+            <PropertyRef Name="RequestDate" />
+            <PropertyRef Name="RequestedRefID" />
+            <PropertyRef Name="RequestNumber" />
+          </Key>
+          <Property Name="RequestID" Type="Int32" Nullable="false" />
+          <Property Name="AnalysisID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="StatusDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PatientRequestAnalysisStatusEmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="PatientRequestAnalysisStatusComment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RequestAnalysisStatusID" Type="Int32" Nullable="false" />
+          <Property Name="RequestedAnalysisID" Type="Int32" Nullable="false" />
+          <Property Name="AnalysisCode" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="AnalysisName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NormalRange" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SampleTypeID" Type="Int32" Nullable="false" />
+          <Property Name="MinimumValue" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="MaximumValue" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="CostPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="PatientID" Type="Int32" Nullable="false" />
+          <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DoctorRefID" Type="Int32" />
+          <Property Name="Priority" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OrganizationID" Type="Int32" />
+          <Property Name="RequestedRefID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AttachmentSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExtraDiscount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PatientRequestAnalysis_LastStatus">
+          <Key>
+            <PropertyRef Name="RequestID" />
+            <PropertyRef Name="AnalysisID" />
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="RunNumber" />
+            <PropertyRef Name="StatusIdentifier" />
+            <PropertyRef Name="StatusName" />
+            <PropertyRef Name="StatusID" />
+            <PropertyRef Name="StatusDate" />
+            <PropertyRef Name="PatientRequestAnalysisStatusEmployeeId" />
+            <PropertyRef Name="RequestAnalysisStatusID" />
+            <PropertyRef Name="RequestedAnalysisID" />
+            <PropertyRef Name="AnalysisCode" />
+            <PropertyRef Name="AnalysisName" />
+            <PropertyRef Name="SampleTypeID" />
+            <PropertyRef Name="MinimumValue" />
+            <PropertyRef Name="MaximumValue" />
+            <PropertyRef Name="CostPrice" />
+            <PropertyRef Name="PatientID" />
+            <PropertyRef Name="RequestDate" />
+            <PropertyRef Name="RequestedRefID" />
+            <PropertyRef Name="RequestNumber" />
+          </Key>
+          <Property Name="RequestID" Type="Int32" Nullable="false" />
+          <Property Name="AnalysisID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="StatusDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PatientRequestAnalysisStatusEmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="PatientRequestAnalysisStatusComment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RequestAnalysisStatusID" Type="Int32" Nullable="false" />
+          <Property Name="RequestedAnalysisID" Type="Int32" Nullable="false" />
+          <Property Name="AnalysisCode" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="AnalysisName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NormalRange" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SampleTypeID" Type="Int32" Nullable="false" />
+          <Property Name="MinimumValue" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="MaximumValue" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="CostPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="PatientID" Type="Int32" Nullable="false" />
+          <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DoctorRefID" Type="Int32" />
+          <Property Name="Priority" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OrganizationID" Type="Int32" />
+          <Property Name="RequestedRefID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AttachmentSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExtraDiscount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
         </EntityType>
         <Association Name="FK_Analysis_SampleType">
           <End Type="DemoMisrIntModel.SampleType" Role="SampleType" Multiplicity="1">
@@ -3022,6 +3690,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <FunctionImportMapping FunctionImportName="GetAnalysisRunNumber" FunctionName="DemoMisrIntModel.Store.GetAnalysisRunNumber" />
           <FunctionImportMapping FunctionImportName="GetPatientRefID" FunctionName="DemoMisrIntModel.Store.GetPatientRefID" />
           <FunctionImportMapping FunctionImportName="GetRequestNumber" FunctionName="DemoMisrIntModel.Store.GetRequestNumber" />
+          <FunctionImportMapping FunctionImportName="AddPatientRequest" FunctionName="DemoMisrIntModel.Store.AddPatientRequest" />
           <EntitySetMapping Name="Analyses">
             <EntityTypeMapping TypeName="DemoMisrIntModel.Analysis">
               <MappingFragment StoreEntitySet="Analysis">
@@ -3440,6 +4109,49 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Patient_PatientRequest_AllStatuses">
+            <EntityTypeMapping TypeName="DemoMisrIntModel.Patient_PatientRequest_AllStatuses">
+              <MappingFragment StoreEntitySet="Patient_PatientRequest_AllStatuses">
+                <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
+                <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
+                <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
+                <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
+                <ScalarProperty Name="ExtraDiscount" ColumnName="ExtraDiscount" />
+                <ScalarProperty Name="LastDataModified" ColumnName="LastDataModified" />
+                <ScalarProperty Name="RegisteredDate" ColumnName="RegisteredDate" />
+                <ScalarProperty Name="ReferenceID" ColumnName="ReferenceID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="NationalID" ColumnName="NationalID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="PatientRequestStatusID" ColumnName="PatientRequestStatusID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StatusIdentifier" ColumnName="StatusIdentifier" />
+                <ScalarProperty Name="PatientRequestStatusComment" ColumnName="PatientRequestStatusComment" />
+                <ScalarProperty Name="PatientRequestStatusEmployeeID" ColumnName="PatientRequestStatusEmployeeID" />
+                <ScalarProperty Name="StatusDate" ColumnName="StatusDate" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="RequestStatusID" ColumnName="RequestStatusID" />
+                <ScalarProperty Name="AttachmentSession" ColumnName="AttachmentSession" />
+                <ScalarProperty Name="RequestedRefID" ColumnName="RequestedRefID" />
+                <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="DoctorRefID" ColumnName="DoctorRefID" />
+                <ScalarProperty Name="PatientRequestComment" ColumnName="PatientRequestComment" />
+                <ScalarProperty Name="PatientRequestEmployeeID" ColumnName="PatientRequestEmployeeID" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Patient_PatientRequest_LastStatus">
             <EntityTypeMapping TypeName="DemoMisrIntModel.Patient_PatientRequest_LastStatus">
               <MappingFragment StoreEntitySet="Patient_PatientRequest_LastStatus">
@@ -3486,6 +4198,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <EntitySetMapping Name="PatientRequest_Analysis">
             <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequest_Analysis">
               <MappingFragment StoreEntitySet="PatientRequest_Analysis">
+                <ScalarProperty Name="SampleType" ColumnName="SampleType" />
                 <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
                 <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
                 <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
@@ -3516,9 +4229,49 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PatientRequest_PatientRequestAnalysis_AllStatuses">
+            <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequest_PatientRequestAnalysis_AllStatuses">
+              <MappingFragment StoreEntitySet="PatientRequest_PatientRequestAnalysis_AllStatuses">
+                <ScalarProperty Name="SampleType" ColumnName="SampleType" />
+                <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
+                <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
+                <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
+                <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
+                <ScalarProperty Name="ExtraDiscount" ColumnName="ExtraDiscount" />
+                <ScalarProperty Name="AttachmentSession" ColumnName="AttachmentSession" />
+                <ScalarProperty Name="RequestedRefID" ColumnName="RequestedRefID" />
+                <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="DoctorRefID" ColumnName="DoctorRefID" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+                <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
+                <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
+                <ScalarProperty Name="SampleTypeID" ColumnName="SampleTypeID" />
+                <ScalarProperty Name="NormalRange" ColumnName="NormalRange" />
+                <ScalarProperty Name="AnalysisName" ColumnName="AnalysisName" />
+                <ScalarProperty Name="AnalysisCode" ColumnName="AnalysisCode" />
+                <ScalarProperty Name="RequestedAnalysisID" ColumnName="RequestedAnalysisID" />
+                <ScalarProperty Name="RequestAnalysisStatusID" ColumnName="RequestAnalysisStatusID" />
+                <ScalarProperty Name="PatientRequestAnalysisStatusComment" ColumnName="PatientRequestAnalysisStatusComment" />
+                <ScalarProperty Name="PatientRequestAnalysisStatusEmployeeId" ColumnName="PatientRequestAnalysisStatusEmployeeId" />
+                <ScalarProperty Name="StatusDate" ColumnName="StatusDate" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StatusIdentifier" ColumnName="StatusIdentifier" />
+                <ScalarProperty Name="RunNumber" ColumnName="RunNumber" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="AnalysisID" ColumnName="AnalysisID" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PatientRequest_PatientRequestAnalysis_LastStatus">
             <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequest_PatientRequestAnalysis_LastStatus">
               <MappingFragment StoreEntitySet="PatientRequest_PatientRequestAnalysis_LastStatus">
+                <ScalarProperty Name="SampleType" ColumnName="SampleType" />
                 <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
                 <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
                 <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
@@ -3577,6 +4330,84 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
                 <ScalarProperty Name="PatientRequestEmployeeID" ColumnName="PatientRequestEmployeeID" />
                 <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
                 <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientRequestAnalysis_AllStatuses">
+            <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequestAnalysis_AllStatuses">
+              <MappingFragment StoreEntitySet="PatientRequestAnalysis_AllStatuses">
+                <ScalarProperty Name="SampleType" ColumnName="SampleType" />
+                <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
+                <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
+                <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
+                <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
+                <ScalarProperty Name="ExtraDiscount" ColumnName="ExtraDiscount" />
+                <ScalarProperty Name="AttachmentSession" ColumnName="AttachmentSession" />
+                <ScalarProperty Name="RequestedRefID" ColumnName="RequestedRefID" />
+                <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="DoctorRefID" ColumnName="DoctorRefID" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+                <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
+                <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
+                <ScalarProperty Name="SampleTypeID" ColumnName="SampleTypeID" />
+                <ScalarProperty Name="NormalRange" ColumnName="NormalRange" />
+                <ScalarProperty Name="AnalysisName" ColumnName="AnalysisName" />
+                <ScalarProperty Name="AnalysisCode" ColumnName="AnalysisCode" />
+                <ScalarProperty Name="RequestedAnalysisID" ColumnName="RequestedAnalysisID" />
+                <ScalarProperty Name="RequestAnalysisStatusID" ColumnName="RequestAnalysisStatusID" />
+                <ScalarProperty Name="PatientRequestAnalysisStatusComment" ColumnName="PatientRequestAnalysisStatusComment" />
+                <ScalarProperty Name="PatientRequestAnalysisStatusEmployeeId" ColumnName="PatientRequestAnalysisStatusEmployeeId" />
+                <ScalarProperty Name="StatusDate" ColumnName="StatusDate" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StatusIdentifier" ColumnName="StatusIdentifier" />
+                <ScalarProperty Name="RunNumber" ColumnName="RunNumber" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="AnalysisID" ColumnName="AnalysisID" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientRequestAnalysis_LastStatus">
+            <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequestAnalysis_LastStatus">
+              <MappingFragment StoreEntitySet="PatientRequestAnalysis_LastStatus">
+                <ScalarProperty Name="SampleType" ColumnName="SampleType" />
+                <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
+                <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
+                <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
+                <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
+                <ScalarProperty Name="ExtraDiscount" ColumnName="ExtraDiscount" />
+                <ScalarProperty Name="AttachmentSession" ColumnName="AttachmentSession" />
+                <ScalarProperty Name="RequestedRefID" ColumnName="RequestedRefID" />
+                <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="DoctorRefID" ColumnName="DoctorRefID" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+                <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
+                <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
+                <ScalarProperty Name="SampleTypeID" ColumnName="SampleTypeID" />
+                <ScalarProperty Name="NormalRange" ColumnName="NormalRange" />
+                <ScalarProperty Name="AnalysisName" ColumnName="AnalysisName" />
+                <ScalarProperty Name="AnalysisCode" ColumnName="AnalysisCode" />
+                <ScalarProperty Name="RequestedAnalysisID" ColumnName="RequestedAnalysisID" />
+                <ScalarProperty Name="RequestAnalysisStatusID" ColumnName="RequestAnalysisStatusID" />
+                <ScalarProperty Name="PatientRequestAnalysisStatusComment" ColumnName="PatientRequestAnalysisStatusComment" />
+                <ScalarProperty Name="PatientRequestAnalysisStatusEmployeeId" ColumnName="PatientRequestAnalysisStatusEmployeeId" />
+                <ScalarProperty Name="StatusDate" ColumnName="StatusDate" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StatusIdentifier" ColumnName="StatusIdentifier" />
+                <ScalarProperty Name="RunNumber" ColumnName="RunNumber" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="AnalysisID" ColumnName="AnalysisID" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

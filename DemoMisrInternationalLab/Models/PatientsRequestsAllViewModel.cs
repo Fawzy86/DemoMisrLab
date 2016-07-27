@@ -5,9 +5,9 @@ using System.Web;
 
 namespace DemoMisrInternationalLab.Models
 {
-    public class PatientsRequestsStatusViewModel
+    public class PatientsRequestsAllViewModel
     {
-        public PatientsRequestsStatusViewModel()
+        public PatientsRequestsAllViewModel()
         {
             PatientRequestStatusWithAnalyzes = new List<Patient_Request_Status_Analysis_ViewModel>();
             SelectedPatientsRequestIDs = new List<int>();

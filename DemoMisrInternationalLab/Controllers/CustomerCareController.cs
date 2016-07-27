@@ -45,7 +45,7 @@ namespace DemoMisrInternationalLab.Controllers
 
         public ActionResult loadPatientRequestStatus()
         {
-            PatientsRequestsStatusViewModel PatientRequestStatus = new PatientsRequestsStatusViewModel();
+            PatientsRequestsAllViewModel PatientRequestStatus = new PatientsRequestsAllViewModel();
             PatientRequestStatus.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestWithStatus(Resources.Status.PatientRequestPending);
             return PartialView("_PatientRequestStatus", PatientRequestStatus);
         }
@@ -64,8 +64,8 @@ namespace DemoMisrInternationalLab.Controllers
 
         public ActionResult loadReports()
         {
-            PatientsRequestsStatusViewModel PatientRequestStatus = new PatientsRequestsStatusViewModel();
-            PatientRequestStatus.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestTransactions(null, new DateTime(1986, 1, 1), new DateTime(2020, 1, 1));
+            PatientsRequestsAllViewModel PatientRequestStatus = new PatientsRequestsAllViewModel();
+            PatientRequestStatus.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestTransactionsForCustomerCare(null, new DateTime(1986, 1, 1), new DateTime(2020, 1, 1));
             return PartialView("_Reports", PatientRequestStatus);
         }
 
@@ -385,7 +385,7 @@ namespace DemoMisrInternationalLab.Controllers
 
         public ActionResult LoadTransactions(string SearchPattern, string DateRange)
         {
-            PatientsRequestsStatusViewModel PatientRequestStatus = new PatientsRequestsStatusViewModel();
+            PatientsRequestsAllViewModel PatientRequestStatus = new PatientsRequestsAllViewModel();
             DateTime DateFrom = DateTime.Now.Date;
             DateTime DateTo = DateTime.Now.AddDays(1).Date;
             if (!String.IsNullOrWhiteSpace(DateRange))
@@ -400,7 +400,7 @@ namespace DemoMisrInternationalLab.Controllers
                     }
                 }
             }
-            PatientRequestStatus.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestTransactions(SearchPattern, DateFrom, DateTo);
+            PatientRequestStatus.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestTransactionsForCustomerCare(SearchPattern, DateFrom, DateTo);
             return PartialView("_Transactions", PatientRequestStatus);
         }
 

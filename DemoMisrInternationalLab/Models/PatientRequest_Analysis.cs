@@ -28,7 +28,7 @@ namespace DemoMisrInternationalLab.Models
         public int AnalysisID { get; set; }
         public System.DateTime AnalysisRequestDate { get; set; }
         public int RequestAnalysisEmployeeID { get; set; }
-        public Nullable<int> RunNumber { get; set; }
+        public string RunNumber { get; set; }
         public string AnalysisCode { get; set; }
         public string AnalysisName { get; set; }
         public string NormalRange { get; set; }
@@ -40,6 +40,7 @@ namespace DemoMisrInternationalLab.Models
         public Nullable<decimal> ExtraCost { get; set; }
         public Nullable<decimal> TotalPatientCost { get; set; }
         public Nullable<decimal> TotalOrganizationCost { get; set; }
-        public Nullable<int> RequestNumber { get; set; }
+        public int RequestNumber { get; set; }
+        public string SampleType { get; set; }
     }
 }

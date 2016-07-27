@@ -12,7 +12,7 @@ namespace DemoMisrInternationalLab.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PatientRequest_PatientRequestAnalysis_LastStatus
+    public partial class PatientRequestAnalysis_LastStatus
     {
         public int RequestID { get; set; }
         public int AnalysisID { get; set; }

@@ -1,5 +1,5 @@
-﻿<div id="CustomerCare_Transaction_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
-@using (Html.BeginForm("", "", FormMethod.Get, new { @id = "CustomerCare_Transaction_Form" }))
+﻿<div id="Chemist_Transaction_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Chemist_Transactions_Form" }))
 {
     <div class="row">
         <div class="col-md-12">
@@ -8,9 +8,9 @@
                 <div class="input-group">
 
                     <div class="col-md-4">
-                        <input type="text" id="CustomerCare_Transaction_SearchText" class="form-control form-widthhh" placeholder="Search ...">
+                        <input type="text" id="Chemist_Transaction_SearchText" class="form-control form-widthhh" placeholder="Search ...">
                         <span class="input-group-addon namefirst" style="width: 40px;">
-                            <a href="" id="CustomerCare_Transaction_Search_Link"><i class="fa fa-search"></i></a>
+                            <a href="" id="Chemist_Transaction_Search_Link"><i class="fa fa-search"></i></a>
                         </span>
                     </div>
 
@@ -18,17 +18,18 @@
 
                     <div class="col-md-3">
 
-                        <div id="CustomerCare_Report_Range" class="pull-right" style="background: #fff; cursor: pointer; padding: 8px 10px; border: 1px solid #ccc; width: 100%"
-                             tabindex="-1">
+                        <div id="Chemist_Report_Range" class="pull-right" style="background: #fff; cursor: pointer; padding: 8px 10px; border: 1px solid #ccc; width: 100%">
                             <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-                            <span id="CustomerCare_Transaction_DateRangeText" tabindex="-1"></span> <b class="caret"></b>
+                            <span id="Chemist_Transaction_DateRangeText"></span> <b class="caret"></b>
                         </div>
 
                     </div>
 
                 </div>
             </div>
+
             <div class="input-group table-responsive" id="Transaction_Container">
+
                 @{Html.RenderAction("LoadTransactions");}
             </div>
         </div>
@@ -38,9 +39,9 @@
     ////////////////////////////////////////////////////////////
     $(document).ajaxStart(function () {
         try {
-            $("#CustomerCare_Transaction_Form").prop('disabled', true);
-            //    $("#CustomerCare_Transaction_Form").hide();
-            $("#CustomerCare_Transaction_Loading").show();
+            $("#Chemist_Transactions_Form").prop('disabled', true);
+         //   $("#Chemist_Transactions_Form").hide();
+            $("#Chemist_Transaction_Loading").show();
         }
         catch (err) {
             alert(err.message);
@@ -49,9 +50,9 @@
     /////////////////////////////////////////////////////////
     $(document).ajaxStop(function () {
         try {
-            $("#CustomerCare_Transaction_Form").prop('disabled', true);
-            //   $("#CustomerCare_Transaction_Form").show();
-            $("#CustomerCare_Transaction_Loading").hide();
+            $("#Chemist_Transactions_Form").prop('disabled', true);
+         //   $("#Chemist_Transactions_Form").show();
+            $("#Chemist_Transaction_Loading").hide();
         }
         catch (err) {
             alert(err.message);
@@ -61,11 +62,11 @@
     $(function () {
 
         function cb(start, end) {
-            $('#CustomerCare_Report_Range span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            $('#Chemist_Report_Range span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         }
         cb(moment(), moment());
 
-        $('#CustomerCare_Report_Range').daterangepicker({
+        $('#Chemist_Report_Range').daterangepicker({
             ranges: {
                 'Today': [moment(), moment()],
                 'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -75,26 +76,28 @@
                 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             }
         }, cb);
+
     });
+
     //////////////////////////////////////////////////////////
-    $('#CustomerCare_Transaction_Search_Link').on('click', function (event) {
+    $('#Chemist_Transaction_Search_Link').on('click', function (event) {
         event.preventDefault();
         LoadTransactions();
     });
     //////////////////////////////////////////////////////////////////////
-    $('#CustomerCare_Report_Range').on('apply.daterangepicker', function (ev, picker) {
+    $('#Chemist_Report_Range').on('apply.daterangepicker', function (ev, picker) {
         LoadTransactions();
     });
-    ////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     function LoadTransactions() {
         try {
-            var TransactionSearchValue = $("#CustomerCare_Transaction_SearchText").val();
-            var TransactionDateRangeValue = $("#CustomerCare_Transaction_DateRangeText").html();
+            var TransactionSearchValue = $("#Chemist_Transaction_SearchText").val();
+            var TransactionDateRangeValue = $("#Chemist_Transaction_DateRangeText").html();
             $.ajax({
                 cache: false,
                 async: true,
                 type: "GET",
-                url: "/CustomerCare/LoadTransactions?SearchPattern=" + TransactionSearchValue + "&DateRange=" + TransactionDateRangeValue,//form.attr('action'),
+                url: "/Chemist/LoadTransactions?SearchPattern=" + TransactionSearchValue + "&DateRange=" + TransactionDateRangeValue,//form.attr('action'),
                 success: function (data) {
                     $("#Transaction_Container").html(data);
                 },
@@ -108,7 +111,7 @@
         }
     }
     //////////////////////////////////////////////////////////
-    $('#CustomerCare_Transaction_SearchText').keyup(function () {
+    $('#Chemist_Transaction_SearchText').keyup(function () {
         var SearchPattern = $(this).val();
         try {
             if (SearchPattern != null && SearchPattern.length > 0) {
