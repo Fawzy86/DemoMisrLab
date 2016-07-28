@@ -20,47 +20,100 @@ namespace DemoMisrInternationalLab.Models
             set
             {
                 _PatientRequestAnalysisStatuses = value;
-                SetTheDates();
+                SetStartDates();
             }
         }
 
         public PatientRequestAnalysis_AllStatuses PatientRequestAnalysisLastStatus { get; set; }
 
-        public DateTime? SampledDate { get; set; }
-        public DateTime? TransferredDate { get; set; }
-        public DateTime? PreservationDate { get; set; }
-        public DateTime? LabbedDate { get; set; }
 
-        private void SetTheDates()
+        
+        public string StartSampledDate { get; set; }
+        public string EndSampledDate { get; set; }
+
+        public string StartTransferredDate { get; set; }
+        public string EndTransferredDate { get; set; }
+
+        public string StartPreservationDate { get; set; }
+        public string EndPreservationDate { get; set; }
+
+        public string StartLabbedDate { get; set; }
+        public string EndLabbedDate { get; set; }
+        private void SetStartDates()
         {
             if (_PatientRequestAnalysisStatuses != null && _PatientRequestAnalysisStatuses.Any())
             {
                 var LabbedStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.AnalysisMovedToLab).FirstOrDefault();
                 if (LabbedStatus != null)
                 {
-                    LabbedDate = LabbedStatus.StatusDate;
+                    StartLabbedDate = LabbedStatus.StatusDate.ToString("dd/MM/yyyy hh:mm tt");
                 }
 
                 var SampledStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.AnalysisSampled).FirstOrDefault();
                 if (SampledStatus != null)
                 {
-                    SampledDate = SampledStatus.StatusDate;
+                    StartSampledDate = SampledStatus.StatusDate.ToString("dd/MM/yyyy hh:mm tt");
+                    var NextStatus = _PatientRequestAnalysisStatuses.OrderBy(s => s.StatusDate).Where(s => s.StatusDate > SampledStatus.StatusDate).FirstOrDefault();
+                    if (NextStatus != null)
+                    {
+                        EndSampledDate = NextStatus.StatusDate.ToString("dd/MM/yyyy hh:mm tt");
+                    }
+                    else
+                    {
+                        EndSampledDate = "Pending";
+                    }
                 }
 
                 var TransferredStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.AnalysisTransferred).FirstOrDefault();
                 if (TransferredStatus != null)
                 {
-                    TransferredDate = TransferredStatus.StatusDate;
+                    StartTransferredDate = TransferredStatus.StatusDate.ToString("dd/MM/yyyy hh:mm tt");
+                    var NextStatus = _PatientRequestAnalysisStatuses.OrderBy(s => s.StatusDate).Where(s => s.StatusDate > TransferredStatus.StatusDate).FirstOrDefault();
+                    if (NextStatus != null)
+                    {
+                        EndTransferredDate = NextStatus.StatusDate.ToString("dd/MM/yyyy hh:mm tt");
+                    }
+                    else
+                    {
+                        EndTransferredDate = "Pending";
+                    }
                 }
 
                 var SavedStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.AnalysisSaved).FirstOrDefault();
                 if (SavedStatus != null)
                 {
-                    PreservationDate = SavedStatus.StatusDate;
+                    StartPreservationDate = SavedStatus.StatusDate.ToString("dd/MM/yyyy hh:mm tt");
+                    var NextStatus = _PatientRequestAnalysisStatuses.OrderBy(s => s.StatusDate).Where(s => s.StatusDate > SavedStatus.StatusDate).FirstOrDefault();
+                    if (NextStatus != null)
+                    {
+                        EndPreservationDate = NextStatus.StatusDate.ToString("dd/MM/yyyy hh:mm tt");
+                    }
+                    else
+                    {
+                        EndPreservationDate = "Pending";
+                    }
+                }
+                ///// set the pass values
+                string DefaultPassValue = "Passed";
+                if (StartPreservationDate == null)
+                {
+                    if (StartLabbedDate != null)
+                    {
+                        StartPreservationDate = DefaultPassValue;
+                        EndPreservationDate = DefaultPassValue;
+                    }
+                }
+                if (StartTransferredDate == null)
+                {
+                    if (StartPreservationDate != null)
+                    {
+                        StartTransferredDate = DefaultPassValue;
+                        EndTransferredDate = DefaultPassValue;
+                    }
                 }
             }
-
         }
+
         
     }
 }

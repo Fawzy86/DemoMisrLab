@@ -12,6 +12,13 @@
         <div class="input-group table-responsive">
             <div class="table-scrollb">
                 <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="20%">Name</th>
+                            <th width ="20%">Phone</th>
+                            <th width="60%">Analysis</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         @if (Model != null && Model.PatientRequestStatusWithAnalyzes.Any())
                         {
@@ -40,11 +47,11 @@
                                         }
 
                                     </td>
-                                    <td>
+                                    @*<td>
                                         <div class="count">
                                                 @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.TotalPatientCost
                                         </div>
-                                    </td>
+                                    </td>*@
                                 </tr>
                             }
                         }

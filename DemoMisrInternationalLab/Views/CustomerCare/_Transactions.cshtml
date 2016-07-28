@@ -6,11 +6,12 @@
     <table class="table table-bordered" id="Transactions_Table">
         <thead>
             <tr>
-                <th width="10%">Request ID</th>
+                <th width="10%">Request #</th>
                 <th width="7%">Category</th>
                 <th width="25%">Name</th>
                 <th>Phone</th>
                 <th width="40%">Analysis</th>
+                <th width="10%">Total Due</th>
                 <th width="20%">Date</th>
                 <th>Invoice</th>
             </tr>
@@ -19,7 +20,7 @@
             @for (int i = 0; i < Model.PatientRequestStatusWithAnalyzes.Count(); i++)
             {
                 <tr>
-                    <td>@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestedRefID </td>
+                    <td>@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestNumber </td>
                     <td>
                         <span class="label label-warning">@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.Priority</span>
                     </td>
@@ -35,15 +36,49 @@
                             @AnalyzesList
                         }
                     </td>
+                    <td>@Model.PatientRequestStatusWithAnalyzes[i].TotalDue</td>
                     <td>@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestDate</td>
                     <td align="center" style="word-spacing:10px;">
                         <a href='@Url.Action("OpenInvoice", "CustomerCare", new { RequestID = @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID })' target="_blank"><i class="fa fa-credit-card"></i></a>
+                        <a href="#Display_Report_Popup"><i class="fa fa-eye"></i></a>
+                        <a href="#Print_Report_Popup"><i class="fa fa-print"></i></a>
+                        <a href="#Download_Report_Popup"><i class="fa fa-download"></i></a>
                     </td>
                   
                 </tr>
             }
         </tbody>
     </table>
+        <div id="Display_Report_Popup" class="overlay">
+            <div class="popup">
+                <a class="close" href="#">&times;</a>
+                <div class="contentt">
+                    <div id="Display_Report_Popup_Content" style="z-index:9999 !important;">
+                        <div class="table-scrollb" style="margin-top:20px;"> <img src="~/images/invoice.PNG" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Print_Report_Popup" class="overlay">
+            <div class="popup">
+                <a class="close" href="#">&times;</a>
+                <div class="contentt">
+                    <div id="Print_Report_Popup_Content" style="z-index:9999 !important;">
+                        <div class="table-scrollb" style="margin-top:20px;"> <img src="~/images/invoice.PNG" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Download_Report_Popup" class="overlay">
+            <div class="popup">
+                <a class="close" href="#">&times;</a>
+                <div class="contentt">
+                    <div id="Download_Report_Popup_Content" style="z-index:9999 !important;">
+                        <div class="table-scrollb" style="margin-top:20px;"> <img src="~/images/invoice.PNG" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
     else
     {

@@ -117,7 +117,7 @@
             if (SearchPattern != null && SearchPattern.length > 0) {
                 SearchPattern = SearchPattern.toLocaleLowerCase();
             }
-            $.each($('#Transactions_Table tbody tr'), function (i, val) {
+            $.each($('#Transactions_Tables_Div table'), function (i, val) {
                 console.log(($(val).text()));
                 if ($(val).text().toLocaleLowerCase().indexOf(SearchPattern) == -1) {
                     $(val).hide();

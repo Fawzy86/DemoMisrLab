@@ -14,6 +14,7 @@ namespace DemoMisrInternationalLab.Models
     
     public partial class RequestNumber
     {
-        public int Request_Number { get; set; }
+        public string Prefix { get; set; }
+        public int Number { get; set; }
     }
 }

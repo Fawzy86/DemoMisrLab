@@ -401,7 +401,8 @@
     <EntitySetMapping Name="RequestNumbers">
       <EntityTypeMapping TypeName="DemoMisrIntModel.RequestNumber">
         <MappingFragment StoreEntitySet="RequestNumber">
-          <ScalarProperty Name="Request_Number" ColumnName="Request_Number" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Prefix" ColumnName="Prefix" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

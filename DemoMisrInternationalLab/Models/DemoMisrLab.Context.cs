@@ -185,9 +185,9 @@ namespace DemoMisrInternationalLab.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetPatientRefID");
         }
     
-        public virtual ObjectResult<Nullable<int>> GetRequestNumber()
+        public virtual ObjectResult<string> GetRequestNumber()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetRequestNumber");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetRequestNumber");
         }
     
         public virtual ObjectResult<Nullable<int>> AddPatientRequest(Nullable<int> patientId, Nullable<int> doctorRefId, Nullable<int> organizationId, string comment, string priority, Nullable<decimal> paid, Nullable<decimal> totalOrganizationCost, Nullable<decimal> totalPatientCost, Nullable<decimal> extraDiscount, Nullable<decimal> extraCost, string attachmentSession, string analyzesIds)

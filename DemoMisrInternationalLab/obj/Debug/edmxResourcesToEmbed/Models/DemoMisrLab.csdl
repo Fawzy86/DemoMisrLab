@@ -33,7 +33,7 @@
     <FunctionImport Name="sp_upgraddiagrams" />
     <FunctionImport Name="GetAnalysisRunNumber" ReturnType="Collection(Int32)" />
     <FunctionImport Name="GetPatientRefID" ReturnType="Collection(Int32)" />
-    <FunctionImport Name="GetRequestNumber" ReturnType="Collection(Int32)" />
+    <FunctionImport Name="GetRequestNumber" ReturnType="Collection(String)" />
     <FunctionImport Name="AddPatientRequest" ReturnType="Collection(Int32)">
       <Parameter Name="patientId" Mode="In" Type="Int32" />
       <Parameter Name="doctorRefId" Mode="In" Type="Int32" />
@@ -550,7 +550,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+    <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="DoctorRef" Relationship="DemoMisrIntModel.FK_PatientRequest_DoctorRef" FromRole="PatientRequest" ToRole="DoctorRef" />
     <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_PatientRequest_Employee" FromRole="PatientRequest" ToRole="Employee" />
     <NavigationProperty Name="Organization" Relationship="DemoMisrIntModel.FK_PatientRequest_Organization" FromRole="PatientRequest" ToRole="Organization" />
@@ -568,7 +568,7 @@
     <Property Name="AnalysisID" Type="Int32" Nullable="false" />
     <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-    <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Analysis" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysis_Analysis" FromRole="PatientRequestAnalysi" ToRole="Analysis" />
     <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysis_Employee" FromRole="PatientRequestAnalysi" ToRole="Employee" />
     <NavigationProperty Name="PatientRequest" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysis_PatientRequest" FromRole="PatientRequestAnalysi" ToRole="PatientRequest" />
@@ -697,9 +697,11 @@
   </EntityType>
   <EntityType Name="RequestNumber">
     <Key>
-      <PropertyRef Name="Request_Number" />
+      <PropertyRef Name="Prefix" />
+      <PropertyRef Name="Number" />
     </Key>
-    <Property Name="Request_Number" Type="Int32" Nullable="false" />
+    <Property Name="Prefix" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="Number" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="RunNumber">
     <Key>
@@ -747,7 +749,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+    <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Patient_PatientRequest_AllStatuses">
     <Key>
@@ -803,7 +805,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+    <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Patient_PatientRequest_LastStatus">
     <Key>
@@ -859,7 +861,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+    <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="PatientRequest_Analysis">
     <Key>
@@ -872,7 +874,6 @@
       <PropertyRef Name="AnalysisID" />
       <PropertyRef Name="AnalysisRequestDate" />
       <PropertyRef Name="RequestAnalysisEmployeeID" />
-      <PropertyRef Name="RunNumber" />
       <PropertyRef Name="AnalysisCode" />
       <PropertyRef Name="AnalysisName" />
       <PropertyRef Name="SampleTypeID" />
@@ -895,7 +896,7 @@
     <Property Name="AnalysisID" Type="Int32" Nullable="false" />
     <Property Name="AnalysisRequestDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="RequestAnalysisEmployeeID" Type="Int32" Nullable="false" />
-    <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="AnalysisCode" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
     <Property Name="AnalysisName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="NormalRange" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -907,7 +908,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+    <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
     <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
   </EntityType>
   <EntityType Name="PatientRequest_PatientRequestAnalysis_AllStatuses">
@@ -915,7 +916,6 @@
       <PropertyRef Name="RequestID" />
       <PropertyRef Name="AnalysisID" />
       <PropertyRef Name="EmployeeID" />
-      <PropertyRef Name="RunNumber" />
       <PropertyRef Name="StatusIdentifier" />
       <PropertyRef Name="StatusName" />
       <PropertyRef Name="StatusID" />
@@ -937,7 +937,7 @@
     <Property Name="RequestID" Type="Int32" Nullable="false" />
     <Property Name="AnalysisID" Type="Int32" Nullable="false" />
     <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-    <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -965,7 +965,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+    <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
     <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
   </EntityType>
   <EntityType Name="PatientRequest_PatientRequestAnalysis_LastStatus">
@@ -973,7 +973,6 @@
       <PropertyRef Name="RequestID" />
       <PropertyRef Name="AnalysisID" />
       <PropertyRef Name="EmployeeID" />
-      <PropertyRef Name="RunNumber" />
       <PropertyRef Name="StatusIdentifier" />
       <PropertyRef Name="StatusName" />
       <PropertyRef Name="StatusID" />
@@ -995,7 +994,7 @@
     <Property Name="RequestID" Type="Int32" Nullable="false" />
     <Property Name="AnalysisID" Type="Int32" Nullable="false" />
     <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-    <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -1023,7 +1022,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+    <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
     <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
   </EntityType>
   <EntityType Name="PatientRequest_Payment">
@@ -1036,6 +1035,7 @@
       <PropertyRef Name="RequestID" />
       <PropertyRef Name="PaymentDate" />
       <PropertyRef Name="PaymentEmployeeID" />
+      <PropertyRef Name="RequestNumber" />
     </Key>
     <Property Name="PatientID" Type="Int32" Nullable="false" />
     <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -1056,14 +1056,13 @@
     <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="PaymentEmployeeID" Type="Int32" Nullable="false" />
     <Property Name="PaymentComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="RequestNumber" Type="Int32" />
+    <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="PatientRequestAnalysis_AllStatuses">
     <Key>
       <PropertyRef Name="RequestID" />
       <PropertyRef Name="AnalysisID" />
       <PropertyRef Name="EmployeeID" />
-      <PropertyRef Name="RunNumber" />
       <PropertyRef Name="StatusIdentifier" />
       <PropertyRef Name="StatusName" />
       <PropertyRef Name="StatusID" />
@@ -1085,7 +1084,7 @@
     <Property Name="RequestID" Type="Int32" Nullable="false" />
     <Property Name="AnalysisID" Type="Int32" Nullable="false" />
     <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-    <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -1113,7 +1112,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+    <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
     <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
   </EntityType>
   <EntityType Name="PatientRequestAnalysis_LastStatus">
@@ -1121,7 +1120,6 @@
       <PropertyRef Name="RequestID" />
       <PropertyRef Name="AnalysisID" />
       <PropertyRef Name="EmployeeID" />
-      <PropertyRef Name="RunNumber" />
       <PropertyRef Name="StatusIdentifier" />
       <PropertyRef Name="StatusName" />
       <PropertyRef Name="StatusID" />
@@ -1143,7 +1141,7 @@
     <Property Name="RequestID" Type="Int32" Nullable="false" />
     <Property Name="AnalysisID" Type="Int32" Nullable="false" />
     <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-    <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -1171,7 +1169,7 @@
     <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+    <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
     <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
   </EntityType>
   <Association Name="FK_Analysis_SampleType">

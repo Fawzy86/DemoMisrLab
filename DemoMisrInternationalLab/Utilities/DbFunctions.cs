@@ -644,8 +644,8 @@ namespace DemoMisrInternationalLab.Utilities
                         }
                     }
                     PatientRequest _PatientRequest = new PatientRequest();
-                    int? RequestNumber =  db.GetRequestNumber().FirstOrDefault();
-                    _PatientRequest.RequestNumber = RequestNumber.Value;
+                    var RequestNumber = db.GetRequestNumber().FirstOrDefault();
+                    _PatientRequest.RequestNumber = RequestNumber;
                     _PatientRequest.Comment = PatientRequestInputs.Comment;
                     _PatientRequest.DoctorRefID = PatientRequestInputs.DoctorRefID;
                     _PatientRequest.EmployeeID = EmployeeID;
@@ -734,7 +734,7 @@ namespace DemoMisrInternationalLab.Utilities
                                                           where PendingRequestIDs.Contains(p.RequestID)
                                                           select p).ToList();
 
-                    List<Patient_Request_Status_Analysis_ViewModel> PendingPatientsRequest = Build_Patient_Request_Status_Analysis_ViewModel_List(_PatientRequest_LastStatus, _PatientRequest_Analysis, null);
+                    List<Patient_Request_Status_Analysis_ViewModel> PendingPatientsRequest = Build_Patient_Request_Status_Analysis_ViewModel_List(_PatientRequest_LastStatus, _PatientRequest_Analysis, null, null);
                     return PendingPatientsRequest;
                 }
             }
@@ -747,7 +747,8 @@ namespace DemoMisrInternationalLab.Utilities
         private static List<Patient_Request_Status_Analysis_ViewModel> Build_Patient_Request_Status_Analysis_ViewModel_List(
             List<Patient_PatientRequest_LastStatus> _PatientRequest_LastStatus,
             List<PatientRequest_Analysis> _PatientRequest_Analysis,
-            List<PatientRequestAnalysis_AllStatuses> _PatientRequestAnalysis_AllStatuses)
+            List<PatientRequestAnalysis_AllStatuses> _PatientRequestAnalysis_AllStatuses,
+            List<PatientRequest_Payment> _PatientRequest_Payments)
         {
             try
             {
@@ -781,15 +782,30 @@ namespace DemoMisrInternationalLab.Utilities
                             var _PatientRequestAnalysis_AllStatus = _PatientRequestAnalysis_AllStatuses.Where(a => a.RequestID == Request.RequestID).ToList();
                             if (_PatientRequestAnalysis_AllStatus.Any())
                             {
-                                var PatientAnalysisWithStatus = new PatientRequest_Analysis_Status_ViewModel()
-                                                    {
-                                                        PatientRequestAnalysisStatuses = _PatientRequestAnalysis_AllStatus,
-                                                        PatientRequestAnalysisLastStatus = _PatientRequestAnalysis_AllStatus.OrderByDescending(a => a.StatusDate).FirstOrDefault(),
-                                                    };
-                                PatientRequestLastStatus.PatientRequestAnalyzesWithStatuses.Add(PatientAnalysisWithStatus);
-
+                                var RequestAnalyZesIds = _PatientRequestAnalysis_AllStatus.Select(r => r.RequestedAnalysisID).Distinct();
+                                foreach (var requestedAnalysisId in RequestAnalyZesIds)
+                                {
+                                    var AnalyzesWithStatus = _PatientRequestAnalysis_AllStatus.Where(r => r.RequestedAnalysisID == requestedAnalysisId).ToList();
+                                    var PatientAnalysisWithStatus = new PatientRequest_Analysis_Status_ViewModel()
+                                                        {
+                                                            PatientRequestAnalysisStatuses = AnalyzesWithStatus,
+                                                            PatientRequestAnalysisLastStatus = AnalyzesWithStatus.OrderByDescending(a => a.StatusDate).FirstOrDefault(),
+                                                        };
+                                    PatientRequestLastStatus.PatientRequestAnalyzesWithStatuses.Add(PatientAnalysisWithStatus);
+                                }
                             }
                         }
+
+                        if (_PatientRequest_Payments != null && _PatientRequest_Payments.Any())
+                        {
+                            PatientRequestLastStatus.PatientRequestPayments = _PatientRequest_Payments.Where(p => p.RequestID == Request.RequestID).ToList();
+                            if (PatientRequestLastStatus.PatientRequestPayments.Any())
+                            {
+                                PatientRequestLastStatus.Paid = Convert.ToDecimal(PatientRequestLastStatus.PatientRequestPayments.Select(p => p.PaidAmount).Sum());
+                            }
+                        }
+                        PatientRequestLastStatus.TotalDue = Convert.ToDecimal(Request.TotalPatientCost - PatientRequestLastStatus.Paid);
+
                         if (!String.IsNullOrWhiteSpace(Request.Priority))
                         {
                             string Prefix = String.Empty;
@@ -955,17 +971,17 @@ namespace DemoMisrInternationalLab.Utilities
                     IEnumerable<Patient_PatientRequest_LastStatus> _PatientRequest_LastStatus = new List<Patient_PatientRequest_LastStatus>();
                     if (String.IsNullOrWhiteSpace(SearchPattern))
                     {
-                        _PatientRequest_LastStatus =  (from p in db.Patient_PatientRequest_LastStatus
-                                                            where p.RequestDate >= DateFrom && p.RequestDate < DateTo
-                                                            select p).ToList();
+                        _PatientRequest_LastStatus = (from p in db.Patient_PatientRequest_LastStatus
+                                                      where p.RequestDate >= DateFrom && p.RequestDate < DateTo
+                                                      select p);
                     }
                     else
                     {
                         //// Search by patient name
                         var MatchedByName = (from p in db.Patient_PatientRequest_LastStatus
-                                             where (p.FirstName.Trim() + (p.MiddleName.Trim() == null ? " " : " " + p.MiddleName.Trim() + " ") + p.LastName.Trim()).ToLower().Contains(SearchPattern.Trim().ToLower())
+                                             where (p.FirstName.Trim() + " " + (p.MiddleName == null ? "" : p.MiddleName.Trim() + " ") + (p.LastName == null ? "" : p.LastName.Trim())).ToLower().Contains(SearchPattern.Trim().ToLower())
                                              select p);
-                        _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union( MatchedByName.ToList()).GroupBy(p => p.RequestedRefID).Select(p => p.FirstOrDefault());
+                        _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union( MatchedByName).GroupBy(p => p.RequestedRefID).Select(p => p.FirstOrDefault());
 
 
                         //// Search by Mobile
@@ -1005,19 +1021,21 @@ namespace DemoMisrInternationalLab.Utilities
                                                      where RequestIDsListByAnalysisName.Contains(p.RequestID)
                                                      select p);
                         _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union(MatchedbyAnalysisName).GroupBy(p => p.RequestedRefID).Select(p => p.FirstOrDefault());
-
-                        //// Date range select
-                        _PatientRequest_LastStatus = (from p in _PatientRequest_LastStatus
-                                                      where p.RequestDate >= DateFrom && p.RequestDate < DateTo
-                                                      select p).ToList();
-
                     }
+                    //// Date range select
+                    _PatientRequest_LastStatus = (from p in _PatientRequest_LastStatus
+                                                  where p.RequestDate >= DateFrom && p.RequestDate < DateTo
+                                                  select p).ToList();
 
-                    var RequestIDs = _PatientRequest_LastStatus.Select(p => p.RequestID).ToList();
+                    var RequestIDs = _PatientRequest_LastStatus.Select(p => p.RequestID);
                     var _PatientRequest_Analysis = (from p in db.PatientRequest_Analysis
                                                     where RequestIDs.Contains(p.RequestID)
                                                     select p).ToList();
-                    List<Patient_Request_Status_Analysis_ViewModel> PatientsRequestTransactions = Build_Patient_Request_Status_Analysis_ViewModel_List(_PatientRequest_LastStatus.ToList(), _PatientRequest_Analysis, null);
+
+                    var _PatientRequest_Payments = (from p in db.PatientRequest_Payment
+                                                    where RequestIDs.Contains(p.RequestID)
+                                                    select p).ToList();
+                    List<Patient_Request_Status_Analysis_ViewModel> PatientsRequestTransactions = Build_Patient_Request_Status_Analysis_ViewModel_List(_PatientRequest_LastStatus.ToList(), _PatientRequest_Analysis, null, _PatientRequest_Payments);
                     ///// Sorting by Request Date desc then priority desc
                     PatientsRequestTransactions = PatientsRequestTransactions.OrderByDescending(p => p.PatientRequestStatus.RequestDate).ThenBy(p => p.PriorityOrder).ToList();
                     return PatientsRequestTransactions;
@@ -1187,67 +1205,76 @@ namespace DemoMisrInternationalLab.Utilities
                     {
                         //// Search by patient name
                         var MatchedByName = (from p in db.Patient_PatientRequest_LastStatus
-                                             where (p.FirstName.Trim() + (p.MiddleName.Trim() == null ? " " : " " + p.MiddleName.Trim() + " ") + p.LastName.Trim()).ToLower().Contains(SearchPattern.Trim().ToLower())
+                                             where (p.FirstName.Trim() + " " + (p.MiddleName == null ? "" : p.MiddleName.Trim() + " ") + (p.LastName == null ? "" : p.LastName.Trim())).ToLower().Contains(SearchPattern.Trim().ToLower())
                                              select p);
-                        _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union(MatchedByName.ToList()).GroupBy(p => p.RequestedRefID).Select(p => p.FirstOrDefault());
+                        _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union(MatchedByName).GroupBy(p => p.RequestID).Select(p => p.FirstOrDefault());
 
 
                         //// Search by analysis sample type
                         var RequestIDsListBySampleType = (from p in db.PatientRequest_Analysis
                                                           where p.SampleType.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
-                                                          select p.RequestID).ToList();
+                                                          select p.RequestID);
                         var MatchedbySampleType = (from p in db.Patient_PatientRequest_LastStatus
                                                    where RequestIDsListBySampleType.Contains(p.RequestID)
                                                    select p);
-                        _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union(MatchedbySampleType).GroupBy(p => p.RequestedRefID).Select(p => p.FirstOrDefault());
+                        _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union(MatchedbySampleType).GroupBy(p => p.RequestID).Select(p => p.FirstOrDefault());
 
 
                         //// Search by run number
                         var RequestIDsListByRunNumber = (from p in db.PatientRequest_Analysis
                                                          where p.RunNumber.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
-                                                         select p.RequestID).ToList();
+                                                         select p.RequestID);
                         var MatchedbyRunNumber = (from p in db.Patient_PatientRequest_LastStatus
                                                   where RequestIDsListByRunNumber.Contains(p.RequestID)
                                                   select p);
-                        _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union(MatchedbyRunNumber).GroupBy(p => p.RequestedRefID).Select(p => p.FirstOrDefault());
+                        _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union(MatchedbyRunNumber).GroupBy(p => p.RequestID).Select(p => p.FirstOrDefault());
 
 
                         //// Search by Request Ref ID
                         var MatchedByRequestRefID = (from p in db.Patient_PatientRequest_LastStatus
                                                      where p.RequestedRefID.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
                                                      select p);
-                        _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union(MatchedByRequestRefID).GroupBy(p => p.RequestedRefID).Select(p => p.FirstOrDefault());
+                        _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union(MatchedByRequestRefID).GroupBy(p => p.RequestID).Select(p => p.FirstOrDefault());
 
 
                         //// Search by analysis name
                         var RequestIDsListByAnalysisName = (from p in db.PatientRequest_Analysis
                                                             where p.AnalysisName.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
-                                                            select p.RequestID).ToList();
+                                                            select p.RequestID);
                         var MatchedbyAnalysisName = (from p in db.Patient_PatientRequest_LastStatus
                                                      where RequestIDsListByAnalysisName.Contains(p.RequestID)
                                                      select p);
-                        _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union(MatchedbyAnalysisName).GroupBy(p => p.RequestedRefID).Select(p => p.FirstOrDefault());
+                        _PatientRequest_LastStatus = _PatientRequest_LastStatus.Union(MatchedbyAnalysisName).GroupBy(p => p.RequestID).Select(p => p.FirstOrDefault());
 
                     }
+
                     //// Date range select
                     _PatientRequest_LastStatus = (from p in _PatientRequest_LastStatus
+                                                  join an in db.PatientRequestAnalysis_AllStatuses
+                                                  on p.RequestID equals an.RequestID
                                                   where p.RequestDate >= DateFrom && p.RequestDate < DateTo &&
-                                                   p.StatusIdentifier == Resources.Status.PatientRequestReceived
-                                                  select p).ToList();
+                                                        p.StatusIdentifier == Resources.Status.PatientRequestReceived &&
+                                                        an.StatusIdentifier == Resources.Status.AnalysisSampled
+                                                  select p).Distinct().ToList();
+                    
 
-                    var RequestIDs = _PatientRequest_LastStatus.Select(p => p.RequestID).ToList();
+                    var RequestIDs = _PatientRequest_LastStatus.Select(p => p.RequestID);
                     var _PatientRequest_Analysis = (from p in db.PatientRequest_Analysis
                                                     where RequestIDs.Contains(p.RequestID)
                                                     select p).ToList();
 
 
 
-                    var RequestAnalyzesIds = _PatientRequest_Analysis.Select(a => a.RequestedAnalysisID).ToList();
+                    var RequestAnalyzesIds = _PatientRequest_Analysis.Select(a => a.RequestedAnalysisID);
                     var _PatientRequestAnalysis_AllStatuses = (from p in db.PatientRequestAnalysis_AllStatuses
                                                                where RequestAnalyzesIds.Contains(p.RequestedAnalysisID)
                                                                select p).ToList();
 
-                    List<Patient_Request_Status_Analysis_ViewModel> PatientsRequestTransactions = Build_Patient_Request_Status_Analysis_ViewModel_List(_PatientRequest_LastStatus.ToList(), _PatientRequest_Analysis, _PatientRequestAnalysis_AllStatuses);
+                    var _PatientRequest_Payments = (from p in db.PatientRequest_Payment
+                                                    where RequestIDs.Contains(p.RequestID)
+                                                    select p).ToList();
+
+                    List<Patient_Request_Status_Analysis_ViewModel> PatientsRequestTransactions = Build_Patient_Request_Status_Analysis_ViewModel_List(_PatientRequest_LastStatus.ToList(), _PatientRequest_Analysis, _PatientRequestAnalysis_AllStatuses, _PatientRequest_Payments);
                     ///// Sorting by Request Date desc then priority desc
                     PatientsRequestTransactions = PatientsRequestTransactions.OrderByDescending(p => p.PatientRequestStatus.RequestDate).ThenBy(p => p.PriorityOrder).ToList();
                     return PatientsRequestTransactions;

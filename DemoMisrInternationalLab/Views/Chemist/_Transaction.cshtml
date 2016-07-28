@@ -3,42 +3,46 @@
 <div class="table-scrollb">
     @if (Model.PatientRequestStatusWithAnalyzes.Any())
     {
-        for (int i = 0; i < Model.PatientRequestStatusWithAnalyzes.Count; i++)
-        {
-            <table class="table table-bordered" id="Transactions_Table">
-                <thead>
-                    <tr style="background-color:#61aee2; color:#fff;">
-                        <th width="24%" colspan="2">Request Id : <span style="color:#ffe6d7;">@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestedRefID</span></th>
-                        <th width="24%">
-                            Date : <span style="color:#ffe6d7;">@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestDate.Date.ToString("yyyy-MM-dd")</span>
-                            <span style="padding-left:10px;">-</span> <span style="padding-left:10px;">Time : <span style="color:#ffe6d7;">@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestDate.ToString("hh:mm tt")</span></span>
-                        </th>
-                        <th width="24%" colspan="2">Patient Name : <span style="color:#ffe6d7;">@Model.PatientRequestStatusWithAnalyzes[i].PatientFullName</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var analysis in @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalyzesWithStatuses)
-                    {
-                        <tr style="background-color:#f2f2f2;">
-                            <th width="24%" colspan="2" colspan="2">Sample Number : <span style="color:#de8650;">@analysis.PatientRequestAnalysisLastStatus.RunNumber</span></th>
-                            <th width="24%">Sample Type : <span style="color:#de8650;">@analysis.PatientRequestAnalysisLastStatus.SampleType</span></th>
-                            <th width="24%" colspan="2">Analysis : <span style="color:#de8650;">@analysis.PatientRequestAnalysisLastStatus.AnalysisName</span></th>
+        <div id="Transactions_Tables_Div">
+            @for (int i = 0; i < Model.PatientRequestStatusWithAnalyzes.Count; i++)
+            {
+                <table class="table table-bordered" id="Transactions_Table">
+                    <thead>
+                        <tr style="background-color:#61aee2; color:#fff;">
+                            <th width="24%" colspan="2">Request Id : <span style="color:#ffe6d7;">@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestedRefID</span></th>
+                            <th width="24%">
+                                Date: <span style="color:#ffe6d7;">@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestDate.Date.ToString("yyyy-MM-dd")</span>
+                                <span style="padding-left:2px;">-</span><span style="padding-left:2px;">Time : <span style="color:#ffe6d7;">@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestDate.ToString("hh:mm tt")</span></span>
+                            </th>
+                            <th width="24%" colspan="2">Patient Name : <span style="color:#ffe6d7;">@Model.PatientRequestStatusWithAnalyzes[i].PatientFullName</span></th>
                         </tr>
-                        <tr style="background-color:#ffdfcc;">
-                            <th width="4%"></th>
-                            <th width="24%" style="text-align:center;">Sampling</th>
-                            <th width="24%" style="text-align:center;">Transfer</th>
-                            <th width="24%" style="text-align:center;">Preservation</th>
-                            <th width="24%" style="text-align:center;">Lab</th>
-                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var analysis in @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalyzesWithStatuses)
+                        {
+                            if (analysis.PatientRequestAnalysisLastStatus.StatusIdentifier != Status.AnalysisPendingForSampling)
+                            {
+                                <tr style="background-color:#f2f2f2;">
+                                    <th width="24%" colspan="2" colspan="2">Sample Number : <span style="color:#de8650;">@analysis.PatientRequestAnalysisLastStatus.RunNumber</span></th>
+                                    <th width="24%">Sample Type : <span style="color:#de8650;">@analysis.PatientRequestAnalysisLastStatus.SampleType</span></th>
+                                    <th width="24%" colspan="2">Analysis : <span style="color:#de8650;">@analysis.PatientRequestAnalysisLastStatus.AnalysisName</span></th>
+                                </tr>
+                                <tr style="background-color:#ffdfcc;">
+                                    <th width="4%"></th>
+                                    <th width="24%" style="text-align:center;">Sampling</th>
+                                    <th width="24%" style="text-align:center;">Transfer</th>
+                                    <th width="24%" style="text-align:center;">Preservation</th>
+                                    <th width="24%" style="text-align:center;">Lab</th>
+                                </tr>
 
 
-                        <tr><th style="color:#24ce28;"><i class="fa fa-2x fa-arrow-circle-o-right"></i></th><td>@analysis.SampledDate</td><td>@analysis.TransferredDate</td><td>@analysis.PreservationDate</td><td>@analysis.LabbedDate</td></tr>
-                        <tr><th style="color:#f00000;"><i class="fa fa-2x fa-arrow-circle-o-left"></i></th><td></td><td></td><td></td><td></td></tr>
-
-                    }
-                </tbody>
+                                <tr><th style="color:#24ce28;"><i class="fa fa-2x fa-arrow-circle-o-right"></i></th><td>@analysis.StartSampledDate</td><td>@analysis.StartTransferredDate</td><td>@analysis.StartPreservationDate</td><td>@analysis.StartLabbedDate</td></tr>
+                                <tr><th style="color:#f00000;"><i class="fa fa-2x fa-arrow-circle-o-left"></i></th><td>@analysis.EndSampledDate</td><td>@analysis.EndTransferredDate</td><td>@analysis.EndPreservationDate</td><td>@analysis.EndLabbedDate</td></tr>
+                            }
+                        }
+                    </tbody>
                 </table>
-        }
+            }
+        </div>
     }
 </div>

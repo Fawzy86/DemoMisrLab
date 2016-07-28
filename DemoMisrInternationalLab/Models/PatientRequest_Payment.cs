@@ -33,6 +33,6 @@ namespace DemoMisrInternationalLab.Models
         public System.DateTime PaymentDate { get; set; }
         public int PaymentEmployeeID { get; set; }
         public string PaymentComment { get; set; }
-        public Nullable<int> RequestNumber { get; set; }
+        public string RequestNumber { get; set; }
     }
 }

@@ -238,7 +238,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRefID' does not have a prim
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="RequestNumber" Type="varchar" MaxLength="16" Nullable="false" />
         </EntityType>
         <EntityType Name="PatientRequestAnalysis">
           <Key>
@@ -249,7 +249,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRefID' does not have a prim
           <Property Name="AnalysisID" Type="int" Nullable="false" />
           <Property Name="RequestDate" Type="datetime" Nullable="false" />
           <Property Name="EmployeeID" Type="int" Nullable="false" />
-          <Property Name="RunNumber" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="RunNumber" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="PatientRequestAnalysisStatus">
           <Key>
@@ -313,9 +313,11 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRefID' does not have a prim
 warning 6002: The table/view 'DemoMisrInt.dbo.RequestNumber' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="RequestNumber">
           <Key>
-            <PropertyRef Name="Request_Number" />
+            <PropertyRef Name="Prefix" />
+            <PropertyRef Name="Number" />
           </Key>
-          <Property Name="Request_Number" Type="int" Nullable="false" />
+          <Property Name="Prefix" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -404,7 +406,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest' does not h
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="RequestNumber" Type="varchar" MaxLength="16" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_AllStatuses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -462,7 +464,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_AllStatuses
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="RequestNumber" Type="varchar" MaxLength="16" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_LastStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -520,7 +522,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_LastStatus'
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="RequestNumber" Type="varchar" MaxLength="16" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -535,7 +537,6 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not 
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="AnalysisRequestDate" />
             <PropertyRef Name="RequestAnalysisEmployeeID" />
-            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="AnalysisCode" />
             <PropertyRef Name="AnalysisName" />
             <PropertyRef Name="SampleTypeID" />
@@ -558,7 +559,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not 
           <Property Name="AnalysisID" Type="int" Nullable="false" />
           <Property Name="AnalysisRequestDate" Type="datetime" Nullable="false" />
           <Property Name="RequestAnalysisEmployeeID" Type="int" Nullable="false" />
-          <Property Name="RunNumber" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="RunNumber" Type="varchar" MaxLength="30" />
           <Property Name="AnalysisCode" Type="nchar" MaxLength="20" Nullable="false" />
           <Property Name="AnalysisName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="NormalRange" Type="nvarchar" MaxLength="50" />
@@ -570,7 +571,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not 
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="RequestNumber" Type="varchar" MaxLength="16" Nullable="false" />
           <Property Name="SampleType" Type="nchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -580,7 +581,6 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_PatientRequestAnaly
             <PropertyRef Name="RequestID" />
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="EmployeeID" />
-            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="StatusIdentifier" />
             <PropertyRef Name="StatusName" />
             <PropertyRef Name="StatusID" />
@@ -602,7 +602,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_PatientRequestAnaly
           <Property Name="RequestID" Type="int" Nullable="false" />
           <Property Name="AnalysisID" Type="int" Nullable="false" />
           <Property Name="EmployeeID" Type="int" Nullable="false" />
-          <Property Name="RunNumber" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="RunNumber" Type="varchar" MaxLength="30" />
           <Property Name="StatusIdentifier" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
@@ -630,7 +630,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_PatientRequestAnaly
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="RequestNumber" Type="varchar" MaxLength="16" Nullable="false" />
           <Property Name="SampleType" Type="nchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -640,7 +640,6 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_PatientRequestAnaly
             <PropertyRef Name="RequestID" />
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="EmployeeID" />
-            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="StatusIdentifier" />
             <PropertyRef Name="StatusName" />
             <PropertyRef Name="StatusID" />
@@ -662,7 +661,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_PatientRequestAnaly
           <Property Name="RequestID" Type="int" Nullable="false" />
           <Property Name="AnalysisID" Type="int" Nullable="false" />
           <Property Name="EmployeeID" Type="int" Nullable="false" />
-          <Property Name="RunNumber" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="RunNumber" Type="varchar" MaxLength="30" />
           <Property Name="StatusIdentifier" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
@@ -690,7 +689,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_PatientRequestAnaly
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="RequestNumber" Type="varchar" MaxLength="16" Nullable="false" />
           <Property Name="SampleType" Type="nchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -705,6 +704,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
             <PropertyRef Name="RequestID" />
             <PropertyRef Name="PaymentDate" />
             <PropertyRef Name="PaymentEmployeeID" />
+            <PropertyRef Name="RequestNumber" />
           </Key>
           <Property Name="PatientID" Type="int" Nullable="false" />
           <Property Name="RequestDate" Type="datetime" Nullable="false" />
@@ -725,7 +725,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Payment' does not h
           <Property Name="PaymentDate" Type="datetime" Nullable="false" />
           <Property Name="PaymentEmployeeID" Type="int" Nullable="false" />
           <Property Name="PaymentComment" Type="text" />
-          <Property Name="RequestNumber" Type="int" />
+          <Property Name="RequestNumber" Type="varchar" MaxLength="16" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_AllStatuses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -734,7 +734,6 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_AllStatuses
             <PropertyRef Name="RequestID" />
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="EmployeeID" />
-            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="StatusIdentifier" />
             <PropertyRef Name="StatusName" />
             <PropertyRef Name="StatusID" />
@@ -756,7 +755,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_AllStatuses
           <Property Name="RequestID" Type="int" Nullable="false" />
           <Property Name="AnalysisID" Type="int" Nullable="false" />
           <Property Name="EmployeeID" Type="int" Nullable="false" />
-          <Property Name="RunNumber" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="RunNumber" Type="varchar" MaxLength="30" />
           <Property Name="StatusIdentifier" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
@@ -784,7 +783,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_AllStatuses
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="RequestNumber" Type="varchar" MaxLength="16" Nullable="false" />
           <Property Name="SampleType" Type="nchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -794,7 +793,6 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             <PropertyRef Name="RequestID" />
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="EmployeeID" />
-            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="StatusIdentifier" />
             <PropertyRef Name="StatusName" />
             <PropertyRef Name="StatusID" />
@@ -816,7 +814,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="RequestID" Type="int" Nullable="false" />
           <Property Name="AnalysisID" Type="int" Nullable="false" />
           <Property Name="EmployeeID" Type="int" Nullable="false" />
-          <Property Name="RunNumber" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="RunNumber" Type="varchar" MaxLength="30" />
           <Property Name="StatusIdentifier" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
@@ -844,7 +842,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="int" Nullable="false" />
+          <Property Name="RequestNumber" Type="varchar" MaxLength="16" Nullable="false" />
           <Property Name="SampleType" Type="nchar" MaxLength="20" />
         </EntityType>
         <Association Name="FK_Analysis_SampleType">
@@ -1459,7 +1457,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           </EntitySet>
           <EntitySet Name="RequestNumber" EntityType="Self.RequestNumber" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [RequestNumber].[Request_Number] AS [Request_Number]
+    [RequestNumber].[Prefix] AS [Prefix], 
+    [RequestNumber].[Number] AS [Number]
     FROM [dbo].[RequestNumber] AS [RequestNumber]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="RunNumber" EntityType="Self.RunNumber" store:Type="Tables" store:Schema="dbo">
@@ -1992,7 +1991,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="GetAnalysisRunNumber" ReturnType="Collection(Int32)" />
           <FunctionImport Name="GetPatientRefID" ReturnType="Collection(Int32)" />
-          <FunctionImport Name="GetRequestNumber" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="GetRequestNumber" ReturnType="Collection(String)" />
           <FunctionImport Name="AddPatientRequest" ReturnType="Collection(Int32)">
             <Parameter Name="patientId" Mode="In" Type="Int32" />
             <Parameter Name="doctorRefId" Mode="In" Type="Int32" />
@@ -2509,7 +2508,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DoctorRef" Relationship="DemoMisrIntModel.FK_PatientRequest_DoctorRef" FromRole="PatientRequest" ToRole="DoctorRef" />
           <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_PatientRequest_Employee" FromRole="PatientRequest" ToRole="Employee" />
           <NavigationProperty Name="Organization" Relationship="DemoMisrIntModel.FK_PatientRequest_Organization" FromRole="PatientRequest" ToRole="Organization" />
@@ -2527,7 +2526,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="AnalysisID" Type="Int32" Nullable="false" />
           <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-          <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Analysis" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysis_Analysis" FromRole="PatientRequestAnalysi" ToRole="Analysis" />
           <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysis_Employee" FromRole="PatientRequestAnalysi" ToRole="Employee" />
           <NavigationProperty Name="PatientRequest" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysis_PatientRequest" FromRole="PatientRequestAnalysi" ToRole="PatientRequest" />
@@ -2656,9 +2655,11 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
         </EntityType>
         <EntityType Name="RequestNumber">
           <Key>
-            <PropertyRef Name="Request_Number" />
+            <PropertyRef Name="Prefix" />
+            <PropertyRef Name="Number" />
           </Key>
-          <Property Name="Request_Number" Type="Int32" Nullable="false" />
+          <Property Name="Prefix" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="RunNumber">
           <Key>
@@ -2706,7 +2707,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Patient_PatientRequest_AllStatuses">
           <Key>
@@ -2762,7 +2763,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Patient_PatientRequest_LastStatus">
           <Key>
@@ -2818,7 +2819,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PatientRequest_Analysis">
           <Key>
@@ -2831,7 +2832,6 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="AnalysisRequestDate" />
             <PropertyRef Name="RequestAnalysisEmployeeID" />
-            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="AnalysisCode" />
             <PropertyRef Name="AnalysisName" />
             <PropertyRef Name="SampleTypeID" />
@@ -2854,7 +2854,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="AnalysisID" Type="Int32" Nullable="false" />
           <Property Name="AnalysisRequestDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RequestAnalysisEmployeeID" Type="Int32" Nullable="false" />
-          <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="AnalysisCode" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Name="AnalysisName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NormalRange" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2866,7 +2866,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="PatientRequest_PatientRequestAnalysis_AllStatuses">
@@ -2874,7 +2874,6 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             <PropertyRef Name="RequestID" />
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="EmployeeID" />
-            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="StatusIdentifier" />
             <PropertyRef Name="StatusName" />
             <PropertyRef Name="StatusID" />
@@ -2896,7 +2895,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="RequestID" Type="Int32" Nullable="false" />
           <Property Name="AnalysisID" Type="Int32" Nullable="false" />
           <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-          <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -2924,7 +2923,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="PatientRequest_PatientRequestAnalysis_LastStatus">
@@ -2932,7 +2931,6 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             <PropertyRef Name="RequestID" />
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="EmployeeID" />
-            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="StatusIdentifier" />
             <PropertyRef Name="StatusName" />
             <PropertyRef Name="StatusID" />
@@ -2954,7 +2952,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="RequestID" Type="Int32" Nullable="false" />
           <Property Name="AnalysisID" Type="Int32" Nullable="false" />
           <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-          <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -2982,7 +2980,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="PatientRequest_Payment">
@@ -2995,6 +2993,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             <PropertyRef Name="RequestID" />
             <PropertyRef Name="PaymentDate" />
             <PropertyRef Name="PaymentEmployeeID" />
+            <PropertyRef Name="RequestNumber" />
           </Key>
           <Property Name="PatientID" Type="Int32" Nullable="false" />
           <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -3015,14 +3014,13 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PaymentEmployeeID" Type="Int32" Nullable="false" />
           <Property Name="PaymentComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="RequestNumber" Type="Int32" />
+          <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PatientRequestAnalysis_AllStatuses">
           <Key>
             <PropertyRef Name="RequestID" />
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="EmployeeID" />
-            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="StatusIdentifier" />
             <PropertyRef Name="StatusName" />
             <PropertyRef Name="StatusID" />
@@ -3044,7 +3042,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="RequestID" Type="Int32" Nullable="false" />
           <Property Name="AnalysisID" Type="Int32" Nullable="false" />
           <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-          <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -3072,7 +3070,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="PatientRequestAnalysis_LastStatus">
@@ -3080,7 +3078,6 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             <PropertyRef Name="RequestID" />
             <PropertyRef Name="AnalysisID" />
             <PropertyRef Name="EmployeeID" />
-            <PropertyRef Name="RunNumber" />
             <PropertyRef Name="StatusIdentifier" />
             <PropertyRef Name="StatusName" />
             <PropertyRef Name="StatusID" />
@@ -3102,7 +3099,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="RequestID" Type="Int32" Nullable="false" />
           <Property Name="AnalysisID" Type="Int32" Nullable="false" />
           <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-          <Property Name="RunNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -3130,7 +3127,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RequestNumber" Type="Int32" Nullable="false" />
+          <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
         </EntityType>
         <Association Name="FK_Analysis_SampleType">
@@ -4063,7 +4060,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <EntitySetMapping Name="RequestNumbers">
             <EntityTypeMapping TypeName="DemoMisrIntModel.RequestNumber">
               <MappingFragment StoreEntitySet="RequestNumber">
-                <ScalarProperty Name="Request_Number" ColumnName="Request_Number" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
