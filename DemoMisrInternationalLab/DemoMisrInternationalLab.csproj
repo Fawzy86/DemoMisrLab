@@ -168,183 +168,206 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomerCareController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PreservationController.cs" />
+    <Compile Include="Controllers\LabController.cs" />
     <Compile Include="Controllers\ChemistController.cs" />
     <Compile Include="Controllers\TestBarCodeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Analysis.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AnalysisResult.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AnalysisResultStatu.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\AnalysisUnitDeviceViewModel.cs" />
     <Compile Include="Models\AnalysisViewModel.cs" />
-    <Compile Include="Models\CategoryType.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\City.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CitiesViewModel.cs" />
-    <Compile Include="Models\Condition.cs">
+    <Compile Include="Models\DoctorRefViewModel.cs" />
+    <Compile Include="Models\DoctorsRefViewModel.cs" />
+    <Compile Include="Models\DoctorsSpecializationsViewModel.cs" />
+    <Compile Include="Models\EntityModel\Analysis.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DemoMisrLab.Context.cs">
+    <Compile Include="Models\EntityModel\AnalysisResult.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\AnalysisResultStatu.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Analysis_Unit_Device_Sample.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\CategoryType.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\City.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Condition.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\DemoMisrLab.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DemoMisrLab.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DemoMisrLab.cs">
+    <Compile Include="Models\EntityModel\DemoMisrLab.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DemoMisrLab.Designer.cs">
+    <Compile Include="Models\EntityModel\DemoMisrLab.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DemoMisrLab.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\DoctorRef.cs">
+    <Compile Include="Models\EntityModel\Device.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DoctorRefViewModel.cs" />
-    <Compile Include="Models\DoctorSpecialization.cs">
+    <Compile Include="Models\EntityModel\DeviceAnalysi.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DoctorsRefViewModel.cs" />
-    <Compile Include="Models\DoctorsSpecializationsViewModel.cs" />
-    <Compile Include="Models\Employee.cs">
+    <Compile Include="Models\EntityModel\DevicePlan.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entity.cs">
+    <Compile Include="Models\EntityModel\DoctorRef.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EntityAction.cs">
+    <Compile Include="Models\EntityModel\DoctorSpecialization.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Employee.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Entity.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\EntityAction.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\JobTitle.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\LabBranch.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\NotDeliveredAnalysi.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\NotDeliveredReason.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Organization.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\OrganizationCondition.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\OrganizationConsuming.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\OrganizationInfo.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Package.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\PackageCostList.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Patient.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\PatientRefID.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\PatientRequest.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\PatientRequestAnalysi.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\PatientRequestAnalysisStatu.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\PatientRequestAnalysis_AllStatuses.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\PatientRequestAnalysis_LastStatus.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\PatientRequestPayment.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\PatientRequestStatu.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\PatientRequest_Analysis.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\PatientRequest_Payment.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Patient_PatientRequest.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Patient_PatientRequest_AllStatuses.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Patient_PatientRequest_LastStatus.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Patient_PatientRequest_PatientRequestAnalysis_AllStatuses.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Patient_PatientRequest_PatientRequestAnalysis_LastStatus.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Permission.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Priority.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Province.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\RejectedAnalysi.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\RejectionResson.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\RequestNumber.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Role.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\RunNumber.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\SampleType.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Status.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Unit.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\User.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\JobTitle.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LabBranch.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Organization.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\OrganizationCondition.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\OrganizationConsuming.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\OrganizationInfo.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\OrganizationsViewModel.cs" />
-    <Compile Include="Models\Package.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PackageCostList.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Patient.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PatientRefID.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PatientRequest.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PatientRequestAnalysi.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PatientRequestAnalysisStatu.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PatientRequestAnalysisViewModel.cs" />
-    <Compile Include="Models\PatientRequestAnalysis_AllStatuses.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PatientRequestAnalysis_LastStatus.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PatientRequestInputsDataModel.cs" />
-    <Compile Include="Models\PatientRequestPayment.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PatientRequestStatu.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PatientRequestViewModel.cs" />
     <Compile Include="Models\PatientInfoViewModel.cs" />
-    <Compile Include="Models\PatientRequest_Analysis.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PatientRequest_Analysis_Status_ViewModel.cs" />
-    <Compile Include="Models\PatientRequest_PatientRequestAnalysis_AllStatuses.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PatientRequest_PatientRequestAnalysis_LastStatus.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PatientRequest_Payment.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PatientsRequestsAllViewModel.cs" />
-    <Compile Include="Models\Patient_PatientRequest.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Patient_PatientRequest_AllStatuses.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Patient_PatientRequest_LastStatus.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel.cs" />
     <Compile Include="Models\Patient_Request_Status_Analysis_ViewModel.cs" />
-    <Compile Include="Models\Permission.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PreservationViewModel.cs" />
-    <Compile Include="Models\Priority.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Province.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\AnalyzesViewModel.cs" />
     <Compile Include="Models\ProvincesViewModel.cs" />
-    <Compile Include="Models\RequestNumber.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Role.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\RunNumber.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SampleType.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Status.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\User.cs">
-      <DependentUpon>DemoMisrLab.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\CategoryType.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -798,12 +821,12 @@
     <Content Include="js\validation-custom.js" />
     <Content Include="js\wysihtml5-0.3.0.js" />
     <Content Include="js\wysiwyg-custom.js" />
-    <Content Include="Models\DemoMisrLab.Context.tt">
+    <Content Include="Models\EntityModel\DemoMisrLab.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DemoMisrLab.edmx</DependentUpon>
       <LastGenOutput>DemoMisrLab.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\DemoMisrLab.tt">
+    <Content Include="Models\EntityModel\DemoMisrLab.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DemoMisrLab.edmx</DependentUpon>
       <LastGenOutput>DemoMisrLab.cs</LastGenOutput>
@@ -815,13 +838,6 @@
     <Content Include="nicelabel\js\jquery.nicelabel.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\DemoMisrLab.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DemoMisrLab.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\DemoMisrLab.edmx.diagram">
-      <DependentUpon>DemoMisrLab.edmx</DependentUpon>
-    </Content>
     <Content Include="css\bootstrap-theme.css.map" />
     <Content Include="css\bootstrap.css.map" />
     <Content Include="less\404.less" />
@@ -840,6 +856,13 @@
     <Content Include="fonts\timelineicons\ecoico.eot" />
     <Content Include="fonts\timelineicons\ecoico.ttf" />
     <Content Include="fonts\timelineicons\ecoico.woff" />
+    <EntityDeploy Include="Models\EntityModel\DemoMisrLab.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DemoMisrLab.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\EntityModel\DemoMisrLab.edmx.diagram">
+      <DependentUpon>DemoMisrLab.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\MisrLab.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomerCare\ClosePatientRequestResultPopup.js" />
@@ -918,6 +941,9 @@
     <Content Include="Views\Chemist\_TransferredSamples.cshtml" />
     <Content Include="Views\Chemist\_Transaction.cshtml" />
     <Content Include="Views\Chemist\_ChemistTransactions.cshtml" />
+    <Content Include="Views\Lab\Index.cshtml" />
+    <Content Include="Views\Lab\_Lab.cshtml" />
+    <Content Include="Views\Lab\_ReceivedAnalyzes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

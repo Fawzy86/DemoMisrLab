@@ -359,7 +359,7 @@
     $(document).ajaxStart(function () {
         try {
             $("#LabToLab_PatientRequest_Form").prop('disabled', true);
-            $("#LabToLab_PatientRequest_Form").hide();
+            //$("#LabToLab_PatientRequest_Form").hide();
             $("#LabToLab_Loading").show();
         }
         catch (err) {
@@ -369,7 +369,7 @@
     $(document).ajaxStop(function () {
         try {
             $("#LabToLab_PatientRequest_Form").prop('disabled', true);
-            $("#LabToLab_PatientRequest_Form").show();
+            //$("#LabToLab_PatientRequest_Form").show();
             $("#LabToLab_Loading").hide();
         }
         catch (err) {

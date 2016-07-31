@@ -1,4 +1,5 @@
 ﻿using DemoMisrInternationalLab.Models;
+using DemoMisrInternationalLab.Models.EntityModel;
 using DemoMisrInternationalLab.Security;
 using DemoMisrInternationalLab.Utilities;
 using System;

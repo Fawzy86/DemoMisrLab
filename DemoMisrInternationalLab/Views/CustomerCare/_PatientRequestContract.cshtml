@@ -358,7 +358,7 @@
     $(document).ajaxStart(function () {
         try {
             $("#Contract_PatientRequest_Form").prop('disabled', true);
-            $("#Contract_PatientRequest_Form").hide();
+            //$("#Contract_PatientRequest_Form").hide();
             $("#Contract_Loading").show();
         }
         catch (err) {
@@ -368,7 +368,7 @@
     $(document).ajaxStop(function () {
         try {
             $("#Contract_PatientRequest_Form").prop('disabled', true);
-            $("#Contract_PatientRequest_Form").show();
+            //$("#Contract_PatientRequest_Form").show();
             $("#Contract_Loading").hide();
         }
         catch (err) {

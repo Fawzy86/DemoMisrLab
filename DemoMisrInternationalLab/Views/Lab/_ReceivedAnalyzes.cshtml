@@ -1,0 +1,76 @@
+﻿@model DemoMisrInternationalLab.Models.PatientRequestAnalysisViewModel
+<div class="table-scrollb">
+    @if (Model.PatientRequestAnalyzes != null && Model.PatientRequestAnalyzes.Any())
+    {
+        <table class="table table-bordered" id="Received_Analyzes_Table">
+            <thead>
+                <tr style="background-color:#61aee2; color:#fff;">
+                    <th width="7%">Run Num.</th>
+                    <th width="20%">R.Time</th>
+                    <th>Analysic Name</th>
+                    <th width="7%">Analysic Type</th>
+                    <th width="7%">Gender</th>
+                    <th width="7%">Age</th>
+                    <th width="35%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.PatientRequestAnalyzes.Count; i++)
+                {
+                    var Age = Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.BirthDate!=null  ? (DateTime.Now.Year - Convert.ToDateTime(Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.BirthDate).Year).ToString() : String.Empty;
+                    <tr>
+                        <td height="20">@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RunNumber</td>
+                        <td>@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.StatusDate</td>
+                        <td>@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.AnalysisName</td>
+                        <td>@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.SampleType</td>
+                        <td>@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.Gender</td>
+                        <td>@Age</td>
+                        <td align="right" style="width:24%;">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning btn-sm btn-animate-demo" onclick="ReceivedAnalyzes(@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID,@Model.PatientRequestAnalyzes[i].DefaultDevice.DeviceId);">@Model.PatientRequestAnalyzes[i].DefaultDevice.DeviceName</button>
+                                <button type="button" class="btn btn-warning btn-sm dropdown-toggle btn-animate-demo" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    @foreach (var device in @Model.PatientRequestAnalyzes[i].Devices)
+                                    {
+                                        <li><a href="#" onclick="ReceivedAnalyzes(@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID,@device.DeviceId);">@device.DeviceName</a></li>
+                                    }
+                                </ul>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning btn-sm btn-animate-demo">Rejected</button>
+                                <button type="button" class="btn btn-warning btn-sm dropdown-toggle btn-animate-demo" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    @foreach(var )
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning btn-sm btn-animate-demo">Undeliverd</button>
+                                <button type="button" class="btn btn-warning btn-sm dropdown-toggle btn-animate-demo" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                </ul>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

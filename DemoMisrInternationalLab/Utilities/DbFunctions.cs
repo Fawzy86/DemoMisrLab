@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Data.Entity;
+using DemoMisrInternationalLab.Models.EntityModel;
 
 namespace DemoMisrInternationalLab.Utilities
 {
@@ -1050,15 +1051,18 @@ namespace DemoMisrInternationalLab.Utilities
         /// ///////////////////////////
         /// </summary>
         /// <returns></returns>
-        public static  List<PatientRequest_PatientRequestAnalysis_LastStatus> GetRequestAnalyzesWithStatus(string StatusIdentifier)
+        public static  List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel> GetRequestAnalyzesWithStatus(string StatusIdentifier)
         {
             try
             {
                 using (DemoMisrIntEntities db = new DemoMisrIntEntities())
                 {
-                    var _RequestAnalyzes =  (from r in db.PatientRequest_PatientRequestAnalysis_LastStatus
-                                                  where r.StatusIdentifier == StatusIdentifier
-                                                  select r).ToList();
+                    var _RequestAnalyzes = (from r in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus
+                                            where r.StatusIdentifier == StatusIdentifier
+                                            select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel()
+                                            {
+                                                PatientRequestAnalysis = r
+                                            }).ToList();
                     return _RequestAnalyzes;
                 }
             }
@@ -1154,7 +1158,7 @@ namespace DemoMisrInternationalLab.Utilities
                                 var _RequestedAnalsis =  db.PatientRequestAnalysis.Where(r => r.RequestedAnalysisID == requestedAnalysisID).FirstOrDefault();
                                 if (_RequestedAnalsis != null)
                                 {
-                                    if (_RequestedAnalsis.RunNumber == null)
+                                    if (StatusIdentifier == Resources.Status.AnalysisSampled)// _RequestedAnalsis.RunNumber == null)
                                     {
                                         int? RunNumber = db.GetAnalysisRunNumber().FirstOrDefault();
                                         _RequestedAnalsis.RunNumber = _RequestedAnalsis.PatientRequest.RequestNumber + " -" + RunNumber.Value;
@@ -1285,5 +1289,119 @@ namespace DemoMisrInternationalLab.Utilities
                 throw new Exception(ex.Message);
             }
         }
+
+        /// <summary>
+        /// ///////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        public static List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel> GetReceivedAnalyzesWithDevices(string StatusIdentifier)
+        {
+            try
+            {
+                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                {
+                    var _RequestAnalyzes = (from r in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus
+                                            where r.StatusIdentifier == StatusIdentifier
+                                            select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel()
+                                            {
+                                                PatientRequestAnalysis = r
+                                            }).ToList();
+                    foreach (var analysis in _RequestAnalyzes)
+                    {
+                        analysis.Devices = db.Devices.Where(u => u.UnitId == analysis.PatientRequestAnalysis.UnitId).ToList();
+                        if (analysis.Devices != null && analysis.Devices.Any())
+                        {
+                            analysis.DefaultDevice = analysis.Devices.Where(a => a.IsDefalutUnitDevice).FirstOrDefault();
+                        }
+                        if (analysis.DefaultDevice == null)
+                        {
+                            analysis.DefaultDevice = analysis.Devices.FirstOrDefault();
+                        }
+                    }
+                    return _RequestAnalyzes;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static void ReceiveAnalysisOnDevice(int RequestedAnalysisId, int DeviceId, string UserName)
+        {
+            try
+            {
+                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                {
+                    if (RequestedAnalysisId != 0 && DeviceId != 0)
+                    {
+                        int EmployeeID = GetUserEmployeeId(UserName);
+
+                        try
+                        {
+                            var _RequestedAnalsis = db.PatientRequestAnalysis.Where(r => r.RequestedAnalysisID == RequestedAnalysisId).FirstOrDefault();
+                            if (_RequestedAnalsis != null)
+                            {
+                                DeviceAnalysi _DeviceAnalysis = new DeviceAnalysi()
+                                {
+                                    DeviceId = DeviceId,
+                                    EmployeeId = EmployeeID,
+                                    ReceiveDate = DateTime.Now,
+                                    RequestedAnalysisId = RequestedAnalysisId
+                                };
+                                db.DeviceAnalysis.Add(_DeviceAnalysis);
+                                db.SaveChanges();
+                                List<int> RequestedAnalyzesIds = new List<int>();
+                                RequestedAnalyzesIds.Add(RequestedAnalysisId);
+                                AddNewRequestAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.AnalysisReceivedOnDevice, UserName);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static List<RejectionResson> GetRejectionReasons()
+        {
+            try
+            {
+                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                {
+                    var _RejectionRessons = (from r in db.RejectionRessons
+                                            select r).ToList();
+                    return _RejectionRessons;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static List<NotDeliveredReason> GetNotDeliveredReasons()
+        {
+            try
+            {
+                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                {
+                    var _NotDeliveredReasons = (from r in db.NotDeliveredReasons
+                                                select r).ToList();
+                    return _NotDeliveredReasons;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

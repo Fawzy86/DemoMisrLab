@@ -32,6 +32,7 @@
     <EntitySetMapping Name="Analyses">
       <EntityTypeMapping TypeName="DemoMisrIntModel.Analysis">
         <MappingFragment StoreEntitySet="Analysis">
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
           <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
           <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
           <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
@@ -90,6 +91,17 @@
           <ScalarProperty Name="RequiredData" ColumnName="RequiredData" />
           <ScalarProperty Name="ConditionName" ColumnName="ConditionName" />
           <ScalarProperty Name="ConditionID" ColumnName="ConditionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Devices">
+      <EntityTypeMapping TypeName="DemoMisrIntModel.Device">
+        <MappingFragment StoreEntitySet="Device">
+          <ScalarProperty Name="IsDefalutUnitDevice" ColumnName="IsDefalutUnitDevice" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="DeviceDescription" ColumnName="DeviceDescription" />
+          <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+          <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -378,6 +390,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Units">
+      <EntityTypeMapping TypeName="DemoMisrIntModel.Unit">
+        <MappingFragment StoreEntitySet="Unit">
+          <ScalarProperty Name="UnitDescription" ColumnName="UnitDescription" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="DemoMisrIntModel.User">
         <MappingFragment StoreEntitySet="User">
@@ -410,6 +431,28 @@
       <EntityTypeMapping TypeName="DemoMisrIntModel.RunNumber">
         <MappingFragment StoreEntitySet="RunNumber">
           <ScalarProperty Name="RunNum" ColumnName="RunNum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Analysis_Unit_Device_Sample">
+      <EntityTypeMapping TypeName="DemoMisrIntModel.Analysis_Unit_Device_Sample">
+        <MappingFragment StoreEntitySet="Analysis_Unit_Device_Sample">
+          <ScalarProperty Name="UnitDescription" ColumnName="UnitDescription" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="SampleType" ColumnName="SampleType" />
+          <ScalarProperty Name="SampleTypeID" ColumnName="SampleTypeID" />
+          <ScalarProperty Name="IsDefalutUnitDevice" ColumnName="IsDefalutUnitDevice" />
+          <ScalarProperty Name="DeviceDescription" ColumnName="DeviceDescription" />
+          <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+          <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+          <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+          <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
+          <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
+          <ScalarProperty Name="NormalRange" ColumnName="NormalRange" />
+          <ScalarProperty Name="AnalysisName" ColumnName="AnalysisName" />
+          <ScalarProperty Name="AnalysisCode" ColumnName="AnalysisCode" />
+          <ScalarProperty Name="AnalysisID" ColumnName="AnalysisID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -568,84 +611,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PatientRequest_PatientRequestAnalysis_AllStatuses">
-      <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequest_PatientRequestAnalysis_AllStatuses">
-        <MappingFragment StoreEntitySet="PatientRequest_PatientRequestAnalysis_AllStatuses">
-          <ScalarProperty Name="SampleType" ColumnName="SampleType" />
-          <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
-          <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
-          <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
-          <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
-          <ScalarProperty Name="ExtraDiscount" ColumnName="ExtraDiscount" />
-          <ScalarProperty Name="AttachmentSession" ColumnName="AttachmentSession" />
-          <ScalarProperty Name="RequestedRefID" ColumnName="RequestedRefID" />
-          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="Priority" ColumnName="Priority" />
-          <ScalarProperty Name="DoctorRefID" ColumnName="DoctorRefID" />
-          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
-          <ScalarProperty Name="PatientID" ColumnName="PatientID" />
-          <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
-          <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
-          <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
-          <ScalarProperty Name="SampleTypeID" ColumnName="SampleTypeID" />
-          <ScalarProperty Name="NormalRange" ColumnName="NormalRange" />
-          <ScalarProperty Name="AnalysisName" ColumnName="AnalysisName" />
-          <ScalarProperty Name="AnalysisCode" ColumnName="AnalysisCode" />
-          <ScalarProperty Name="RequestedAnalysisID" ColumnName="RequestedAnalysisID" />
-          <ScalarProperty Name="RequestAnalysisStatusID" ColumnName="RequestAnalysisStatusID" />
-          <ScalarProperty Name="PatientRequestAnalysisStatusComment" ColumnName="PatientRequestAnalysisStatusComment" />
-          <ScalarProperty Name="PatientRequestAnalysisStatusEmployeeId" ColumnName="PatientRequestAnalysisStatusEmployeeId" />
-          <ScalarProperty Name="StatusDate" ColumnName="StatusDate" />
-          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
-          <ScalarProperty Name="StatusIdentifier" ColumnName="StatusIdentifier" />
-          <ScalarProperty Name="RunNumber" ColumnName="RunNumber" />
-          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
-          <ScalarProperty Name="AnalysisID" ColumnName="AnalysisID" />
-          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PatientRequest_PatientRequestAnalysis_LastStatus">
-      <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequest_PatientRequestAnalysis_LastStatus">
-        <MappingFragment StoreEntitySet="PatientRequest_PatientRequestAnalysis_LastStatus">
-          <ScalarProperty Name="SampleType" ColumnName="SampleType" />
-          <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
-          <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
-          <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
-          <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
-          <ScalarProperty Name="ExtraDiscount" ColumnName="ExtraDiscount" />
-          <ScalarProperty Name="AttachmentSession" ColumnName="AttachmentSession" />
-          <ScalarProperty Name="RequestedRefID" ColumnName="RequestedRefID" />
-          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="Priority" ColumnName="Priority" />
-          <ScalarProperty Name="DoctorRefID" ColumnName="DoctorRefID" />
-          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
-          <ScalarProperty Name="PatientID" ColumnName="PatientID" />
-          <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
-          <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
-          <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
-          <ScalarProperty Name="SampleTypeID" ColumnName="SampleTypeID" />
-          <ScalarProperty Name="NormalRange" ColumnName="NormalRange" />
-          <ScalarProperty Name="AnalysisName" ColumnName="AnalysisName" />
-          <ScalarProperty Name="AnalysisCode" ColumnName="AnalysisCode" />
-          <ScalarProperty Name="RequestedAnalysisID" ColumnName="RequestedAnalysisID" />
-          <ScalarProperty Name="RequestAnalysisStatusID" ColumnName="RequestAnalysisStatusID" />
-          <ScalarProperty Name="PatientRequestAnalysisStatusComment" ColumnName="PatientRequestAnalysisStatusComment" />
-          <ScalarProperty Name="PatientRequestAnalysisStatusEmployeeId" ColumnName="PatientRequestAnalysisStatusEmployeeId" />
-          <ScalarProperty Name="StatusDate" ColumnName="StatusDate" />
-          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
-          <ScalarProperty Name="StatusIdentifier" ColumnName="StatusIdentifier" />
-          <ScalarProperty Name="RunNumber" ColumnName="RunNumber" />
-          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
-          <ScalarProperty Name="AnalysisID" ColumnName="AnalysisID" />
-          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="PatientRequest_Payment">
       <EntityTypeMapping TypeName="DemoMisrIntModel.PatientRequest_Payment">
         <MappingFragment StoreEntitySet="PatientRequest_Payment">
@@ -727,6 +692,112 @@
           <ScalarProperty Name="DoctorRefID" ColumnName="DoctorRefID" />
           <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
           <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+          <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+          <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
+          <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
+          <ScalarProperty Name="SampleTypeID" ColumnName="SampleTypeID" />
+          <ScalarProperty Name="NormalRange" ColumnName="NormalRange" />
+          <ScalarProperty Name="AnalysisName" ColumnName="AnalysisName" />
+          <ScalarProperty Name="AnalysisCode" ColumnName="AnalysisCode" />
+          <ScalarProperty Name="RequestedAnalysisID" ColumnName="RequestedAnalysisID" />
+          <ScalarProperty Name="RequestAnalysisStatusID" ColumnName="RequestAnalysisStatusID" />
+          <ScalarProperty Name="PatientRequestAnalysisStatusComment" ColumnName="PatientRequestAnalysisStatusComment" />
+          <ScalarProperty Name="PatientRequestAnalysisStatusEmployeeId" ColumnName="PatientRequestAnalysisStatusEmployeeId" />
+          <ScalarProperty Name="StatusDate" ColumnName="StatusDate" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="StatusIdentifier" ColumnName="StatusIdentifier" />
+          <ScalarProperty Name="RunNumber" ColumnName="RunNumber" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="AnalysisID" ColumnName="AnalysisID" />
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Patient_PatientRequest_PatientRequestAnalysis_AllStatuses">
+      <EntityTypeMapping TypeName="DemoMisrIntModel.Patient_PatientRequest_PatientRequestAnalysis_AllStatuses">
+        <MappingFragment StoreEntitySet="Patient_PatientRequest_PatientRequestAnalysis_AllStatuses">
+          <ScalarProperty Name="LastDataModified" ColumnName="LastDataModified" />
+          <ScalarProperty Name="RegisteredDate" ColumnName="RegisteredDate" />
+          <ScalarProperty Name="ReferenceID" ColumnName="ReferenceID" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="NationalID" ColumnName="NationalID" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+          <ScalarProperty Name="SampleType" ColumnName="SampleType" />
+          <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
+          <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
+          <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
+          <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
+          <ScalarProperty Name="ExtraDiscount" ColumnName="ExtraDiscount" />
+          <ScalarProperty Name="AttachmentSession" ColumnName="AttachmentSession" />
+          <ScalarProperty Name="RequestedRefID" ColumnName="RequestedRefID" />
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="Priority" ColumnName="Priority" />
+          <ScalarProperty Name="DoctorRefID" ColumnName="DoctorRefID" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+          <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+          <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
+          <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />
+          <ScalarProperty Name="SampleTypeID" ColumnName="SampleTypeID" />
+          <ScalarProperty Name="NormalRange" ColumnName="NormalRange" />
+          <ScalarProperty Name="AnalysisName" ColumnName="AnalysisName" />
+          <ScalarProperty Name="AnalysisCode" ColumnName="AnalysisCode" />
+          <ScalarProperty Name="RequestedAnalysisID" ColumnName="RequestedAnalysisID" />
+          <ScalarProperty Name="RequestAnalysisStatusID" ColumnName="RequestAnalysisStatusID" />
+          <ScalarProperty Name="PatientRequestAnalysisStatusComment" ColumnName="PatientRequestAnalysisStatusComment" />
+          <ScalarProperty Name="PatientRequestAnalysisStatusEmployeeId" ColumnName="PatientRequestAnalysisStatusEmployeeId" />
+          <ScalarProperty Name="StatusDate" ColumnName="StatusDate" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="StatusIdentifier" ColumnName="StatusIdentifier" />
+          <ScalarProperty Name="RunNumber" ColumnName="RunNumber" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="AnalysisID" ColumnName="AnalysisID" />
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Patient_PatientRequest_PatientRequestAnalysis_LastStatus">
+      <EntityTypeMapping TypeName="DemoMisrIntModel.Patient_PatientRequest_PatientRequestAnalysis_LastStatus">
+        <MappingFragment StoreEntitySet="Patient_PatientRequest_PatientRequestAnalysis_LastStatus">
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="ReferenceID" ColumnName="ReferenceID" />
+          <ScalarProperty Name="LastDataModified" ColumnName="LastDataModified" />
+          <ScalarProperty Name="RegisteredDate" ColumnName="RegisteredDate" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="NationalID" ColumnName="NationalID" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+          <ScalarProperty Name="SampleType" ColumnName="SampleType" />
+          <ScalarProperty Name="RequestNumber" ColumnName="RequestNumber" />
+          <ScalarProperty Name="TotalOrganizationCost" ColumnName="TotalOrganizationCost" />
+          <ScalarProperty Name="TotalPatientCost" ColumnName="TotalPatientCost" />
+          <ScalarProperty Name="ExtraCost" ColumnName="ExtraCost" />
+          <ScalarProperty Name="ExtraDiscount" ColumnName="ExtraDiscount" />
+          <ScalarProperty Name="AttachmentSession" ColumnName="AttachmentSession" />
+          <ScalarProperty Name="RequestedRefID" ColumnName="RequestedRefID" />
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="Priority" ColumnName="Priority" />
+          <ScalarProperty Name="DoctorRefID" ColumnName="DoctorRefID" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
           <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
           <ScalarProperty Name="MaximumValue" ColumnName="MaximumValue" />
           <ScalarProperty Name="MinimumValue" ColumnName="MinimumValue" />

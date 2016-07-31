@@ -6,21 +6,22 @@
     {
         for (int i = 0; i < Model.PatientRequestAnalyzes.Count; i++)
         {
-            @Html.HiddenFor(x => Model.PatientRequestAnalyzes[i].RequestedAnalysisID)
+            @Html.HiddenFor(x => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID)
             <div class="ck-button">
                 <label>
                     <input type="checkbox" name="SelectedRequestAnalyzesIDs"
-                           id="@Model.PatientRequestAnalyzes[i].RequestedAnalysisID"
-                           value="@Model.PatientRequestAnalyzes[i].RequestedAnalysisID"
-                           @{if (Model.SelectedRequestAnalyzesIDs.Contains(@Model.PatientRequestAnalyzes[i].RequestedAnalysisID)) { <text> checked='checked' </text>                   } } />
+                           id="@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID"
+                           value="@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID"
+                           @{if (Model.SelectedRequestAnalyzesIDs.Contains(@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID))
+                             { <text> checked='checked' </text>                     } } />
 
                     <span>
 
                         <table width="100%">
 
                             <tr>
-                                <td width="8%">@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].RequestNumber)</td>
-                                <td width="82%">@Html.DisplayFor(x => Model.PatientRequestAnalyzes[i].AnalysisName)</td>
+                                <td width="8%">@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestNumber)</td>
+                                <td width="82%">@Html.DisplayFor(x => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.AnalysisName)</td>
                                 <td width="10%"></td>
                             </tr>
 

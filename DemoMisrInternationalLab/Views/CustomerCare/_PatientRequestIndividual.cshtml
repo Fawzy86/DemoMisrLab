@@ -336,7 +336,7 @@
     $(document).ajaxStart(function () {
         try {
             $("#Individual_PatientRequest_Form").prop('disabled', true);
-            $("#Individual_PatientRequest_Form").hide();
+            //$("#Individual_PatientRequest_Form").hide();
             $("#Individual_Loading").show();
         }
         catch (err) {
@@ -346,7 +346,7 @@
     $(document).ajaxStop(function () {
         try {
             $("#Individual_PatientRequest_Form").prop('disabled', true);
-            $("#Individual_PatientRequest_Form").show();
+            //$("#Individual_PatientRequest_Form").show();
             $("#Individual_Loading").hide();
         }
         catch (err) {

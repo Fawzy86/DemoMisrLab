@@ -82,7 +82,7 @@
     $(document).ajaxStart(function () {
         try {
             $("#Status_PatientRequest_Div").prop('disabled', true);
-            $("#Status_PatientRequest_Div").hide();
+            //$("#Status_PatientRequest_Div").hide();
             $("#Status_Loading").show();
         }
         catch (err) {
@@ -92,7 +92,7 @@
     $(document).ajaxStop(function () {
         try {
             $("#Status_PatientRequest_Div").prop('disabled', true);
-            $("#Status_PatientRequest_Div").show();
+            //$("#Status_PatientRequest_Div").show();
             $("#Status_Loading").hide();
         }
         catch (err) {
