@@ -1,0 +1,129 @@
+﻿@model DemoMisrInternationalLab.Models.UnitsViewModel
+<div id="Work_Unit_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Work_Unit_Form" }))
+{
+    <div class="input-group">
+
+        <div class="col-md-12">
+            @Html.DropDownListFor(p => Model.SelectedUnitId,
+                                       Model.UnitsIEnum, "-- Units --",
+                                        new { @id = "Work_Unit_SelectedUnitId", @class = "form-control" })
+
+        </div>
+
+    </div>
+    <div id="Work_Unit_DevicesWithAnalyzes_Container"></div>
+
+
+}
+<script type="text/javascript">
+    ////////////////////////////////////////////////////////////
+    $(document).ajaxStart(function () {
+        try {
+            $("#Work_Unit_Form").prop('disabled', true);
+            //   $("#Chemist_Transactions_Form").hide();
+            $("#Work_Unit_Loading").show();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    /////////////////////////////////////////////////////////
+    $(document).ajaxStop(function () {
+        try {
+            $("#Work_Unit_Form").prop('disabled', true);
+            //   $("#Chemist_Transactions_Form").show();
+            $("#Work_Unit_Loading").hide();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    /////////////////////////////////////////////////////////////////
+    $('#Work_Unit_SelectedUnitId').change(function () {
+        var SelectedUnitId = this.value;
+        try {
+            $("#Work_Unit_DevicesWithAnalyzes_Container").load('@Url.Action("LoadDevicesWithAnalyzes", "Lab")?UnitId=' + SelectedUnitId);
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    ///////////////////////////////////////////////////////////
+    $(function () {
+        ///////////////////////////////////////////////////////////////////
+        document.addEventListener('dragstart', function (ev) {
+            var SelectedItems = [];
+            $.each($('#' + ev.target.parentNode.id + ' li'), function (i, val) {
+                if (val.getAttribute('aria-grabbed') == 'true') {
+                    SelectedItems.push(val.id);
+                }
+            });
+            ev.dataTransfer.setData("analyzesIds", SelectedItems);
+            ev.dataTransfer.setData("sourceDeviceId", ev.target.parentNode.id);
+        });
+        ///////////////////////////////////////////////////////////////////////
+        document.addEventListener("drop", function (ev) {
+            try {
+
+                var RequestedAnalyzesIds = ev.dataTransfer.getData("analyzesIds");
+                console.log(ev.dataTransfer.getData("analyzesIds"));
+
+                var SourceDeviceId = ev.dataTransfer.getData("sourceDeviceId")
+                console.log(ev.dataTransfer.getData("sourceDeviceId"));
+                
+
+                var DestinationDeviceId = ev.target.id;
+                if (DestinationDeviceId.indexOf("RequestedAnalysisId_") == 0) {
+                    DestinationDeviceId = ev.target.parentNode.id;
+                }
+                console.log(DestinationDeviceId);
+
+                if (SourceDeviceId == DestinationDeviceId || SourceDeviceId.indexOf("DeviceId_") != 0
+                    || DestinationDeviceId.indexOf("DeviceId_") != 0) {
+                    return;
+                }
+                var form = $('#' + ev.target.id).closest("form");
+                $.ajax({
+                    cache: false,
+                    async: true,
+                    type: "POST",
+                    url: "/Lab/MoveAnalyzesToAnotherDevice",//form.attr('action'),
+                    data: form.serialize() + "&RequestedAnalyzesIds=" + RequestedAnalyzesIds + "&SourceDeviceId=" + SourceDeviceId + "&DestinationDeviceId=" + DestinationDeviceId,
+                    success: function (data) {
+                    //    $("#Work_Unit_DevicesWithAnalyzes_Container").html(data);
+                    },
+                    error: function (xhr, desc, err) {
+                        alert("Error: " + err.message + " " + desc + " " + xhr.responseText + err.description);
+                    }
+                });
+            }
+            catch (err) {
+                alert(err.message + err.description);
+            }
+        });
+    });
+    //////////////////////////////////////////////////////////////
+    function RunTest(deviceId) {
+        try {
+          //  ?SearchPattern=" + SearchValue + "&DateRange=" + DateRangeValue
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "/Lab/RunTest",//form.attr('action'),
+                data: form.serialize(),
+                success: function (data) {
+                    $("#Received_Lab_Analyzes_Container").html(data);
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                }
+            });
+        }
+        catch (err) {
+            alert(err.message + err.description);
+        }
+    }
+    
+</script>

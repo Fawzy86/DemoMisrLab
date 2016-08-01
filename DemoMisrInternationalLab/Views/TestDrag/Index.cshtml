@@ -1,0 +1,130 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="~/css/dragdrop.css">
+</head>
+<body>
+    <div id="Work_Unit_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
+    @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Work_Unit_Form" }))
+    {
+        <div class="input-group">
+
+            <div class="col-md-12">
+
+                <select class="form-control">
+                    <option>Machine 1</option>
+                    <option>Machine 2</option>
+                    <option>Machine 3</option>
+                    <option>Machine 4</option>
+                    <option>Machine 5</option>
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="col-md-12">
+                    <ol class="scrolll" data-draggable="target">
+                        <li data-draggable="item" class="ck-button">Item 0</li>
+                        <li data-draggable="item" class="ck-buttonb">Item 1</li>
+                        <li data-draggable="item" class="ck-button">Item 2</li>
+                        <li data-draggable="item" class="ck-buttonb">Item 3</li>
+                    </ol>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row text-right">
+                        <div class="col-md-12">
+
+                            <button type="button" class="btn btn-success" style="border-radius:0;">Run Test</button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <div class="col-md-12">
+                    <ol class="scrolll" data-draggable="target">
+                        <li data-draggable="item" class="ck-button">Item 4</li>
+                        <li data-draggable="item" class="ck-buttonb">Item 5</li>
+
+                    </ol>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row text-right">
+                        <div class="col-md-12">
+
+                            <button type="button" class="btn btn-success" style="border-radius:0;">Run Test</button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="col-md-12">
+                    <ol class="scrolll" data-draggable="target">
+                        <li data-draggable="item" class="ck-buttonb">Item 6</li>
+                    </ol>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row text-right">
+                        <div class="col-md-12">
+
+                            <button type="button" class="btn btn-success" style="border-radius:0;">Run Test</button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="col-md-12">
+                    <ol class="scrolll" data-draggable="target">
+                        <li data-draggable="item" class="ck-buttonb">Item 7</li>
+                    </ol>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row text-right">
+                        <div class="col-md-12">
+
+                            <button type="button" class="btn btn-success" style="border-radius:0;">Run Test</button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    }
+
+    <script src="~/js/dragdrop.js"></script>
+</body>
+</html>

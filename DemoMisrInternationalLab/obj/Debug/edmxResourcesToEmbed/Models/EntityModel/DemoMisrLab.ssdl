@@ -168,6 +168,7 @@
     <Property Name="RequestedAnalysisId" Type="int" Nullable="false" />
     <Property Name="NotDeliveredDate" Type="datetime" Nullable="false" />
     <Property Name="ReasonId" Type="int" Nullable="false" />
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="NotDeliveredReason">
     <Key>
@@ -360,8 +361,9 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRefID' does not have a prim
     <Property Name="RequestedAnalysisId" Type="int" Nullable="false" />
     <Property Name="RejectionDate" Type="datetime" Nullable="false" />
     <Property Name="ReasonId" Type="int" Nullable="false" />
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="RejectionResson">
+  <EntityType Name="RejectionReason">
     <Key>
       <PropertyRef Name="ErrorId" />
     </Key>
@@ -1206,6 +1208,18 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_NotDeliveredAnalysis_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="NotDeliveredAnalysis" Type="Self.NotDeliveredAnalysis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="NotDeliveredAnalysis">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_NotDeliveredAnalysis_NotDeliveredReason">
     <End Role="NotDeliveredReason" Type="Self.NotDeliveredReason" Multiplicity="1" />
     <End Role="NotDeliveredAnalysis" Type="Self.NotDeliveredAnalysis" Multiplicity="*" />
@@ -1584,6 +1598,18 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_RejectedAnalysis_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="RejectedAnalysis" Type="Self.RejectedAnalysis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="RejectedAnalysis">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_RejectedAnalysis_PatientRequestAnalysis">
     <End Role="PatientRequestAnalysis" Type="Self.PatientRequestAnalysis" Multiplicity="1" />
     <End Role="RejectedAnalysis" Type="Self.RejectedAnalysis" Multiplicity="*" />
@@ -1596,11 +1622,11 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_RejectedAnalysis_RejectionResson">
-    <End Role="RejectionResson" Type="Self.RejectionResson" Multiplicity="1" />
+  <Association Name="FK_RejectedAnalysis_RejectionReason">
+    <End Role="RejectionReason" Type="Self.RejectionReason" Multiplicity="1" />
     <End Role="RejectedAnalysis" Type="Self.RejectedAnalysis" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="RejectionResson">
+      <Principal Role="RejectionReason">
         <PropertyRef Name="ErrorId" />
       </Principal>
       <Dependent Role="RejectedAnalysis">
@@ -1608,14 +1634,14 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_RejectionResson_RejectionResson">
-    <End Role="RejectionResson" Type="Self.RejectionResson" Multiplicity="1" />
-    <End Role="RejectionResson1" Type="Self.RejectionResson" Multiplicity="0..1" />
+  <Association Name="FK_RejectionResson_RejectionReason">
+    <End Role="RejectionReason" Type="Self.RejectionReason" Multiplicity="1" />
+    <End Role="RejectionReason1" Type="Self.RejectionReason" Multiplicity="0..1" />
     <ReferentialConstraint>
-      <Principal Role="RejectionResson">
+      <Principal Role="RejectionReason">
         <PropertyRef Name="ErrorId" />
       </Principal>
-      <Dependent Role="RejectionResson1">
+      <Dependent Role="RejectionReason1">
         <PropertyRef Name="ErrorId" />
       </Dependent>
     </ReferentialConstraint>
@@ -1698,7 +1724,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
     <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Province" EntityType="Self.Province" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RejectedAnalysis" EntityType="Self.RejectedAnalysis" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="RejectionResson" EntityType="Self.RejectionResson" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RejectionReason" EntityType="Self.RejectionReason" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SampleType" EntityType="Self.SampleType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
@@ -2161,6 +2187,10 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
       <End Role="City" EntitySet="City" />
       <End Role="LabBranch" EntitySet="LabBranch" />
     </AssociationSet>
+    <AssociationSet Name="FK_NotDeliveredAnalysis_Employee" Association="Self.FK_NotDeliveredAnalysis_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="NotDeliveredAnalysis" EntitySet="NotDeliveredAnalysis" />
+    </AssociationSet>
     <AssociationSet Name="FK_NotDeliveredAnalysis_NotDeliveredReason" Association="Self.FK_NotDeliveredAnalysis_NotDeliveredReason">
       <End Role="NotDeliveredReason" EntitySet="NotDeliveredReason" />
       <End Role="NotDeliveredAnalysis" EntitySet="NotDeliveredAnalysis" />
@@ -2285,17 +2315,21 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
       <End Role="Role" EntitySet="Role" />
       <End Role="Permission" EntitySet="Permission" />
     </AssociationSet>
+    <AssociationSet Name="FK_RejectedAnalysis_Employee" Association="Self.FK_RejectedAnalysis_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="RejectedAnalysis" EntitySet="RejectedAnalysis" />
+    </AssociationSet>
     <AssociationSet Name="FK_RejectedAnalysis_PatientRequestAnalysis" Association="Self.FK_RejectedAnalysis_PatientRequestAnalysis">
       <End Role="PatientRequestAnalysis" EntitySet="PatientRequestAnalysis" />
       <End Role="RejectedAnalysis" EntitySet="RejectedAnalysis" />
     </AssociationSet>
-    <AssociationSet Name="FK_RejectedAnalysis_RejectionResson" Association="Self.FK_RejectedAnalysis_RejectionResson">
-      <End Role="RejectionResson" EntitySet="RejectionResson" />
+    <AssociationSet Name="FK_RejectedAnalysis_RejectionReason" Association="Self.FK_RejectedAnalysis_RejectionReason">
+      <End Role="RejectionReason" EntitySet="RejectionReason" />
       <End Role="RejectedAnalysis" EntitySet="RejectedAnalysis" />
     </AssociationSet>
-    <AssociationSet Name="FK_RejectionResson_RejectionResson" Association="Self.FK_RejectionResson_RejectionResson">
-      <End Role="RejectionResson" EntitySet="RejectionResson" />
-      <End Role="RejectionResson1" EntitySet="RejectionResson" />
+    <AssociationSet Name="FK_RejectionResson_RejectionReason" Association="Self.FK_RejectionResson_RejectionReason">
+      <End Role="RejectionReason" EntitySet="RejectionReason" />
+      <End Role="RejectionReason1" EntitySet="RejectionReason" />
     </AssociationSet>
     <AssociationSet Name="FK_User_Employee" Association="Self.FK_User_Employee">
       <End Role="Employee" EntitySet="Employee" />

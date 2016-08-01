@@ -184,6 +184,7 @@
     <EntitySetMapping Name="NotDeliveredAnalysis">
       <EntityTypeMapping TypeName="DemoMisrIntModel.NotDeliveredAnalysi">
         <MappingFragment StoreEntitySet="NotDeliveredAnalysis">
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="ReasonId" ColumnName="ReasonId" />
           <ScalarProperty Name="NotDeliveredDate" ColumnName="NotDeliveredDate" />
           <ScalarProperty Name="RequestedAnalysisId" ColumnName="RequestedAnalysisId" />
@@ -382,6 +383,7 @@
     <EntitySetMapping Name="RejectedAnalysis">
       <EntityTypeMapping TypeName="DemoMisrIntModel.RejectedAnalysi">
         <MappingFragment StoreEntitySet="RejectedAnalysis">
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="ReasonId" ColumnName="ReasonId" />
           <ScalarProperty Name="RejectionDate" ColumnName="RejectionDate" />
           <ScalarProperty Name="RequestedAnalysisId" ColumnName="RequestedAnalysisId" />
@@ -389,9 +391,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="RejectionRessons">
-      <EntityTypeMapping TypeName="DemoMisrIntModel.RejectionResson">
-        <MappingFragment StoreEntitySet="RejectionResson">
+    <EntitySetMapping Name="RejectionReasons">
+      <EntityTypeMapping TypeName="DemoMisrIntModel.RejectionReason">
+        <MappingFragment StoreEntitySet="RejectionReason">
           <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
           <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
         </MappingFragment>

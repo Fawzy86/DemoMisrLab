@@ -18,7 +18,9 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public int RequestedAnalysisId { get; set; }
         public System.DateTime NotDeliveredDate { get; set; }
         public int ReasonId { get; set; }
+        public int EmployeeId { get; set; }
     
+        public virtual Employee Employee { get; set; }
         public virtual NotDeliveredReason NotDeliveredReason { get; set; }
         public virtual PatientRequestAnalysi PatientRequestAnalysi { get; set; }
     }

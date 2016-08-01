@@ -61,7 +61,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public virtual DbSet<Priority> Priorities { get; set; }
         public virtual DbSet<Province> Provinces { get; set; }
         public virtual DbSet<RejectedAnalysi> RejectedAnalysis { get; set; }
-        public virtual DbSet<RejectionResson> RejectionRessons { get; set; }
+        public virtual DbSet<RejectionReason> RejectionReasons { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SampleType> SampleTypes { get; set; }
         public virtual DbSet<Status> Status { get; set; }

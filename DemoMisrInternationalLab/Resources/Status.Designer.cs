@@ -79,6 +79,15 @@ namespace DemoMisrInternationalLab.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AnalysisNotDelivered.
+        /// </summary>
+        public static string AnalysisNotDelivered {
+            get {
+                return ResourceManager.GetString("AnalysisNotDelivered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AnalysisPendingForSampling.
         /// </summary>
         public static string AnalysisPendingForSampling {
@@ -93,6 +102,15 @@ namespace DemoMisrInternationalLab.Resources {
         public static string AnalysisReceivedOnDevice {
             get {
                 return ResourceManager.GetString("AnalysisReceivedOnDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AnalysisRejected.
+        /// </summary>
+        public static string AnalysisRejected {
+            get {
+                return ResourceManager.GetString("AnalysisRejected", resourceCulture);
             }
         }
         
@@ -144,9 +162,9 @@ namespace DemoMisrInternationalLab.Resources {
         /// <summary>
         ///   Looks up a localized string similar to PatientRequestReceivedForSampling.
         /// </summary>
-        public static string PatientRequestReceived {
+        public static string PatientRequestReceivedForSampling {
             get {
-                return ResourceManager.GetString("PatientRequestReceived", resourceCulture);
+                return ResourceManager.GetString("PatientRequestReceivedForSampling", resourceCulture);
             }
         }
     }

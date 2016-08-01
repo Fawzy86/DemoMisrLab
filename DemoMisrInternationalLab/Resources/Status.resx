@@ -125,6 +125,10 @@
     <value>AnalysisMovedToLab</value>
     <comment>Analysis move to lab to analysis</comment>
   </data>
+  <data name="AnalysisNotDelivered" xml:space="preserve">
+    <value>AnalysisNotDelivered</value>
+    <comment>Analysis has not been delivered for some reason</comment>
+  </data>
   <data name="AnalysisPendingForSampling" xml:space="preserve">
     <value>AnalysisPendingForSampling</value>
     <comment>The analysis is pending until taking the sample for it</comment>
@@ -132,6 +136,10 @@
   <data name="AnalysisReceivedOnDevice" xml:space="preserve">
     <value>AnalysisReceivedOnDevice</value>
     <comment>The doctor received the analysis on unit device</comment>
+  </data>
+  <data name="AnalysisRejected" xml:space="preserve">
+    <value>AnalysisRejected</value>
+    <comment>Analysis has been rejected for a reason</comment>
   </data>
   <data name="AnalysisSampled" xml:space="preserve">
     <value>AnalysisSampled</value>
@@ -153,7 +161,7 @@
     <value>PatientRequestPending</value>
     <comment>The Customer care is finished the patient request, and the patient is waiting for the Sampling</comment>
   </data>
-  <data name="PatientRequestReceived" xml:space="preserve">
+  <data name="PatientRequestReceivedForSampling" xml:space="preserve">
     <value>PatientRequestReceivedForSampling</value>
     <comment>The preservation and sampling department receive the patient request for taking samples </comment>
   </data>

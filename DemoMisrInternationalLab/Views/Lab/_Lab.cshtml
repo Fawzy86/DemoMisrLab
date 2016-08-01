@@ -123,13 +123,13 @@
         }
     });
     ///////////////////////////////////////////////////////////////////////////////////
-    function ReceivedAnalyzes(RequestedAnalysisId, DeviceId) {
+    function ReceiveAnalysis(RequestedAnalysisId, DeviceId) {
         try {
             $.ajax({
                 cache: false,
                 async: true,
                 type: "POST",
-                url: "/Lab/ReceivedAnalysis",//form.attr('action'),
+                url: "/Lab/ReceiveAnalysis",//form.attr('action'),
                 data: "RequestedAnalysisId=" + RequestedAnalysisId + "&DeviceId=" + DeviceId,
                 success: function (data) {
                     $("#Received_Lab_Analyzes_Container").html(data);
@@ -143,4 +143,47 @@
             alert(err.message + err.description);
         }
     }
+    ///////////////////////////////////////////////////////////////////////////////////
+    function RejectAnalysis(RequestedAnalysisId, RejectionId) {
+        try {
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "/Lab/RejectAnalysis",//form.attr('action'),
+                data: "RequestedAnalysisId=" + RequestedAnalysisId + "&RejectionId=" + RejectionId,
+                success: function (data) {
+                    $("#Received_Lab_Analyzes_Container").html(data);
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err.message + " " + desc + " " + xhr.responseText + err.description);
+                }
+            });
+        }
+        catch (err) {
+            alert(err.message + err.description);
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////////
+    function NotDeliveredAnalysis(RequestedAnalysisId, RejectionId) {
+        try {
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "/Lab/NotDeliveredAnalysis",//form.attr('action'),
+                data: "RequestedAnalysisId=" + RequestedAnalysisId + "&RejectionId=" + RejectionId,
+                success: function (data) {
+                    $("#Received_Lab_Analyzes_Container").html(data);
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err.message + " " + desc + " " + xhr.responseText + err.description);
+                }
+            });
+        }
+        catch (err) {
+            alert(err.message + err.description);
+        }
+    }
+    
 </script>

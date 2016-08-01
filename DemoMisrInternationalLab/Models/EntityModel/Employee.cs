@@ -20,6 +20,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
             this.AnalysisResultStatus = new HashSet<AnalysisResultStatu>();
             this.DeviceAnalysis = new HashSet<DeviceAnalysi>();
             this.DevicePlans = new HashSet<DevicePlan>();
+            this.NotDeliveredAnalysis = new HashSet<NotDeliveredAnalysi>();
             this.Organizations = new HashSet<Organization>();
             this.Patients = new HashSet<Patient>();
             this.PatientRequests = new HashSet<PatientRequest>();
@@ -27,6 +28,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
             this.PatientRequestAnalysisStatus = new HashSet<PatientRequestAnalysisStatu>();
             this.PatientRequestPayments = new HashSet<PatientRequestPayment>();
             this.PatientRequestStatus = new HashSet<PatientRequestStatu>();
+            this.RejectedAnalysis = new HashSet<RejectedAnalysi>();
             this.Users = new HashSet<User>();
         }
     
@@ -47,6 +49,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public virtual ICollection<DevicePlan> DevicePlans { get; set; }
         public virtual JobTitle JobTitle { get; set; }
         public virtual LabBranch LabBranch { get; set; }
+        public virtual ICollection<NotDeliveredAnalysi> NotDeliveredAnalysis { get; set; }
         public virtual ICollection<Organization> Organizations { get; set; }
         public virtual ICollection<Patient> Patients { get; set; }
         public virtual ICollection<PatientRequest> PatientRequests { get; set; }
@@ -54,6 +57,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public virtual ICollection<PatientRequestAnalysisStatu> PatientRequestAnalysisStatus { get; set; }
         public virtual ICollection<PatientRequestPayment> PatientRequestPayments { get; set; }
         public virtual ICollection<PatientRequestStatu> PatientRequestStatus { get; set; }
+        public virtual ICollection<RejectedAnalysi> RejectedAnalysis { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }
 }

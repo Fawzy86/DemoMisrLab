@@ -12,9 +12,9 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     using System;
     using System.Collections.Generic;
     
-    public partial class RejectionResson
+    public partial class RejectionReason
     {
-        public RejectionResson()
+        public RejectionReason()
         {
             this.RejectedAnalysis = new HashSet<RejectedAnalysi>();
         }
@@ -23,7 +23,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public string ErrorMessage { get; set; }
     
         public virtual ICollection<RejectedAnalysi> RejectedAnalysis { get; set; }
-        public virtual RejectionResson RejectionResson1 { get; set; }
-        public virtual RejectionResson RejectionResson2 { get; set; }
+        public virtual RejectionReason RejectionReason1 { get; set; }
+        public virtual RejectionReason RejectionReason2 { get; set; }
     }
 }
