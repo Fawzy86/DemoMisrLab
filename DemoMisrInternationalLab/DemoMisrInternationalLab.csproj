@@ -321,7 +321,13 @@
     <Compile Include="Models\EntityModel\Patient_PatientRequest_PatientRequestAnalysis_LastStatus.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EntityModel\Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EntityModel\Permission.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\PlanNumber.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityModel\Priority.cs">
@@ -951,7 +957,10 @@
     <Content Include="Views\Lab\_ReceivedAnalyzes.cshtml" />
     <Content Include="Views\Lab\_WorkUnit.cshtml" />
     <Content Include="Views\TestDrag\Index.cshtml" />
-    <Content Include="Views\Lab\_AnalyzesAndDevices.cshtml" />
+    <Content Include="Views\Lab\_DevicesAndAnalyzes.cshtml" />
+    <Content Include="Views\Lab\_DevicePlanAnalyzes.cshtml" />
+    <Content Include="Views\Lab\_ReceiveAnalysisOnDeviceConfirmation.cshtml" />
+    <Content Include="Views\Lab\_MoveAnalysisToDeviceConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

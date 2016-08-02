@@ -27,7 +27,7 @@
                         <td>@Age</td>
                         <td align="right" style="width:24%;">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-warning btn-sm btn-animate-demo" onclick="ReceivedAnalyzes(@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID,@Model.PatientRequestAnalyzes[i].DefaultDevice.DeviceId);">@Model.PatientRequestAnalyzes[i].DefaultDevice.DeviceName</button>
+                                <button type="button" class="btn btn-warning btn-sm btn-animate-demo" onclick="ReceiveAnalysis(@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID,@Model.PatientRequestAnalyzes[i].DefaultDevice.DeviceId, false);">@Model.PatientRequestAnalyzes[i].DefaultDevice.DeviceName</button>
                                 <button type="button" class="btn btn-warning btn-sm dropdown-toggle btn-animate-demo" data-toggle="dropdown">
                                     <span class="caret"></span>
                                     <span class="sr-only">Toggle Dropdown</span>
@@ -35,7 +35,7 @@
                                 <ul class="dropdown-menu" role="menu">
                                     @foreach (var device in @Model.PatientRequestAnalyzes[i].Devices)
                                     {
-                                        <li><a href="#" onclick="ReceiveAnalysis(@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID,@device.DeviceId);">@device.DeviceName</a></li>
+                                        <li><a href="#" onclick="ReceiveAnalysis(@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID,@device.DeviceId, false);">@device.DeviceName</a></li>
                                     }
                                 </ul>
                             </div>

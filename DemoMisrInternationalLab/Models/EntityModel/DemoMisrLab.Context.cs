@@ -68,6 +68,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<PatientRefID> PatientRefIDs { get; set; }
+        public virtual DbSet<PlanNumber> PlanNumbers { get; set; }
         public virtual DbSet<RequestNumber> RequestNumbers { get; set; }
         public virtual DbSet<RunNumber> RunNumbers { get; set; }
         public virtual DbSet<Analysis_Unit_Device_Sample> Analysis_Unit_Device_Sample { get; set; }
@@ -76,6 +77,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public virtual DbSet<Patient_PatientRequest_LastStatus> Patient_PatientRequest_LastStatus { get; set; }
         public virtual DbSet<Patient_PatientRequest_PatientRequestAnalysis_AllStatuses> Patient_PatientRequest_PatientRequestAnalysis_AllStatuses { get; set; }
         public virtual DbSet<Patient_PatientRequest_PatientRequestAnalysis_LastStatus> Patient_PatientRequest_PatientRequestAnalysis_LastStatus { get; set; }
+        public virtual DbSet<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device> Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device { get; set; }
         public virtual DbSet<PatientRequest_Analysis> PatientRequest_Analysis { get; set; }
         public virtual DbSet<PatientRequest_Payment> PatientRequest_Payment { get; set; }
         public virtual DbSet<PatientRequestAnalysis_AllStatuses> PatientRequestAnalysis_AllStatuses { get; set; }
@@ -147,6 +149,11 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public virtual ObjectResult<string> GetRequestNumber()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetRequestNumber");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetPlanNumber()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetPlanNumber");
         }
     }
 }

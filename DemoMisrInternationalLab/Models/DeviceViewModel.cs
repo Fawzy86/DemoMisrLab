@@ -11,9 +11,9 @@ namespace DemoMisrInternationalLab.Models
         public DeviceViewModel()
         {
             Device = new Device();
-            Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus>();
+            Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device>();
         }
         public Device Device { get; set; }
-        public List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus> Analyzes { get; set; }
+        public List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device> Analyzes { get; set; }
     }
 }

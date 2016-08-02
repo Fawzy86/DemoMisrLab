@@ -23,10 +23,10 @@
                             {
                                 Class = "ck-button";
                             }
-                            <li data-draggable="item" class="@Class" id="@("RequestedAnalysisId_" + Model.Devices[i].Analyzes[j].RequestedAnalysisID)">
-                                @Model.Devices[i].Analyzes[j].AnalysisName  ---
-                                Run#: @Model.Devices[i].Analyzes[j].RunNumber     ---
-                                Gender: @Model.Devices[i].Analyzes[j].Gender        ---
+                            <li data-draggable="item" class="@Class" id="@("DeviceAnalysisId_" + Model.Devices[i].Analyzes[j].DeviceAnalysisId)">
+                                @Model.Devices[i].Analyzes[j].AnalysisName  &nbsp; || &nbsp;
+                                Run#: @Model.Devices[i].Analyzes[j].RunNumber    &nbsp; || &nbsp;
+                                Gender: @Model.Devices[i].Analyzes[j].Gender        &nbsp; || &nbsp;
                                 Age: @Age
 
                             </li>
@@ -50,5 +50,6 @@
     }
 </div>
 <script src="~/js/dragdrop.js"></script>
+
 
 

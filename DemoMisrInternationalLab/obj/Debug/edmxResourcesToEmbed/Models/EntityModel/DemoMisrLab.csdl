@@ -59,6 +59,7 @@
     <EntitySet Name="Units" EntityType="DemoMisrIntModel.Unit" />
     <EntitySet Name="Users" EntityType="DemoMisrIntModel.User" />
     <EntitySet Name="PatientRefIDs" EntityType="DemoMisrIntModel.PatientRefID" />
+    <EntitySet Name="PlanNumbers" EntityType="DemoMisrIntModel.PlanNumber" />
     <EntitySet Name="RequestNumbers" EntityType="DemoMisrIntModel.RequestNumber" />
     <EntitySet Name="RunNumbers" EntityType="DemoMisrIntModel.RunNumber" />
     <EntitySet Name="Analysis_Unit_Device_Sample" EntityType="DemoMisrIntModel.Analysis_Unit_Device_Sample" />
@@ -67,6 +68,7 @@
     <EntitySet Name="Patient_PatientRequest_LastStatus" EntityType="DemoMisrIntModel.Patient_PatientRequest_LastStatus" />
     <EntitySet Name="Patient_PatientRequest_PatientRequestAnalysis_AllStatuses" EntityType="DemoMisrIntModel.Patient_PatientRequest_PatientRequestAnalysis_AllStatuses" />
     <EntitySet Name="Patient_PatientRequest_PatientRequestAnalysis_LastStatus" EntityType="DemoMisrIntModel.Patient_PatientRequest_PatientRequestAnalysis_LastStatus" />
+    <EntitySet Name="Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device" EntityType="DemoMisrIntModel.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device" />
     <EntitySet Name="PatientRequest_Analysis" EntityType="DemoMisrIntModel.PatientRequest_Analysis" />
     <EntitySet Name="PatientRequest_Payment" EntityType="DemoMisrIntModel.PatientRequest_Payment" />
     <EntitySet Name="PatientRequestAnalysis_AllStatuses" EntityType="DemoMisrIntModel.PatientRequestAnalysis_AllStatuses" />
@@ -137,6 +139,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_DeviceAnalysis_Device" Association="DemoMisrIntModel.FK_DeviceAnalysis_Device">
       <End Role="Device" EntitySet="Devices" />
+      <End Role="DeviceAnalysi" EntitySet="DeviceAnalysis" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeviceAnalysis_DevicePlan" Association="DemoMisrIntModel.FK_DeviceAnalysis_DevicePlan">
+      <End Role="DevicePlan" EntitySet="DevicePlans" />
       <End Role="DeviceAnalysi" EntitySet="DeviceAnalysis" />
     </AssociationSet>
     <AssociationSet Name="FK_DeviceAnalysis_Employee" Association="DemoMisrIntModel.FK_DeviceAnalysis_Employee">
@@ -291,6 +297,7 @@
       <End Role="Role" EntitySet="Roles" />
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
+    <FunctionImport Name="GetPlanNumber" ReturnType="Collection(Int32)" />
   </EntityContainer>
   <EntityType Name="Analysis">
     <Key>
@@ -376,7 +383,7 @@
     <Property Name="DeviceDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="UnitId" Type="Int32" Nullable="false" />
     <Property Name="IsDefalutUnitDevice" Type="Boolean" Nullable="false" />
-    <Property Name="Capacity" Type="Int32" />
+    <Property Name="Capacity" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Unit" Relationship="DemoMisrIntModel.FK_Device_Unit" FromRole="Device" ToRole="Unit" />
     <NavigationProperty Name="DeviceAnalysis" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_Device" FromRole="Device" ToRole="DeviceAnalysi" />
   </EntityType>
@@ -391,6 +398,7 @@
     <Property Name="ReceiveDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="PlanId" Type="Int32" />
     <NavigationProperty Name="Device" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_Device" FromRole="DeviceAnalysi" ToRole="Device" />
+    <NavigationProperty Name="DevicePlan" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_DevicePlan" FromRole="DeviceAnalysi" ToRole="DevicePlan" />
     <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_Employee" FromRole="DeviceAnalysi" ToRole="Employee" />
     <NavigationProperty Name="PatientRequestAnalysi" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_PatientRequestAnalysis" FromRole="DeviceAnalysi" ToRole="PatientRequestAnalysi" />
   </EntityType>
@@ -402,6 +410,7 @@
     <Property Name="PlanNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
     <Property Name="TestDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DeviceAnalysis" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_DevicePlan" FromRole="DevicePlan" ToRole="DeviceAnalysi" />
     <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_DevicePlan_Employee" FromRole="DevicePlan" ToRole="Employee" />
   </EntityType>
   <EntityType Name="DoctorRef">
@@ -815,6 +824,12 @@
     </Key>
     <Property Name="LastPatientRefID" Type="Int32" Nullable="false" />
   </EntityType>
+  <EntityType Name="PlanNumber">
+    <Key>
+      <PropertyRef Name="PlanNum" />
+    </Key>
+    <Property Name="PlanNum" Type="Int32" Nullable="false" />
+  </EntityType>
   <EntityType Name="RequestNumber">
     <Key>
       <PropertyRef Name="Prefix" />
@@ -1172,6 +1187,101 @@
     <Property Name="UnitId" Type="Int32" Nullable="false" />
     <Property Name="UnitName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="UnitDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
+    <Key>
+      <PropertyRef Name="RequestID" />
+      <PropertyRef Name="AnalysisID" />
+      <PropertyRef Name="EmployeeID" />
+      <PropertyRef Name="StatusIdentifier" />
+      <PropertyRef Name="StatusName" />
+      <PropertyRef Name="StatusID" />
+      <PropertyRef Name="StatusDate" />
+      <PropertyRef Name="PatientRequestAnalysisStatusEmployeeId" />
+      <PropertyRef Name="RequestAnalysisStatusID" />
+      <PropertyRef Name="RequestedAnalysisID" />
+      <PropertyRef Name="AnalysisCode" />
+      <PropertyRef Name="AnalysisName" />
+      <PropertyRef Name="SampleTypeID" />
+      <PropertyRef Name="MinimumValue" />
+      <PropertyRef Name="MaximumValue" />
+      <PropertyRef Name="CostPrice" />
+      <PropertyRef Name="RequestDate" />
+      <PropertyRef Name="RequestedRefID" />
+      <PropertyRef Name="RequestNumber" />
+      <PropertyRef Name="PatientID" />
+      <PropertyRef Name="FirstName" />
+      <PropertyRef Name="RegisteredDate" />
+      <PropertyRef Name="ReferenceID" />
+      <PropertyRef Name="UnitId" />
+      <PropertyRef Name="UnitName" />
+      <PropertyRef Name="DeviceAnalysisId" />
+      <PropertyRef Name="ReceiveDate" />
+      <PropertyRef Name="DeviceName" />
+      <PropertyRef Name="IsDefalutUnitDevice" />
+      <PropertyRef Name="Capacity" />
+      <PropertyRef Name="DoctorAnalyticEmployeeId" />
+      <PropertyRef Name="DeviceId" />
+    </Key>
+    <Property Name="RequestID" Type="Int32" Nullable="false" />
+    <Property Name="AnalysisID" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+    <Property Name="RunNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="StatusIdentifier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="StatusID" Type="Int32" Nullable="false" />
+    <Property Name="StatusDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PatientRequestAnalysisStatusEmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="PatientRequestAnalysisStatusComment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="RequestAnalysisStatusID" Type="Int32" Nullable="false" />
+    <Property Name="RequestedAnalysisID" Type="Int32" Nullable="false" />
+    <Property Name="AnalysisCode" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="AnalysisName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NormalRange" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SampleTypeID" Type="Int32" Nullable="false" />
+    <Property Name="MinimumValue" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="MaximumValue" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="CostPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DoctorRefID" Type="Int32" />
+    <Property Name="Priority" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="OrganizationID" Type="Int32" />
+    <Property Name="RequestedRefID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AttachmentSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ExtraDiscount" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="ExtraCost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TotalPatientCost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="PatientID" Type="Int32" Nullable="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="NationalID" Type="String" MaxLength="16" FixedLength="true" Unicode="true" />
+    <Property Name="BirthDate" Type="DateTime" Precision="3" />
+    <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RegisteredDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastDataModified" Type="DateTime" Precision="3" />
+    <Property Name="ReferenceID" Type="Int32" Nullable="false" />
+    <Property Name="CityID" Type="Int32" />
+    <Property Name="UnitId" Type="Int32" Nullable="false" />
+    <Property Name="UnitName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UnitDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="DeviceAnalysisId" Type="Int32" Nullable="false" />
+    <Property Name="ReceiveDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeviceName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DeviceDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="IsDefalutUnitDevice" Type="Boolean" Nullable="false" />
+    <Property Name="Capacity" Type="Int32" Nullable="false" />
+    <Property Name="PlanId" Type="Int32" />
+    <Property Name="DoctorAnalyticEmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="DeviceId" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="PatientRequest_Analysis">
     <Key>
@@ -1583,6 +1693,20 @@
       </Principal>
       <Dependent Role="DeviceAnalysi">
         <PropertyRef Name="DeviceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeviceAnalysis_DevicePlan">
+    <End Type="DemoMisrIntModel.DevicePlan" Role="DevicePlan" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="DemoMisrIntModel.DeviceAnalysi" Role="DeviceAnalysi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DevicePlan">
+        <PropertyRef Name="PlanId" />
+      </Principal>
+      <Dependent Role="DeviceAnalysi">
+        <PropertyRef Name="PlanId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

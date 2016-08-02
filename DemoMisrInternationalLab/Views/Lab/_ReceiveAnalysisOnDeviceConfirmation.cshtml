@@ -1,0 +1,37 @@
+﻿@model DemoMisrInternationalLab.Models.UnitViewModel
+<div id="Receive_Analysis_OnDevice_Confirmation_Div">
+
+    <p><br></p>
+
+    <p>
+        @ViewBag.Message
+
+    </p>
+
+    <p><br></p>
+    <div class="text-center">
+
+        <button type="button" class="btn btn-success" style="border-radius:0;"
+                onclick="ReceiveAnalysis(@ViewBag.RequestedAnalysisId,@ViewBag.DeviceId, true);">
+            Continue
+        </button>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                Other Machine
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                @foreach (var device in @Model.Devices)
+                {
+                    <li><a href="#" onclick="ReceiveAnalysis(@ViewBag.RequestedAnalysisId,@device.Device.DeviceId, false);">@device.Device.DeviceName</a></li>
+                }
+            </ul>
+        </div>
+
+        <button type="button" class="btn btn-danger" style="border-radius:0;" onclick="Cancel();">Cancel</button>
+
+    </div>
+</div>
+
+

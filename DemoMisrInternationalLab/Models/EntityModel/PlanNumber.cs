@@ -12,21 +12,8 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Device
+    public partial class PlanNumber
     {
-        public Device()
-        {
-            this.DeviceAnalysis = new HashSet<DeviceAnalysi>();
-        }
-    
-        public int DeviceId { get; set; }
-        public string DeviceName { get; set; }
-        public string DeviceDescription { get; set; }
-        public int UnitId { get; set; }
-        public bool IsDefalutUnitDevice { get; set; }
-        public int Capacity { get; set; }
-    
-        public virtual Unit Unit { get; set; }
-        public virtual ICollection<DeviceAnalysi> DeviceAnalysis { get; set; }
+        public int PlanNum { get; set; }
     }
 }

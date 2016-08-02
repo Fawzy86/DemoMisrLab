@@ -68,7 +68,7 @@
     <Property Name="DeviceDescription" Type="varchar" MaxLength="255" />
     <Property Name="UnitId" Type="int" Nullable="false" />
     <Property Name="IsDefalutUnitDevice" Type="bit" Nullable="false" />
-    <Property Name="Capacity" Type="int" />
+    <Property Name="Capacity" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="DeviceAnalysis">
     <Key>
@@ -337,6 +337,14 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRefID' does not have a prim
     <Property Name="ActionID" Type="int" Nullable="false" />
     <Property Name="RoleID" Type="int" Nullable="false" />
     <Property Name="InsertionDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.PlanNumber' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PlanNumber">
+    <Key>
+      <PropertyRef Name="PlanNum" />
+    </Key>
+    <Property Name="PlanNum" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Priority">
     <Key>
@@ -790,6 +798,103 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_PatientRequ
     <Property Name="UnitDescription" Type="varchar" MaxLength="255" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
+    <Key>
+      <PropertyRef Name="RequestID" />
+      <PropertyRef Name="AnalysisID" />
+      <PropertyRef Name="EmployeeID" />
+      <PropertyRef Name="StatusIdentifier" />
+      <PropertyRef Name="StatusName" />
+      <PropertyRef Name="StatusID" />
+      <PropertyRef Name="StatusDate" />
+      <PropertyRef Name="PatientRequestAnalysisStatusEmployeeId" />
+      <PropertyRef Name="RequestAnalysisStatusID" />
+      <PropertyRef Name="RequestedAnalysisID" />
+      <PropertyRef Name="AnalysisCode" />
+      <PropertyRef Name="AnalysisName" />
+      <PropertyRef Name="SampleTypeID" />
+      <PropertyRef Name="MinimumValue" />
+      <PropertyRef Name="MaximumValue" />
+      <PropertyRef Name="CostPrice" />
+      <PropertyRef Name="RequestDate" />
+      <PropertyRef Name="RequestedRefID" />
+      <PropertyRef Name="RequestNumber" />
+      <PropertyRef Name="PatientID" />
+      <PropertyRef Name="FirstName" />
+      <PropertyRef Name="RegisteredDate" />
+      <PropertyRef Name="ReferenceID" />
+      <PropertyRef Name="UnitId" />
+      <PropertyRef Name="UnitName" />
+      <PropertyRef Name="DeviceAnalysisId" />
+      <PropertyRef Name="ReceiveDate" />
+      <PropertyRef Name="DeviceName" />
+      <PropertyRef Name="IsDefalutUnitDevice" />
+      <PropertyRef Name="Capacity" />
+      <PropertyRef Name="DoctorAnalyticEmployeeId" />
+      <PropertyRef Name="DeviceId" />
+    </Key>
+    <Property Name="RequestID" Type="int" Nullable="false" />
+    <Property Name="AnalysisID" Type="int" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="RunNumber" Type="varchar" MaxLength="30" />
+    <Property Name="StatusIdentifier" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" />
+    <Property Name="StatusID" Type="int" Nullable="false" />
+    <Property Name="StatusDate" Type="datetime" Nullable="false" />
+    <Property Name="PatientRequestAnalysisStatusEmployeeId" Type="int" Nullable="false" />
+    <Property Name="PatientRequestAnalysisStatusComment" Type="nvarchar" MaxLength="255" />
+    <Property Name="RequestAnalysisStatusID" Type="int" Nullable="false" />
+    <Property Name="RequestedAnalysisID" Type="int" Nullable="false" />
+    <Property Name="AnalysisCode" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="AnalysisName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NormalRange" Type="nvarchar" MaxLength="50" />
+    <Property Name="SampleTypeID" Type="int" Nullable="false" />
+    <Property Name="MinimumValue" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="MaximumValue" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="CostPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="RequestDate" Type="datetime" Nullable="false" />
+    <Property Name="DoctorRefID" Type="int" />
+    <Property Name="Priority" Type="varchar" MaxLength="10" />
+    <Property Name="OrganizationID" Type="int" />
+    <Property Name="RequestedRefID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="AttachmentSession" Type="varchar" MaxLength="50" />
+    <Property Name="ExtraDiscount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ExtraCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalPatientCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="TotalOrganizationCost" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="RequestNumber" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="SampleType" Type="nchar" MaxLength="20" />
+    <Property Name="PatientID" Type="int" Nullable="false" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="NationalID" Type="nchar" MaxLength="16" />
+    <Property Name="BirthDate" Type="datetime" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="RegisteredDate" Type="datetime" Nullable="false" />
+    <Property Name="LastDataModified" Type="datetime" />
+    <Property Name="ReferenceID" Type="int" Nullable="false" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="UnitId" Type="int" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UnitDescription" Type="varchar" MaxLength="255" />
+    <Property Name="DeviceAnalysisId" Type="int" Nullable="false" />
+    <Property Name="ReceiveDate" Type="datetime" Nullable="false" />
+    <Property Name="DeviceName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="DeviceDescription" Type="varchar" MaxLength="255" />
+    <Property Name="IsDefalutUnitDevice" Type="bit" Nullable="false" />
+    <Property Name="Capacity" Type="int" Nullable="false" />
+    <Property Name="PlanId" Type="int" />
+    <Property Name="DoctorAnalyticEmployeeId" Type="int" Nullable="false" />
+    <Property Name="DeviceId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="PatientRequest_Analysis">
     <Key>
@@ -1105,6 +1210,20 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
       </Principal>
       <Dependent Role="DeviceAnalysis">
         <PropertyRef Name="DeviceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeviceAnalysis_DevicePlan">
+    <End Role="DevicePlan" Type="Self.DevicePlan" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DeviceAnalysis" Type="Self.DeviceAnalysis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DevicePlan">
+        <PropertyRef Name="PlanId" />
+      </Principal>
+      <Dependent Role="DeviceAnalysis">
+        <PropertyRef Name="PlanId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1688,6 +1807,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
   </Function>
   <Function Name="GetAnalysisRunNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="GetPatientRefID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetPlanNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="GetRequestNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="DemoMisrIntModelStoreContainer">
     <EntitySet Name="Analysis" EntityType="Self.Analysis" Schema="dbo" store:Type="Tables" />
@@ -1734,6 +1854,11 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
       <DefiningQuery>SELECT 
     [PatientRefID].[LastPatientRefID] AS [LastPatientRefID]
     FROM [dbo].[PatientRefID] AS [PatientRefID]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PlanNumber" EntityType="Self.PlanNumber" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PlanNumber].[PlanNum] AS [PlanNum]
+    FROM [dbo].[PlanNumber] AS [PlanNumber]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="RequestNumber" EntityType="Self.RequestNumber" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -1989,6 +2114,69 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
     [Patient_PatientRequest_PatientRequestAnalysis_LastStatus].[UnitDescription] AS [UnitDescription]
     FROM [dbo].[Patient_PatientRequest_PatientRequestAnalysis_LastStatus] AS [Patient_PatientRequest_PatientRequestAnalysis_LastStatus]</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device" EntityType="Self.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[RequestID] AS [RequestID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[AnalysisID] AS [AnalysisID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[EmployeeID] AS [EmployeeID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[RunNumber] AS [RunNumber], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[StatusIdentifier] AS [StatusIdentifier], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[StatusName] AS [StatusName], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[Description] AS [Description], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[StatusID] AS [StatusID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[StatusDate] AS [StatusDate], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[PatientRequestAnalysisStatusEmployeeId] AS [PatientRequestAnalysisStatusEmployeeId], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[PatientRequestAnalysisStatusComment] AS [PatientRequestAnalysisStatusComment], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[RequestAnalysisStatusID] AS [RequestAnalysisStatusID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[RequestedAnalysisID] AS [RequestedAnalysisID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[AnalysisCode] AS [AnalysisCode], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[AnalysisName] AS [AnalysisName], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[NormalRange] AS [NormalRange], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[SampleTypeID] AS [SampleTypeID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[MinimumValue] AS [MinimumValue], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[MaximumValue] AS [MaximumValue], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[CostPrice] AS [CostPrice], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[RequestDate] AS [RequestDate], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[DoctorRefID] AS [DoctorRefID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[Priority] AS [Priority], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[OrganizationID] AS [OrganizationID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[RequestedRefID] AS [RequestedRefID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[AttachmentSession] AS [AttachmentSession], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[ExtraDiscount] AS [ExtraDiscount], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[ExtraCost] AS [ExtraCost], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[TotalPatientCost] AS [TotalPatientCost], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[TotalOrganizationCost] AS [TotalOrganizationCost], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[RequestNumber] AS [RequestNumber], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[SampleType] AS [SampleType], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[PatientID] AS [PatientID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[MiddleName] AS [MiddleName], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[FirstName] AS [FirstName], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[LastName] AS [LastName], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[Gender] AS [Gender], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[Address] AS [Address], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[NationalID] AS [NationalID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[BirthDate] AS [BirthDate], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[Mobile] AS [Mobile], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[Phone] AS [Phone], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[Email] AS [Email], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[RegisteredDate] AS [RegisteredDate], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[LastDataModified] AS [LastDataModified], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[ReferenceID] AS [ReferenceID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[CityID] AS [CityID], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[UnitId] AS [UnitId], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[UnitName] AS [UnitName], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[UnitDescription] AS [UnitDescription], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[DeviceAnalysisId] AS [DeviceAnalysisId], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[ReceiveDate] AS [ReceiveDate], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[DeviceName] AS [DeviceName], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[DeviceDescription] AS [DeviceDescription], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[IsDefalutUnitDevice] AS [IsDefalutUnitDevice], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[Capacity] AS [Capacity], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[PlanId] AS [PlanId], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[DoctorAnalyticEmployeeId] AS [DoctorAnalyticEmployeeId], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[DeviceId] AS [DeviceId]
+    FROM [dbo].[Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device] AS [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="PatientRequest_Analysis" EntityType="Self.PatientRequest_Analysis" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [PatientRequest_Analysis].[RequestDate] AS [RequestDate], 
@@ -2153,6 +2341,10 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
     </AssociationSet>
     <AssociationSet Name="FK_DeviceAnalysis_Device" Association="Self.FK_DeviceAnalysis_Device">
       <End Role="Device" EntitySet="Device" />
+      <End Role="DeviceAnalysis" EntitySet="DeviceAnalysis" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeviceAnalysis_DevicePlan" Association="Self.FK_DeviceAnalysis_DevicePlan">
+      <End Role="DevicePlan" EntitySet="DevicePlan" />
       <End Role="DeviceAnalysis" EntitySet="DeviceAnalysis" />
     </AssociationSet>
     <AssociationSet Name="FK_DeviceAnalysis_Employee" Association="Self.FK_DeviceAnalysis_Employee">

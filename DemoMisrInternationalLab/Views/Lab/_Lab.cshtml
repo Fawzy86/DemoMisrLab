@@ -26,6 +26,12 @@
     <div class="input-group table-responsive" id="Received_Lab_Analyzes_Container">
         @{Html.RenderAction("LoadReceivedAnalyzes");}
     </div>
+    <div id="Receive_Analysis_OnDevice_Confirmation_Popup" class="overlay">
+        <div class=" popup">
+            <a class="close" href="#">&times;</a>
+            <div class="contentt" style="overflow: visible;" id="Receive_Analysis_OnDevice_Confirmation_Popup_Content"></div>
+        </div>
+    </div>
 }
 <script type="text/javascript">
     ////////////////////////////////////////////////////////////
@@ -123,16 +129,23 @@
         }
     });
     ///////////////////////////////////////////////////////////////////////////////////
-    function ReceiveAnalysis(RequestedAnalysisId, DeviceId) {
+    function ReceiveAnalysis(RequestedAnalysisId, DeviceId, Overhead) {
         try {
             $.ajax({
                 cache: false,
                 async: true,
                 type: "POST",
                 url: "/Lab/ReceiveAnalysis",//form.attr('action'),
-                data: "RequestedAnalysisId=" + RequestedAnalysisId + "&DeviceId=" + DeviceId,
+                data: "RequestedAnalysisId=" + RequestedAnalysisId + "&DeviceId=" + DeviceId + "&IsOverhead=" + Overhead,
                 success: function (data) {
-                    $("#Received_Lab_Analyzes_Container").html(data);
+                    if ($(data).filter("#Receive_Analysis_OnDevice_Confirmation_Div") != null &&
+                        $(data).filter("#Receive_Analysis_OnDevice_Confirmation_Div").html() != null) {
+                        $("#Receive_Analysis_OnDevice_Confirmation_Popup_Content").html(data);
+                        window.location.href = "#Receive_Analysis_OnDevice_Confirmation_Popup";
+                    } else {
+                        $("#Received_Lab_Analyzes_Container").html(data);
+                        window.location.href = "#";
+                    }
                 },
                 error: function (xhr, desc, err) {
                     alert("Error: " + err.message + " " + desc + " " + xhr.responseText + err.description);
@@ -140,7 +153,7 @@
             });
         }
         catch (err) {
-            alert(err.message + err.description);
+            alert("Error::"  + err.message + err.description);
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////
@@ -184,6 +197,10 @@
         catch (err) {
             alert(err.message + err.description);
         }
+    }
+    //////////////////////////////////////////////////////////
+    function Cancel() {
+        window.location.href = "#";
     }
     
 </script>

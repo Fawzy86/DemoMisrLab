@@ -22,6 +22,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public Nullable<int> PlanId { get; set; }
     
         public virtual Device Device { get; set; }
+        public virtual DevicePlan DevicePlan { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual PatientRequestAnalysi PatientRequestAnalysi { get; set; }
     }

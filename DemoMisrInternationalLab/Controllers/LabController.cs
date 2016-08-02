@@ -46,10 +46,27 @@ namespace DemoMisrInternationalLab.Controllers
         }
 
         [HttpPost]
-        public ActionResult ReceiveAnalysis(string RequestedAnalysisId, string DeviceId)
+        public ActionResult ReceiveAnalysis(string RequestedAnalysisId, string DeviceId, bool IsOverhead)
         {
-            DbFunctions.ReceiveAnalysisOnDevice(Convert.ToInt32(RequestedAnalysisId), Convert.ToInt32(DeviceId), HttpContext.User.Identity.Name);
-            return LoadReceivedAnalyzes(null, null);
+            DeviceViewModel _DeviceView = DbFunctions.GetDevice(Convert.ToInt32(DeviceId));
+            if (_DeviceView != null)
+            {
+                if (_DeviceView.Device.Capacity >= _DeviceView.Analyzes.Count + 1  || IsOverhead)
+                {
+                    DbFunctions.ReceiveAnalysisOnDevice(Convert.ToInt32(RequestedAnalysisId), Convert.ToInt32(DeviceId), HttpContext.User.Identity.Name);
+                    return LoadReceivedAnalyzes(null, null);
+                }
+                else
+                {
+                    UnitViewModel UnitView = DbFunctions.GetUnitDevices(_DeviceView.Device.UnitId);
+                    ViewBag.Message = String.Format("The device \"{0}\" capcity is \"{1}\" and there is no more space to receive any analysis right now, " +
+                        "so please decide what you want to do", _DeviceView.Device.DeviceName, _DeviceView.Device.Capacity);
+                    ViewBag.RequestedAnalysisId = RequestedAnalysisId;
+                    ViewBag.DeviceId = _DeviceView.Device.DeviceId;
+                    return PartialView("_ReceiveAnalysisOnDeviceConfirmation", UnitView);
+                }
+            }
+            return null;
         }
 
         [HttpPost]
@@ -83,26 +100,27 @@ namespace DemoMisrInternationalLab.Controllers
             {
                 WorkUnitDevices = DbFunctions.GetUnitDevices(UnitId);
             }
-            return PartialView("_AnalyzesAndDevices", WorkUnitDevices);
+            return PartialView("_DevicesAndAnalyzes", WorkUnitDevices);
         }
 
         [HttpPost]
-        public ActionResult MoveAnalyzesToAnotherDevice(FormCollection form, UnitViewModel model, string RequestedAnalyzesIds, string SourceDeviceId, string DestinationDeviceId)
+        [ValidateAntiForgeryToken]
+        public ActionResult MoveAnalyzesToAnotherDevice(FormCollection form, UnitViewModel model, string DeviceAnalyzesIds, string SourceDeviceId, string DestinationDeviceId, bool IsOverhead)
         {
-            if (!String.IsNullOrWhiteSpace(RequestedAnalyzesIds) && !String.IsNullOrWhiteSpace(SourceDeviceId) && !String.IsNullOrWhiteSpace(DestinationDeviceId))
+            if (!String.IsNullOrWhiteSpace(DeviceAnalyzesIds) && !String.IsNullOrWhiteSpace(SourceDeviceId) && !String.IsNullOrWhiteSpace(DestinationDeviceId))
             {
-                List<int> _RequestedAnalyzesIdsList = new List<int>();
-                var RequestedAnalyzesIdsArray = RequestedAnalyzesIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var requestedAnalysis in RequestedAnalyzesIdsArray)
+                List<int> _DeviceAnalyzesIdsList = new List<int>();
+                var DeviceAnalyzesIdsArray = DeviceAnalyzesIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var deviceAnalysisId in DeviceAnalyzesIdsArray)
                 {
-                    var RequestedAnalysisArray = requestedAnalysis.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (RequestedAnalysisArray.Count() > 1)
+                    var DeviceAnalysisIdArray = deviceAnalysisId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (DeviceAnalysisIdArray.Count() > 1)
                     {
-                        _RequestedAnalyzesIdsList.Add(Convert.ToInt32(RequestedAnalysisArray[1]));
+                        _DeviceAnalyzesIdsList.Add(Convert.ToInt32(DeviceAnalysisIdArray[1]));
                     }
                     else
                     {
-                        _RequestedAnalyzesIdsList.Add(Convert.ToInt32(RequestedAnalysisArray[0]));
+                        _DeviceAnalyzesIdsList.Add(Convert.ToInt32(DeviceAnalysisIdArray[0]));
                     }
                 }
 
@@ -128,8 +146,50 @@ namespace DemoMisrInternationalLab.Controllers
                     _DestinationDeviceId = Convert.ToInt32(DestinationDeviceIdArray[0]);
                 }
 
-                DbFunctions.MoveAnalyzesToAnotherDevice(_RequestedAnalyzesIdsList, _SourceDeviceId, _DestinationDeviceId);
-            //    return LoadDevicesWithAnalyzes(model.Unit.UnitId);
+                var DestinationDevice = DbFunctions.GetDevice(_DestinationDeviceId);
+                if (DestinationDevice != null)
+                {
+                    if (DestinationDevice.Device.Capacity >= DestinationDevice.Analyzes.Count + _DeviceAnalyzesIdsList.Count || IsOverhead)
+                    {
+                        DbFunctions.MoveAnalyzesToAnotherDevice(_DeviceAnalyzesIdsList, _SourceDeviceId, _DestinationDeviceId, HttpContext.User.Identity.Name);
+                        return LoadDevicesWithAnalyzes(model.Unit.UnitId);
+                    }
+                    else
+                    {
+                        UnitViewModel UnitView = DbFunctions.GetUnitDevices(DestinationDevice.Device.UnitId);
+                        ViewBag.Message = String.Format("The device \"{0}\" capcity is \"{1}\" and there is no more space to receive any analysis right now, " +
+                            "so please decide what you want to do", DestinationDevice.Device.DeviceName, DestinationDevice.Device.Capacity);
+                        ViewBag.DeviceAnalyzesIds = DeviceAnalyzesIds;
+                        ViewBag.SourceDeviceId = SourceDeviceId;
+                        ViewBag.DestinationDeviceId = DestinationDeviceId;
+                        return PartialView("_MoveAnalysisToDeviceConfirmation", UnitView);
+                    }
+                }
+            }
+            return null;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RunTest(FormCollection form, UnitViewModel model, string DeviceId)
+        {
+            if (!String.IsNullOrWhiteSpace(DeviceId))
+            {
+                DeviceViewModel Device = DbFunctions.RunTestPlan(Convert.ToInt32(DeviceId));
+                return PartialView("_DevicePlanAnalyzes", Device);
+            }
+            return null;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmRunTest(FormCollection form, DeviceViewModel model)
+        {
+            if (model != null)
+            {
+                List<int> DeviceAnalyzesIds = model.Analyzes.Select(a => a.DeviceAnalysisId).ToList();
+                DbFunctions.ConfirmTestPlan(DeviceAnalyzesIds, model.Device.DeviceId, HttpContext.User.Identity.Name);
+                return LoadDevicesWithAnalyzes(model.Device.UnitId);
             }
             return null;
         }

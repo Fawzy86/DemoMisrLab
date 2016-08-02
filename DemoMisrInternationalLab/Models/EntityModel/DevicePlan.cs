@@ -14,11 +14,17 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     
     public partial class DevicePlan
     {
+        public DevicePlan()
+        {
+            this.DeviceAnalysis = new HashSet<DeviceAnalysi>();
+        }
+    
         public int PlanId { get; set; }
         public string PlanNumber { get; set; }
         public System.DateTime TestDate { get; set; }
         public int EmployeeId { get; set; }
     
+        public virtual ICollection<DeviceAnalysi> DeviceAnalysis { get; set; }
         public virtual Employee Employee { get; set; }
     }
 }
