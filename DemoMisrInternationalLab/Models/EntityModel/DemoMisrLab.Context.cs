@@ -62,6 +62,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public virtual DbSet<Province> Provinces { get; set; }
         public virtual DbSet<RejectedAnalysi> RejectedAnalysis { get; set; }
         public virtual DbSet<RejectionReason> RejectionReasons { get; set; }
+        public virtual DbSet<RequestedAnalysisResult> RequestedAnalysisResults { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SampleType> SampleTypes { get; set; }
         public virtual DbSet<Status> Status { get; set; }
@@ -82,6 +83,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public virtual DbSet<PatientRequest_Payment> PatientRequest_Payment { get; set; }
         public virtual DbSet<PatientRequestAnalysis_AllStatuses> PatientRequestAnalysis_AllStatuses { get; set; }
         public virtual DbSet<PatientRequestAnalysis_LastStatus> PatientRequestAnalysis_LastStatus { get; set; }
+        public virtual DbSet<Plan_Device_Unit> Plan_Device_Unit { get; set; }
     
         public virtual ObjectResult<Nullable<int>> AddPatientRequest(Nullable<int> patientId, Nullable<int> doctorRefId, Nullable<int> organizationId, string comment, string priority, Nullable<decimal> paid, Nullable<decimal> totalOrganizationCost, Nullable<decimal> totalPatientCost, Nullable<decimal> extraDiscount, Nullable<decimal> extraCost, string attachmentSession, string analyzesIds)
         {

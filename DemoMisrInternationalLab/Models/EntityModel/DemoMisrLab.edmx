@@ -85,6 +85,7 @@
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="ReceiveDate" Type="datetime" Nullable="false" />
           <Property Name="PlanId" Type="int" />
+          <Property Name="RakeNumber" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DevicePlan">
           <Key>
@@ -94,6 +95,7 @@
           <Property Name="PlanNumber" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="TestDate" Type="datetime" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="DeviceId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DoctorRef">
           <Key>
@@ -382,6 +384,17 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PlanNumber' does not have a primar
           </Key>
           <Property Name="ErrorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ErrorMessage" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestedAnalysisResult">
+          <Key>
+            <PropertyRef Name="RequestedAnalysisResultId" />
+          </Key>
+          <Property Name="RequestedAnalysisResultId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestedAnalysisId" Type="int" Nullable="false" />
+          <Property Name="ResultDate" Type="datetime" Nullable="false" />
+          <Property Name="ResultValue" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.RequestNumber' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -838,6 +851,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_PatientRequ
             <PropertyRef Name="Capacity" />
             <PropertyRef Name="DoctorAnalyticEmployeeId" />
             <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="RakeNumber" />
           </Key>
           <Property Name="RequestID" Type="int" Nullable="false" />
           <Property Name="AnalysisID" Type="int" Nullable="false" />
@@ -898,6 +912,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_PatientRequ
           <Property Name="PlanId" Type="int" />
           <Property Name="DoctorAnalyticEmployeeId" Type="int" Nullable="false" />
           <Property Name="DeviceId" Type="int" Nullable="false" />
+          <Property Name="RakeNumber" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1102,6 +1117,51 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="RequestNumber" Type="varchar" MaxLength="16" Nullable="false" />
           <Property Name="SampleType" Type="nchar" MaxLength="20" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DemoMisrInt.dbo.Plan_Device_Unit' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Plan_Device_Unit">
+          <Key>
+            <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="DeviceName" />
+            <PropertyRef Name="IsDefalutUnitDevice" />
+            <PropertyRef Name="Capacity" />
+            <PropertyRef Name="UnitId" />
+            <PropertyRef Name="UnitName" />
+            <PropertyRef Name="PlanId" />
+            <PropertyRef Name="PlanNumber" />
+            <PropertyRef Name="TestDate" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="JobDate" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="BirthDay" />
+            <PropertyRef Name="Phone" />
+            <PropertyRef Name="CurrentBranchID" />
+            <PropertyRef Name="JobTitleID" />
+          </Key>
+          <Property Name="DeviceId" Type="int" Nullable="false" />
+          <Property Name="DeviceName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DeviceDescription" Type="varchar" MaxLength="255" />
+          <Property Name="IsDefalutUnitDevice" Type="bit" Nullable="false" />
+          <Property Name="Capacity" Type="int" Nullable="false" />
+          <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="UnitName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UnitDescription" Type="varchar" MaxLength="255" />
+          <Property Name="PlanId" Type="int" Nullable="false" />
+          <Property Name="PlanNumber" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TestDate" Type="datetime" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="JobDate" Type="datetime" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="CityID" Type="int" />
+          <Property Name="BirthDay" Type="date" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CurrentBranchID" Type="int" Nullable="false" />
+          <Property Name="JobTitleID" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Analysis_SampleType">
           <End Role="SampleType" Type="Self.SampleType" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1253,6 +1313,18 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             </Principal>
             <Dependent Role="DeviceAnalysis">
               <PropertyRef Name="RequestedAnalysisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DevicePlan_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="DevicePlan" Type="Self.DevicePlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceId" />
+            </Principal>
+            <Dependent Role="DevicePlan">
+              <PropertyRef Name="DeviceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1770,6 +1842,30 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RequestedAnalysisResult_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="RequestedAnalysisResult" Type="Self.RequestedAnalysisResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="RequestedAnalysisResult">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestedAnalysisResult_PatientRequestAnalysis">
+          <End Role="PatientRequestAnalysis" Type="Self.PatientRequestAnalysis" Multiplicity="1" />
+          <End Role="RequestedAnalysisResult" Type="Self.RequestedAnalysisResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientRequestAnalysis">
+              <PropertyRef Name="RequestedAnalysisID" />
+            </Principal>
+            <Dependent Role="RequestedAnalysisResult">
+              <PropertyRef Name="RequestedAnalysisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1850,6 +1946,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <EntitySet Name="Province" EntityType="Self.Province" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RejectedAnalysis" EntityType="Self.RejectedAnalysis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RejectionReason" EntityType="Self.RejectionReason" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestedAnalysisResult" EntityType="Self.RequestedAnalysisResult" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SampleType" EntityType="Self.SampleType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
@@ -2179,7 +2276,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
     [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[Capacity] AS [Capacity], 
     [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[PlanId] AS [PlanId], 
     [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[DoctorAnalyticEmployeeId] AS [DoctorAnalyticEmployeeId], 
-    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[DeviceId] AS [DeviceId]
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[DeviceId] AS [DeviceId], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[RakeNumber] AS [RakeNumber]
     FROM [dbo].[Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device] AS [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PatientRequest_Analysis" EntityType="Self.PatientRequest_Analysis" store:Type="Views" store:Schema="dbo">
@@ -2312,6 +2410,31 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
     [PatientRequestAnalysis_LastStatus].[SampleType] AS [SampleType]
     FROM [dbo].[PatientRequestAnalysis_LastStatus] AS [PatientRequestAnalysis_LastStatus]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Plan_Device_Unit" EntityType="Self.Plan_Device_Unit" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Plan_Device_Unit].[DeviceId] AS [DeviceId], 
+    [Plan_Device_Unit].[DeviceName] AS [DeviceName], 
+    [Plan_Device_Unit].[DeviceDescription] AS [DeviceDescription], 
+    [Plan_Device_Unit].[IsDefalutUnitDevice] AS [IsDefalutUnitDevice], 
+    [Plan_Device_Unit].[Capacity] AS [Capacity], 
+    [Plan_Device_Unit].[UnitId] AS [UnitId], 
+    [Plan_Device_Unit].[UnitName] AS [UnitName], 
+    [Plan_Device_Unit].[UnitDescription] AS [UnitDescription], 
+    [Plan_Device_Unit].[PlanId] AS [PlanId], 
+    [Plan_Device_Unit].[PlanNumber] AS [PlanNumber], 
+    [Plan_Device_Unit].[TestDate] AS [TestDate], 
+    [Plan_Device_Unit].[FirstName] AS [FirstName], 
+    [Plan_Device_Unit].[LastName] AS [LastName], 
+    [Plan_Device_Unit].[JobDate] AS [JobDate], 
+    [Plan_Device_Unit].[Address] AS [Address], 
+    [Plan_Device_Unit].[EmployeeID] AS [EmployeeID], 
+    [Plan_Device_Unit].[CityID] AS [CityID], 
+    [Plan_Device_Unit].[BirthDay] AS [BirthDay], 
+    [Plan_Device_Unit].[Phone] AS [Phone], 
+    [Plan_Device_Unit].[CurrentBranchID] AS [CurrentBranchID], 
+    [Plan_Device_Unit].[JobTitleID] AS [JobTitleID]
+    FROM [dbo].[Plan_Device_Unit] AS [Plan_Device_Unit]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Analysis_SampleType" Association="Self.FK_Analysis_SampleType">
             <End Role="SampleType" EntitySet="SampleType" />
             <End Role="Analysis" EntitySet="Analysis" />
@@ -2359,6 +2482,10 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <AssociationSet Name="FK_DeviceAnalysis_PatientRequestAnalysis" Association="Self.FK_DeviceAnalysis_PatientRequestAnalysis">
             <End Role="PatientRequestAnalysis" EntitySet="PatientRequestAnalysis" />
             <End Role="DeviceAnalysis" EntitySet="DeviceAnalysis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DevicePlan_Device" Association="Self.FK_DevicePlan_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="DevicePlan" EntitySet="DevicePlan" />
           </AssociationSet>
           <AssociationSet Name="FK_DevicePlan_Employee" Association="Self.FK_DevicePlan_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -2528,6 +2655,14 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             <End Role="RejectionReason" EntitySet="RejectionReason" />
             <End Role="RejectionReason1" EntitySet="RejectionReason" />
           </AssociationSet>
+          <AssociationSet Name="FK_RequestedAnalysisResult_Employee" Association="Self.FK_RequestedAnalysisResult_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="RequestedAnalysisResult" EntitySet="RequestedAnalysisResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestedAnalysisResult_PatientRequestAnalysis" Association="Self.FK_RequestedAnalysisResult_PatientRequestAnalysis">
+            <End Role="PatientRequestAnalysis" EntitySet="PatientRequestAnalysis" />
+            <End Role="RequestedAnalysisResult" EntitySet="RequestedAnalysisResult" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_Employee" Association="Self.FK_User_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="User" EntitySet="User" />
@@ -2559,6 +2694,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <FunctionImport Name="GetAnalysisRunNumber" ReturnType="Collection(Int32)" />
           <FunctionImport Name="GetPatientRefID" ReturnType="Collection(Int32)" />
           <FunctionImport Name="GetRequestNumber" ReturnType="Collection(String)" />
+          <FunctionImport Name="GetPlanNumber" ReturnType="Collection(Int32)" />
           <EntitySet Name="Analyses" EntityType="DemoMisrIntModel.Analysis" />
           <EntitySet Name="AnalysisResults" EntityType="DemoMisrIntModel.AnalysisResult" />
           <EntitySet Name="AnalysisResultStatus" EntityType="DemoMisrIntModel.AnalysisResultStatu" />
@@ -2594,6 +2730,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <EntitySet Name="Provinces" EntityType="DemoMisrIntModel.Province" />
           <EntitySet Name="RejectedAnalysis" EntityType="DemoMisrIntModel.RejectedAnalysi" />
           <EntitySet Name="RejectionReasons" EntityType="DemoMisrIntModel.RejectionReason" />
+          <EntitySet Name="RequestedAnalysisResults" EntityType="DemoMisrIntModel.RequestedAnalysisResult" />
           <EntitySet Name="Roles" EntityType="DemoMisrIntModel.Role" />
           <EntitySet Name="SampleTypes" EntityType="DemoMisrIntModel.SampleType" />
           <EntitySet Name="Status" EntityType="DemoMisrIntModel.Status" />
@@ -2614,6 +2751,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <EntitySet Name="PatientRequest_Payment" EntityType="DemoMisrIntModel.PatientRequest_Payment" />
           <EntitySet Name="PatientRequestAnalysis_AllStatuses" EntityType="DemoMisrIntModel.PatientRequestAnalysis_AllStatuses" />
           <EntitySet Name="PatientRequestAnalysis_LastStatus" EntityType="DemoMisrIntModel.PatientRequestAnalysis_LastStatus" />
+          <EntitySet Name="Plan_Device_Unit" EntityType="DemoMisrIntModel.Plan_Device_Unit" />
           <AssociationSet Name="FK_Analysis_SampleType" Association="DemoMisrIntModel.FK_Analysis_SampleType">
             <End Role="SampleType" EntitySet="SampleTypes" />
             <End Role="Analysis" EntitySet="Analyses" />
@@ -2681,6 +2819,10 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <AssociationSet Name="FK_DeviceAnalysis_Device" Association="DemoMisrIntModel.FK_DeviceAnalysis_Device">
             <End Role="Device" EntitySet="Devices" />
             <End Role="DeviceAnalysi" EntitySet="DeviceAnalysis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DevicePlan_Device" Association="DemoMisrIntModel.FK_DevicePlan_Device">
+            <End Role="Device" EntitySet="Devices" />
+            <End Role="DevicePlan" EntitySet="DevicePlans" />
           </AssociationSet>
           <AssociationSet Name="FK_DeviceAnalysis_DevicePlan" Association="DemoMisrIntModel.FK_DeviceAnalysis_DevicePlan">
             <End Role="DevicePlan" EntitySet="DevicePlans" />
@@ -2750,6 +2892,10 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             <End Role="Employee" EntitySet="Employees" />
             <End Role="RejectedAnalysi" EntitySet="RejectedAnalysis" />
           </AssociationSet>
+          <AssociationSet Name="FK_RequestedAnalysisResult_Employee" Association="DemoMisrIntModel.FK_RequestedAnalysisResult_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="RequestedAnalysisResult" EntitySet="RequestedAnalysisResults" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_Employee" Association="DemoMisrIntModel.FK_User_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="User" EntitySet="Users" />
@@ -2814,6 +2960,10 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             <End Role="PatientRequestAnalysi" EntitySet="PatientRequestAnalysis" />
             <End Role="RejectedAnalysi" EntitySet="RejectedAnalysis" />
           </AssociationSet>
+          <AssociationSet Name="FK_RequestedAnalysisResult_PatientRequestAnalysis" Association="DemoMisrIntModel.FK_RequestedAnalysisResult_PatientRequestAnalysis">
+            <End Role="PatientRequestAnalysi" EntitySet="PatientRequestAnalysis" />
+            <End Role="RequestedAnalysisResult" EntitySet="RequestedAnalysisResults" />
+          </AssociationSet>
           <AssociationSet Name="FK_PatientRequestAnalysisStatus_Status" Association="DemoMisrIntModel.FK_PatientRequestAnalysisStatus_Status">
             <End Role="Status" EntitySet="Status" />
             <End Role="PatientRequestAnalysisStatu" EntitySet="PatientRequestAnalysisStatus" />
@@ -2838,7 +2988,6 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             <End Role="Role" EntitySet="Roles" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <FunctionImport Name="GetPlanNumber" ReturnType="Collection(Int32)" />
           </EntityContainer>
         <EntityType Name="Analysis">
           <Key>
@@ -2927,6 +3076,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="Capacity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Unit" Relationship="DemoMisrIntModel.FK_Device_Unit" FromRole="Device" ToRole="Unit" />
           <NavigationProperty Name="DeviceAnalysis" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_Device" FromRole="Device" ToRole="DeviceAnalysi" />
+          <NavigationProperty Name="DevicePlans" Relationship="DemoMisrIntModel.FK_DevicePlan_Device" FromRole="Device" ToRole="DevicePlan" />
         </EntityType>
         <EntityType Name="DeviceAnalysi">
           <Key>
@@ -2938,6 +3088,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="ReceiveDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PlanId" Type="Int32" />
+          <Property Name="RakeNumber" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Device" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_Device" FromRole="DeviceAnalysi" ToRole="Device" />
           <NavigationProperty Name="DevicePlan" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_DevicePlan" FromRole="DeviceAnalysi" ToRole="DevicePlan" />
           <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_Employee" FromRole="DeviceAnalysi" ToRole="Employee" />
@@ -2951,6 +3102,8 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="PlanNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TestDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="DeviceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="DemoMisrIntModel.FK_DevicePlan_Device" FromRole="DevicePlan" ToRole="Device" />
           <NavigationProperty Name="DeviceAnalysis" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_DevicePlan" FromRole="DevicePlan" ToRole="DeviceAnalysi" />
           <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_DevicePlan_Employee" FromRole="DevicePlan" ToRole="Employee" />
         </EntityType>
@@ -3007,6 +3160,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <NavigationProperty Name="PatientRequestPayments" Relationship="DemoMisrIntModel.FK_PatientRequestPayment_Employee" FromRole="Employee" ToRole="PatientRequestPayment" />
           <NavigationProperty Name="PatientRequestStatus" Relationship="DemoMisrIntModel.FK_PatientRequestStatus_Employee" FromRole="Employee" ToRole="PatientRequestStatu" />
           <NavigationProperty Name="RejectedAnalysis" Relationship="DemoMisrIntModel.FK_RejectedAnalysis_Employee" FromRole="Employee" ToRole="RejectedAnalysi" />
+          <NavigationProperty Name="RequestedAnalysisResults" Relationship="DemoMisrIntModel.FK_RequestedAnalysisResult_Employee" FromRole="Employee" ToRole="RequestedAnalysisResult" />
           <NavigationProperty Name="Users" Relationship="DemoMisrIntModel.FK_User_Employee" FromRole="Employee" ToRole="User" />
         </EntityType>
         <EntityType Name="Entity">
@@ -3210,6 +3364,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <NavigationProperty Name="PatientRequest" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysis_PatientRequest" FromRole="PatientRequestAnalysi" ToRole="PatientRequest" />
           <NavigationProperty Name="PatientRequestAnalysisStatus" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysisStatus_PatientRequestAnalysis" FromRole="PatientRequestAnalysi" ToRole="PatientRequestAnalysisStatu" />
           <NavigationProperty Name="RejectedAnalysis" Relationship="DemoMisrIntModel.FK_RejectedAnalysis_PatientRequestAnalysis" FromRole="PatientRequestAnalysi" ToRole="RejectedAnalysi" />
+          <NavigationProperty Name="RequestedAnalysisResults" Relationship="DemoMisrIntModel.FK_RequestedAnalysisResult_PatientRequestAnalysis" FromRole="PatientRequestAnalysi" ToRole="RequestedAnalysisResult" />
         </EntityType>
         <EntityType Name="PatientRequestAnalysisStatu">
           <Key>
@@ -3303,6 +3458,19 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <NavigationProperty Name="RejectedAnalysis" Relationship="DemoMisrIntModel.FK_RejectedAnalysis_RejectionReason" FromRole="RejectionReason" ToRole="RejectedAnalysi" />
           <NavigationProperty Name="RejectionReason1" Relationship="DemoMisrIntModel.FK_RejectionResson_RejectionReason" FromRole="RejectionReason" ToRole="RejectionReason1" />
           <NavigationProperty Name="RejectionReason2" Relationship="DemoMisrIntModel.FK_RejectionResson_RejectionReason" FromRole="RejectionReason1" ToRole="RejectionReason" />
+        </EntityType>
+        <EntityType Name="RequestedAnalysisResult">
+          <Key>
+            <PropertyRef Name="RequestedAnalysisResultId" />
+          </Key>
+          <Property Name="RequestedAnalysisResultId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestedAnalysisId" Type="Int32" Nullable="false" />
+          <Property Name="ResultDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ResultValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_RequestedAnalysisResult_Employee" FromRole="RequestedAnalysisResult" ToRole="Employee" />
+          <NavigationProperty Name="PatientRequestAnalysi" Relationship="DemoMisrIntModel.FK_RequestedAnalysisResult_PatientRequestAnalysis" FromRole="RequestedAnalysisResult" ToRole="PatientRequestAnalysi" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -3763,6 +3931,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             <PropertyRef Name="Capacity" />
             <PropertyRef Name="DoctorAnalyticEmployeeId" />
             <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="RakeNumber" />
           </Key>
           <Property Name="RequestID" Type="Int32" Nullable="false" />
           <Property Name="AnalysisID" Type="Int32" Nullable="false" />
@@ -3823,6 +3992,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="PlanId" Type="Int32" />
           <Property Name="DoctorAnalyticEmployeeId" Type="Int32" Nullable="false" />
           <Property Name="DeviceId" Type="Int32" Nullable="false" />
+          <Property Name="RakeNumber" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="PatientRequest_Analysis">
           <Key>
@@ -4018,6 +4188,49 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Plan_Device_Unit">
+          <Key>
+            <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="DeviceName" />
+            <PropertyRef Name="IsDefalutUnitDevice" />
+            <PropertyRef Name="Capacity" />
+            <PropertyRef Name="UnitId" />
+            <PropertyRef Name="UnitName" />
+            <PropertyRef Name="PlanId" />
+            <PropertyRef Name="PlanNumber" />
+            <PropertyRef Name="TestDate" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="JobDate" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="BirthDay" />
+            <PropertyRef Name="Phone" />
+            <PropertyRef Name="CurrentBranchID" />
+            <PropertyRef Name="JobTitleID" />
+          </Key>
+          <Property Name="DeviceId" Type="Int32" Nullable="false" />
+          <Property Name="DeviceName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DeviceDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IsDefalutUnitDevice" Type="Boolean" Nullable="false" />
+          <Property Name="Capacity" Type="Int32" Nullable="false" />
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <Property Name="UnitName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UnitDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PlanId" Type="Int32" Nullable="false" />
+          <Property Name="PlanNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TestDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JobDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="BirthDay" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentBranchID" Type="Int32" Nullable="false" />
+          <Property Name="JobTitleID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Analysis_SampleType">
           <End Type="DemoMisrIntModel.SampleType" Role="SampleType" Multiplicity="1">
@@ -4237,6 +4450,18 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DevicePlan_Device">
+          <End Type="DemoMisrIntModel.Device" Role="Device" Multiplicity="1" />
+          <End Type="DemoMisrIntModel.DevicePlan" Role="DevicePlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceId" />
+            </Principal>
+            <Dependent Role="DevicePlan">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DeviceAnalysis_DevicePlan">
           <End Type="DemoMisrIntModel.DevicePlan" Role="DevicePlan" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -4447,6 +4672,18 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RequestedAnalysisResult_Employee">
+          <End Type="DemoMisrIntModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="DemoMisrIntModel.RequestedAnalysisResult" Role="RequestedAnalysisResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="RequestedAnalysisResult">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Employee">
           <End Type="DemoMisrIntModel.Employee" Role="Employee" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -4641,6 +4878,18 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RequestedAnalysisResult_PatientRequestAnalysis">
+          <End Type="DemoMisrIntModel.PatientRequestAnalysi" Role="PatientRequestAnalysi" Multiplicity="1" />
+          <End Type="DemoMisrIntModel.RequestedAnalysisResult" Role="RequestedAnalysisResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientRequestAnalysi">
+              <PropertyRef Name="RequestedAnalysisID" />
+            </Principal>
+            <Dependent Role="RequestedAnalysisResult">
+              <PropertyRef Name="RequestedAnalysisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PatientRequestAnalysisStatus_Status">
           <End Type="DemoMisrIntModel.Status" Role="Status" Multiplicity="1" />
           <End Type="DemoMisrIntModel.PatientRequestAnalysisStatu" Role="PatientRequestAnalysisStatu" Multiplicity="*" />
@@ -4723,6 +4972,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <FunctionImportMapping FunctionImportName="GetAnalysisRunNumber" FunctionName="DemoMisrIntModel.Store.GetAnalysisRunNumber" />
           <FunctionImportMapping FunctionImportName="GetPatientRefID" FunctionName="DemoMisrIntModel.Store.GetPatientRefID" />
           <FunctionImportMapping FunctionImportName="GetRequestNumber" FunctionName="DemoMisrIntModel.Store.GetRequestNumber" />
+          <FunctionImportMapping FunctionImportName="GetPlanNumber" FunctionName="DemoMisrIntModel.Store.GetPlanNumber" />
           <EntitySetMapping Name="Analyses">
             <EntityTypeMapping TypeName="DemoMisrIntModel.Analysis">
               <MappingFragment StoreEntitySet="Analysis">
@@ -4803,6 +5053,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <EntitySetMapping Name="DeviceAnalysis">
             <EntityTypeMapping TypeName="DemoMisrIntModel.DeviceAnalysi">
               <MappingFragment StoreEntitySet="DeviceAnalysis">
+                <ScalarProperty Name="RakeNumber" ColumnName="RakeNumber" />
                 <ScalarProperty Name="PlanId" ColumnName="PlanId" />
                 <ScalarProperty Name="ReceiveDate" ColumnName="ReceiveDate" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
@@ -4815,6 +5066,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <EntitySetMapping Name="DevicePlans">
             <EntityTypeMapping TypeName="DemoMisrIntModel.DevicePlan">
               <MappingFragment StoreEntitySet="DevicePlan">
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="TestDate" ColumnName="TestDate" />
                 <ScalarProperty Name="PlanNumber" ColumnName="PlanNumber" />
@@ -5114,6 +5366,18 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
               <MappingFragment StoreEntitySet="RejectionReason">
                 <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
                 <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestedAnalysisResults">
+            <EntityTypeMapping TypeName="DemoMisrIntModel.RequestedAnalysisResult">
+              <MappingFragment StoreEntitySet="RequestedAnalysisResult">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="ResultValue" ColumnName="ResultValue" />
+                <ScalarProperty Name="ResultDate" ColumnName="ResultDate" />
+                <ScalarProperty Name="RequestedAnalysisId" ColumnName="RequestedAnalysisId" />
+                <ScalarProperty Name="RequestedAnalysisResultId" ColumnName="RequestedAnalysisResultId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5454,6 +5718,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
           <EntitySetMapping Name="Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
             <EntityTypeMapping TypeName="DemoMisrIntModel.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
               <MappingFragment StoreEntitySet="Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
+                <ScalarProperty Name="RakeNumber" ColumnName="RakeNumber" />
                 <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
                 <ScalarProperty Name="DoctorAnalyticEmployeeId" ColumnName="DoctorAnalyticEmployeeId" />
                 <ScalarProperty Name="PlanId" ColumnName="PlanId" />
@@ -5654,7 +5919,33 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequestAnalysis_LastStatus'
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetPlanNumber" FunctionName="DemoMisrIntModel.Store.GetPlanNumber" />
+          <EntitySetMapping Name="Plan_Device_Unit">
+            <EntityTypeMapping TypeName="DemoMisrIntModel.Plan_Device_Unit">
+              <MappingFragment StoreEntitySet="Plan_Device_Unit">
+                <ScalarProperty Name="JobTitleID" ColumnName="JobTitleID" />
+                <ScalarProperty Name="CurrentBranchID" ColumnName="CurrentBranchID" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="JobDate" ColumnName="JobDate" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="TestDate" ColumnName="TestDate" />
+                <ScalarProperty Name="PlanNumber" ColumnName="PlanNumber" />
+                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+                <ScalarProperty Name="UnitDescription" ColumnName="UnitDescription" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="IsDefalutUnitDevice" ColumnName="IsDefalutUnitDevice" />
+                <ScalarProperty Name="DeviceDescription" ColumnName="DeviceDescription" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

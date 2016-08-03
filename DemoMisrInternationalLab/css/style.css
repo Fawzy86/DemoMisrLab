@@ -589,6 +589,7 @@ background-color:#de8650;
   border-color: #364359;
   border-width: 1px;
   border-top-width: 0px;
+  
 }
 .navbar .top-navbar li > ul.dropdown-menu .divider {
   background-color: #495b79;
@@ -647,6 +648,13 @@ background-color:#de8650;
 }
 .sidebar-holder {
   padding: 25px 0px;
+  
+}
+.ahmeddd {
+	float:left;
+	width:25%;
+	text-align:center;
+  
 }
 .sidebar-holder .nav li.nav-toggle {
   text-align: right;
@@ -1556,6 +1564,14 @@ div label input {
 	
 }
 
+.sampling-heighte {
+	height:167px;
+	float:left;
+	width:100%;
+	overflow:auto;	
+	
+}
+
 .sampling-heightdd {
 	height:250px;
 	float:left;
@@ -1572,12 +1588,25 @@ div label input {
 	overflow:auto;
 	
 }
-
 .sampling-heightc {
 	height:540px;
 	float:left;
 	width:100%;
 	overflow:auto;	
+
+}
+.addrecord-input {	
+    width: 60% !important;
+    margin-top: 3px;
+    margin-left: 20%;
+    height: 23px;
+    font-size: 12px;
+	
+}
+.table-record {	
+    width: 159px !important;
+    float: left;
+    margin-left: 10px;	
 
 }
 .result-valueinner {
@@ -2287,7 +2316,7 @@ table.todo-table i.finish-task:hover {
   margin-top: 10px;
 }
 .btn-animate-demo {
-  margin-top: 10px;
+  /*margin-top: 10px;*/
 }
 /* WYSIWYG Editor
 ---------------------------------------------------------------------------------------------- */
@@ -3642,4 +3671,13 @@ ul.icheck-buttons > li {
 }	
 	.panel-cascade {
     height: auto !important;
+	
+}
+.addrecord-input {	
+    width:100% !important;margin-left:0px;
+	
+}
+.table-record {	
+    width: 90% !important;
+    margin-left: 5%;			
 	

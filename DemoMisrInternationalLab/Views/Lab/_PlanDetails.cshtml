@@ -1,0 +1,52 @@
+﻿@model DemoMisrInternationalLab.Models.PlanViewModel
+@if (Model != null && Model.Analyzes.Any())
+{
+    <div class="table-scroll">
+        <table class="table table-bordered">
+            <thead>
+                <tr style="BACKGROUND-COLOR: #1C598F;COLOR: #FFF;">
+                    <td>Run #</td>
+                    <th>Analysis Name</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Request Date</th>
+                    <th>Rake #</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Analyzes.Count; i++)
+                {
+                    var Age = Model.Analyzes[i].BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.Analyzes[i].BirthDate).Year).ToString() : String.Empty;
+                    @Html.HiddenFor(m => Model.Analyzes[i].DeviceAnalysisId)
+                    @Html.HiddenFor(m => Model.Analyzes[i].RequestedAnalysisID)
+                    <tr>
+                        <td>@Html.DisplayFor(m => Model.Analyzes[i].RunNumber)</td>
+                        <td>@Html.DisplayFor(m => Model.Analyzes[i].AnalysisName)</td>
+                        <td>@Html.DisplayFor(m => Model.Analyzes[i].Gender)</td>
+                        <td>@Age</td>
+                        <td>@Html.DisplayFor(m => Model.Analyzes[i].RequestDate)</td>
+                        <td>@(i + 1)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12 text-right">
+        <button type="button" id="Close_Button"
+                name="Close_Button" class="btn btn-danger"
+                style="border-radius:0;" onclick="Close();">
+            Close
+        </button>
+    </div>
+}
+
+
+<script type="text/javascript">
+    //////////////////////////////////////////////////////////
+    function Close() {
+        window.location.href = "#";
+    }
+</script>
+
+
+

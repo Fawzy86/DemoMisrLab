@@ -28,6 +28,8 @@
     </div>
 
 }
+
+@*@Scripts.Render("~/bundles/jqueryui")*@
 <script type="text/javascript">
     ////////////////////////////////////////////////////////////
     $(document).ajaxStart(function () {
@@ -54,17 +56,22 @@
     /////////////////////////////////////////////////////////////////
     $('#Work_Unit_SelectedUnitId').change(function () {
         var SelectedUnitId = this.value;
+        LoadDevicesAndAnalyzes(SelectedUnitId);
+    });
+    //////////////////////////////////////////////////////////////////////
+    function LoadDevicesAndAnalyzes(UnitId) {
         try {
-            $("#Work_Unit_DevicesWithAnalyzes_Container").load('@Url.Action("LoadDevicesWithAnalyzes", "Lab")?UnitId=' + SelectedUnitId);
+            $("#Work_Unit_DevicesWithAnalyzes_Container").load('@Url.Action("LoadDevicesWithAnalyzes", "Lab")?UnitId=' + UnitId);
         }
         catch (err) {
             alert(err.message);
         }
-    });
+    }
     ///////////////////////////////////////////////////////////
     $(function () {
         ///////////////////////////////////////////////////////////////////
         document.addEventListener('dragstart', function (ev) {
+            //     debugger;
             var SelectedItems = [];
             $.each($('#' + ev.target.parentNode.id + ' li'), function (i, val) {
                 if (val.getAttribute('aria-grabbed') == 'true') {
@@ -101,27 +108,28 @@
         });
     });
     /////////////////////////////////////////////////////////////////////
-    function MoveAnalyzes(deviceAnalyzesIds, sourceDeviceId, destinationDeviceId, Overhead) {
+    function MoveAnalyzes(SelectedDeviceAnalyzesIds, SelectedSourceDeviceId, SelectedDestinationDeviceId, Overhead) {
         try {
-            console.log("Move");
-            console.log(deviceAnalyzesIds);
-            console.log(sourceDeviceId);
-            console.log(destinationDeviceId);
+            console.log(SelectedDeviceAnalyzesIds);
+            console.log(SelectedSourceDeviceId);
+            console.log(SelectedDestinationDeviceId);
             console.log(Overhead);
-            var form = $('#' + SourceDeviceId).closest("form");
+            // var form = $('#' + SelectedSourceDeviceId).closest("form");
+            var form = $('#Work_Unit_Form');
             $.ajax({
                 cache: false,
                 async: true,
                 type: "POST",
                 url: "/Lab/MoveAnalyzesToAnotherDevice",//form.attr('action'),
-                data: form.serialize() + "&DeviceAnalyzesIds=" + deviceAnalyzesIds + "&SourceDeviceId=" + sourceDeviceId + "&DestinationDeviceId=" + destinationDeviceId + "&IsOverhead=" + Overhead,
+                data: form.serialize() + "&DeviceAnalyzesIds=" + SelectedDeviceAnalyzesIds + "&SourceDeviceId=" + SelectedSourceDeviceId + "&DestinationDeviceId=" + SelectedDestinationDeviceId + "&IsOverhead=" + Overhead,
                 success: function (data) {
                     if ($(data).filter("#Move_Analysis_ToDevice_Confirmation_Div") != null &&
                        $(data).filter("#Move_Analysis_ToDevice_Confirmation_Div").html() != null) {
                         $("#Move_Analysis_ToDevice_Confirmation_Popup_Content").html(data);
                         window.location.href = "#Move_Analysis_ToDevice_Confirmation_Popup";
                     } else {
-                        $("#Work_Unit_DevicesWithAnalyzes_Container").html(data);
+                           $("#Work_Unit_DevicesWithAnalyzes_Container").html(data);
+                        //LoadDevicesAndAnalyzes(data);
                         window.location.href = "#";
                     }
                 },

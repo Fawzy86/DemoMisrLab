@@ -153,15 +153,17 @@ namespace DemoMisrInternationalLab.Controllers
                     {
                         DbFunctions.MoveAnalyzesToAnotherDevice(_DeviceAnalyzesIdsList, _SourceDeviceId, _DestinationDeviceId, HttpContext.User.Identity.Name);
                         return LoadDevicesWithAnalyzes(model.Unit.UnitId);
+                      //  return Content(model.Unit.UnitId.ToString());
                     }
                     else
                     {
                         UnitViewModel UnitView = DbFunctions.GetUnitDevices(DestinationDevice.Device.UnitId);
                         ViewBag.Message = String.Format("The device \"{0}\" capcity is \"{1}\" and there is no more space to receive any analysis right now, " +
                             "so please decide what you want to do", DestinationDevice.Device.DeviceName, DestinationDevice.Device.Capacity);
-                        ViewBag.DeviceAnalyzesIds = DeviceAnalyzesIds;
-                        ViewBag.SourceDeviceId = SourceDeviceId;
-                        ViewBag.DestinationDeviceId = DestinationDeviceId;
+
+                        ViewBag.SelectedDeviceAnalyzesIds = String.Join(",", _DeviceAnalyzesIdsList);
+                        ViewBag.SelectedSourceDeviceId = _SourceDeviceId.ToString();
+                        ViewBag.SelectedDestinationDeviceId = _DestinationDeviceId.ToString();
                         return PartialView("_MoveAnalysisToDeviceConfirmation", UnitView);
                     }
                 }
@@ -196,7 +198,46 @@ namespace DemoMisrInternationalLab.Controllers
 
 
 
+        public ActionResult GetPlans(string SearchPattern, string DateRange)
+        {
+            DateTime DateFrom = DateTime.Now.Date;
+            DateTime DateTo = DateTime.Now.AddDays(1).Date;
+            if (!String.IsNullOrWhiteSpace(DateRange))
+            {
+                string[] DateRangeArray = DateRange.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+                DateTime.TryParse(DateRangeArray[0], out DateFrom);
+                if (DateRangeArray.Length > 1)
+                {
+                    if (DateTime.TryParse(DateRangeArray[1], out DateTo))
+                    {
+                        DateTo = DateTo.AddDays(1).Date;
+                    }
+                }
+            }
+            List<PlanViewModel> Plans = new List<PlanViewModel>();
+            Plans = DbFunctions.GetPlans(SearchPattern, DateFrom, DateTo);
+            return PartialView("_FilteredPlans", Plans);
+        }
 
+
+        public ActionResult GetPlanDetails(int PlanId)
+        {
+            if (PlanId != 0)
+            {
+                var Plan = DbFunctions.GetPlanDetails(PlanId);
+                return PartialView("_PlanDetails", Plan);
+            }
+            return null;
+        }
+
+
+
+        public ActionResult LoadAnalyzesForCaptureResult()
+        {
+            List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>();
+            Analyzes = DbFunctions.GetAnalysisForCaptureResult();
+            return PartialView("_CaptureResult", Analyzes);
+        }
 
         
 	}

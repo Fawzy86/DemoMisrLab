@@ -20,6 +20,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
             this.NotDeliveredAnalysis = new HashSet<NotDeliveredAnalysi>();
             this.PatientRequestAnalysisStatus = new HashSet<PatientRequestAnalysisStatu>();
             this.RejectedAnalysis = new HashSet<RejectedAnalysi>();
+            this.RequestedAnalysisResults = new HashSet<RequestedAnalysisResult>();
         }
     
         public int RequestedAnalysisID { get; set; }
@@ -36,5 +37,6 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public virtual PatientRequest PatientRequest { get; set; }
         public virtual ICollection<PatientRequestAnalysisStatu> PatientRequestAnalysisStatus { get; set; }
         public virtual ICollection<RejectedAnalysi> RejectedAnalysis { get; set; }
+        public virtual ICollection<RequestedAnalysisResult> RequestedAnalysisResults { get; set; }
     }
 }

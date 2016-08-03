@@ -1,0 +1,40 @@
+﻿@model List<DemoMisrInternationalLab.Models.PlanViewModel>
+@if (Model != null && Model.Any())
+{
+    <div>
+        <table class="table table-bordered" id="Lab_Plans_Table">
+            <thead>
+                <tr>
+                    <th>Plan #</th>
+                    <th width="15%">Plan Date</th>
+                    <th width="30%">Device Name</th>
+                    <th width="15%">Analyzes Count</th>
+                    <th width="25%">Doctor Name</th>
+                    <th width="10%">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Plan in Model)
+                {
+                    <tr>
+                        <td>@Plan.Plan.PlanNumber</td>
+                        <td>@Plan.Plan.TestDate</td>
+                        <td>@Plan.Plan.DeviceName </td>
+                        <td>@Plan.Analyzes.Count </td>
+                        <td>@Plan.Plan.FirstName @Plan.Plan.LastName</td>
+                        <td>
+                            @Html.ActionLink("Show", "", new
+                               {
+                                   PlanId = @Plan.Plan.PlanId
+                               },
+                               new
+                               {
+                                   onclick = "return GetPlanDetails('" + @Plan.Plan.PlanId + "');"
+                               })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

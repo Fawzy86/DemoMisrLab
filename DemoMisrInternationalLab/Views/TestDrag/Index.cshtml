@@ -10,6 +10,34 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     <link rel="stylesheet" href="~/css/dragdrop.css">
+    <style>
+        #feedback {
+            font-size: 1.4em;
+        }
+
+        .Selectable .ui-selecting {
+            background: #FECA40;
+        }
+
+        .Selectable .ui-selected {
+            background: #F39814;
+            color: white;
+        }
+
+        .Selectable {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 60%;
+        }
+
+            .Selectable li {
+                margin: 3px;
+                padding: 0.4em;
+                font-size: 1.4em;
+                height: 18px;
+            }
+    </style>
 </head>
 <body>
     <div id="Work_Unit_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
@@ -36,11 +64,11 @@
             <div class="col-md-6">
 
                 <div class="col-md-12">
-                    <ol class="scrolll" data-draggable="target">
-                        <li data-draggable="item" class="ck-button">Item 0</li>
-                        <li data-draggable="item" class="ck-buttonb">Item 1</li>
-                        <li data-draggable="item" class="ck-button">Item 2</li>
-                        <li data-draggable="item" class="ck-buttonb">Item 3</li>
+                    <ol class="Selectable" data-draggable="target" id="Machine1">
+                        <li  class="ck-button" draggable="true" id="tedfmldsf">Item 0</li>
+                        <li  class="ck-buttonb" draggable="true">Item 1</li>
+                        <li  class="ck-button" draggable="true">Item 2</li>
+                        <li  class="ck-buttonb" draggable="true">Item 3</li>
                     </ol>
                 </div>
 
@@ -61,7 +89,7 @@
             <div class="col-md-6">
 
                 <div class="col-md-12">
-                    <ol class="scrolll" data-draggable="target">
+                    <ol class="scrolll" data-draggable="target" id="Machine2">
                         <li data-draggable="item" class="ck-button">Item 4</li>
                         <li data-draggable="item" class="ck-buttonb">Item 5</li>
 
@@ -84,7 +112,7 @@
             <div class="col-md-6">
 
                 <div class="col-md-12">
-                    <ol class="scrolll" data-draggable="target">
+                    <ol class="scrolll" data-draggable="target" id="Machine3">
                         <li data-draggable="item" class="ck-buttonb">Item 6</li>
                     </ol>
                 </div>
@@ -105,7 +133,7 @@
             <div class="col-md-6">
 
                 <div class="col-md-12">
-                    <ol class="scrolll" data-draggable="target">
+                    <ol class="scrolll" data-draggable="target" id="Machine4">
                         <li data-draggable="item" class="ck-buttonb">Item 7</li>
                     </ol>
                 </div>
@@ -124,7 +152,15 @@
             </div>
         </div>
     }
-
-    <script src="~/js/dragdrop.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @*<script src="~/js/dragdrop.js"></script>*@
+    <script type="text/javascript">
+        $(function () {
+            $('#Machine1').selectable();
+            $('#tedfmldsf').draggable();
+       //     $('#tedfmldsf').droppable();
+        });
+    </script>
 </body>
 </html>

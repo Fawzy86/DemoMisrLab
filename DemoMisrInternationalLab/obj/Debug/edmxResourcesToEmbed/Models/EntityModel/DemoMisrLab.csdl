@@ -18,6 +18,7 @@
     <FunctionImport Name="GetAnalysisRunNumber" ReturnType="Collection(Int32)" />
     <FunctionImport Name="GetPatientRefID" ReturnType="Collection(Int32)" />
     <FunctionImport Name="GetRequestNumber" ReturnType="Collection(String)" />
+    <FunctionImport Name="GetPlanNumber" ReturnType="Collection(Int32)" />
     <EntitySet Name="Analyses" EntityType="DemoMisrIntModel.Analysis" />
     <EntitySet Name="AnalysisResults" EntityType="DemoMisrIntModel.AnalysisResult" />
     <EntitySet Name="AnalysisResultStatus" EntityType="DemoMisrIntModel.AnalysisResultStatu" />
@@ -53,6 +54,7 @@
     <EntitySet Name="Provinces" EntityType="DemoMisrIntModel.Province" />
     <EntitySet Name="RejectedAnalysis" EntityType="DemoMisrIntModel.RejectedAnalysi" />
     <EntitySet Name="RejectionReasons" EntityType="DemoMisrIntModel.RejectionReason" />
+    <EntitySet Name="RequestedAnalysisResults" EntityType="DemoMisrIntModel.RequestedAnalysisResult" />
     <EntitySet Name="Roles" EntityType="DemoMisrIntModel.Role" />
     <EntitySet Name="SampleTypes" EntityType="DemoMisrIntModel.SampleType" />
     <EntitySet Name="Status" EntityType="DemoMisrIntModel.Status" />
@@ -73,6 +75,7 @@
     <EntitySet Name="PatientRequest_Payment" EntityType="DemoMisrIntModel.PatientRequest_Payment" />
     <EntitySet Name="PatientRequestAnalysis_AllStatuses" EntityType="DemoMisrIntModel.PatientRequestAnalysis_AllStatuses" />
     <EntitySet Name="PatientRequestAnalysis_LastStatus" EntityType="DemoMisrIntModel.PatientRequestAnalysis_LastStatus" />
+    <EntitySet Name="Plan_Device_Unit" EntityType="DemoMisrIntModel.Plan_Device_Unit" />
     <AssociationSet Name="FK_Analysis_SampleType" Association="DemoMisrIntModel.FK_Analysis_SampleType">
       <End Role="SampleType" EntitySet="SampleTypes" />
       <End Role="Analysis" EntitySet="Analyses" />
@@ -140,6 +143,10 @@
     <AssociationSet Name="FK_DeviceAnalysis_Device" Association="DemoMisrIntModel.FK_DeviceAnalysis_Device">
       <End Role="Device" EntitySet="Devices" />
       <End Role="DeviceAnalysi" EntitySet="DeviceAnalysis" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DevicePlan_Device" Association="DemoMisrIntModel.FK_DevicePlan_Device">
+      <End Role="Device" EntitySet="Devices" />
+      <End Role="DevicePlan" EntitySet="DevicePlans" />
     </AssociationSet>
     <AssociationSet Name="FK_DeviceAnalysis_DevicePlan" Association="DemoMisrIntModel.FK_DeviceAnalysis_DevicePlan">
       <End Role="DevicePlan" EntitySet="DevicePlans" />
@@ -209,6 +216,10 @@
       <End Role="Employee" EntitySet="Employees" />
       <End Role="RejectedAnalysi" EntitySet="RejectedAnalysis" />
     </AssociationSet>
+    <AssociationSet Name="FK_RequestedAnalysisResult_Employee" Association="DemoMisrIntModel.FK_RequestedAnalysisResult_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="RequestedAnalysisResult" EntitySet="RequestedAnalysisResults" />
+    </AssociationSet>
     <AssociationSet Name="FK_User_Employee" Association="DemoMisrIntModel.FK_User_Employee">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="User" EntitySet="Users" />
@@ -273,6 +284,10 @@
       <End Role="PatientRequestAnalysi" EntitySet="PatientRequestAnalysis" />
       <End Role="RejectedAnalysi" EntitySet="RejectedAnalysis" />
     </AssociationSet>
+    <AssociationSet Name="FK_RequestedAnalysisResult_PatientRequestAnalysis" Association="DemoMisrIntModel.FK_RequestedAnalysisResult_PatientRequestAnalysis">
+      <End Role="PatientRequestAnalysi" EntitySet="PatientRequestAnalysis" />
+      <End Role="RequestedAnalysisResult" EntitySet="RequestedAnalysisResults" />
+    </AssociationSet>
     <AssociationSet Name="FK_PatientRequestAnalysisStatus_Status" Association="DemoMisrIntModel.FK_PatientRequestAnalysisStatus_Status">
       <End Role="Status" EntitySet="Status" />
       <End Role="PatientRequestAnalysisStatu" EntitySet="PatientRequestAnalysisStatus" />
@@ -297,7 +312,6 @@
       <End Role="Role" EntitySet="Roles" />
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
-    <FunctionImport Name="GetPlanNumber" ReturnType="Collection(Int32)" />
   </EntityContainer>
   <EntityType Name="Analysis">
     <Key>
@@ -386,6 +400,7 @@
     <Property Name="Capacity" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Unit" Relationship="DemoMisrIntModel.FK_Device_Unit" FromRole="Device" ToRole="Unit" />
     <NavigationProperty Name="DeviceAnalysis" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_Device" FromRole="Device" ToRole="DeviceAnalysi" />
+    <NavigationProperty Name="DevicePlans" Relationship="DemoMisrIntModel.FK_DevicePlan_Device" FromRole="Device" ToRole="DevicePlan" />
   </EntityType>
   <EntityType Name="DeviceAnalysi">
     <Key>
@@ -397,6 +412,7 @@
     <Property Name="EmployeeId" Type="Int32" Nullable="false" />
     <Property Name="ReceiveDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="PlanId" Type="Int32" />
+    <Property Name="RakeNumber" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Device" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_Device" FromRole="DeviceAnalysi" ToRole="Device" />
     <NavigationProperty Name="DevicePlan" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_DevicePlan" FromRole="DeviceAnalysi" ToRole="DevicePlan" />
     <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_Employee" FromRole="DeviceAnalysi" ToRole="Employee" />
@@ -410,6 +426,8 @@
     <Property Name="PlanNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
     <Property Name="TestDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="DeviceId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Device" Relationship="DemoMisrIntModel.FK_DevicePlan_Device" FromRole="DevicePlan" ToRole="Device" />
     <NavigationProperty Name="DeviceAnalysis" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_DevicePlan" FromRole="DevicePlan" ToRole="DeviceAnalysi" />
     <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_DevicePlan_Employee" FromRole="DevicePlan" ToRole="Employee" />
   </EntityType>
@@ -466,6 +484,7 @@
     <NavigationProperty Name="PatientRequestPayments" Relationship="DemoMisrIntModel.FK_PatientRequestPayment_Employee" FromRole="Employee" ToRole="PatientRequestPayment" />
     <NavigationProperty Name="PatientRequestStatus" Relationship="DemoMisrIntModel.FK_PatientRequestStatus_Employee" FromRole="Employee" ToRole="PatientRequestStatu" />
     <NavigationProperty Name="RejectedAnalysis" Relationship="DemoMisrIntModel.FK_RejectedAnalysis_Employee" FromRole="Employee" ToRole="RejectedAnalysi" />
+    <NavigationProperty Name="RequestedAnalysisResults" Relationship="DemoMisrIntModel.FK_RequestedAnalysisResult_Employee" FromRole="Employee" ToRole="RequestedAnalysisResult" />
     <NavigationProperty Name="Users" Relationship="DemoMisrIntModel.FK_User_Employee" FromRole="Employee" ToRole="User" />
   </EntityType>
   <EntityType Name="Entity">
@@ -669,6 +688,7 @@
     <NavigationProperty Name="PatientRequest" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysis_PatientRequest" FromRole="PatientRequestAnalysi" ToRole="PatientRequest" />
     <NavigationProperty Name="PatientRequestAnalysisStatus" Relationship="DemoMisrIntModel.FK_PatientRequestAnalysisStatus_PatientRequestAnalysis" FromRole="PatientRequestAnalysi" ToRole="PatientRequestAnalysisStatu" />
     <NavigationProperty Name="RejectedAnalysis" Relationship="DemoMisrIntModel.FK_RejectedAnalysis_PatientRequestAnalysis" FromRole="PatientRequestAnalysi" ToRole="RejectedAnalysi" />
+    <NavigationProperty Name="RequestedAnalysisResults" Relationship="DemoMisrIntModel.FK_RequestedAnalysisResult_PatientRequestAnalysis" FromRole="PatientRequestAnalysi" ToRole="RequestedAnalysisResult" />
   </EntityType>
   <EntityType Name="PatientRequestAnalysisStatu">
     <Key>
@@ -762,6 +782,19 @@
     <NavigationProperty Name="RejectedAnalysis" Relationship="DemoMisrIntModel.FK_RejectedAnalysis_RejectionReason" FromRole="RejectionReason" ToRole="RejectedAnalysi" />
     <NavigationProperty Name="RejectionReason1" Relationship="DemoMisrIntModel.FK_RejectionResson_RejectionReason" FromRole="RejectionReason" ToRole="RejectionReason1" />
     <NavigationProperty Name="RejectionReason2" Relationship="DemoMisrIntModel.FK_RejectionResson_RejectionReason" FromRole="RejectionReason1" ToRole="RejectionReason" />
+  </EntityType>
+  <EntityType Name="RequestedAnalysisResult">
+    <Key>
+      <PropertyRef Name="RequestedAnalysisResultId" />
+    </Key>
+    <Property Name="RequestedAnalysisResultId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestedAnalysisId" Type="Int32" Nullable="false" />
+    <Property Name="ResultDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ResultValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_RequestedAnalysisResult_Employee" FromRole="RequestedAnalysisResult" ToRole="Employee" />
+    <NavigationProperty Name="PatientRequestAnalysi" Relationship="DemoMisrIntModel.FK_RequestedAnalysisResult_PatientRequestAnalysis" FromRole="RequestedAnalysisResult" ToRole="PatientRequestAnalysi" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -1222,6 +1255,7 @@
       <PropertyRef Name="Capacity" />
       <PropertyRef Name="DoctorAnalyticEmployeeId" />
       <PropertyRef Name="DeviceId" />
+      <PropertyRef Name="RakeNumber" />
     </Key>
     <Property Name="RequestID" Type="Int32" Nullable="false" />
     <Property Name="AnalysisID" Type="Int32" Nullable="false" />
@@ -1282,6 +1316,7 @@
     <Property Name="PlanId" Type="Int32" />
     <Property Name="DoctorAnalyticEmployeeId" Type="Int32" Nullable="false" />
     <Property Name="DeviceId" Type="Int32" Nullable="false" />
+    <Property Name="RakeNumber" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="PatientRequest_Analysis">
     <Key>
@@ -1477,6 +1512,49 @@
     <Property Name="TotalOrganizationCost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="RequestNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
     <Property Name="SampleType" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Plan_Device_Unit">
+    <Key>
+      <PropertyRef Name="DeviceId" />
+      <PropertyRef Name="DeviceName" />
+      <PropertyRef Name="IsDefalutUnitDevice" />
+      <PropertyRef Name="Capacity" />
+      <PropertyRef Name="UnitId" />
+      <PropertyRef Name="UnitName" />
+      <PropertyRef Name="PlanId" />
+      <PropertyRef Name="PlanNumber" />
+      <PropertyRef Name="TestDate" />
+      <PropertyRef Name="FirstName" />
+      <PropertyRef Name="LastName" />
+      <PropertyRef Name="JobDate" />
+      <PropertyRef Name="Address" />
+      <PropertyRef Name="EmployeeID" />
+      <PropertyRef Name="BirthDay" />
+      <PropertyRef Name="Phone" />
+      <PropertyRef Name="CurrentBranchID" />
+      <PropertyRef Name="JobTitleID" />
+    </Key>
+    <Property Name="DeviceId" Type="Int32" Nullable="false" />
+    <Property Name="DeviceName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DeviceDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="IsDefalutUnitDevice" Type="Boolean" Nullable="false" />
+    <Property Name="Capacity" Type="Int32" Nullable="false" />
+    <Property Name="UnitId" Type="Int32" Nullable="false" />
+    <Property Name="UnitName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UnitDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="PlanId" Type="Int32" Nullable="false" />
+    <Property Name="PlanNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="TestDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="JobDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+    <Property Name="CityID" Type="Int32" />
+    <Property Name="BirthDay" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CurrentBranchID" Type="Int32" Nullable="false" />
+    <Property Name="JobTitleID" Type="Int32" Nullable="false" />
   </EntityType>
   <Association Name="FK_Analysis_SampleType">
     <End Type="DemoMisrIntModel.SampleType" Role="SampleType" Multiplicity="1">
@@ -1696,6 +1774,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_DevicePlan_Device">
+    <End Type="DemoMisrIntModel.Device" Role="Device" Multiplicity="1" />
+    <End Type="DemoMisrIntModel.DevicePlan" Role="DevicePlan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Device">
+        <PropertyRef Name="DeviceId" />
+      </Principal>
+      <Dependent Role="DevicePlan">
+        <PropertyRef Name="DeviceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_DeviceAnalysis_DevicePlan">
     <End Type="DemoMisrIntModel.DevicePlan" Role="DevicePlan" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -1906,6 +1996,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_RequestedAnalysisResult_Employee">
+    <End Type="DemoMisrIntModel.Employee" Role="Employee" Multiplicity="1" />
+    <End Type="DemoMisrIntModel.RequestedAnalysisResult" Role="RequestedAnalysisResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="RequestedAnalysisResult">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_User_Employee">
     <End Type="DemoMisrIntModel.Employee" Role="Employee" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -2096,6 +2198,18 @@
         <PropertyRef Name="RequestedAnalysisID" />
       </Principal>
       <Dependent Role="RejectedAnalysi">
+        <PropertyRef Name="RequestedAnalysisId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestedAnalysisResult_PatientRequestAnalysis">
+    <End Type="DemoMisrIntModel.PatientRequestAnalysi" Role="PatientRequestAnalysi" Multiplicity="1" />
+    <End Type="DemoMisrIntModel.RequestedAnalysisResult" Role="RequestedAnalysisResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PatientRequestAnalysi">
+        <PropertyRef Name="RequestedAnalysisID" />
+      </Principal>
+      <Dependent Role="RequestedAnalysisResult">
         <PropertyRef Name="RequestedAnalysisId" />
       </Dependent>
     </ReferentialConstraint>

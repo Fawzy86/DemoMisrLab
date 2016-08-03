@@ -330,6 +330,9 @@
     <Compile Include="Models\EntityModel\PlanNumber.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EntityModel\Plan_Device_Unit.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EntityModel\Priority.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
@@ -340,6 +343,9 @@
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityModel\RejectionReason.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\RequestedAnalysisResult.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityModel\RequestNumber.cs">
@@ -371,9 +377,11 @@
     <Compile Include="Models\PatientInfoViewModel.cs" />
     <Compile Include="Models\PatientRequest_Analysis_Status_ViewModel.cs" />
     <Compile Include="Models\PatientsRequestsAllViewModel.cs" />
+    <Compile Include="Models\Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel.cs" />
     <Compile Include="Models\Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel.cs" />
     <Compile Include="Models\Patient_Request_Status_Analysis_ViewModel.cs" />
     <Compile Include="Models\AnalyzesViewModel.cs" />
+    <Compile Include="Models\PlanViewModel.cs" />
     <Compile Include="Models\ProvincesViewModel.cs" />
     <Compile Include="Models\UnitsViewModel.cs" />
     <Compile Include="Models\UnitViewModel.cs" />
@@ -495,6 +503,7 @@
     <Content Include="css\bootstrap-wysihtml5.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\carouseller.css" />
     <Content Include="css\chosen.css" />
     <Content Include="css\clockface.css" />
     <Content Include="css\component.css" />
@@ -728,6 +737,8 @@
     <Content Include="js\bootstrap-wysiwyg.min.js" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\carouseller.js" />
+    <Content Include="js\carouseller.min.js" />
     <Content Include="js\chat.js" />
     <Content Include="js\chosen.jquery.js" />
     <Content Include="js\chosen.jquery.min.js" />
@@ -961,6 +972,10 @@
     <Content Include="Views\Lab\_DevicePlanAnalyzes.cshtml" />
     <Content Include="Views\Lab\_ReceiveAnalysisOnDeviceConfirmation.cshtml" />
     <Content Include="Views\Lab\_MoveAnalysisToDeviceConfirmation.cshtml" />
+    <Content Include="Views\Lab\_Plans.cshtml" />
+    <Content Include="Views\Lab\_FilteredPlans.cshtml" />
+    <Content Include="Views\Lab\_PlanDetails.cshtml" />
+    <Content Include="Views\Lab\_CaptureResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

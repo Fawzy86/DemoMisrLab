@@ -13,8 +13,11 @@ namespace DemoMisrInternationalLab.Models
             PatientRequestAnalysis = new Patient_PatientRequest_PatientRequestAnalysis_LastStatus();
             Devices = new List<Device>();
             DefaultDevice = new Device();
+            AnalysisResults = new List<RequestedAnalysisResult>();
         }
         public Patient_PatientRequest_PatientRequestAnalysis_LastStatus PatientRequestAnalysis { get; set; }
+
+        public List<RequestedAnalysisResult> AnalysisResults { get; set; }
 
         public Device DefaultDevice { get; set; }
 

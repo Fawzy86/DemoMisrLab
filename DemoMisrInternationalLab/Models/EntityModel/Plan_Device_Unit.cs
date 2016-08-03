@@ -12,23 +12,28 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Device
+    public partial class Plan_Device_Unit
     {
-        public Device()
-        {
-            this.DeviceAnalysis = new HashSet<DeviceAnalysi>();
-            this.DevicePlans = new HashSet<DevicePlan>();
-        }
-    
         public int DeviceId { get; set; }
         public string DeviceName { get; set; }
         public string DeviceDescription { get; set; }
-        public int UnitId { get; set; }
         public bool IsDefalutUnitDevice { get; set; }
         public int Capacity { get; set; }
-    
-        public virtual Unit Unit { get; set; }
-        public virtual ICollection<DeviceAnalysi> DeviceAnalysis { get; set; }
-        public virtual ICollection<DevicePlan> DevicePlans { get; set; }
+        public int UnitId { get; set; }
+        public string UnitName { get; set; }
+        public string UnitDescription { get; set; }
+        public int PlanId { get; set; }
+        public string PlanNumber { get; set; }
+        public System.DateTime TestDate { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public System.DateTime JobDate { get; set; }
+        public string Address { get; set; }
+        public int EmployeeID { get; set; }
+        public Nullable<int> CityID { get; set; }
+        public System.DateTime BirthDay { get; set; }
+        public string Phone { get; set; }
+        public int CurrentBranchID { get; set; }
+        public int JobTitleID { get; set; }
     }
 }

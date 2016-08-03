@@ -5,6 +5,7 @@
     <FunctionImportMapping FunctionImportName="GetAnalysisRunNumber" FunctionName="DemoMisrIntModel.Store.GetAnalysisRunNumber" />
     <FunctionImportMapping FunctionImportName="GetPatientRefID" FunctionName="DemoMisrIntModel.Store.GetPatientRefID" />
     <FunctionImportMapping FunctionImportName="GetRequestNumber" FunctionName="DemoMisrIntModel.Store.GetRequestNumber" />
+    <FunctionImportMapping FunctionImportName="GetPlanNumber" FunctionName="DemoMisrIntModel.Store.GetPlanNumber" />
     <EntitySetMapping Name="Analyses">
       <EntityTypeMapping TypeName="DemoMisrIntModel.Analysis">
         <MappingFragment StoreEntitySet="Analysis">
@@ -85,6 +86,7 @@
     <EntitySetMapping Name="DeviceAnalysis">
       <EntityTypeMapping TypeName="DemoMisrIntModel.DeviceAnalysi">
         <MappingFragment StoreEntitySet="DeviceAnalysis">
+          <ScalarProperty Name="RakeNumber" ColumnName="RakeNumber" />
           <ScalarProperty Name="PlanId" ColumnName="PlanId" />
           <ScalarProperty Name="ReceiveDate" ColumnName="ReceiveDate" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
@@ -97,6 +99,7 @@
     <EntitySetMapping Name="DevicePlans">
       <EntityTypeMapping TypeName="DemoMisrIntModel.DevicePlan">
         <MappingFragment StoreEntitySet="DevicePlan">
+          <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="TestDate" ColumnName="TestDate" />
           <ScalarProperty Name="PlanNumber" ColumnName="PlanNumber" />
@@ -396,6 +399,18 @@
         <MappingFragment StoreEntitySet="RejectionReason">
           <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
           <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RequestedAnalysisResults">
+      <EntityTypeMapping TypeName="DemoMisrIntModel.RequestedAnalysisResult">
+        <MappingFragment StoreEntitySet="RequestedAnalysisResult">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="ResultValue" ColumnName="ResultValue" />
+          <ScalarProperty Name="ResultDate" ColumnName="ResultDate" />
+          <ScalarProperty Name="RequestedAnalysisId" ColumnName="RequestedAnalysisId" />
+          <ScalarProperty Name="RequestedAnalysisResultId" ColumnName="RequestedAnalysisResultId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -736,6 +751,7 @@
     <EntitySetMapping Name="Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
       <EntityTypeMapping TypeName="DemoMisrIntModel.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
         <MappingFragment StoreEntitySet="Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
+          <ScalarProperty Name="RakeNumber" ColumnName="RakeNumber" />
           <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
           <ScalarProperty Name="DoctorAnalyticEmployeeId" ColumnName="DoctorAnalyticEmployeeId" />
           <ScalarProperty Name="PlanId" ColumnName="PlanId" />
@@ -936,6 +952,32 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="GetPlanNumber" FunctionName="DemoMisrIntModel.Store.GetPlanNumber" />
+    <EntitySetMapping Name="Plan_Device_Unit">
+      <EntityTypeMapping TypeName="DemoMisrIntModel.Plan_Device_Unit">
+        <MappingFragment StoreEntitySet="Plan_Device_Unit">
+          <ScalarProperty Name="JobTitleID" ColumnName="JobTitleID" />
+          <ScalarProperty Name="CurrentBranchID" ColumnName="CurrentBranchID" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="JobDate" ColumnName="JobDate" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="TestDate" ColumnName="TestDate" />
+          <ScalarProperty Name="PlanNumber" ColumnName="PlanNumber" />
+          <ScalarProperty Name="PlanId" ColumnName="PlanId" />
+          <ScalarProperty Name="UnitDescription" ColumnName="UnitDescription" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+          <ScalarProperty Name="IsDefalutUnitDevice" ColumnName="IsDefalutUnitDevice" />
+          <ScalarProperty Name="DeviceDescription" ColumnName="DeviceDescription" />
+          <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+          <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

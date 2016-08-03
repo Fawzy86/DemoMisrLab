@@ -11,13 +11,13 @@
     <p><br></p>
     <div class="text-center">
         @{
-            var DeviceAnalyzesIds = (string)@ViewBag.DeviceAnalyzesIds;
-            var SourceDeviceId = (string)@ViewBag.SourceDeviceId;
-            var DestinationDeviceId = (string)@ViewBag.DestinationDeviceId;
+            var SelectedDeviceAnalyzesIds = "\"" + (string)@ViewBag.SelectedDeviceAnalyzesIds + "\"";
+            var SelectedSourceDeviceId = (string)@ViewBag.SelectedSourceDeviceId;
+            var SelectedDestinationDeviceId = (string)@ViewBag.SelectedDestinationDeviceId;
         }
-        @DeviceAnalyzesIds || @SourceDeviceId || @DestinationDeviceId
-        <button type="button" class="btn btn-success" style="border-radius:0;"
-                onclick="MoveAnalyzes(@DeviceAnalyzesIds,@SourceDeviceId,@DestinationDeviceId, true);">
+
+        <button type="button" class="btn btn-success" style="border-radius:0;" id="Continue_Move_Button"
+                onclick="MoveAnalyzes(@SelectedDeviceAnalyzesIds,@SelectedSourceDeviceId,@SelectedDestinationDeviceId, true);">
             Continue
         </button>
 
@@ -29,7 +29,7 @@
             <ul class="dropdown-menu">
                 @foreach (var device in @Model.Devices)
                 {
-                    <li><a href="#" onclick="MoveAnalyzes(@DeviceAnalyzesIds,@SourceDeviceId, @device.Device.DeviceId, false);">@device.Device.DeviceName</a></li>
+                    <li><a href="#" onclick="MoveAnalyzes(@SelectedDeviceAnalyzesIds,@SelectedSourceDeviceId, @device.Device.DeviceId, false);">@device.Device.DeviceName</a></li>
                 }
             </ul>
         </div>

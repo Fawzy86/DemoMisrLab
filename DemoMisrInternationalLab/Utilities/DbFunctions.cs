@@ -1645,6 +1645,7 @@ namespace DemoMisrInternationalLab.Utilities
                             PlanNumber = PlanNumber.ToString(),
                             EmployeeId = EmployeeID,
                             TestDate = DateTime.Now,
+                            DeviceId = DeviceId
                         };
                         db.DevicePlans.Add(_DevicePlan);
                         db.SaveChanges();
@@ -1660,6 +1661,139 @@ namespace DemoMisrInternationalLab.Utilities
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static List<PlanViewModel> GetPlans(string SearchPattern, DateTime DateFrom, DateTime DateTo)
+        {
+            try
+            {
+                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                {
+                    List<PlanViewModel> Plans = new List<PlanViewModel>();
+                    IEnumerable<Plan_Device_Unit> _Plan_Device_Unit = new List<Plan_Device_Unit>();
+                    if (String.IsNullOrWhiteSpace(SearchPattern))
+                    {
+                        _Plan_Device_Unit = (from p in db.Plan_Device_Unit
+                                             select p);
+                    }
+                    else
+                    {
+
+                        var MatchedByUnit = (from p in db.Plan_Device_Unit
+                                             where p.UnitName.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
+                                             select p);
+                        _Plan_Device_Unit = _Plan_Device_Unit.Union(MatchedByUnit).GroupBy(p => p.PlanId).Select(p => p.FirstOrDefault());
+
+                        var MatchedByDevice = (from p in db.Plan_Device_Unit
+                                               where p.DeviceName.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
+                                               select p);
+                        _Plan_Device_Unit = _Plan_Device_Unit.Union(MatchedByDevice).GroupBy(p => p.PlanId).Select(p => p.FirstOrDefault());
+
+                        var MatchedByDoctor = (from p in db.Plan_Device_Unit
+                                               where (p.FirstName.Trim() + " " + (p.LastName == null ? "" : p.LastName.Trim())).ToLower().Contains(SearchPattern.Trim().ToLower())
+                                               select p);
+                        _Plan_Device_Unit = _Plan_Device_Unit.Union(MatchedByDoctor).GroupBy(p => p.PlanId).Select(p => p.FirstOrDefault());
+
+
+                        var DevicesIdsbyRunNumber = (from p in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
+                                                     where p.RunNumber.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
+                                                     select p.DeviceId);
+                        var MatchedbyRunNumber = (from p in db.Plan_Device_Unit
+                                                  where DevicesIdsbyRunNumber.Contains(p.DeviceId)
+                                                  select p);
+                        _Plan_Device_Unit = _Plan_Device_Unit.Union(MatchedbyRunNumber).GroupBy(p => p.PlanId).Select(p => p.FirstOrDefault());
+
+
+                        //// Search by analysis name
+                        var DevicesIdsbyAnalysisName = (from p in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
+                                                        where p.AnalysisName.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
+                                                        select p.DeviceId);
+                        var MatchedbyAnalysisName = (from p in db.Plan_Device_Unit
+                                                     where DevicesIdsbyAnalysisName.Contains(p.DeviceId)
+                                                     select p);
+                        _Plan_Device_Unit = _Plan_Device_Unit.Union(MatchedbyAnalysisName).GroupBy(p => p.PlanId).Select(p => p.FirstOrDefault());
+
+
+
+
+                    }
+
+                    //// Date range select
+                    _Plan_Device_Unit = (from p in _Plan_Device_Unit
+                                         where p.TestDate >= DateFrom && p.TestDate < DateTo
+                                         select p).Distinct().ToList();
+
+                    foreach (var plan in _Plan_Device_Unit)
+                    {
+                        PlanViewModel Planview = new PlanViewModel();
+                        Planview.Plan = plan;
+
+                        Planview.Analyzes = (from p in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
+                                             join an in db.DeviceAnalysis
+                                             on p.PlanId equals plan.PlanId
+                                             where p.RequestedAnalysisID == an.RequestedAnalysisId
+                                             select p).Distinct().ToList();
+                        Plans.Add(Planview);
+                    }
+                    return Plans;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        public static PlanViewModel GetPlanDetails(int PlanId)
+        {
+            try
+            {
+                PlanViewModel PlanView = new PlanViewModel();
+                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                {
+                    var _Plan_Device_Unit = (from a in db.Plan_Device_Unit
+                                             where a.PlanId == PlanId
+                                             select a).SingleOrDefault();
+                    if (_Plan_Device_Unit != null)
+                    {
+                        PlanView.Plan = _Plan_Device_Unit;
+                        PlanView.Analyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
+                                             where _Plan_Device_Unit.PlanId == a.PlanId
+                                             orderby a.ReceiveDate
+                                             select a).ToList();
+                    }
+                }
+                return PlanView;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        public static List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> GetAnalysisForCaptureResult()
+        {
+            try
+            {
+                List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>();
+                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                {
+                    Analyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
+                                where a.StatusIdentifier == Resources.Status.AnalysisCaptureResult
+                                select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel()
+                                {
+                                    Analysis = a
+                                }).ToList();
+
+                }
+                return Analyzes;
             }
             catch (Exception ex)
             {

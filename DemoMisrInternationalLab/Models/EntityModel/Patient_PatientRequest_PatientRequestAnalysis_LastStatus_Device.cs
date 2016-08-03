@@ -73,5 +73,6 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public Nullable<int> PlanId { get; set; }
         public int DoctorAnalyticEmployeeId { get; set; }
         public int DeviceId { get; set; }
+        public int RakeNumber { get; set; }
     }
 }

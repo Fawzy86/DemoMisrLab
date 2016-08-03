@@ -1,0 +1,122 @@
+﻿@model List<DemoMisrInternationalLab.Models.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>
+<div id="Capture_Result_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Capture_Result_Form" }))
+{
+    @Html.AntiForgeryToken()
+<div id="fourd" class="carouseller">
+    <a href="javascript:void(0)" class="carousel-button-left">‹</a>
+    <div class="carousel-wrapper">
+        <div class="carousel-items">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var analysis in Model)
+                {
+                    <div class="carousel-block">
+                        <table class="table table-bordered table-record" id="@("RequestedAnalysisId_" + @analysis.Analysis.RequestedAnalysisID)">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="col-md-6">@analysis.Analysis.AnalysisName</div>
+                                        <div class="col-md-6">@analysis.Analysis.RunNumber</div>
+                                        <div class="col-md-6">@analysis.Analysis.DeviceName</div>
+                                        <div class="col-md-6">@analysis.Analysis.RakeNumber</div>
+                                </th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="number" class="form-control addrecord-input" onkeypress="AddNewResult(event);">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                        <div class="col-md-12 text-right">
+                            <button type="button" id="Save_Analysis_Result" class="btn btn-success" style="border-radius:0;"
+                                    onclick="SaveResult(event,@analysis.Analysis.RequestedAnalysisID);">
+                                Save
+                            </button>
+                        </div>
+                </div>
+                }
+            }
+        </div>
+    </div>
+    <a href="javascript:void(0)" class="carousel-button-right">›</a>
+</div>
+}
+<script src="~/js/carouseller.min.js"></script>
+
+<script type="text/javascript">
+    ////////////////////////////////////////////////////////////
+    $(document).ajaxStart(function () {
+        try {
+            $("#Capture_Result_Form").prop('disabled', true);
+            $("#Capture_Result_Loading").show();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    /////////////////////////////////////////////////////////
+    $(document).ajaxStop(function () {
+        try {
+            $("#Capture_Result_Form").prop('disabled', true);
+            $("#Capture_Result_Loading").hide();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    ///////////////////////////////////////////////////////
+    $(function () {
+        $(fourd).carouseller();
+    });
+    ///////////////////////////////////////////////////////////
+    function AddNewResult(ev) {
+        if (ev.keyCode == 13) {
+            console.log(ev.target.closest("table"));
+            var tableElem = ev.target.closest("table");
+            var rowCount = tableElem.rows.length;
+            var row = tableElem.insertRow(rowCount);
+            var cell1 = row.insertCell(0);
+            cell1.innerHTML = "<input type='number' class='form-control addrecord-input' onkeypress='AddNewResult(event);'>";
+            row.getElementsByTagName("input")[0].focus();
+        }
+        return false;
+    }
+    ////////////////////////////////////////////////////////////
+    function SaveResult(ev, RequestedAnalysisId) {
+        try {
+            console.log(ev.target);
+            console.log(RequestedAnalysisId);
+            var tableElem = ev.target.closest("table");
+            console.log(tableElem);
+            var Results = [];
+            for (i = 0; i < tableElem.rows.length; i++) {
+                var InputResultValue = tableElem.row(i).getElementsByTagName("input")[0].val();
+                Results.push(InputResultValue);
+            }
+            console.log(Results);
+            var form = $('#Capture_Result_Form');
+           /* $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "/Lab/SaveAnalysisReslut",//form.attr('action'),
+                data: form.serialize() + "&DeviceId=" + deviceId,
+                success: function (data) {
+                    $("#Device_Plan_Analyzes_Popup_Content").html(data);
+                    window.location.href = "#Device_Plan_Analyzes_Popup";
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                }
+            });*/
+        }
+        catch (err) {
+            alert(err.message + err.description);
+        }
+    }
+</script>
+
+
