@@ -39,32 +39,19 @@ namespace DemoMisrInternationalLab.Controllers
 
 
             PatientRequestAnalysisViewModel ReceivedAnalyzes = new PatientRequestAnalysisViewModel();
-            ReceivedAnalyzes.PatientRequestAnalyzes = DbFunctions.GetReceivedAnalyzesWithDevices(Resources.Status.AnalysisMovedToLab);
+            ReceivedAnalyzes.PatientRequestAnalyzes = DbFunctions.GetRequestAnalyzesWithStatus(Resources.Status.AnalysisMovedToLab);
             ViewBag.RejectionReasons = DbFunctions.GetRejectionReasons();
             ViewBag.NotDeliveredReasons = DbFunctions.GetNotDeliveredReasons();
             return PartialView("_ReceivedAnalyzes", ReceivedAnalyzes);
         }
 
         [HttpPost]
-        public ActionResult ReceiveAnalysis(string RequestedAnalysisId, string DeviceId, bool IsOverhead)
+        public ActionResult ReceiveAnalysis(string RequestedAnalysisId)
         {
-            DeviceViewModel _DeviceView = DbFunctions.GetDevice(Convert.ToInt32(DeviceId));
-            if (_DeviceView != null)
+            if (!String.IsNullOrWhiteSpace(RequestedAnalysisId))
             {
-                if (_DeviceView.Device.Capacity >= _DeviceView.Analyzes.Count + 1  || IsOverhead)
-                {
-                    DbFunctions.ReceiveAnalysisOnDevice(Convert.ToInt32(RequestedAnalysisId), Convert.ToInt32(DeviceId), HttpContext.User.Identity.Name);
-                    return LoadReceivedAnalyzes(null, null);
-                }
-                else
-                {
-                    UnitViewModel UnitView = DbFunctions.GetUnitDevices(_DeviceView.Device.UnitId);
-                    ViewBag.Message = String.Format("The device \"{0}\" capcity is \"{1}\" and there is no more space to receive any analysis right now, " +
-                        "so please decide what you want to do", _DeviceView.Device.DeviceName, _DeviceView.Device.Capacity);
-                    ViewBag.RequestedAnalysisId = RequestedAnalysisId;
-                    ViewBag.DeviceId = _DeviceView.Device.DeviceId;
-                    return PartialView("_ReceiveAnalysisOnDeviceConfirmation", UnitView);
-                }
+                DbFunctions.ReceiveAnalysisOnDevice(Convert.ToInt32(RequestedAnalysisId), HttpContext.User.Identity.Name);
+                return LoadReceivedAnalyzes(null, null);
             }
             return null;
         }
@@ -93,14 +80,14 @@ namespace DemoMisrInternationalLab.Controllers
             return PartialView("_WorkUnit", WorkUnits);
         }
 
-        public ActionResult LoadDevicesWithAnalyzes(int UnitId)
+        public ActionResult LoadUnitAndDevices(int UnitId)
         {
             UnitViewModel WorkUnitDevices = new UnitViewModel();
             if (UnitId != 0)
             {
                 WorkUnitDevices = DbFunctions.GetUnitDevices(UnitId);
             }
-            return PartialView("_DevicesAndAnalyzes", WorkUnitDevices);
+            return PartialView("_UnitsAndDevices", WorkUnitDevices);
         }
 
         [HttpPost]
@@ -152,7 +139,7 @@ namespace DemoMisrInternationalLab.Controllers
                     if (DestinationDevice.Device.Capacity >= DestinationDevice.Analyzes.Count + _DeviceAnalyzesIdsList.Count || IsOverhead)
                     {
                         DbFunctions.MoveAnalyzesToAnotherDevice(_DeviceAnalyzesIdsList, _SourceDeviceId, _DestinationDeviceId, HttpContext.User.Identity.Name);
-                        return LoadDevicesWithAnalyzes(model.Unit.UnitId);
+                        return LoadUnitAndDevices(model.Unit.UnitId);
                       //  return Content(model.Unit.UnitId.ToString());
                     }
                     else
@@ -191,7 +178,7 @@ namespace DemoMisrInternationalLab.Controllers
             {
                 List<int> DeviceAnalyzesIds = model.Analyzes.Select(a => a.DeviceAnalysisId).ToList();
                 DbFunctions.ConfirmTestPlan(DeviceAnalyzesIds, model.Device.DeviceId, HttpContext.User.Identity.Name);
-                return LoadDevicesWithAnalyzes(model.Device.UnitId);
+                return LoadUnitAndDevices(model.Device.UnitId);
             }
             return null;
         }
@@ -237,6 +224,20 @@ namespace DemoMisrInternationalLab.Controllers
             List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>();
             Analyzes = DbFunctions.GetAnalysisForCaptureResult();
             return PartialView("_CaptureResult", Analyzes);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveAnalysisReslut(FormCollection form, List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> model, string RequestedAnalysisId, string Result)
+        {
+            if (!String.IsNullOrWhiteSpace(RequestedAnalysisId) && !String.IsNullOrWhiteSpace(Result))
+            {
+                List<string> ResultList = Result.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                DbFunctions.SaveResultForRequestedAnalysis(Convert.ToInt32(RequestedAnalysisId), ResultList, HttpContext.User.Identity.Name);
+                return LoadAnalyzesForCaptureResult();
+            }
+            return null;
         }
 
         

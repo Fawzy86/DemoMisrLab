@@ -571,6 +571,9 @@
     <Content Include="dist\overlay.css" />
     <Content Include="dist\overlay.js" />
     <Content Include="dist\overlay.min.js" />
+    <Content Include="drag\jquery-dragndrop.css" />
+    <Content Include="drag\jquery-dragndrop.js" />
+    <Content Include="drag\main.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -968,7 +971,7 @@
     <Content Include="Views\Lab\_ReceivedAnalyzes.cshtml" />
     <Content Include="Views\Lab\_WorkUnit.cshtml" />
     <Content Include="Views\TestDrag\Index.cshtml" />
-    <Content Include="Views\Lab\_DevicesAndAnalyzes.cshtml" />
+    <Content Include="Views\Lab\_UnitsAndDevices.cshtml" />
     <Content Include="Views\Lab\_DevicePlanAnalyzes.cshtml" />
     <Content Include="Views\Lab\_ReceiveAnalysisOnDeviceConfirmation.cshtml" />
     <Content Include="Views\Lab\_MoveAnalysisToDeviceConfirmation.cshtml" />
@@ -976,6 +979,7 @@
     <Content Include="Views\Lab\_FilteredPlans.cshtml" />
     <Content Include="Views\Lab\_PlanDetails.cshtml" />
     <Content Include="Views\Lab\_CaptureResult.cshtml" />
+    <Content Include="Views\TestDrag\jqueryDrag.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

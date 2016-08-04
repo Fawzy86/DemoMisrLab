@@ -12,8 +12,11 @@ namespace DemoMisrInternationalLab.Models
         {
             Unit = new Unit();
             Devices = new List<DeviceViewModel>();
+            ReceivedAnalyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel>();
         }
         public Unit Unit { get; set; }
         public List<DeviceViewModel> Devices { get; set; }
+
+        public List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel> ReceivedAnalyzes { get; set; }
     }
 }

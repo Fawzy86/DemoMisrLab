@@ -157,6 +157,10 @@
     <value>AnalysisUnderTesting</value>
     <comment>Run the test plan on analyzes</comment>
   </data>
+  <data name="AnalysisWaitingForReportApproved" xml:space="preserve">
+    <value>AnalysisWaitingForReportApproved</value>
+    <comment>The analysis got the result and waiting to be approved</comment>
+  </data>
   <data name="PatientRequestPending" xml:space="preserve">
     <value>PatientRequestPending</value>
     <comment>The Customer care is finished the patient request, and the patient is waiting for the Sampling</comment>

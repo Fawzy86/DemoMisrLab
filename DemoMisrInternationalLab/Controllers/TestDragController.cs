@@ -14,5 +14,10 @@ namespace DemoMisrInternationalLab.Controllers
         {
             return View();
         }
+
+        public ActionResult jqueryDrag()
+        {
+            return View();
+        }
 	}
 }

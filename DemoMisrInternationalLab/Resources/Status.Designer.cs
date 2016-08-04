@@ -151,6 +151,15 @@ namespace DemoMisrInternationalLab.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AnalysisWaitingForReportApproved.
+        /// </summary>
+        public static string AnalysisWaitingForReportApproved {
+            get {
+                return ResourceManager.GetString("AnalysisWaitingForReportApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PatientRequestPending.
         /// </summary>
         public static string PatientRequestPending {

@@ -56,12 +56,12 @@
     /////////////////////////////////////////////////////////////////
     $('#Work_Unit_SelectedUnitId').change(function () {
         var SelectedUnitId = this.value;
-        LoadDevicesAndAnalyzes(SelectedUnitId);
+        LoadUnitAndDevices(SelectedUnitId);
     });
     //////////////////////////////////////////////////////////////////////
-    function LoadDevicesAndAnalyzes(UnitId) {
+    function LoadUnitAndDevices(UnitId) {
         try {
-            $("#Work_Unit_DevicesWithAnalyzes_Container").load('@Url.Action("LoadDevicesWithAnalyzes", "Lab")?UnitId=' + UnitId);
+            $("#Work_Unit_DevicesWithAnalyzes_Container").load('@Url.Action("LoadUnitAndDevices", "Lab")?UnitId=' + UnitId);
         }
         catch (err) {
             alert(err.message);
@@ -129,7 +129,7 @@
                         window.location.href = "#Move_Analysis_ToDevice_Confirmation_Popup";
                     } else {
                            $("#Work_Unit_DevicesWithAnalyzes_Container").html(data);
-                        //LoadDevicesAndAnalyzes(data);
+                        //LoadUnitAndDevices(data);
                         window.location.href = "#";
                     }
                 },

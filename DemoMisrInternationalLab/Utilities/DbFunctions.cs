@@ -1290,42 +1290,6 @@ namespace DemoMisrInternationalLab.Utilities
             }
         }
 
-        /// <summary>
-        /// ///////////////////////////
-        /// </summary>
-        /// <returns></returns>
-        public static List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel> GetReceivedAnalyzesWithDevices(string StatusIdentifier)
-        {
-            try
-            {
-                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
-                {
-                    var _RequestAnalyzes = (from r in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus
-                                            where r.StatusIdentifier == StatusIdentifier
-                                            select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel()
-                                            {
-                                                PatientRequestAnalysis = r
-                                            }).ToList();
-                    foreach (var analysis in _RequestAnalyzes)
-                    {
-                        analysis.Devices = db.Devices.Where(u => u.UnitId == analysis.PatientRequestAnalysis.UnitId).ToList();
-                        if (analysis.Devices != null && analysis.Devices.Any())
-                        {
-                            analysis.DefaultDevice = analysis.Devices.Where(a => a.IsDefalutUnitDevice).FirstOrDefault();
-                        }
-                        if (analysis.DefaultDevice == null)
-                        {
-                            analysis.DefaultDevice = analysis.Devices.FirstOrDefault();
-                        }
-                    }
-                    return _RequestAnalyzes;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
 
         public static List<RejectionReason> GetRejectionReasons()
         {
@@ -1388,30 +1352,19 @@ namespace DemoMisrInternationalLab.Utilities
             }
         }
 
-        public static void ReceiveAnalysisOnDevice(int RequestedAnalysisId, int DeviceId, string UserName)
+        public static void ReceiveAnalysisOnDevice(int RequestedAnalysisId, string UserName)
         {
             try
             {
                 using (DemoMisrIntEntities db = new DemoMisrIntEntities())
                 {
-                    if (RequestedAnalysisId != 0 && DeviceId != 0)
+                    if (RequestedAnalysisId != 0)
                     {
-                        int EmployeeID = GetUserEmployeeId(UserName);
-
                         try
                         {
                             var _RequestedAnalsis = db.PatientRequestAnalysis.Where(r => r.RequestedAnalysisID == RequestedAnalysisId).FirstOrDefault();
                             if (_RequestedAnalsis != null)
                             {
-                                DeviceAnalysi _DeviceAnalysis = new DeviceAnalysi()
-                                {
-                                    DeviceId = DeviceId,
-                                    EmployeeId = EmployeeID,
-                                    ReceiveDate = DateTime.Now,
-                                    RequestedAnalysisId = RequestedAnalysisId
-                                };
-                                db.DeviceAnalysis.Add(_DeviceAnalysis);
-                                db.SaveChanges();
                                 List<int> RequestedAnalyzesIds = new List<int>();
                                 RequestedAnalyzesIds.Add(RequestedAnalysisId);
                                 AddNewRequestAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.AnalysisReceivedOnDevice, UserName);
@@ -1794,6 +1747,50 @@ namespace DemoMisrInternationalLab.Utilities
 
                 }
                 return Analyzes;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        public static void SaveResultForRequestedAnalysis(int RequestedAnalysisId, List<string> Results,string UserName)
+        {
+            try
+            {
+                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                {
+                    
+                    var _PatientRequestAnalysis = (from a in db.PatientRequestAnalysis
+                                             where a.RequestedAnalysisID == RequestedAnalysisId
+                                             select a).SingleOrDefault();
+                    if (_PatientRequestAnalysis != null)
+                    {
+                        int EmployeeId = GetUserEmployeeId(UserName);
+                        List<RequestedAnalysisResult> _RequestedAnalysisResultList = new List<RequestedAnalysisResult>();
+                        foreach (var result in Results)
+                        {
+                            RequestedAnalysisResult _RequestedAnalysisResult = new RequestedAnalysisResult()
+                            {
+                                Description = String.Empty,
+                                EmployeeId=EmployeeId,
+                                RequestedAnalysisId = _PatientRequestAnalysis.RequestedAnalysisID,
+                                ResultDate=DateTime.Now,
+                                ResultValue=result
+                            };
+                            _RequestedAnalysisResultList.Add(_RequestedAnalysisResult);
+                        }
+                        if (_RequestedAnalysisResultList.Any())
+                        {
+                            db.RequestedAnalysisResults.AddRange(_RequestedAnalysisResultList);
+                            db.SaveChanges();
+                            var RequestedAnalysisIdList =new List<int>();
+                            AddNewRequestAnalyzesStatus(RequestedAnalysisIdList, Resources.Status.AnalysisWaitingForReportApproved, UserName);
+                        }
+                    }
+
+                }
             }
             catch (Exception ex)
             {
