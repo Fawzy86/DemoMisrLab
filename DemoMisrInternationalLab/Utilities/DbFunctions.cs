@@ -1340,7 +1340,7 @@ namespace DemoMisrInternationalLab.Utilities
                         DeviceView.Device = _Device;
                         DeviceView.Analyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
                                                where _Device.DeviceId == a.DeviceId
-                                               && a.StatusIdentifier == Resources.Status.AnalysisReceivedOnDevice
+                                            //   && a.StatusIdentifier == Resources.Status.AnalysisReceivedOnDevice
                                                select a).ToList();
                     }
                     return DeviceView;
@@ -1352,7 +1352,7 @@ namespace DemoMisrInternationalLab.Utilities
             }
         }
 
-        public static void ReceiveAnalysisOnDevice(int RequestedAnalysisId, string UserName)
+        public static void ReceiveAnalysisOnUnit(int RequestedAnalysisId, string UserName)
         {
             try
             {
@@ -1367,7 +1367,7 @@ namespace DemoMisrInternationalLab.Utilities
                             {
                                 List<int> RequestedAnalyzesIds = new List<int>();
                                 RequestedAnalyzesIds.Add(RequestedAnalysisId);
-                                AddNewRequestAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.AnalysisReceivedOnDevice, UserName);
+                                AddNewRequestAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.AnalysisReceivedOnUnit, UserName);
                             }
                         }
                         catch (Exception ex)
@@ -1494,16 +1494,13 @@ namespace DemoMisrInternationalLab.Utilities
                     _Unit.Unit = db.Units.Where(u => u.UnitId == UnitId).SingleOrDefault();
                     if (_Unit.Unit != null)
                     {
-                        foreach (var device in _Unit.Unit.Devices)
-                        {
-                            var DeviceView = new DeviceViewModel() { Device = device };
-
-                            DeviceView.Analyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
-                                                   where device.DeviceId == a.DeviceId
-                                                   && a.StatusIdentifier == Resources.Status.AnalysisReceivedOnDevice
-                                                   select a).ToList();
-                            _Unit.Devices.Add(DeviceView);
-                        }
+                        _Unit.ReceivedAnalyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus
+                                                  where a.UnitId == _Unit.Unit.UnitId
+                                                  && a.StatusIdentifier == Resources.Status.AnalysisReceivedOnUnit
+                                                  select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel()
+                                                  {
+                                                      PatientRequestAnalysis = a
+                                                  }).ToList();
                     }
                     return _Unit;
                 }
@@ -1514,7 +1511,7 @@ namespace DemoMisrInternationalLab.Utilities
             }
         }
 
-        public static void MoveAnalyzesToAnotherDevice(List<int> DeviceAnalyzesIds, int SourceDeviceId, int DestinationDeviceId, string UserName)
+        /*public static void MoveAnalyzesToAnotherDevice(List<int> DeviceAnalyzesIds, int SourceDeviceId, int DestinationDeviceId, string UserName)
         {
             try
             {
@@ -1548,9 +1545,9 @@ namespace DemoMisrInternationalLab.Utilities
             {
                 throw new Exception(ex.Message);
             }
-        }
+        }*/
 
-        public static DeviceViewModel RunTestPlan(int DeviceId)
+        public static DeviceViewModel RunTestPlan()
         {
             try
             {
@@ -1578,40 +1575,36 @@ namespace DemoMisrInternationalLab.Utilities
             }
         }
 
-        public static void ConfirmTestPlan(List<int> DeviceAnalyzesIds, int DeviceId, string UserName)
+        public static void ConfirmTestPlan(List<DeviceAnalysi> DeviceAnalyzes, string UserName)
         {
             try
             {
                 using (DemoMisrIntEntities db = new DemoMisrIntEntities())
                 {
-                    int EmployeeID = GetUserEmployeeId(UserName);
-                    var _DeviceAnalysis = (from a in db.DeviceAnalysis
-                                           where DeviceAnalyzesIds.Contains(a.DeviceAnalysisId)
-                                           && a.DeviceId == DeviceId
-                                           select a);
-                    List<int> RequestedAnalyzesIds = new List<int>();
-                    if (_DeviceAnalysis.Any())
+                    if (DeviceAnalyzes != null && DeviceAnalyzes.Any())
                     {
+                        int EmployeeID = GetUserEmployeeId(UserName);
                         int? PlanNumber = db.GetPlanNumber().FirstOrDefault();
                         DevicePlan _DevicePlan = new DevicePlan()
                         {
                             PlanNumber = PlanNumber.ToString(),
                             EmployeeId = EmployeeID,
                             TestDate = DateTime.Now,
-                            DeviceId = DeviceId
+                            DeviceId = DeviceAnalyzes.FirstOrDefault().DeviceId
                         };
                         db.DevicePlans.Add(_DevicePlan);
                         db.SaveChanges();
-                        foreach (var deviceAnalysis in _DeviceAnalysis)
+                        foreach (var deviceAnalysis in DeviceAnalyzes)
                         {
+                            deviceAnalysis.EmployeeId = EmployeeID;
                             deviceAnalysis.PlanId = _DevicePlan.PlanId;
-                            RequestedAnalyzesIds.Add(deviceAnalysis.RequestedAnalysisId);
+                            deviceAnalysis.ReceiveDate = DateTime.Now;
                         }
+                        db.DeviceAnalysis.AddRange(DeviceAnalyzes);
                         db.SaveChanges();
-                        if (RequestedAnalyzesIds.Any())
-                        {
-                            AddNewRequestAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.AnalysisCaptureResult, UserName);
-                        }
+                        List<int> RequestedAnalyzesIds = new List<int>();
+                        RequestedAnalyzesIds = DeviceAnalyzes.Select(d => d.RequestedAnalysisId).ToList();
+                        AddNewRequestAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.AnalysisCaptureResult, UserName);
                     }
                 }
             }

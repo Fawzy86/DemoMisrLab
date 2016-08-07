@@ -50,7 +50,7 @@ namespace DemoMisrInternationalLab.Controllers
         {
             if (!String.IsNullOrWhiteSpace(RequestedAnalysisId))
             {
-                DbFunctions.ReceiveAnalysisOnDevice(Convert.ToInt32(RequestedAnalysisId), HttpContext.User.Identity.Name);
+                DbFunctions.ReceiveAnalysisOnUnit(Convert.ToInt32(RequestedAnalysisId), HttpContext.User.Identity.Name);
                 return LoadReceivedAnalyzes(null, null);
             }
             return null;

@@ -97,11 +97,11 @@ namespace DemoMisrInternationalLab.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AnalysisReceivedOnDevice.
+        ///   Looks up a localized string similar to AnalysisReceivedOnUnit.
         /// </summary>
-        public static string AnalysisReceivedOnDevice {
+        public static string AnalysisReceivedOnUnit {
             get {
-                return ResourceManager.GetString("AnalysisReceivedOnDevice", resourceCulture);
+                return ResourceManager.GetString("AnalysisReceivedOnUnit", resourceCulture);
             }
         }
         

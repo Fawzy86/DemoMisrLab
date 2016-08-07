@@ -983,6 +983,7 @@
     <Content Include="Views\Lab\_CaptureResult.cshtml" />
     <Content Include="Views\TestDrag\jqueryDrag.cshtml" />
     <Content Include="Views\TestDrag\Test.cshtml" />
+    <Content Include="Views\TestDrag\test2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

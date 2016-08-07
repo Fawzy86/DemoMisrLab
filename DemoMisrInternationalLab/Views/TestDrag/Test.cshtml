@@ -1,6 +1,5 @@
-﻿
-@{
- //    Layout = null;
+﻿@{
+    //    Layout = null;
 }
 
 <!doctype html>
@@ -11,7 +10,7 @@
     <title>jQuery UI Sortable - Connect lists</title>
     <link href="~/css/dragdrop.css" rel="stylesheet" />
     @*<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">*@
+        <link rel="stylesheet" href="/resources/demos/style.css">*@
     <style>
         /*#sortable1, #sortable2 {
             border: 1px solid #eee;
@@ -24,148 +23,349 @@
             margin-right: 10px;
         }*/
 
-            /*#sortable1 li, #sortable2 li {
+        /*#sortable1 li, #sortable2 li {
                 margin: 0 5px 5px 5px;
                 padding: 5px;
                 font-size: 1.2em;
                 width: 120px;
             }*/
 
-            /*li.selectedItem
+        /*li.selectedItem
             {
                 background-color:Blue;
                 color:White;
-            }*/ 
+            }*/
     </style>
     <script>
-  $( function() {
-    //$( "#sortable1, #sortable2" ).sortable({
-    //  connectWith: ".connectedSortable"
-      //}).disableSelection();
-      //$("#sortable1, #sortable2").sortable({
-      //    connectWith: ".connectedSortable"
-      //}).selectable();
+        $(function () {
+            //$( "#sortable1, #sortable2" ).sortable({
+            //  connectWith: ".connectedSortable"
+            //}).disableSelection();
+            //$("#sortable1, #sortable2").sortable({
+            //    connectWith: ".connectedSortable"
+            //}).selectable();
 
-          //$("ol").sortable({
-          //  //  connectWith: ".connectedSortable"
-          //}).selectable();
+            //$("ol").sortable({
+            //    connectWith: ".connectedSortable"
+            //}).disableSelection();
 
-      $("ol").sortable({
-        //  connectWith: ".connectedSortable",
-          beforeStop: function (event, ui) {
-              console.log("beforeStop");
-              ui.helper.removeClass("selectedItem");
-              ui.helper.die();
-          },
-          change: function (event, ui) {  //for issue solving   
-              console.log("change");
-              console.log(ui);
-              var placeHolder = ui.helper.children(".ui-sortable-placeholder");
+                //$("ol").sortable({
+                //    connectWith: ".connectedSortable",
+                //    beforeStop: function (event, ui) {
+                //        console.log("beforeStop");
+                //        console.log(event.target);
+                //        console.log(ui.item);
+                //        //   ui.helper.removeClass("selectedItem");
+                //        ui.helper.die();
+                //    },
+                //    change: function (event, ui) {  //for issue solving
+                //        console.log("change");
+                //        console.log(ui);
+                //        var placeHolder = ui.helper.children(".ui-sortable-placeholder");
+                //        console.log(placeHolder);
+                //        console.log("before: " + JSON.stringify(ui.helper.parent()));
+                //        if (placeHolder) {
+                //            placeHolder.detach().appendTo(ui.helper.parent());
+                //        }
+                //        console.log(ui.helper.parent());
+                //    },
+                //    start: function (event, ui) {
+                //        console.log("start");
+                //        console.log(ui.helper);
+                //        if (ui.helper) {
+                //            //  var cnt = ui.helper.parent().children(".selectedItem:not(.ui-sortable-placeholder)").length;
+                //            var SelectedItems = [];
+                //            $.each(ui.helper.parent().children(), function (index, child) {
+                //                child = $(child);
+                //                if (child.attr('aria-grabbed') == 'true') {
+                //                    SelectedItems.push(child.id);
+                //                    if (ui.helper.attr('id') != child.attr('id')) {
+                //                        child = child.detach();
+                //                        child.appendTo(ui.helper);
+                //                    }
+                //                }
+                //            });
+                //            //  var cnt = ui.helper.parent().children().getAttribute('aria-grabbed').length;
+                //            var cnt = 0;
+                //            console.log(cnt);
+                //            if (cnt > 1) {
+                //                var parent = ui.helper.parent();
+                //                var childs = parent.children("li.selectedItem:not(.ui-sortable-placeholder)"); console.log(childs);
+                //                $.each(childs, function (index, child) {
+                //                    child = $(child);
 
-              if (placeHolder) {
-                  placeHolder.detach().appendTo(ui.helper.parent());
-              }
-          },
-          start: function (event, ui) {
-              console.log("start");
-              console.log(ui);
-              if (ui.helper) {
-                  console.log(ui);
-                  console.log(ui.helper);
-                  var cnt = ui.helper.parent().children(".selectedItem:not(.ui-sortable-placeholder)").length;
-                  if (cnt > 1) {
-                      var parent = ui.helper.parent();
-                      var childs = parent.children("li.selectedItem:not(.ui-sortable-placeholder)"); console.log(childs);
-                      $.each(childs, function (index, child) {
-                          child = $(child);
-                          if (ui.helper.attr('id') != child.attr('id')) {
-                              child = child.detach();
-                              child.appendTo(ui.helper);
-                              child.css("margin", "0px").css("padding", "0px"); //addClass not working
-                          }
-                      });
-                  }
-              }
-          },
-          stop: function (event, ui) {
-              console.log("stop");
-              console.log(ui);
-              //console.log(ui.helper);
-              if (ui.item) {
-                  var cnt = $(ui.item[0]).children("li").length;
-                  if (cnt > 0) {
-                      //ui.helper is null
-                      var dropItem = $(ui.item[0]);
-                      $.each(dropItem.children("li"), function (index, child) {
-                          child = $(child).detach();
-                          child.insertAfter(dropItem);
-                          child.removeClass("selectedItem");
-                          child.css("margin", "").css("padding", "");
-                      });
-                  }
-              }
-          }
-      }).disableSelection();
+                //                    if (ui.helper.attr('id') != child.attr('id')) {
+                //                        child = child.detach();
+                //                        child.appendTo(ui.helper);
+                //                        //     child.css("margin", "0px").css("padding", "0px"); //addClass not working
+                //                    }
+                //                });
+                //            }
+                //        }
+                //    },
+                //    stop: function (event, ui) {
+                    
+                //        console.log("stop");
+                //        console.log(event);
+                //        console.log(ui.helper);
+                //        //console.log(ui.helper);
+                //        if (ui.item) {
+                //            console.log(ui.item);
+                //            var cnt = $(ui.item[0]).children("li").length;
+                //            console.log("lenght: " + cnt);
+                //            if (cnt > 0) {
 
-      
+                //                //ui.helper is null
+                //                var dropItem = $(ui.item[0]);
+                //                console.log(dropItem.children("li"));
+                //                $.each(dropItem.children("li"), function (index, child) {
+                //                    console.log("child: " + $(child));
+                //                    child = $(child).detach();
+                //                   //    child.insertAfter(dropItem);
+                //                    //    child.removeClass("selectedItem");
+                //                    //    child.css("margin", "").css("padding", "");
+                //                });
+                //            }
+                //        }
+                //    }
+            //}).disableSelection();
+            //    $("ol").sortable().disableSelection();
 
 
+       
+            //document.addEventListener('dragstart', function (ev) {
+            //    //     debugger;
+            //    console.log("dragstart")
+            //    event.dataTransfer.effectAllowed = "move";
+            //    event.dataTransfer.dropEffect = "copy";
+            //    var SelectedItems = [];
+            //    $.each($('#' + ev.target.parentNode.id + ' li'), function (i, val) {
+            //        if (val.getAttribute('aria-grabbed') == 'true') {
+            //            SelectedItems.push(val.id);
+            //        }
+            //    });
+            //    ev.dataTransfer.setData("analyzesIds", SelectedItems);
+            //    ev.dataTransfer.setData("sourceDeviceId", ev.target.parentNode.id);
+            //    console.log(ev.dataTransfer);
+            //});
+
+            ////document.addEventListener('dragover', function (ev) {
+            ////    //     debugger;
+            ////    ev.preventDefault();
+            ////    console.log("dragover dead");
+            ////    // event.dataTransfer.effectAllowed = "move";
+            ////    ev.dataTransfer.dropEffect = "copy";
+                
+            ////});
+
+            //document.addEventListener("dragover", function (ev) {
+            //    // prevent default to allow drop
+            //    ev.preventDefault();
+            //    console.log("dragover dead");
+            //    // event.dataTransfer.effectAllowed = "move";
+            ////    ev.dataTransfer.dropEffect = "copy";
+            //}, false);
+
+            //document.addEventListener('dragenter', function (ev) {
+            //    //     debugger;
+            //    ev.preventDefault();
+            //    console.log("dragover dead");
+            //    // event.dataTransfer.effectAllowed = "move";
+            //    ev.dataTransfer.dropEffect = "copy";
+
+            //});
+
+            
+
+            //document.addEventListener('dragend', function (ev) {
+            //    //     debugger;
+            //    console.log("dragend")
+            //   // event.dataTransfer.effectAllowed = "move";
+            //    event.dataTransfer.dropEffect = "copy";
+            //    var SelectedItems = [];
+            //    $.each($('#' + ev.target.parentNode.id + ' li'), function (i, val) {
+            //        if (val.getAttribute('aria-grabbed') == 'true') {
+            //            SelectedItems.push(val.id);
+            //        }
+            //    });
+            //    ev.dataTransfer.setData("analyzesIds", SelectedItems);
+            //    ev.dataTransfer.setData("sourceDeviceId", ev.target.parentNode.id);
+            //    console.log(ev.dataTransfer);
+            //});
+
+            //document.addEventListener('dragleave', function (ev) {
+            //    //     debugger;
+            //    ev.preventDefault();
+            //    console.log("dragleave dead");
+            //    // event.dataTransfer.effectAllowed = "move";
+            //    ev.dataTransfer.dropEffect = "copy";
+
+            //});
+
+            //    document.addEventListener('drop', function (ev) {
+            //        //     debugger;
+            //        console.log("DRRRRRop")
+            //        var SelectedItems = [];
+            //     /*   $.each($('#' + ev.target.parentNode.id + ' li'), function (i, val) {
+            //            if (val.getAttribute('aria-grabbed') == 'true') {
+            //                SelectedItems.push(val.id);
+            //            }
+            //        });
+            //        ev.dataTransfer.setData("analyzesIds", SelectedItems);
+            //        ev.dataTransfer.setData("sourceDeviceId", ev.target.parentNode.id);*/
+            //    });
+
+
+            document.addEventListener("drag", function (ev) {
+
+            }, false);
+
+            document.addEventListener("dragstart", function (ev) {
+                // store a ref. on the dragged elem
+                console.log("dragstart");
+                dragged = ev.target;
+                console.log(dragged);
+                var SelectedItems = [];
+                $.each($('#' + ev.target.parentNode.id + ' li'), function (i, val) {
+                    if (val.getAttribute('aria-grabbed') == 'true') {
+                        SelectedItems.push(val.id);
+                    }
+                });
+                ev.dataTransfer.setData("analyzesIds", SelectedItems);
+                ev.dataTransfer.setData("sourceDeviceId", ev.target.parentNode.id);
+                console.log(ev.dataTransfer.getData("analyzesIds"));
+
+            }, false);
+
+            document.addEventListener("dragend", function (ev) {
+                // reset the transparency
+                ev.target.style.opacity = "";
+            }, false);
+
+            /* events fired on the drop targets */
+            document.addEventListener("dragover", function (ev) {
+                // prevent default to allow drop
+                ev.preventDefault();
+            }, false);
+
+            document.addEventListener("dragenter", function (ev) {
+                // highlight potential drop target when the draggable element enters it
+                if (ev.target.className == "dropzone") {
+                    ev.target.style.background = "purple";
+                }
+
+            }, false);
+
+            document.addEventListener("dragleave", function (ev) {
+                // reset background of potential drop target when the draggable element leaves it
+                if (ev.target.className == "dropzone") {
+                    ev.target.style.background = "";
+                }
+
+            }, false);
+
+            document.addEventListener("drop", function (ev) {
+                // prevent default action (open as link for some elements)
+                ev.preventDefault();
+
+                try {
+                    console.log("now dropping");
+                    var DeviceAnalyzesIds = ev.dataTransfer.getData("analyzesIds");
+                    console.log(DeviceAnalyzesIds + DeviceAnalyzesIds.length);
+                    if (DeviceAnalyzesIds == null || DeviceAnalyzesIds.length == 0) {
+                        return;
+                    }
+                    var DevicesAnalyzesIdsArray = DeviceAnalyzesIds.split(',');
+                    for (i = 0; i < DevicesAnalyzesIdsArray.length; i++) {
+                        console.log(DevicesAnalyzesIdsArray[i]);
+                        var elem = document.getElementById(DevicesAnalyzesIdsArray[i]);
+                        elem.parentNode.removeChild(elem);
+                        ev.target.appendChild(elem);
+                    }
+                    var SourceDeviceId = ev.dataTransfer.getData("sourceDeviceId")
+
+                    var DestinationDeviceId = ev.target.id;
+                    if (DestinationDeviceId.indexOf("DeviceAnalysisId_") == 0) {
+                        DestinationDeviceId = ev.target.parentNode.id;
+                    }
+
+                    if (SourceDeviceId == DestinationDeviceId || SourceDeviceId.indexOf("DeviceId_") != 0
+                        || DestinationDeviceId.indexOf("DeviceId_") != 0
+                        || DeviceAnalyzesIds.indexOf("DeviceAnalysisId_") != 0) {
+                        return;
+                    }
+
+                    MoveAnalyzes(DeviceAnalyzesIds, SourceDeviceId, DestinationDeviceId, false);
+                }
+                catch (err) {
+                    alert(err.message + err.description);
+                }
+
+            }, false);
 
 
 
-      //click color handling
-      $("ol>li").live("click", function (ev) {
-          console.log("live");
-          console.log(ev);
-          console.log($(this).parent().children());
-          if (!ev.ctrlKey) {
-              console.log("remove");
-              //    $(this).parent().children().removeClass("selectedItem");
-             // console.log($(this).parent().children());
-            //  $(this).parent().children().setAttribute('aria - grabbed', 'false');
-            //  console.log($(this).parent().children());
-          }
-        //  $(this).toggleClass("selectedItem");
-          //   $(this).item.setAttribute('aria - grabbed', 'true');
-          console.log(ev.target.getAttribute('aria-grabbed'));
-          ev.target.setAttribute('aria-grabbed', 'true');
-          console.log($(this));
-      });
 
-  });
 
+            //click color handling
+             // $("ol>li").live("click", function (ev) {
+            $("ol").live("click", function (ev) {
+                var node = ev.target;
+                var parentNode = node.parentNode;
+                if (ev.target.nodeName.toLowerCase() != 'li') {
+                    parentNode = ev.target;
+                    node = null;
+                }
+
+                if (!ev.ctrlKey) {
+                         ClearSelection(parentNode)
+                }
+
+                if (node != null) {
+                    node.setAttribute('aria-grabbed', 'true');
+                }
+            });
+
+            function ClearSelection(parentNode) {
+                console.log(parentNode);
+                $.each(parentNode.children, function (index, child) {
+                    child.setAttribute('aria-grabbed', 'false');
+                });
+            }
+        });
 
     </script>
 </head>
 <body>
+
     <div class="col-md-6">
-        <ol id="sortable1" data-draggable="target" aria-dropeffect="none">
+        <ol id="sortable1" data-draggable="target" class="connectedSortable">
             @*<li class="ui-state-default">Item 1</li>
             <li class="ui-state-default">Item 2</li>
             <li class="ui-state-default">Item 3</li>
             <li class="ui-state-default">Item 4</li>
             <li class="ui-state-default">Item 5</li>*@
-            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="1" class="ck-button" >Item 1</li>
-            <li data-draggable="item" draggable="true"  aria-grabbed="false" tabindex="0" id="2" class="ck-buttonb">Item 2</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="1" class="ck-button">Item 1</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="2" class="ck-buttonb">Item 2</li>
             <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="3" class="ck-button">Item 3</li>
             <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="4" class="ck-buttonb">Item 4</li>
             <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="5" class="ck-button">Item 5</li>
         </ol>
     </div>
     <div class="col-md-6">
-        <ol id="sortable2" data-draggable="target" aria-dropeffect="none" >
+        <ol id="sortable2" data-draggable="target" class="connectedSortable">
             @*<li class="ui-state-highlight">Item 1</li>
             <li class="ui-state-highlight">Item 2</li>
             <li class="ui-state-highlight">Item 3</li>
             <li class="ui-state-highlight">Item 4</li>
             <li class="ui-state-highlight">Item 5</li>*@
-            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="6" class="ck-buttonb">Item 1</li>
-            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="7" class="ck-button">Item 2</li>
-            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="8" class="ck-buttonb">Item 3</li>
-            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="9" class="ck-button">Item 4</li>
-            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="10" class="ck-buttonb">Item 5</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="6" class="ck-buttonb">Item 6</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="7" class="ck-button">Item 7</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="8" class="ck-buttonb">Item 8</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="9" class="ck-button">Item 9</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="10" class="ck-buttonb">Item 10</li>
         </ol>
-        </div>
+    </div>
 
 </body>
 </html>

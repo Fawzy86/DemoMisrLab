@@ -125,8 +125,6 @@ C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\DemoMisrInternationa
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\DemoMisrInternationalLab.dll
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\DemoMisrInternationalLab.pdb
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\Antlr3.Runtime.dll
-C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\EntityFramework.dll
-C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\EntityFramework.SqlServer.dll
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\MessagingToolkit.QRCode.dll
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\Microsoft.AspNet.Identity.EntityFramework.dll

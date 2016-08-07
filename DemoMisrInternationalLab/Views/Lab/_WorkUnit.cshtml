@@ -8,7 +8,7 @@
         <div class="col-md-12">
             @Html.DropDownListFor(p => Model.SelectedUnitId,
                                        Model.UnitsIEnum, "-- Units --",
-                                        new { @id = "Work_Unit_SelectedUnitId", @class = "form-control" })
+                                     new { @id = "Work_Unit_SelectedUnitId", @class = "form-control" })
 
         </div>
 
@@ -69,9 +69,14 @@
     }
     ///////////////////////////////////////////////////////////
     $(function () {
-        ///////////////////////////////////////////////////////////////////
-        document.addEventListener('dragstart', function (ev) {
-            //     debugger;
+        /////////////////////////////////////////////////////////////////////
+        document.addEventListener("drag", function (ev) {
+
+        }, false);
+        ////////////////////////////////////////////////////////////////////
+        document.addEventListener("dragstart", function (ev) {
+            // store a ref. on the dragged elem
+            console.log("dragstart");
             var SelectedItems = [];
             $.each($('#' + ev.target.parentNode.id + ' li'), function (i, val) {
                 if (val.getAttribute('aria-grabbed') == 'true') {
@@ -80,13 +85,50 @@
             });
             ev.dataTransfer.setData("analyzesIds", SelectedItems);
             ev.dataTransfer.setData("sourceDeviceId", ev.target.parentNode.id);
-        });
-        ///////////////////////////////////////////////////////////////////////
+        }, false);
+        ////////////////////////////////////////////////////////////////////
+        document.addEventListener("dragend", function (ev) {
+            // reset the transparency
+            ev.target.style.opacity = "";
+        }, false);
+        ////////////////////////////////////////////////////////////////////
+        /* events fired on the drop targets */
+        document.addEventListener("dragover", function (ev) {
+            // prevent default to allow drop
+            ev.preventDefault();
+        }, false);
+        ////////////////////////////////////////////////////////////////////
+        document.addEventListener("dragenter", function (ev) {
+            // highlight potential drop target when the draggable element enters it
+            if (ev.target.className == "dropzone") {
+                ev.target.style.background = "purple";
+            }
+        }, false);
+        ////////////////////////////////////////////////////////////////////
+        document.addEventListener("dragleave", function (ev) {
+            // reset background of potential drop target when the draggable element leaves it
+            if (ev.target.className == "dropzone") {
+                ev.target.style.background = "";
+            }
+        }, false);
+        ////////////////////////////////////////////////////////////////////
         document.addEventListener("drop", function (ev) {
+            // prevent default action (open as link for some elements)
+            ev.preventDefault();
             try {
-
+                console.log("now dropping");
                 var DeviceAnalyzesIds = ev.dataTransfer.getData("analyzesIds");
-
+                console.log(DeviceAnalyzesIds + DeviceAnalyzesIds.length);
+                if (DeviceAnalyzesIds == null || DeviceAnalyzesIds.length == 0) {
+                    return;
+                }
+                var DevicesAnalyzesIdsArray = DeviceAnalyzesIds.split(',');
+                for (i = 0; i < DevicesAnalyzesIdsArray.length; i++) {
+                    console.log(DevicesAnalyzesIdsArray[i]);
+                    var elem = document.getElementById(DevicesAnalyzesIdsArray[i]);
+                    elem.parentNode.removeChild(elem);
+                    ev.target.appendChild(elem);
+                }
                 var SourceDeviceId = ev.dataTransfer.getData("sourceDeviceId")
 
                 var DestinationDeviceId = ev.target.id;
@@ -105,8 +147,34 @@
             catch (err) {
                 alert(err.message + err.description);
             }
-        });
+
+        }, false);
     });
+    ////////////////////////////////////////////////////////////////////
+    function SetSelectedAttribute(ev) {
+        console.log("Evenet dfdsafdsafdsafdsafof setting attr " + ev)
+        var node = ev.target;
+        var parentNode = node.parentNode;
+        console.log(node);
+        if (ev.target.nodeName.toLowerCase() != 'li') {
+            parentNode = ev.target;
+            node = null;
+        }
+        if (!ev.ctrlKey) {
+            ClearSelection(parentNode)
+        }
+
+        if (node != null) {
+            node.setAttribute('aria-grabbed', 'true');
+        }
+    }
+    ////////////////////////////////////////////////////////////////////
+    function ClearSelection(parentNode) {
+        console.log(parentNode);
+        $.each(parentNode.children, function (index, child) {
+            child.setAttribute('aria-grabbed', 'false');
+        });
+    }
     /////////////////////////////////////////////////////////////////////
     function MoveAnalyzes(SelectedDeviceAnalyzesIds, SelectedSourceDeviceId, SelectedDestinationDeviceId, Overhead) {
         try {

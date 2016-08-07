@@ -1,87 +1,100 @@
 ﻿@model DemoMisrInternationalLab.Models.UnitViewModel
 <div class="row">
-    @if (Model != null && Model.Devices.Any())
+    @if (Model != null && Model.ReceivedAnalyzes.Any() && Model.Devices.Any())
     {
         @Html.HiddenFor(m => Model.Unit.UnitId)
-          <div class="col-md-4">
-                <div class="col-md-12">
-                    <ol class="scrolll" data-draggable="target" id="@( "UnitId_" + Model.Unit.UnitId)">
-                        @*@{var Class = "ck-button";}*@
-                        @*@for (int j = 0; j < Model.Devices[i].Analyzes.Count; j++)
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <ol class="scrolll" data-draggable="target" onclick="SetSelectedAttribute(event);"
+                    id="@( "UnitId_" + Model.Unit.UnitId)" style="height: 28.8em;" tabindex="0">
+                    @{var UnitClass = "ck-button";}
+                    @for (int i = 0; i < Model.ReceivedAnalyzes.Count; i++)
                         {
-                            @Html.HiddenFor(m => Model.Devices[i].Analyzes[j].RequestedAnalysisID)
-                            var Age = Model.Devices[i].Analyzes[j].BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.Devices[i].Analyzes[j].BirthDate).Year).ToString() : String.Empty;
-                            if (j % 2 == 1)
+                            @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID)
+                            var UnitAge = Model.ReceivedAnalyzes[i].PatientRequestAnalysis.BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.ReceivedAnalyzes[i].PatientRequestAnalysis.BirthDate).Year).ToString() : String.Empty;
+                            if (i % 2 == 1)
                             {
-                                Class = "ck-buttonb";
+                                UnitClass = "ck-buttonb";
                             }
                             else
                             {
-                                Class = "ck-button";
+                                UnitClass = "ck-button";
                             }
-                            <li data-draggable="item" class="@Class" id="@("DeviceAnalysisId_" + Model.Devices[i].Analyzes[j].DeviceAnalysisId)">
-                                @Model.Devices[i].Analyzes[j].AnalysisName  &nbsp; || &nbsp;
-                                Run#: @Model.Devices[i].Analyzes[j].RunNumber    &nbsp; || &nbsp;
-                                Gender: @Model.Devices[i].Analyzes[j].Gender        &nbsp; || &nbsp;
-                                Age: @Age
-
-                            </li>
-
-                        }*@
-                        <li>test</li>
-                    </ol>
-
-                </div>
-            </div>
-         <div class="col-md-8">
-        @for (int i = 0; i < Model.Devices.Count; i++)
-        {
-            @Html.HiddenFor(m => Model.Devices[i].Device.DeviceId)
-            @Html.HiddenFor(m => Model.Devices[i].Device.DeviceName)
-            <div class="col-md-6">
-                <div class="col-md-12">
-                    <ol class="scrolll" data-draggable="target" id="@( "DeviceId_" + Model.Devices[i].Device.DeviceId)">
-                        @{var Class = "ck-button";}
-                        @for (int j = 0; j < Model.Devices[i].Analyzes.Count; j++)
-                        {
-                            @Html.HiddenFor(m => Model.Devices[i].Analyzes[j].RequestedAnalysisID)
-                            var Age = Model.Devices[i].Analyzes[j].BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.Devices[i].Analyzes[j].BirthDate).Year).ToString() : String.Empty;
-                            if (j % 2 == 1)
-                            {
-                                Class = "ck-buttonb";
-                            }
-                            else
-                            {
-                                Class = "ck-button";
-                            }
-                            <li data-draggable="item" class="@Class" id="@("DeviceAnalysisId_" + Model.Devices[i].Analyzes[j].DeviceAnalysisId)">
-                                @Model.Devices[i].Analyzes[j].AnalysisName  &nbsp; || &nbsp;
-                                Run#: @Model.Devices[i].Analyzes[j].RunNumber    &nbsp; || &nbsp;
-                                Gender: @Model.Devices[i].Analyzes[j].Gender        &nbsp; || &nbsp;
-                                Age: @Age
+                            <li data-draggable="item" class="@UnitClass" id="@("RequestedAnalysisID_" + Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID)"
+                                draggable="true" aria-grabbed="false" tabindex="0">
+                                @Model.ReceivedAnalyzes[i].PatientRequestAnalysis.AnalysisName  &nbsp; || &nbsp;
+                                Run#: @Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RunNumber    &nbsp; || &nbsp;
+                                Gender: @Model.ReceivedAnalyzes[i].PatientRequestAnalysis.Gender        &nbsp; || &nbsp;
+                                Age: @UnitAge
 
                             </li>
 
                         }
-                    </ol>
+                    <li data-draggable="item" class="ck-buttonb">Item 3</li>
+                </ol>
+            </div>
 
+            <div class="col-md-12">
+                <div class="row text-center">
+                    <div class="col-md-12">
+
+                        <button type="button" class="btn btn-success" style="border-radius:0;">Run Test</button>
+
+
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            @for (int i = 0; i < Model.Devices.Count; i++)
+            {
+                @Html.HiddenFor(m => Model.Devices[i].Device.DeviceId)
+                @Html.HiddenFor(m => Model.Devices[i].Device.DeviceName)
+                <div class="col-md-6">
+                    <div class="col-md-12">
+                        <ol class="scrolll" data-draggable="target" onclick="SetSelectedAttribute(event);" id="@( "DeviceId_" + Model.Devices[i].Device.DeviceId)">
+                            @{var Class = "ck-button";}
+                            @for (int j = 0; j < Model.Devices[i].Analyzes.Count; j++)
+                            {
+                                @Html.HiddenFor(m => Model.Devices[i].Analyzes[j].RequestedAnalysisID)
+                                var Age = Model.Devices[i].Analyzes[j].BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.Devices[i].Analyzes[j].BirthDate).Year).ToString() : String.Empty;
+                                if (j % 2 == 1)
+                                {
+                                    Class = "ck-buttonb";
+                                }
+                                else
+                                {
+                                    Class = "ck-button";
+                                }
+                                <li data-draggable="item" class="@Class" id="@("RequestedAnalysisID_" + Model.Devices[i].Analyzes[j].DeviceAnalysisId)"
+                                    draggable="true" aria-grabbed="false" tabindex="0">
+                                    @Model.Devices[i].Analyzes[j].AnalysisName  &nbsp; || &nbsp;
+                                    Run#: @Model.Devices[i].Analyzes[j].RunNumber    &nbsp; || &nbsp;
+                                    Gender: @Model.Devices[i].Analyzes[j].Gender        &nbsp; || &nbsp;
+                                    Age: @Age
 
-                <div class="col-md-12">
-                    <div class="row text-right">
-                        <div class="col-md-12">
-                            <button type="button" class="btn btn-success" style="border-radius:0;" onclick="RunTest(@Model.Devices[i].Device.DeviceId);">Run Test</button>
+                                </li>
+
+                            }
+                        </ol>
+
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row text-right">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success" style="border-radius:0;" onclick="RunTest(@Model.Devices[i].Device.DeviceId);">Run Test</button>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
-
-            </div>
-        }
-             </div>
+            }
+        </div>
     }
 </div>
-@Scripts.Render("~/bundles/dragdrop")
+@*@Scripts.Render("~/bundles/dragdrop")*@
 
 
 
