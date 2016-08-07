@@ -1,0 +1,171 @@
+﻿
+@{
+ //    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery UI Sortable - Connect lists</title>
+    <link href="~/css/dragdrop.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">*@
+    <style>
+        /*#sortable1, #sortable2 {
+            border: 1px solid #eee;
+            width: 142px;
+            min-height: 20px;
+            list-style-type: none;
+            margin: 0;
+            padding: 5px 0 0 0;
+            float: left;
+            margin-right: 10px;
+        }*/
+
+            /*#sortable1 li, #sortable2 li {
+                margin: 0 5px 5px 5px;
+                padding: 5px;
+                font-size: 1.2em;
+                width: 120px;
+            }*/
+
+            /*li.selectedItem
+            {
+                background-color:Blue;
+                color:White;
+            }*/ 
+    </style>
+    <script>
+  $( function() {
+    //$( "#sortable1, #sortable2" ).sortable({
+    //  connectWith: ".connectedSortable"
+      //}).disableSelection();
+      //$("#sortable1, #sortable2").sortable({
+      //    connectWith: ".connectedSortable"
+      //}).selectable();
+
+          //$("ol").sortable({
+          //  //  connectWith: ".connectedSortable"
+          //}).selectable();
+
+      $("ol").sortable({
+        //  connectWith: ".connectedSortable",
+          beforeStop: function (event, ui) {
+              console.log("beforeStop");
+              ui.helper.removeClass("selectedItem");
+              ui.helper.die();
+          },
+          change: function (event, ui) {  //for issue solving   
+              console.log("change");
+              console.log(ui);
+              var placeHolder = ui.helper.children(".ui-sortable-placeholder");
+
+              if (placeHolder) {
+                  placeHolder.detach().appendTo(ui.helper.parent());
+              }
+          },
+          start: function (event, ui) {
+              console.log("start");
+              console.log(ui);
+              if (ui.helper) {
+                  console.log(ui);
+                  console.log(ui.helper);
+                  var cnt = ui.helper.parent().children(".selectedItem:not(.ui-sortable-placeholder)").length;
+                  if (cnt > 1) {
+                      var parent = ui.helper.parent();
+                      var childs = parent.children("li.selectedItem:not(.ui-sortable-placeholder)"); console.log(childs);
+                      $.each(childs, function (index, child) {
+                          child = $(child);
+                          if (ui.helper.attr('id') != child.attr('id')) {
+                              child = child.detach();
+                              child.appendTo(ui.helper);
+                              child.css("margin", "0px").css("padding", "0px"); //addClass not working
+                          }
+                      });
+                  }
+              }
+          },
+          stop: function (event, ui) {
+              console.log("stop");
+              console.log(ui);
+              //console.log(ui.helper);
+              if (ui.item) {
+                  var cnt = $(ui.item[0]).children("li").length;
+                  if (cnt > 0) {
+                      //ui.helper is null
+                      var dropItem = $(ui.item[0]);
+                      $.each(dropItem.children("li"), function (index, child) {
+                          child = $(child).detach();
+                          child.insertAfter(dropItem);
+                          child.removeClass("selectedItem");
+                          child.css("margin", "").css("padding", "");
+                      });
+                  }
+              }
+          }
+      }).disableSelection();
+
+      
+
+
+
+
+
+      //click color handling
+      $("ol>li").live("click", function (ev) {
+          console.log("live");
+          console.log(ev);
+          console.log($(this).parent().children());
+          if (!ev.ctrlKey) {
+              console.log("remove");
+              //    $(this).parent().children().removeClass("selectedItem");
+             // console.log($(this).parent().children());
+            //  $(this).parent().children().setAttribute('aria - grabbed', 'false');
+            //  console.log($(this).parent().children());
+          }
+        //  $(this).toggleClass("selectedItem");
+          //   $(this).item.setAttribute('aria - grabbed', 'true');
+          console.log(ev.target.getAttribute('aria-grabbed'));
+          ev.target.setAttribute('aria-grabbed', 'true');
+          console.log($(this));
+      });
+
+  });
+
+
+    </script>
+</head>
+<body>
+    <div class="col-md-6">
+        <ol id="sortable1" data-draggable="target" aria-dropeffect="none">
+            @*<li class="ui-state-default">Item 1</li>
+            <li class="ui-state-default">Item 2</li>
+            <li class="ui-state-default">Item 3</li>
+            <li class="ui-state-default">Item 4</li>
+            <li class="ui-state-default">Item 5</li>*@
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="1" class="ck-button" >Item 1</li>
+            <li data-draggable="item" draggable="true"  aria-grabbed="false" tabindex="0" id="2" class="ck-buttonb">Item 2</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="3" class="ck-button">Item 3</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="4" class="ck-buttonb">Item 4</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="5" class="ck-button">Item 5</li>
+        </ol>
+    </div>
+    <div class="col-md-6">
+        <ol id="sortable2" data-draggable="target" aria-dropeffect="none" >
+            @*<li class="ui-state-highlight">Item 1</li>
+            <li class="ui-state-highlight">Item 2</li>
+            <li class="ui-state-highlight">Item 3</li>
+            <li class="ui-state-highlight">Item 4</li>
+            <li class="ui-state-highlight">Item 5</li>*@
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="6" class="ck-buttonb">Item 1</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="7" class="ck-button">Item 2</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="8" class="ck-buttonb">Item 3</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="9" class="ck-button">Item 4</li>
+            <li data-draggable="item" draggable="true" aria-grabbed="false" tabindex="0" id="10" class="ck-buttonb">Item 5</li>
+        </ol>
+        </div>
+
+</body>
+</html>

@@ -19,5 +19,10 @@ namespace DemoMisrInternationalLab.Controllers
         {
             return View();
         }
+
+        public ActionResult Test()
+        {
+            return View();
+        }
 	}
 }
