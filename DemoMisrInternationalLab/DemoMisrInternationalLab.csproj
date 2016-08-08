@@ -383,6 +383,7 @@
     <Compile Include="Models\Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel.cs" />
     <Compile Include="Models\Patient_Request_Status_Analysis_ViewModel.cs" />
     <Compile Include="Models\AnalyzesViewModel.cs" />
+    <Compile Include="Models\PlansViewModel.cs" />
     <Compile Include="Models\PlanViewModel.cs" />
     <Compile Include="Models\ProvincesViewModel.cs" />
     <Compile Include="Models\UnitsViewModel.cs" />
@@ -984,6 +985,7 @@
     <Content Include="Views\TestDrag\jqueryDrag.cshtml" />
     <Content Include="Views\TestDrag\Test.cshtml" />
     <Content Include="Views\TestDrag\test2.cshtml" />
+    <Content Include="Views\Lab\_OpenedPlans.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

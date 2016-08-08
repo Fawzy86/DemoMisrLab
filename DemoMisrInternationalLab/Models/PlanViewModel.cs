@@ -15,5 +15,7 @@ namespace DemoMisrInternationalLab.Models
         }
         public Plan_Device_Unit Plan { get; set; }
         public List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device> Analyzes { get; set; }
+
+        public bool IsOpened { get; set; }
     }
 }

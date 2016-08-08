@@ -20,10 +20,11 @@
             <div class="contentt" id="Device_Plan_Analyzes_Popup_Content"></div>
         </div>
     </div>
-    <div id="Move_Analysis_ToDevice_Confirmation_Popup" class="overlay">
+    <div id="Drag_Analysis_ToDevice_Confirmation_Popup" class="overlay">
         <div class=" popup">
             <a class="close" href="#">&times;</a>
-            <div class="contentt" style="overflow: visible;" id="Move_Analysis_ToDevice_Confirmation_Popup_Content"></div>
+            <div class="contentt" style="overflow: visible;" id="Drag_Analysis_ToDevice_Confirmation_Popup_Content"></div>
+            <button type="button" class="btn btn-danger" style="border-radius:0;" onclick="Close();">Close</button>
         </div>
     </div>
 
@@ -83,8 +84,8 @@
                     SelectedItems.push(val.id);
                 }
             });
-            ev.dataTransfer.setData("analyzesIds", SelectedItems);
-            ev.dataTransfer.setData("sourceDeviceId", ev.target.parentNode.id);
+            ev.dataTransfer.setData("RequestedAnalyzesIds", SelectedItems);
+            ev.dataTransfer.setData("SourceId", ev.target.parentNode.id);
         }, false);
         ////////////////////////////////////////////////////////////////////
         document.addEventListener("dragend", function (ev) {
@@ -117,32 +118,20 @@
             ev.preventDefault();
             try {
                 console.log("now dropping");
-                var DeviceAnalyzesIds = ev.dataTransfer.getData("analyzesIds");
-                console.log(DeviceAnalyzesIds + DeviceAnalyzesIds.length);
-                if (DeviceAnalyzesIds == null || DeviceAnalyzesIds.length == 0) {
-                    return;
-                }
-                var DevicesAnalyzesIdsArray = DeviceAnalyzesIds.split(',');
-                for (i = 0; i < DevicesAnalyzesIdsArray.length; i++) {
-                    console.log(DevicesAnalyzesIdsArray[i]);
-                    var elem = document.getElementById(DevicesAnalyzesIdsArray[i]);
-                    elem.parentNode.removeChild(elem);
-                    ev.target.appendChild(elem);
-                }
-                var SourceDeviceId = ev.dataTransfer.getData("sourceDeviceId")
-
-                var DestinationDeviceId = ev.target.id;
-                if (DestinationDeviceId.indexOf("DeviceAnalysisId_") == 0) {
-                    DestinationDeviceId = ev.target.parentNode.id;
-                }
-
-                if (SourceDeviceId == DestinationDeviceId || SourceDeviceId.indexOf("DeviceId_") != 0
-                    || DestinationDeviceId.indexOf("DeviceId_") != 0
-                    || DeviceAnalyzesIds.indexOf("DeviceAnalysisId_") != 0) {
+                var RequestedAnalyzesIds = ev.dataTransfer.getData("RequestedAnalyzesIds");
+                if (RequestedAnalyzesIds == null || RequestedAnalyzesIds.length == 0
+                    || ev.target == null || ev.target.id.length == 0) {
                     return;
                 }
 
-                MoveAnalyzes(DeviceAnalyzesIds, SourceDeviceId, DestinationDeviceId, false);
+                // Move to the unit
+                if (ev.target.id.indexOf("UnitId_") == 0) {
+                    DragAnalyzesToUnit(ev, RequestedAnalyzesIds);
+                }
+                    // Move to device
+                else if (ev.target.id.indexOf("DeviceId_") == 0) {
+                    DragAnalyzesToDevice(ev, RequestedAnalyzesIds);
+                }
             }
             catch (err) {
                 alert(err.message + err.description);
@@ -151,77 +140,83 @@
         }, false);
     });
     ////////////////////////////////////////////////////////////////////
+    function DragAnalyzesToUnit(ev, RequestedAnalyzesIds) {
+        var RequestedAnalyzesIdsArray = RequestedAnalyzesIds.split(',');
+        for (i = 0; i < RequestedAnalyzesIdsArray.length; i++) {
+            if (ev.target.id != RequestedAnalyzesIdsArray[i]) {
+                var dragElem = document.getElementById(RequestedAnalyzesIdsArray[i]);
+                dragElem.parentNode.removeChild(dragElem);
+                ev.target.appendChild(dragElem);
+            }
+        }
+    }
+    ////////////////////////////////////////////////////////////////////
+    function DragAnalyzesToDevice(ev, RequestedAnalyzesIds) {
+        var DeviceCapacity = ev.target.getAttribute('data-count-theme');
+        var RequestedAnalyzesIdsArray = RequestedAnalyzesIds.split(',');
+        var ExistingItems = ev.target.getElementsByTagName('li').length;
+        for (i = 0; i < RequestedAnalyzesIdsArray.length; i++) {
+            if (DeviceCapacity > ExistingItems) {
+                if (ev.target.id != RequestedAnalyzesIdsArray[i]) {
+                    var dragElem = document.getElementById(RequestedAnalyzesIdsArray[i]);
+                    dragElem.parentNode.removeChild(dragElem);
+                    ev.target.appendChild(dragElem);
+                    ++ExistingItems;
+                }
+            } else {
+                $("#Drag_Analysis_ToDevice_Confirmation_Popup_Content").text("The device capacity is full, you cannot add any more analyzes to it");
+                window.location.href = "#Drag_Analysis_ToDevice_Confirmation_Popup";
+            }
+        }
+    }
+    ////////////////////////////////////////////////////////////////////
     function SetSelectedAttribute(ev) {
-        console.log("Evenet dfdsafdsafdsafdsafof setting attr " + ev)
         var node = ev.target;
+        if (node.nodeName.toLowerCase() == 'tr' || node.nodeName.toLowerCase() == 'td' || node.nodeName.toLowerCase() == 'table') {
+            node = $(node).closest('li')[0];
+        }
         var parentNode = node.parentNode;
-        console.log(node);
-        if (ev.target.nodeName.toLowerCase() != 'li') {
-            parentNode = ev.target;
+        if (node.nodeName.toLowerCase() != 'li') {
+            parentNode = node;
             node = null;
         }
-        if (!ev.ctrlKey) {
+        if (!ev.ctrlKey && (parentNode.nodeName.toLowerCase() == 'ol' || parentNode.nodeName.toLowerCase() == 'ul')) {
             ClearSelection(parentNode)
         }
 
-        if (node != null) {
+        if (node != null && node.getAttribute('data-draggable') == 'item') {
             node.setAttribute('aria-grabbed', 'true');
         }
     }
     ////////////////////////////////////////////////////////////////////
     function ClearSelection(parentNode) {
-        console.log(parentNode);
         $.each(parentNode.children, function (index, child) {
             child.setAttribute('aria-grabbed', 'false');
         });
     }
-    /////////////////////////////////////////////////////////////////////
-    function MoveAnalyzes(SelectedDeviceAnalyzesIds, SelectedSourceDeviceId, SelectedDestinationDeviceId, Overhead) {
-        try {
-            console.log(SelectedDeviceAnalyzesIds);
-            console.log(SelectedSourceDeviceId);
-            console.log(SelectedDestinationDeviceId);
-            console.log(Overhead);
-            // var form = $('#' + SelectedSourceDeviceId).closest("form");
-            var form = $('#Work_Unit_Form');
-            $.ajax({
-                cache: false,
-                async: true,
-                type: "POST",
-                url: "/Lab/MoveAnalyzesToAnotherDevice",//form.attr('action'),
-                data: form.serialize() + "&DeviceAnalyzesIds=" + SelectedDeviceAnalyzesIds + "&SourceDeviceId=" + SelectedSourceDeviceId + "&DestinationDeviceId=" + SelectedDestinationDeviceId + "&IsOverhead=" + Overhead,
-                success: function (data) {
-                    if ($(data).filter("#Move_Analysis_ToDevice_Confirmation_Div") != null &&
-                       $(data).filter("#Move_Analysis_ToDevice_Confirmation_Div").html() != null) {
-                        $("#Move_Analysis_ToDevice_Confirmation_Popup_Content").html(data);
-                        window.location.href = "#Move_Analysis_ToDevice_Confirmation_Popup";
-                    } else {
-                           $("#Work_Unit_DevicesWithAnalyzes_Container").html(data);
-                        //LoadUnitAndDevices(data);
-                        window.location.href = "#";
-                    }
-                },
-                error: function (xhr, desc, err) {
-                    alert("Error: " + err.message + " " + desc + " " + xhr.responseText + err.description);
-                }
-            });
-        } catch (err) {
-            alert(err.message + err.description);
-        }
-    }
     //////////////////////////////////////////////////////////////
-    function RunTest(deviceId) {
+    function RunTest(deviceElem) {
         try {
             var form = $('#Work_Unit_Form');
+
+            RequestedAnalyzesIds = [];
+           
+            var RequestedAnalyzesIdsElem = deviceElem.getElementsByTagName('li');
+            for (i = 0; i < RequestedAnalyzesIdsElem.length; i++) {
+                RequestedAnalyzesIds.push(RequestedAnalyzesIdsElem[i].id);
+            }
+
             $.ajax({
                 cache: false,
                 async: true,
                 type: "POST",
                 url: "/Lab/RunTest",//form.attr('action'),
-                data: form.serialize() + "&DeviceId=" + deviceId,
+                data: form.serialize() + "&DeviceId=" + deviceElem.id + "&RequestedAnalyzesIds=" + RequestedAnalyzesIds,
                 success: function (data) {
-                    $("#Device_Plan_Analyzes_Popup_Content").html(data);
-                    window.location.href = "#Device_Plan_Analyzes_Popup";
+                    if (data != null && data.length > 0) {
+                        $("#Device_Plan_Analyzes_Popup_Content").html(data);
+                        window.location.href = "#Device_Plan_Analyzes_Popup";
+                    }
                 },
                 error: function (xhr, desc, err) {
                     alert("Error: " + err + " " + desc + " " + xhr.responseText);
@@ -232,8 +227,45 @@
             alert(err.message + err.description);
         }
     }
+    ////////////////////////////////////////////////////////////////////////////
+    function ConfirmRunTest() {
+        //  var form = $(this).closest("form");
+        //  var form = $("#Device_Plan_Analyzes_Form");
+        var childform = $("#Device_Plan_Analyzes_Popup_Content").children();
+        var parentform = childform.closest('form');
+        try {
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "/Lab/ConfirmRunTest",//form.attr('action'),
+                data: childform.serialize(),
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        ClearDeviceAnalyzes(data);
+                        Close();
+                    }
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                }
+            });
+        }
+        catch (err) {
+            alert(err.message + err.description);
+        }
+        return false;
+    }
+    ////////////////////////////////////////////////////////////////////
+    function ClearDeviceAnalyzes(requestedAnalyzesIds) {
+        var RequestedAnalyzesIdsArray = requestedAnalyzesIds.split(',');
+        for (i = 0; i < RequestedAnalyzesIdsArray.length; i++) {
+            var dragElem = document.getElementById("RequestedAnalysisID_" + RequestedAnalyzesIdsArray[i]);
+            dragElem.parentNode.removeChild(dragElem);
+        }
+    }
     //////////////////////////////////////////////////////////
-    function Cancel() {
+    function Close() {
         window.location.href = "#";
     }
 </script>

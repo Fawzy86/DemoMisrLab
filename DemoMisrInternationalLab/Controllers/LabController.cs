@@ -19,7 +19,7 @@ namespace DemoMisrInternationalLab.Controllers
             return View();
         }
 
-
+        #region ReceiveAnalysis
         public ActionResult LoadReceivedAnalyzes(string SearchPattern, string DateRange)
         {
             DateTime DateFrom = DateTime.Now.Date;
@@ -70,9 +70,11 @@ namespace DemoMisrInternationalLab.Controllers
             return LoadReceivedAnalyzes(null, null);
         }
 
+        #endregion
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
+        #region Work units
         public ActionResult LoadWorkUnits()
         {
             UnitsViewModel WorkUnits = new UnitsViewModel();
@@ -92,38 +94,27 @@ namespace DemoMisrInternationalLab.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MoveAnalyzesToAnotherDevice(FormCollection form, UnitViewModel model, string DeviceAnalyzesIds, string SourceDeviceId, string DestinationDeviceId, bool IsOverhead)
+        public ActionResult RunTest(FormCollection form, UnitViewModel model, string DeviceId, string RequestedAnalyzesIds)
         {
-            if (!String.IsNullOrWhiteSpace(DeviceAnalyzesIds) && !String.IsNullOrWhiteSpace(SourceDeviceId) && !String.IsNullOrWhiteSpace(DestinationDeviceId))
+            if (!String.IsNullOrWhiteSpace(RequestedAnalyzesIds))
             {
-                List<int> _DeviceAnalyzesIdsList = new List<int>();
-                var DeviceAnalyzesIdsArray = DeviceAnalyzesIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var deviceAnalysisId in DeviceAnalyzesIdsArray)
+                List<int> RequestedAnalyzesIdsList = new List<int>();
+                var RequestedAnalyzesIdsArray = RequestedAnalyzesIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var requestedAnalysisId in RequestedAnalyzesIdsArray)
                 {
-                    var DeviceAnalysisIdArray = deviceAnalysisId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (DeviceAnalysisIdArray.Count() > 1)
+                    var RequestedAnalysisIdArray = requestedAnalysisId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (RequestedAnalysisIdArray.Count() > 1)
                     {
-                        _DeviceAnalyzesIdsList.Add(Convert.ToInt32(DeviceAnalysisIdArray[1]));
+                        RequestedAnalyzesIdsList.Add(Convert.ToInt32(RequestedAnalysisIdArray[1]));
                     }
                     else
                     {
-                        _DeviceAnalyzesIdsList.Add(Convert.ToInt32(DeviceAnalysisIdArray[0]));
+                        RequestedAnalyzesIdsList.Add(Convert.ToInt32(RequestedAnalysisIdArray[0]));
                     }
                 }
 
-                int _SourceDeviceId = 0;
-                var SourceDeviceIdArray = SourceDeviceId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
-                if (SourceDeviceIdArray.Count() > 1)
-                {
-                    _SourceDeviceId = Convert.ToInt32(SourceDeviceIdArray[1]);
-                }
-                else
-                {
-                    _SourceDeviceId = Convert.ToInt32(SourceDeviceIdArray[0]);
-                }
-
                 int _DestinationDeviceId = 0;
-                var DestinationDeviceIdArray = DestinationDeviceId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
+                var DestinationDeviceIdArray = DeviceId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
                 if (DestinationDeviceIdArray.Count() > 1)
                 {
                     _DestinationDeviceId = Convert.ToInt32(DestinationDeviceIdArray[1]);
@@ -132,60 +123,51 @@ namespace DemoMisrInternationalLab.Controllers
                 {
                     _DestinationDeviceId = Convert.ToInt32(DestinationDeviceIdArray[0]);
                 }
+                DeviceViewModel Device = new DeviceViewModel();
+                Device.Analyzes = (from a in model.ReceivedAnalyzes
+                                   where RequestedAnalyzesIdsList.Contains(a.PatientRequestAnalysis.RequestedAnalysisID)
+                                   select a.PatientRequestAnalysis).ToList();
+                Device.Device = (from d in model.Devices
+                                 where d.Device.DeviceId == _DestinationDeviceId
+                                 select d.Device).SingleOrDefault();
+                //  DeviceViewModel Device = DbFunctions.RunTestPlan(Convert.ToInt32(DeviceId));
+                  return PartialView("_DevicePlanAnalyzes", Device);
+            }
+            return null;
+        }
 
-                var DestinationDevice = DbFunctions.GetDevice(_DestinationDeviceId);
-                if (DestinationDevice != null)
+        [HttpPost]
+      //  [ValidateAntiForgeryToken]
+        public ActionResult ConfirmRunTest(FormCollection form, UnitViewModel parentModel, DeviceViewModel childModel)
+        {
+            if (childModel != null)
+            {
+                List<Models.EntityModel.DeviceAnalysi> DeviceAnalyzes = new List<Models.EntityModel.DeviceAnalysi>();
+                int RakeNumber = 0;
+                foreach (var deviceAnalysis in childModel.Analyzes)
                 {
-                    if (DestinationDevice.Device.Capacity >= DestinationDevice.Analyzes.Count + _DeviceAnalyzesIdsList.Count || IsOverhead)
+                    ++RakeNumber;
+                    DeviceAnalyzes.Add(new Models.EntityModel.DeviceAnalysi()
                     {
-                        DbFunctions.MoveAnalyzesToAnotherDevice(_DeviceAnalyzesIdsList, _SourceDeviceId, _DestinationDeviceId, HttpContext.User.Identity.Name);
-                        return LoadUnitAndDevices(model.Unit.UnitId);
-                      //  return Content(model.Unit.UnitId.ToString());
-                    }
-                    else
-                    {
-                        UnitViewModel UnitView = DbFunctions.GetUnitDevices(DestinationDevice.Device.UnitId);
-                        ViewBag.Message = String.Format("The device \"{0}\" capcity is \"{1}\" and there is no more space to receive any analysis right now, " +
-                            "so please decide what you want to do", DestinationDevice.Device.DeviceName, DestinationDevice.Device.Capacity);
-
-                        ViewBag.SelectedDeviceAnalyzesIds = String.Join(",", _DeviceAnalyzesIdsList);
-                        ViewBag.SelectedSourceDeviceId = _SourceDeviceId.ToString();
-                        ViewBag.SelectedDestinationDeviceId = _DestinationDeviceId.ToString();
-                        return PartialView("_MoveAnalysisToDeviceConfirmation", UnitView);
-                    }
+                        DeviceId = childModel.Device.DeviceId,
+                        RakeNumber = RakeNumber,
+                        RequestedAnalysisId = deviceAnalysis.RequestedAnalysisID,
+                    });
                 }
+                DbFunctions.RunTestPlan(DeviceAnalyzes, HttpContext.User.Identity.Name);
+                return Content(String.Join(",", DeviceAnalyzes.Select(a => a.RequestedAnalysisId)));
+             //   return LoadUnitAndDevices(model.Device.UnitId);
             }
             return null;
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RunTest(FormCollection form, UnitViewModel model, string DeviceId)
-        {
-            if (!String.IsNullOrWhiteSpace(DeviceId))
-            {
-                DeviceViewModel Device = DbFunctions.RunTestPlan(Convert.ToInt32(DeviceId));
-                return PartialView("_DevicePlanAnalyzes", Device);
-            }
-            return null;
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ConfirmRunTest(FormCollection form, DeviceViewModel model)
-        {
-            if (model != null)
-            {
-                List<int> DeviceAnalyzesIds = model.Analyzes.Select(a => a.DeviceAnalysisId).ToList();
-                DbFunctions.ConfirmTestPlan(DeviceAnalyzesIds, model.Device.DeviceId, HttpContext.User.Identity.Name);
-                return LoadUnitAndDevices(model.Device.UnitId);
-            }
-            return null;
-        }
+        #endregion
 
 
+        /////////////////////////////////////////////////////////////////////////////////////////
 
-        public ActionResult GetPlans(string SearchPattern, string DateRange)
+        #region Plans
+        public ActionResult GetPlans(string SearchPattern,string SearchType, string DateRange)
         {
             DateTime DateFrom = DateTime.Now.Date;
             DateTime DateTo = DateTime.Now.AddDays(1).Date;
@@ -202,7 +184,7 @@ namespace DemoMisrInternationalLab.Controllers
                 }
             }
             List<PlanViewModel> Plans = new List<PlanViewModel>();
-            Plans = DbFunctions.GetPlans(SearchPattern, DateFrom, DateTo);
+            Plans = DbFunctions.GetPlans(SearchPattern, SearchType, DateFrom, DateTo);
             return PartialView("_FilteredPlans", Plans);
         }
 
@@ -217,12 +199,23 @@ namespace DemoMisrInternationalLab.Controllers
             return null;
         }
 
+        #endregion
 
+        /////////////////////////////////////////////////////////////////////////////////////////
 
-        public ActionResult LoadAnalyzesForCaptureResult()
+        #region Capute Result
+
+        public ActionResult GetOpenedPlans()
+        {
+            PlansViewModel Plans = new PlansViewModel();
+            Plans.PlansList = DbFunctions.GetOpenedPlans();
+            return PartialView("_OpenedPlans", Plans);
+        }
+
+        public ActionResult LoadAnalyzesForCaptureResult(string PlanId)
         {
             List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>();
-            Analyzes = DbFunctions.GetAnalysisForCaptureResult();
+            Analyzes = DbFunctions.GetAnalysisForCaptureResult(Convert.ToInt32(PlanId));
             return PartialView("_CaptureResult", Analyzes);
         }
 
@@ -235,11 +228,13 @@ namespace DemoMisrInternationalLab.Controllers
             {
                 List<string> ResultList = Result.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 DbFunctions.SaveResultForRequestedAnalysis(Convert.ToInt32(RequestedAnalysisId), ResultList, HttpContext.User.Identity.Name);
-                return LoadAnalyzesForCaptureResult();
+                return LoadAnalyzesForCaptureResult(model.FirstOrDefault().Analysis.PlanId.ToString());
             }
             return null;
         }
 
-        
-	}
+
+        #endregion
+
+    }
 }

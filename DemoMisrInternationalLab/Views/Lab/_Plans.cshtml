@@ -1,8 +1,7 @@
 ﻿<div id="Lab_Plans_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
 @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Lab_Plans_Form" }))
 {
-
-
+    @Html.AntiForgeryToken()
     <div class="captureresult-listb">
 
         <div class="col-md-7 mar-botmob">
@@ -13,14 +12,17 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#Plan">Plan</a></li>
-                        <li><a href="#Planb">Planb</a></li>
-                        <li><a href="#Planc">Planc</a></li>
+                        <li><a href="#Unit">Unit</a></li>
+                        <li><a href="#Device">Device</a></li>
+                        <li><a href="#Doctor">Doctor</a></li>
+                        <li><a href="#RunNumber">Run#</a></li>
+                        <li><a href="#AnalysisName">Analysis</a></li>
                     </ul>
                 </div>
                 <input type="hidden" name="search_param" value="all" id="search_param">
                 <input type="text" id="Lab_Plans_SearchText" class="form-control" name="x" placeholder="Search term..." style="width: 53%; height:34px;">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                    <button class="btn btn-default" type="button" id="Lab_Plans_Search_Link"><span class="glyphicon glyphicon-search"></span></button>
                 </span>
             </div>
         </div>
@@ -71,6 +73,14 @@
     /////////////////////////////////
     $(function () {
 
+        $('.search-panel .dropdown-menu').find('a').click(function (e) {
+            e.preventDefault();
+            var param = $(this).attr("href").replace("#", "");
+            var concept = $(this).text();
+            $('.search-panel span#search_concept').text(concept);
+            $('.input-group #search_param').val(param);
+        });
+
         function cb(start, end) {
             $('#Lab_Plans_Report_Range span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         }
@@ -102,12 +112,13 @@
     function LoadPlans() {
         try {
             var SearchValue = $("#Lab_Plans_SearchText").val();
+            var search_param = $("#search_param").val();
             var DateRangeValue = $("#Lab_Plans_DateRangeText").html();
             $.ajax({
                 cache: false,
                 async: true,
                 type: "GET",
-                url: "/Lab/GetPlans?SearchPattern=" + SearchValue + "&DateRange=" + DateRangeValue,//form.attr('action'),
+                url: "/Lab/GetPlans?SearchPattern=" + SearchValue + "&SearchType=" + search_param + "&DateRange=" + DateRangeValue,//form.attr('action'),
                 success: function (data) {
                     $("#Lab_Plans_Container").html(data);
                 },

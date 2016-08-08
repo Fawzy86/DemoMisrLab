@@ -1,0 +1,134 @@
+﻿@model DemoMisrInternationalLab.Models.PlansViewModel
+<div id="Opened_Plans_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Opened_Plans_Form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="captureresult-list">
+
+        <div class="col-md-12">
+            @Html.DropDownListFor(p => Model.SelectedPlanId,
+                                    Model.PlansIEnum, "-- Units --",
+                                  new { @id = "Opened_Plans_SelectedPlanId", @class = "form-control form-widthhh-full formtop-mobile" })
+
+        </div>
+        
+
+    </div>
+
+    <div id="Opened_Plan_Container"></div>
+
+
+}
+@*@Scripts.Render("~/bundles/jqueryval")*@
+<script type="text/javascript">
+    ////////////////////////////////////////////////////////////
+    $(document).ajaxStart(function () {
+        try {
+            $("#Opened_Plans_Form").prop('disabled', true);
+            $("#Opened_Plans_Loading").show();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    /////////////////////////////////////////////////////////
+    $(document).ajaxStop(function () {
+        try {
+            $("#Opened_Plans_Form").prop('disabled', true);
+            $("#Opened_Plans_Loading").hide();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    /////////////////////////////////////////////////////////////////
+    $('#Opened_Plans_SelectedPlanId').change(function () {
+        var SelectedPlanId = this.value;
+        LoadPlanAnalzes(SelectedPlanId);
+    });
+    //////////////////////////////////////////////////////////////////////
+    function LoadPlanAnalzes(PlanId) {
+        try {
+            $("#Opened_Plan_Container").load('@Url.Action("LoadAnalyzesForCaptureResult", "Lab")?PlanId=' + PlanId);
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    }
+    ///////////////////////////////////////////////////////////
+    function AddNewResult(ev) {
+        ev.preventDefault();
+        if (ev.keyCode == 13) {
+            var rowElem = ev.target.closest("tr");
+            var tableElem = rowElem.closest("table");
+            var rowCount = tableElem.rows.length;
+            if (rowElem.rowIndex == rowCount - 1) {/// Create new row
+                var newRow = tableElem.insertRow(rowCount);
+                var cell1 = newRow.insertCell(0);
+                cell1.innerHTML = "<input type='number' class='form-control addrecord-input' onkeyup='AddNewResult(event);'>";
+                newRow.getElementsByTagName("input")[0].focus();
+            } else {
+                tableElem.rows[rowElem.rowIndex + 1].getElementsByTagName("input")[0].focus();
+            }
+        }
+        else if (ev.keyCode == 46) {
+            var inputElem = ev.target;
+            if (inputElem.value == "") {
+                inputElem.select();
+                var inputElemValue = window.getSelection().toString();
+                if (inputElemValue.length == 0) {
+                    var rowElem = inputElem.closest("tr");
+                    var tableElem = rowElem.closest("table");
+                    var rowIndex = rowElem.rowIndex;
+                    if (rowIndex != 1) {
+                        tableElem.deleteRow(rowIndex);
+                        try {
+                            tableElem.rows[rowIndex].getElementsByTagName("input")[0].focus();
+                        } catch (err) {
+                            tableElem.rows[rowIndex - 1].getElementsByTagName("input")[0].focus();
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    ////////////////////////////////////////////////////////////
+    function SaveResult(TablePrefix, RequestedAnalysisId) {
+        try {
+            var form = $('#Capture_Result_Form');
+            if (form.validate()) {
+                var tableElem = document.getElementById(TablePrefix + RequestedAnalysisId);
+                var Results = [];
+                for (i = 0; i < tableElem.getElementsByTagName("input").length; i++) {
+                    var inputText = tableElem.getElementsByTagName("input")[i];
+                    if (inputText.value == "") {
+                        inputText.focus();
+                        return;
+                    }
+                    else {
+                        Results.push(inputText.value);
+                    }
+                }
+                $.ajax({
+                    cache: false,
+                    async: true,
+                    type: "POST",
+                    url: "/Lab/SaveAnalysisReslut",//form.attr('action'),
+                    data: form.serialize() + "&RequestedAnalysisId=" + RequestedAnalysisId + "&Result=" + Results,
+                    success: function (data) {
+                        if (data != null && data.length > 0) {
+                            $("#captureResult").html(data);
+                        }
+                    },
+                    error: function (xhr, desc, err) {
+                        alert("Error: " + err.message + " " + desc + " " + xhr.responseText);
+                    }
+                });
+            }
+        }
+        catch (err) {
+            alert(err.message + err.description);
+        }
+    }
+</script>

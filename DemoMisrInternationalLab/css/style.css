@@ -1447,7 +1447,7 @@ ul.list-users > li .user-options > ul > li.bg-danger > a:hover {
 }
 .captureresult-list {
 	position: absolute;
-    top: 150px;
+    top: 123px;
     z-index: 999999;
     width: 30%;
     right: 27px;
@@ -1455,8 +1455,8 @@ ul.list-users > li .user-options > ul > li.bg-danger > a:hover {
 }
 .captureresult-listb {
 	position: absolute;
-    top: 150px;
-    z-index: 999999;
+    top: 123px;
+    /*z-index: 999999;*/
     width: 60%;
     right: 27px;
 }	

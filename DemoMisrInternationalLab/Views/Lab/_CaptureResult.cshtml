@@ -1,80 +1,61 @@
 ﻿@model List<DemoMisrInternationalLab.Models.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>
-<div id="Capture_Result_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
-@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Capture_Result_Form" }))
-{
-    @Html.AntiForgeryToken()
-    <div id="fourd" class="carouseller">
-        <a href="javascript:void(0)" class="carousel-button-left">‹</a>
-        <div class="carousel-wrapper">
-            <div class="carousel-items">
-                <input type="text" id="TempHiddentText" class="form-control addrecord-input" value="temp">
-                @if (Model != null && Model.Any())
+<input type="hidden" id="TempHiddentText" class="form-control addrecord-input" value="temp">
+<div id="fourd" class="carouseller">
+    <a href="javascript:void(0)" class="carousel-button-left">‹</a>
+    <div class="carousel-wrapper">
+        <div class="carousel-items">
+
+            @if (Model != null)
+            {
+                for (int i = 0; i < Model.Count; i++)
                 {
-                    foreach (var analysis in Model)
-                    {
-                        <div class="carousel-block">
-                            <table class="table table-bordered table-record" id="@("RequestedAnalysisIdResultTable_" + @analysis.Analysis.RequestedAnalysisID)">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div class="col-md-12">@analysis.Analysis.AnalysisName</div>
-                                            <div class="col-md-6">@analysis.Analysis.RunNumber</div>
-                                            <div class="col-md-6">@analysis.Analysis.RakeNumber</div>
-                                            <div class="col-md-12">@analysis.Analysis.DeviceName</div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <input type="number" class="form-control addrecord-input" onkeyup="AddNewResult(event);">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="col-md-8 text-right">
-                                <button type="button" class="btn btn-success" style="border-radius:0;"
-                                        onclick="SaveResult('RequestedAnalysisIdResultTable_',@analysis.Analysis.RequestedAnalysisID);">
-                                    Save
-                                </button>
-                            </div>
+                    @Html.HiddenFor(m => Model[i].Analysis.PlanId)
+                    @Html.HiddenFor(m => Model[i].Analysis.RequestedAnalysisID)
+                    <div class="carousel-block">
+                        <table class="table table-bordered table-record" id="@("RequestedAnalysisIdResultTable_" + @Model[i].Analysis.RequestedAnalysisID)">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="col-md-12">@Model[i].Analysis.AnalysisName</div>
+                                        <div class="col-md-6">@Model[i].Analysis.RunNumber</div>
+                                        <div class="col-md-6">@Model[i].Analysis.RakeNumber</div>
+                                        <div class="col-md-12">@Model[i].Analysis.DeviceName</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="number" class="form-control addrecord-input" onkeyup="AddNewResult(event);">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-md-8 text-right">
+                            <button type="button" class="btn btn-success" style="border-radius:0;"
+                                    onclick="SaveResult('RequestedAnalysisIdResultTable_',@Model[i].Analysis.RequestedAnalysisID);">
+                                Save
+                            </button>
                         </div>
-                    }
+                    </div>
                 }
-            </div>
+            }
         </div>
-        <a href="javascript:void(0)" class="carousel-button-right">›</a>
     </div>
-}
-<script src="~/js/carouseller.min.js"></script>
+    <a href="javascript:void(0)" class="carousel-button-right">›</a>
+</div>
+
+
+
 @Scripts.Render("~/bundles/jqueryval")
+<script src="~/js/carouseller.min.js"></script>
 <script type="text/javascript">
-    ////////////////////////////////////////////////////////////
-    $(document).ajaxStart(function () {
-        try {
-            $("#Capture_Result_Form").prop('disabled', true);
-            $("#Capture_Result_Loading").show();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    /////////////////////////////////////////////////////////
-    $(document).ajaxStop(function () {
-        try {
-            $("#Capture_Result_Form").prop('disabled', true);
-            $("#Capture_Result_Loading").hide();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
     ///////////////////////////////////////////////////////
     $(function () {
         $(fourd).carouseller();
     });
-    ///////////////////////////////////////////////////////////
     function AddNewResult(ev) {
+        ev.preventDefault();
         if (ev.keyCode == 13) {
             var rowElem = ev.target.closest("tr");
             var tableElem = rowElem.closest("table");
@@ -110,45 +91,7 @@
         }
         return false;
     }
-    ////////////////////////////////////////////////////////////
-    function SaveResult(TablePrefix, RequestedAnalysisId) {
-        try {
-            var form = $('#Capture_Result_Form');
-            if (form.validate()) {
-                var tableElem = document.getElementById(TablePrefix + RequestedAnalysisId);
-                var Results = [];
-                for (i = 0; i < tableElem.getElementsByTagName("input").length; i++) {
-                    var inputText = tableElem.getElementsByTagName("input")[i];
-                    if (inputText.value == "") {
-                        inputText.focus();
-                        return;
-                    }
-                    else {
-                        Results.push(inputText.value);
-                    }
-                }
-                console.log(Results);
-                $.ajax({
-                    cache: false,
-                    async: true,
-                    type: "POST",
-                    url: "/Lab/SaveAnalysisReslut",//form.attr('action'),
-                    data: form.serialize() + "&RequestedAnalysisId=" + RequestedAnalysisId + "&Result=" + Results,
-                    success: function (data) {
-                        if (data != null && data.length > 0) {
-                            $("#captureResult").html(data);
-                        }
-                    },
-                    error: function (xhr, desc, err) {
-                        alert("Error: " + err.message + " " + desc + " " + xhr.responseText);
-                    }
-                });
-            }
-        }
-        catch (err) {
-            alert(err.message + err.description);
-        }
-    }
 </script>
+
 
 

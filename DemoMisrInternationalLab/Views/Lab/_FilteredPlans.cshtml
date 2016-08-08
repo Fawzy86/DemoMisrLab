@@ -7,6 +7,7 @@
                 <tr>
                     <th>Plan #</th>
                     <th width="15%">Plan Date</th>
+                    <th>Status</th>
                     <th width="30%">Device Name</th>
                     <th width="15%">Analyzes Count</th>
                     <th width="25%">Doctor Name</th>
@@ -14,22 +15,32 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var Plan in Model)
+                @foreach (var plan in Model)
                 {
                     <tr>
-                        <td>@Plan.Plan.PlanNumber</td>
-                        <td>@Plan.Plan.TestDate</td>
-                        <td>@Plan.Plan.DeviceName </td>
-                        <td>@Plan.Analyzes.Count </td>
-                        <td>@Plan.Plan.FirstName @Plan.Plan.LastName</td>
+                        <td>@plan.Plan.PlanNumber</td>
+                        <td>@plan.Plan.TestDate</td>
+                        <td>
+                            @if (plan.IsOpened)
+                            {
+                                <a href="#captureResult" data-toggle="tab">Open</a>
+                            }
+                            else
+                            {
+                                <a href="#">Closed</a>
+                            }
+                        </td>
+                        <td>@plan.Plan.DeviceName </td>
+                        <td>@plan.Analyzes.Count </td>
+                        <td>@plan.Plan.FirstName @plan.Plan.LastName</td>
                         <td>
                             @Html.ActionLink("Show", "", new
                                {
-                                   PlanId = @Plan.Plan.PlanId
+                                   PlanId = @plan.Plan.PlanId
                                },
                                new
                                {
-                                   onclick = "return GetPlanDetails('" + @Plan.Plan.PlanId + "');"
+                                   onclick = "return GetPlanDetails('" + @plan.Plan.PlanId + "');"
                                })
                         </td>
                     </tr>
