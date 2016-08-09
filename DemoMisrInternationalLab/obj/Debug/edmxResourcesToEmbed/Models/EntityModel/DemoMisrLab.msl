@@ -751,10 +751,12 @@
     <EntitySetMapping Name="Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
       <EntityTypeMapping TypeName="DemoMisrIntModel.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
         <MappingFragment StoreEntitySet="Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
+          <ScalarProperty Name="TestDate" ColumnName="TestDate" />
+          <ScalarProperty Name="PlanNumber" ColumnName="PlanNumber" />
+          <ScalarProperty Name="PlanId" ColumnName="PlanId" />
           <ScalarProperty Name="RakeNumber" ColumnName="RakeNumber" />
           <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
           <ScalarProperty Name="DoctorAnalyticEmployeeId" ColumnName="DoctorAnalyticEmployeeId" />
-          <ScalarProperty Name="PlanId" ColumnName="PlanId" />
           <ScalarProperty Name="Capacity" ColumnName="Capacity" />
           <ScalarProperty Name="IsDefalutUnitDevice" ColumnName="IsDefalutUnitDevice" />
           <ScalarProperty Name="DeviceDescription" ColumnName="DeviceDescription" />

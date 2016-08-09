@@ -47,7 +47,7 @@ namespace DemoMisrInternationalLab.Controllers
         public ActionResult loadPatientRequestStatus()
         {
             PatientsRequestsAllViewModel PatientRequestStatus = new PatientsRequestsAllViewModel();
-            PatientRequestStatus.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestWithStatus(Resources.Status.PatientRequestPending);
+            PatientRequestStatus.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestWithStatus(Resources.Status.PendingForSampling);
             return PartialView("_PatientRequestStatus", PatientRequestStatus);
         }
         

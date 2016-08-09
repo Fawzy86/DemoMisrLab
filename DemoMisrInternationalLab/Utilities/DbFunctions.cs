@@ -644,62 +644,23 @@ namespace DemoMisrInternationalLab.Utilities
                             throw new Exception("There is no doctor reference with ID: " + PatientRequestInputs.DoctorRefID);
                         }
                     }
-                    PatientRequest _PatientRequest = new PatientRequest();
-                    var RequestNumber = db.GetRequestNumber().FirstOrDefault();
-                    _PatientRequest.RequestNumber = RequestNumber;
-                    _PatientRequest.Comment = PatientRequestInputs.Comment;
-                    _PatientRequest.DoctorRefID = PatientRequestInputs.DoctorRefID;
-                    _PatientRequest.EmployeeID = EmployeeID;
-                    if (PatientRequestInputs.OrganizationID == null || PatientRequestInputs.OrganizationID == 0)
-                    {
-                        var IndividualOrganizations = GetOrganizationsByCategoryType(Resources.CategoryType.Individual);
-                        if (IndividualOrganizations != null && IndividualOrganizations.FirstOrDefault() != null)
-                        {
-                            _PatientRequest.OrganizationID = IndividualOrganizations.FirstOrDefault().OrganizationID;
-                        }
-                    }
-                    else
-                    {
-                        _PatientRequest.OrganizationID = PatientRequestInputs.OrganizationID;
-                    }
-                    _PatientRequest.PatientID = PatientRequestInputs.PatientID;
-                    _PatientRequest.Priority = PatientRequestInputs.Priority;
-                    _PatientRequest.RequestDate = DateTime.Now;
-                    Random _r = new Random();
-                    string ThirdPart = _r.Next(0, 999).ToString().PadLeft(3, '0');
-                    string FourthPart = _r.Next(84, 999).ToString().PadLeft(3, '0');
-                    _PatientRequest.RequestedRefID = String.Format("000/000/{0}/{1}", ThirdPart, FourthPart);
-                    _PatientRequest.AttachmentSession = PatientRequestInputs.AttachmentSession;
-                    _PatientRequest.ExtraDiscount = PatientRequestInputs.ExtraDiscount;
-                    _PatientRequest.ExtraCost = PatientRequestInputs.ExtraCost;
-                    _PatientRequest.TotalOrganizationCost = PatientRequestInputs.TotalOrganizationCost;
-                    _PatientRequest.TotalPatientCost = PatientRequestInputs.TotalPatientCost;
-                    db.PatientRequests.Add(_PatientRequest);
-                    db.SaveChanges();
-                    Status _PendingRequestStatus = db.Status.Where(s => s.StatusIdentifier == Resources.Status.PatientRequestPending).SingleOrDefault();
-                    if (_PendingRequestStatus == null)
-                    {
-                        throw new Exception("There is no status in DB for PatientRequestPending");
-                    }
-                    PatientRequestStatu _PatientRequestStatu = new PatientRequestStatu();
-                    _PatientRequestStatu.Comment = PatientRequestInputs.Comment;
-                    _PatientRequestStatu.EmployeeID = EmployeeID;
-                    _PatientRequestStatu.RequestID = _PatientRequest.RequestID;
-                    _PatientRequestStatu.StatusDate = DateTime.Now;
-                    _PatientRequestStatu.StatusID = _PendingRequestStatus.StatusID;
-                    db.PatientRequestStatus.Add(_PatientRequestStatu);
-                    db.SaveChanges();
+
+                    var _PatientRequest = AddPatientRequest(PatientRequestInputs, EmployeeID);
+                    ///// add the partient request analyzes 
+                    List<PatientRequestAnalysi> _PatientRequestAnalysis = new List<PatientRequestAnalysi>();
                     foreach (int AnalysisID in PatientRequestInputs.AnalyzesIDs)
                     {
-                        PatientRequestAnalysi _PatientRequestAnalysi = new PatientRequestAnalysi();
-                        _PatientRequestAnalysi.AnalysisID = AnalysisID;
-                        _PatientRequestAnalysi.EmployeeID = EmployeeID;
-                        _PatientRequestAnalysi.RequestDate = DateTime.Now;
-                        _PatientRequestAnalysi.RequestID = _PatientRequest.RequestID;
-                        _PatientRequestAnalysi.RunNumber = null;
-                        db.PatientRequestAnalysis.Add(_PatientRequestAnalysi);
-                        db.SaveChanges();
+                        _PatientRequestAnalysis.Add(new PatientRequestAnalysi()
+                        {
+                            AnalysisID = AnalysisID,
+                            EmployeeID = EmployeeID,
+                            RequestDate = DateTime.Now,
+                            RequestID = _PatientRequest.RequestID,
+                            RunNumber = null,
+                        });
                     }
+                    db.PatientRequestAnalysis.AddRange(_PatientRequestAnalysis);
+                    ///// Add the payment
                     if (PatientRequestInputs.Paid != 0)
                     {
                         PatientRequestPayment _PatientRequestPayment = new PatientRequestPayment();
@@ -709,8 +670,12 @@ namespace DemoMisrInternationalLab.Utilities
                         _PatientRequestPayment.EmployeeID = EmployeeID;
                         _PatientRequestPayment.RequestID = _PatientRequest.RequestID;
                         db.PatientRequestPayments.Add(_PatientRequestPayment);
-                        db.SaveChanges();
                     }
+                    //// Save the records to the DB
+                    db.SaveChanges();
+                    //// Insert pending status for Patient request
+                    UpdatePatientRequestStatus(_PatientRequest.RequestID, Resources.Status.PendingForSampling, EmployeeID);
+                    
                     return _PatientRequest.RequestedRefID;
                 }
             }
@@ -720,6 +685,45 @@ namespace DemoMisrInternationalLab.Utilities
             }
         }
 
+        public static PatientRequest AddPatientRequest(PatientRequestInputsDataModel PatientRequestInputs, int EmployeeId)
+        {
+            using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+            {
+                PatientRequest _PatientRequest = new PatientRequest();
+                var RequestNumber = db.GetRequestNumber().FirstOrDefault();
+                _PatientRequest.RequestNumber = RequestNumber;
+                _PatientRequest.Comment = PatientRequestInputs.Comment;
+                _PatientRequest.DoctorRefID = PatientRequestInputs.DoctorRefID;
+                _PatientRequest.EmployeeID = EmployeeId;
+                if (PatientRequestInputs.OrganizationID == null || PatientRequestInputs.OrganizationID == 0)
+                {
+                    var IndividualOrganizations = GetOrganizationsByCategoryType(Resources.CategoryType.Individual);
+                    if (IndividualOrganizations != null && IndividualOrganizations.FirstOrDefault() != null)
+                    {
+                        _PatientRequest.OrganizationID = IndividualOrganizations.FirstOrDefault().OrganizationID;
+                    }
+                }
+                else
+                {
+                    _PatientRequest.OrganizationID = PatientRequestInputs.OrganizationID;
+                }
+                _PatientRequest.PatientID = PatientRequestInputs.PatientID;
+                _PatientRequest.Priority = PatientRequestInputs.Priority;
+                _PatientRequest.RequestDate = DateTime.Now;
+                Random _r = new Random();
+                string ThirdPart = _r.Next(0, 999).ToString().PadLeft(3, '0');
+                string FourthPart = _r.Next(84, 999).ToString().PadLeft(3, '0');
+                _PatientRequest.RequestedRefID = String.Format("000/000/{0}/{1}", ThirdPart, FourthPart);
+                _PatientRequest.AttachmentSession = PatientRequestInputs.AttachmentSession;
+                _PatientRequest.ExtraDiscount = PatientRequestInputs.ExtraDiscount;
+                _PatientRequest.ExtraCost = PatientRequestInputs.ExtraCost;
+                _PatientRequest.TotalOrganizationCost = PatientRequestInputs.TotalOrganizationCost;
+                _PatientRequest.TotalPatientCost = PatientRequestInputs.TotalPatientCost;
+                db.PatientRequests.Add(_PatientRequest);
+                db.SaveChanges();
+                return _PatientRequest;
+            }
+        }
 
         public static List<Patient_Request_Status_Analysis_ViewModel> GetPatientsRequestWithStatus(string RequestStatus)
         {
@@ -735,8 +739,8 @@ namespace DemoMisrInternationalLab.Utilities
                                                     where PendingRequestIDs.Contains(p.RequestID)
                                                     select p).ToList();
 
-                    List<Patient_Request_Status_Analysis_ViewModel> PendingPatientsRequest = Build_Patient_Request_Status_Analysis_ViewModel_List(_PatientRequest_LastStatus, _PatientRequest_Analysis, null, null);
-                    return PendingPatientsRequest;
+                    List<Patient_Request_Status_Analysis_ViewModel> PatientsRequests = Build_Patient_Request_Status_Analysis_ViewModel_List(_PatientRequest_LastStatus, _PatientRequest_Analysis, null, null);
+                    return PatientsRequests;
                 }
             }
             catch (Exception ex)
@@ -1089,39 +1093,15 @@ namespace DemoMisrInternationalLab.Utilities
                         {
                             try
                             {
-                                var PatientRequest = db.PatientRequests.Where(r => r.RequestID == requestID).FirstOrDefault();
-                                if (PatientRequest != null)
+                                var _PatientRequest = db.PatientRequests.Where(r => r.RequestID == requestID).SingleOrDefault();
+                                if (_PatientRequest != null)
                                 {
-                                    var _PatientRequestReceivedStatus = db.Status.Where(s => s.StatusIdentifier == Resources.Status.PatientRequestReceivedForSampling).FirstOrDefault();
-                                    var _AnalysisPendingForSamplingStatus = db.Status.Where(s => s.StatusIdentifier == Resources.Status.AnalysisPendingForSampling).FirstOrDefault();
-                                    if (_PatientRequestReceivedStatus != null && _AnalysisPendingForSamplingStatus != null)
-                                    {
-                                        //// add the received status for the patient request
-                                        PatientRequestStatu RequestStatus = new PatientRequestStatu()
-                                        {
-                                            EmployeeID = EmployeeID,
-                                            //   Comment = "Patient request is received by " + EmployeeID.FirstName + " " + EmployeeID.LastName,// employee name 
-                                            RequestID = PatientRequest.RequestID,
-                                            StatusDate = DateTime.Now,
-                                            StatusID = _PatientRequestReceivedStatus.StatusID
-                                        };
-                                        db.PatientRequestStatus.Add(RequestStatus);
-                                        //// add the pending status for the requested analyzes
-                                        var _RequestedAnalyzes = db.PatientRequestAnalysis.Where(r => r.RequestID == PatientRequest.RequestID).ToList();
-                                        foreach (var analysis in _RequestedAnalyzes)
-                                        {
-                                            PatientRequestAnalysisStatu AnalysisStatus = new PatientRequestAnalysisStatu()
-                                            {
-                                                EmployeeID = EmployeeID,
-                                                //     Comment = "Patient requested analyzes is pending for sampling by " + EmployeeID.FirstName + " " + EmployeeID.LastName,// employee name 
-                                                RequestedAnalysisID = analysis.RequestedAnalysisID,
-                                                StatusDate = DateTime.Now,
-                                                StatusID = _AnalysisPendingForSamplingStatus.StatusID
-                                            };
-                                            db.PatientRequestAnalysisStatus.Add(AnalysisStatus);
-                                        }
-                                        db.SaveChanges();
-                                    }
+                                    //// add the received status for the patient request
+                                    UpdatePatientRequestStatus(_PatientRequest.RequestID, Resources.Status.ReceivedForSampling, EmployeeID);
+                                    //// add the pending status for the requested analyzes
+                                    List<int> RequestedAnalyzesIds = (from r in _PatientRequest.PatientRequestAnalysis
+                                                                      select r.RequestedAnalysisID).ToList();
+                                    UpdateRequestedAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.PendingForSampling, UserName);
                                 }
                             }
                             catch (Exception ex)
@@ -1142,7 +1122,7 @@ namespace DemoMisrInternationalLab.Utilities
         /// </summary>
         /// <param name="RequestedAnalysisID"></param>
         /// <param name="ChemistEmployee"></param>
-        public static void AddNewRequestAnalyzesStatus(List<int> RequestedAnalyzesIDs, string StatusIdentifier, string UserName)
+        public static void UpdateRequestedAnalyzesStatus(List<int> RequestedAnalyzesIDs, string StatusIdentifier, string UserName)
         {
             try
             {
@@ -1158,7 +1138,7 @@ namespace DemoMisrInternationalLab.Utilities
                                 var _RequestedAnalsis = db.PatientRequestAnalysis.Where(r => r.RequestedAnalysisID == requestedAnalysisID).FirstOrDefault();
                                 if (_RequestedAnalsis != null)
                                 {
-                                    if (StatusIdentifier == Resources.Status.AnalysisSampled)// _RequestedAnalsis.RunNumber == null)
+                                    if (StatusIdentifier == Resources.Status.ReceivedForSampling)// _RequestedAnalsis.RunNumber == null)
                                     {
                                         int? RunNumber = db.GetAnalysisRunNumber().FirstOrDefault();
                                         _RequestedAnalsis.RunNumber = RunNumber.Value.ToString();// _RequestedAnalsis.PatientRequest.RequestNumber + " -" + RunNumber.Value;
@@ -1177,6 +1157,7 @@ namespace DemoMisrInternationalLab.Utilities
                                         db.PatientRequestAnalysisStatus.Add(_RequestedAnalysisStatus);
                                         db.SaveChanges();
                                     }
+                                    CheckPatientRequestStatus(_RequestedAnalsis.PatientRequest.RequestID, StatusIdentifier, EmployeeID);
                                 }
                             }
                             catch (Exception ex)
@@ -1192,7 +1173,82 @@ namespace DemoMisrInternationalLab.Utilities
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////
+        /// </summary>
+        /// <param name="RequestedAnalyzesIDs"></param>
+        /// <param name="StatusIdentifier"></param>
+        /// <param name="UserName"></param>
+        public static void CheckPatientRequestStatus(int RequestId, string RequestedAnalysisStatus, int EmployeeId)
+        {
+            try
+            {
+                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                {
+                    if (RequestId != 0 && !String.IsNullOrWhiteSpace(RequestedAnalysisStatus))
+                    {
 
+                        var _PatientRequest = db.PatientRequests.Where(r => r.RequestID == RequestId).SingleOrDefault();
+                        if (_PatientRequest != null)
+                        {
+                            List<int> AllRequestedAnalyzesIds = (from p in _PatientRequest.PatientRequestAnalysis
+                                                                 select p.RequestedAnalysisID).ToList();
+                            var PatientRequestAnalyzesLastStatus = (from p in db.Patient_PatientRequest_PatientRequestAnalysis_AllStatuses
+                                                                    where p.RequestID == _PatientRequest.RequestID
+                                                                    select p);
+                            var CurrentStatusAnalyzesIds = (from p in PatientRequestAnalyzesLastStatus
+                                                            where p.StatusIdentifier == RequestedAnalysisStatus
+                                                            select p.RequestedAnalysisID).ToList();
+                            var ExceptAnalyzesCurrentStatus = AllRequestedAnalyzesIds.Except(CurrentStatusAnalyzesIds);
+                            if (!ExceptAnalyzesCurrentStatus.Any())
+                            {
+                                UpdatePatientRequestStatus(_PatientRequest.RequestID, RequestedAnalysisStatus, EmployeeId);
+                            }
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+         public static void UpdatePatientRequestStatus(int RequestId, string StatusIdentifier, int EmployeeId)
+         {
+             try
+             {
+                 using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                 {
+                     if (RequestId != 0 && EmployeeId != 0)
+                     {
+                         var _PatientRequest = db.PatientRequests.Where(r => r.RequestID == RequestId).SingleOrDefault();
+                         if (_PatientRequest != null)
+                         {
+                             var _Status = db.Status.Where(s => s.StatusIdentifier == StatusIdentifier).FirstOrDefault();
+                             if (_Status != null)
+                             {
+                                 PatientRequestStatu _PatientRequestStatu = new PatientRequestStatu()
+                                 {
+                                     Comment = String.Empty,
+                                     EmployeeID = EmployeeId,
+                                     RequestID = _PatientRequest.RequestID,
+                                     StatusDate = DateTime.Now,
+                                     StatusID = _Status.StatusID,
+                                 };
+                                 db.PatientRequestStatus.Add(_PatientRequestStatu);
+                                 db.SaveChanges();
+                             }
+                         }
+                     }
+                 }
+             }
+             catch (Exception ex)
+             {
+                 throw new Exception(ex.Message);
+             }
+         }
         public static List<Patient_Request_Status_Analysis_ViewModel> GetPatientsRequestTransactionsForChemist(string SearchPattern, DateTime DateFrom, DateTime DateTo)
         {
             try
@@ -1257,8 +1313,8 @@ namespace DemoMisrInternationalLab.Utilities
                                                   join an in db.PatientRequestAnalysis_AllStatuses
                                                   on p.RequestID equals an.RequestID
                                                   where p.RequestDate >= DateFrom && p.RequestDate < DateTo &&
-                                                        p.StatusIdentifier == Resources.Status.PatientRequestReceivedForSampling &&
-                                                        an.StatusIdentifier == Resources.Status.AnalysisSampled
+                                                        p.StatusIdentifier == Resources.Status.ReceivedForSampling &&
+                                                        an.StatusIdentifier == Resources.Status.ReceivedForSampling
                                                   select p).Distinct().ToList();
 
 
@@ -1367,7 +1423,7 @@ namespace DemoMisrInternationalLab.Utilities
                             {
                                 List<int> RequestedAnalyzesIds = new List<int>();
                                 RequestedAnalyzesIds.Add(RequestedAnalysisId);
-                                AddNewRequestAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.AnalysisReceivedOnUnit, UserName);
+                                UpdateRequestedAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.ReceivedForAnalysising, UserName);
                             }
                         }
                         catch (Exception ex)
@@ -1409,7 +1465,7 @@ namespace DemoMisrInternationalLab.Utilities
                                 db.SaveChanges();
                                 List<int> RequestedAnalyzesIds = new List<int>();
                                 RequestedAnalyzesIds.Add(RequestedAnalysisId);
-                                AddNewRequestAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.AnalysisRejected, UserName);
+                                UpdateRequestedAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.RejectedByLab, UserName);
                             }
                         }
                         catch (Exception ex)
@@ -1451,7 +1507,7 @@ namespace DemoMisrInternationalLab.Utilities
                                 db.SaveChanges();
                                 List<int> RequestedAnalyzesIds = new List<int>();
                                 RequestedAnalyzesIds.Add(RequestedAnalysisId);
-                                AddNewRequestAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.AnalysisNotDelivered, UserName);
+                                UpdateRequestedAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.NotDeliveredByLab, UserName);
                             }
                         }
                         catch (Exception ex)
@@ -1496,7 +1552,7 @@ namespace DemoMisrInternationalLab.Utilities
                     {
                         _Unit.ReceivedAnalyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus
                                                   where a.UnitId == _Unit.Unit.UnitId
-                                                  && a.StatusIdentifier == Resources.Status.AnalysisReceivedOnUnit
+                                                  && a.StatusIdentifier == Resources.Status.ReceivedForAnalysising
                                                   select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel()
                                                   {
                                                       PatientRequestAnalysis = a
@@ -1582,7 +1638,7 @@ namespace DemoMisrInternationalLab.Utilities
                         db.SaveChanges();
                         List<int> RequestedAnalyzesIds = new List<int>();
                         RequestedAnalyzesIds = DeviceAnalyzes.Select(d => d.RequestedAnalysisId).ToList();
-                        AddNewRequestAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.AnalysisCaptureResult, UserName);
+                        UpdateRequestedAnalyzesStatus(RequestedAnalyzesIds, Resources.Status.CaptureResult, UserName);
                     }
                 }
             }
@@ -1677,7 +1733,7 @@ namespace DemoMisrInternationalLab.Utilities
                                              on p.PlanId equals plan.PlanId
                                              where p.RequestedAnalysisID == an.RequestedAnalysisId
                                              select p).Distinct().ToList();
-                        Planview.IsOpened = Planview.Analyzes.Any(a => a.StatusIdentifier == Resources.Status.AnalysisCaptureResult);
+                        Planview.IsOpened = Planview.Analyzes.Any(a => a.StatusIdentifier == Resources.Status.CaptureResult);
                         
                         Plans.Add(Planview);
                     }
@@ -1708,7 +1764,7 @@ namespace DemoMisrInternationalLab.Utilities
                                              where _Plan_Device_Unit.PlanId == a.PlanId
                                              orderby a.ReceiveDate
                                              select a).ToList();
-                        PlanView.IsOpened = PlanView.Analyzes.Any(a => a.StatusIdentifier == Resources.Status.AnalysisCaptureResult);
+                        PlanView.IsOpened = PlanView.Analyzes.Any(a => a.StatusIdentifier == Resources.Status.CaptureResult);
                     }
                 }
                 return PlanView;
@@ -1729,8 +1785,8 @@ namespace DemoMisrInternationalLab.Utilities
                 {
                     Plans = (from a in db.DevicePlans
                              join d in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
-                             on a.DeviceId equals d.DeviceId
-                             where d.StatusIdentifier == Resources.Status.AnalysisCaptureResult
+                             on a.PlanId equals d.PlanId
+                             where d.StatusIdentifier == Resources.Status.CaptureResult
                              select a).Distinct().ToList();
 
                 }
@@ -1751,7 +1807,7 @@ namespace DemoMisrInternationalLab.Utilities
                 using (DemoMisrIntEntities db = new DemoMisrIntEntities())
                 {
                     Analyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
-                                where a.StatusIdentifier == Resources.Status.AnalysisCaptureResult && a.PlanId == PlanId
+                                where a.StatusIdentifier == Resources.Status.CaptureResult && a.PlanId == PlanId
                                 select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel()
                                 {
                                     Analysis = a
@@ -1799,7 +1855,7 @@ namespace DemoMisrInternationalLab.Utilities
                             db.SaveChanges();
                             var RequestedAnalysisIdList = new List<int>();
                             RequestedAnalysisIdList.Add(RequestedAnalysisId);
-                            AddNewRequestAnalyzesStatus(RequestedAnalysisIdList, Resources.Status.AnalysisWaitingForReportApproved, UserName);
+                            UpdateRequestedAnalyzesStatus(RequestedAnalysisIdList, Resources.Status.PendingForReporting, UserName);
                         }
                     }
 

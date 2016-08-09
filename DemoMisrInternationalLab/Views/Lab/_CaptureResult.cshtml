@@ -1,58 +1,58 @@
 ﻿@model List<DemoMisrInternationalLab.Models.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>
-@*<input type="hidden" id="TempHiddentText" class="form-control addrecord-input" value="temp">*@
-<div id="fourd" class="carouseller">
-    <a href="javascript:void(0)" class="carousel-button-left">‹</a>
-    <div class="carousel-wrapper">
-        <div class="carousel-items">
+<input type="hidden" id="TempHiddentText" class="form-control addrecord-input" value="temp">
+    <div id="CaptureResult_fourd" class="carouseller">
+        <a href="javascript:void(0)" class="carousel-button-left">‹</a>
+        <div class="carousel-wrapper">
+            <div class="carousel-items">
 
-            @if (Model != null)
-            {
-                for (int i = 0; i < Model.Count; i++)
+                @if (Model != null)
                 {
-                    @Html.HiddenFor(m => Model[i].Analysis.PlanId)
-                    @Html.HiddenFor(m => Model[i].Analysis.RequestedAnalysisID)
-                    <div class="carousel-block">
-                        <table class="table table-bordered table-record" id="@("RequestedAnalysisIdResultTable_" + @Model[i].Analysis.RequestedAnalysisID)">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <div class="col-md-12">@Model[i].Analysis.AnalysisName</div>
-                                        <div class="col-md-6">@Model[i].Analysis.RunNumber</div>
-                                        <div class="col-md-6">@Model[i].Analysis.RakeNumber</div>
-                                        <div class="col-md-12">@Model[i].Analysis.DeviceName</div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="number" class="form-control addrecord-input" onkeyup="AddNewResult(event);">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="col-md-8 text-right">
-                            <button type="button" class="btn btn-success" style="border-radius:0;"
-                                    onclick="SaveResult(@Model[i].Analysis.PlanId,'RequestedAnalysisIdResultTable_',@Model[i].Analysis.RequestedAnalysisID);">
-                                Save
-                            </button>
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        @Html.HiddenFor(m => Model[i].Analysis.PlanId)
+                        @Html.HiddenFor(m => Model[i].Analysis.RequestedAnalysisID)
+                        <div class="carousel-block">
+                            <table class="table table-bordered table-record" id="@("RequestedAnalysisIdResultTable_" + @Model[i].Analysis.RequestedAnalysisID)">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="col-md-12">@Model[i].Analysis.AnalysisName</div>
+                                            <div class="col-md-6">@Model[i].Analysis.RunNumber</div>
+                                            <div class="col-md-6">@Model[i].Analysis.RakeNumber</div>
+                                            <div class="col-md-12">@Model[i].Analysis.DeviceName</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="number" class="form-control addrecord-input" onkeyup="AddNewResult(event);">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-md-8 text-right">
+                                <button type="button" class="btn btn-success" style="border-radius:0;"
+                                        onclick="SaveResult(@Model[i].Analysis.PlanId,'RequestedAnalysisIdResultTable_',@Model[i].Analysis.RequestedAnalysisID);">
+                                    Save
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    }
                 }
-            }
+            </div>
         </div>
+        <a href="javascript:void(0)" class="carousel-button-right">›</a>
     </div>
-    <a href="javascript:void(0)" class="carousel-button-right">›</a>
-</div>
 
 
 @Scripts.Render("~/bundles/jqueryval")
-@*<script src="~/js/carouseller.min.js"></script>*@
+<script src="~/js/carouseller.min.js"></script>
 <script type="text/javascript">
     ///////////////////////////////////////////////////////
     $(function () {
         try {
-            $(fourd).carouseller();
+            $(CaptureResult_fourd).carouseller();
             $(".carousel-button-left").trigger('click');
             $(".carousel-button-left").trigger('click');
             $(".carousel-button-left").trigger('click');

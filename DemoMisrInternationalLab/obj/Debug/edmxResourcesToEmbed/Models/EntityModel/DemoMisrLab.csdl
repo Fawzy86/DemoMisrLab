@@ -411,7 +411,7 @@
     <Property Name="DeviceId" Type="Int32" Nullable="false" />
     <Property Name="EmployeeId" Type="Int32" Nullable="false" />
     <Property Name="ReceiveDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="PlanId" Type="Int32" />
+    <Property Name="PlanId" Type="Int32" Nullable="false" />
     <Property Name="RakeNumber" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Device" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_Device" FromRole="DeviceAnalysi" ToRole="Device" />
     <NavigationProperty Name="DevicePlan" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_DevicePlan" FromRole="DeviceAnalysi" ToRole="DevicePlan" />
@@ -1256,6 +1256,9 @@
       <PropertyRef Name="DoctorAnalyticEmployeeId" />
       <PropertyRef Name="DeviceId" />
       <PropertyRef Name="RakeNumber" />
+      <PropertyRef Name="PlanId" />
+      <PropertyRef Name="PlanNumber" />
+      <PropertyRef Name="TestDate" />
     </Key>
     <Property Name="RequestID" Type="Int32" Nullable="false" />
     <Property Name="AnalysisID" Type="Int32" Nullable="false" />
@@ -1313,10 +1316,12 @@
     <Property Name="DeviceDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="IsDefalutUnitDevice" Type="Boolean" Nullable="false" />
     <Property Name="Capacity" Type="Int32" Nullable="false" />
-    <Property Name="PlanId" Type="Int32" />
     <Property Name="DoctorAnalyticEmployeeId" Type="Int32" Nullable="false" />
     <Property Name="DeviceId" Type="Int32" Nullable="false" />
     <Property Name="RakeNumber" Type="Int32" Nullable="false" />
+    <Property Name="PlanId" Type="Int32" Nullable="false" />
+    <Property Name="PlanNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="TestDate" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
   <EntityType Name="PatientRequest_Analysis">
     <Key>
@@ -1787,7 +1792,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_DeviceAnalysis_DevicePlan">
-    <End Type="DemoMisrIntModel.DevicePlan" Role="DevicePlan" Multiplicity="0..1">
+    <End Type="DemoMisrIntModel.DevicePlan" Role="DevicePlan" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
     <End Type="DemoMisrIntModel.DeviceAnalysi" Role="DeviceAnalysi" Multiplicity="*" />

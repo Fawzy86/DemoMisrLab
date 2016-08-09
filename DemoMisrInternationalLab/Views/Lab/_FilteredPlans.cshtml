@@ -1,11 +1,11 @@
 ﻿@model List<DemoMisrInternationalLab.Models.PlanViewModel>
-@if (Model != null && Model.Any())
+@if (Model != null)
 {
     <div>
         <table class="table table-bordered" id="Lab_Plans_Table">
             <thead>
                 <tr>
-                    <th>Plan #</th>
+                    <th width="7%">Plan NO</th>
                     <th width="15%">Plan Date</th>
                     <th>Status</th>
                     <th width="30%">Device Name</th>
@@ -23,11 +23,13 @@
                         <td>
                             @if (plan.IsOpened)
                             {
-                                <a href="#captureResult" onclick="LoadPlanAnalzes(@plan.Plan.PlanId);" data-toggle="tab">Opened</a>
+                                <a href="#" onclick="GoToOpenedPlan(event,@plan.Plan.PlanId.ToString());">
+                                    <span style="color:red;">Opened</span>
+                                </a>
                             }
                             else
                             {
-                                <p>Closed</p>
+                                <span style="color:green;">Closed</span>
                             }
                         </td>
                         <td>@plan.Plan.DeviceName </td>

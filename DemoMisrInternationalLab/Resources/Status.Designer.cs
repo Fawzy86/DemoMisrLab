@@ -61,119 +61,155 @@ namespace DemoMisrInternationalLab.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AnalysisCaptureResult.
+        ///   Looks up a localized string similar to CaptureResult.
         /// </summary>
-        public static string AnalysisCaptureResult {
+        public static string CaptureResult {
             get {
-                return ResourceManager.GetString("AnalysisCaptureResult", resourceCulture);
+                return ResourceManager.GetString("CaptureResult", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AnalysisMovedToLab.
+        ///   Looks up a localized string similar to EditedByQC.
         /// </summary>
-        public static string AnalysisMovedToLab {
+        public static string EditedByQC {
             get {
-                return ResourceManager.GetString("AnalysisMovedToLab", resourceCulture);
+                return ResourceManager.GetString("EditedByQC", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AnalysisNotDelivered.
+        ///   Looks up a localized string similar to Finished.
         /// </summary>
-        public static string AnalysisNotDelivered {
+        public static string Finished {
             get {
-                return ResourceManager.GetString("AnalysisNotDelivered", resourceCulture);
+                return ResourceManager.GetString("Finished", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AnalysisPendingForSampling.
+        ///   Looks up a localized string similar to NotDeliveredByLab.
         /// </summary>
-        public static string AnalysisPendingForSampling {
+        public static string NotDeliveredByLab {
             get {
-                return ResourceManager.GetString("AnalysisPendingForSampling", resourceCulture);
+                return ResourceManager.GetString("NotDeliveredByLab", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AnalysisReceivedOnUnit.
+        ///   Looks up a localized string similar to PendingForAnalysising.
         /// </summary>
-        public static string AnalysisReceivedOnUnit {
+        public static string PendingForAnalysising {
             get {
-                return ResourceManager.GetString("AnalysisReceivedOnUnit", resourceCulture);
+                return ResourceManager.GetString("PendingForAnalysising", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AnalysisRejected.
+        ///   Looks up a localized string similar to PendingForReporting.
         /// </summary>
-        public static string AnalysisRejected {
+        public static string PendingForReporting {
             get {
-                return ResourceManager.GetString("AnalysisRejected", resourceCulture);
+                return ResourceManager.GetString("PendingForReporting", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AnalysisSampled.
+        ///   Looks up a localized string similar to PendingForSampling.
         /// </summary>
-        public static string AnalysisSampled {
+        public static string PendingForSampling {
             get {
-                return ResourceManager.GetString("AnalysisSampled", resourceCulture);
+                return ResourceManager.GetString("PendingForSampling", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AnalysisSaved.
+        ///   Looks up a localized string similar to Printed.
         /// </summary>
-        public static string AnalysisSaved {
+        public static string Printed {
             get {
-                return ResourceManager.GetString("AnalysisSaved", resourceCulture);
+                return ResourceManager.GetString("Printed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AnalysisTransferred.
+        ///   Looks up a localized string similar to ReceivedForAnalysising.
         /// </summary>
-        public static string AnalysisTransferred {
+        public static string ReceivedForAnalysising {
             get {
-                return ResourceManager.GetString("AnalysisTransferred", resourceCulture);
+                return ResourceManager.GetString("ReceivedForAnalysising", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AnalysisUnderTesting.
+        ///   Looks up a localized string similar to ReceivedForReporting.
         /// </summary>
-        public static string AnalysisUnderTesting {
+        public static string ReceivedForReporting {
             get {
-                return ResourceManager.GetString("AnalysisUnderTesting", resourceCulture);
+                return ResourceManager.GetString("ReceivedForReporting", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AnalysisWaitingForReportApproved.
+        ///   Looks up a localized string similar to ReceivedForSampling.
         /// </summary>
-        public static string AnalysisWaitingForReportApproved {
+        public static string ReceivedForSampling {
             get {
-                return ResourceManager.GetString("AnalysisWaitingForReportApproved", resourceCulture);
+                return ResourceManager.GetString("ReceivedForSampling", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PatientRequestPending.
+        ///   Looks up a localized string similar to RecycledByQC.
         /// </summary>
-        public static string PatientRequestPending {
+        public static string RecycledByQC {
             get {
-                return ResourceManager.GetString("PatientRequestPending", resourceCulture);
+                return ResourceManager.GetString("RecycledByQC", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PatientRequestReceivedForSampling.
+        ///   Looks up a localized string similar to RejectedByLab.
         /// </summary>
-        public static string PatientRequestReceivedForSampling {
+        public static string RejectedByLab {
             get {
-                return ResourceManager.GetString("PatientRequestReceivedForSampling", resourceCulture);
+                return ResourceManager.GetString("RejectedByLab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ReportedByQC.
+        /// </summary>
+        public static string ReportedByQC {
+            get {
+                return ResourceManager.GetString("ReportedByQC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SavedByChemist.
+        /// </summary>
+        public static string SavedByChemist {
+            get {
+                return ResourceManager.GetString("SavedByChemist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TransferredByChemist.
+        /// </summary>
+        public static string TransferredByChemist {
+            get {
+                return ResourceManager.GetString("TransferredByChemist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UnderTesting.
+        /// </summary>
+        public static string UnderTesting {
+            get {
+                return ResourceManager.GetString("UnderTesting", resourceCulture);
             }
         }
     }

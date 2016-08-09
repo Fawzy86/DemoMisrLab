@@ -173,5 +173,10 @@
             alert(err.message + err.description);
         }
     }
-
+    //////////////////////////////////////////////////
+    function GoToOpenedPlan(ev, PlanId) {
+        ev.preventDefault();
+        $("#CaptureResult_Link").trigger('click');
+        LoadPlanAnalzes(PlanId);
+    }
 </script>

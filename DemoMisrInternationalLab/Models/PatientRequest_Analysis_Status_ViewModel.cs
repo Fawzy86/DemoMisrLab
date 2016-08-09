@@ -44,13 +44,13 @@ namespace DemoMisrInternationalLab.Models
         {
             if (_PatientRequestAnalysisStatuses != null && _PatientRequestAnalysisStatuses.Any())
             {
-                var LabbedStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.AnalysisMovedToLab).FirstOrDefault();
+                var LabbedStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.PendingForAnalysising).FirstOrDefault();
                 if (LabbedStatus != null)
                 {
                     StartLabbedDate = LabbedStatus.StatusDate.ToString("dd/MM/yyyy hh:mm tt");
                 }
 
-                var SampledStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.AnalysisSampled).FirstOrDefault();
+                var SampledStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.ReceivedForSampling).FirstOrDefault();
                 if (SampledStatus != null)
                 {
                     StartSampledDate = SampledStatus.StatusDate.ToString("dd/MM/yyyy hh:mm tt");
@@ -65,7 +65,7 @@ namespace DemoMisrInternationalLab.Models
                     }
                 }
 
-                var TransferredStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.AnalysisTransferred).FirstOrDefault();
+                var TransferredStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.TransferredByChemist).FirstOrDefault();
                 if (TransferredStatus != null)
                 {
                     StartTransferredDate = TransferredStatus.StatusDate.ToString("dd/MM/yyyy hh:mm tt");
@@ -80,7 +80,7 @@ namespace DemoMisrInternationalLab.Models
                     }
                 }
 
-                var SavedStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.AnalysisSaved).FirstOrDefault();
+                var SavedStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.SavedByChemist).FirstOrDefault();
                 if (SavedStatus != null)
                 {
                     StartPreservationDate = SavedStatus.StatusDate.ToString("dd/MM/yyyy hh:mm tt");

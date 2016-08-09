@@ -20,7 +20,7 @@
                     <tbody>
                         @foreach (var analysis in @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalyzesWithStatuses)
                         {
-                            if (analysis.PatientRequestAnalysisLastStatus.StatusIdentifier != Status.AnalysisPendingForSampling)
+                            if (analysis.PatientRequestAnalysisLastStatus.StatusIdentifier != Status.PendingForSampling)
                             {
                                 <tr style="background-color:#f2f2f2;">
                                     <th width="24%" colspan="2" colspan="2">Sample Number : <span style="color:#de8650;">@analysis.PatientRequestAnalysisLastStatus.RunNumber</span></th>

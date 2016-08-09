@@ -5,11 +5,15 @@
     @Html.AntiForgeryToken()
     <div class="captureresult-list">
 
-        <div class="col-md-12">
+        <div class="col-md-10">
             @Html.DropDownListFor(p => Model.SelectedPlanId,
                                     Model.PlansIEnum, "-- Units --",
                                   new { @id = "Opened_Plans_SelectedPlanId", @class = "form-control form-widthhh-full formtop-mobile" })
 
+        </div>
+
+        <div class="col-md-2">
+            <button type="button" class="btn btn-success" onclick="ReloadOpenedPlans();" style="border-radius:0;">Reset</button>
         </div>
         
 
@@ -43,6 +47,15 @@
         }
     });
     /////////////////////////////////////////////////
+    function ReloadOpenedPlans() {
+        try {
+            $("#captureResult").load('@Url.Action("GetOpenedPlans", "Lab")');
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    }
+    /////////////////////////////////////////////////
     $('#Opened_Plans_Form').submit(function (ev) {
         ev.preventDefault();
         //do something
@@ -50,11 +63,13 @@
     /////////////////////////////////////////////////////////////////
     $('#Opened_Plans_SelectedPlanId').change(function () {
         var SelectedPlanId = this.value;
+        console.log("Opened_Plans_SelectedPlanId: " + SelectedPlanId);
         LoadPlanAnalzes(SelectedPlanId);
     });
     //////////////////////////////////////////////////////////////////////
     function LoadPlanAnalzes(PlanId) {
         try {
+            $("#Opened_Plans_SelectedPlanId").val(PlanId);
             $("#Opened_Plan_Container").load('@Url.Action("LoadAnalyzesForCaptureResult", "Lab")?PlanId=' + PlanId);
         }
         catch (err) {
@@ -140,15 +155,6 @@
         }
         catch (err) {
             alert(err.message + err.description);
-        }
-    }
-    /////////////////////////////////////////////////
-    function ReloadOpenedPlans() {
-        try {
-            $("#captureResult").load('@Url.Action("GetOpenedPlans", "Lab")');
-        }
-        catch (err) {
-            alert(err.message);
         }
     }
 </script>

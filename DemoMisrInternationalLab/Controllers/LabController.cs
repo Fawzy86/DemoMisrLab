@@ -39,7 +39,7 @@ namespace DemoMisrInternationalLab.Controllers
 
 
             PatientRequestAnalysisViewModel ReceivedAnalyzes = new PatientRequestAnalysisViewModel();
-            ReceivedAnalyzes.PatientRequestAnalyzes = DbFunctions.GetRequestAnalyzesWithStatus(Resources.Status.AnalysisMovedToLab);
+            ReceivedAnalyzes.PatientRequestAnalyzes = DbFunctions.GetRequestAnalyzesWithStatus(Resources.Status.PendingForAnalysising);
             ViewBag.RejectionReasons = DbFunctions.GetRejectionReasons();
             ViewBag.NotDeliveredReasons = DbFunctions.GetNotDeliveredReasons();
             return PartialView("_ReceivedAnalyzes", ReceivedAnalyzes);

@@ -10,13 +10,13 @@
                     @{var UnitClass = "ck-button";}
                     @for (int i = 0; i < Model.ReceivedAnalyzes.Count; i++)
                         {
-                            @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID)
-                            @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.AnalysisName)
-                            @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RunNumber)
-                            @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.Gender)
-                            @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.BirthDate)
-                            @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.Priority)
-                            @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RequestDate)
+                    @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID)
+                    @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.AnalysisName)
+                    @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RunNumber)
+                    @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.Gender)
+                    @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.BirthDate)
+                    @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.Priority)
+                    @Html.HiddenFor(m => Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RequestDate)
                             var UnitAge = Model.ReceivedAnalyzes[i].PatientRequestAnalysis.BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.ReceivedAnalyzes[i].PatientRequestAnalysis.BirthDate).Year).ToString() : String.Empty;
                             if (i % 2 == 1)
                             {
@@ -26,17 +26,17 @@
                             {
                                 UnitClass = "ck-button";
                             }
-                            <li data-draggable="item" class="@UnitClass" id="@("RequestedAnalysisID_" + Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID)"
-                                draggable="true" aria-grabbed="false" tabindex="0">
-                                <table width="100%;">
-                                    <tr>
-                                        <td width="50%;">@Model.ReceivedAnalyzes[i].PatientRequestAnalysis.AnalysisName</td>
-                                        <td width="15%;">@Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RunNumber</td>
-                                        <td width="20%;">@Model.ReceivedAnalyzes[i].PatientRequestAnalysis.Gender</td>
-                                        <td width="15%;">@UnitAge</td>
-                                    </tr>
-                                </table>
-                            </li>
+                    <li data-draggable="item" class="@UnitClass" id="@("RequestedAnalysisID_" + Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID)"
+                        draggable="true" aria-grabbed="false" tabindex="0">
+                        <table width="100%;">
+                            <tr>
+                                <td width="50%;">@Model.ReceivedAnalyzes[i].PatientRequestAnalysis.AnalysisName</td>
+                                <td width="15%;">@Model.ReceivedAnalyzes[i].PatientRequestAnalysis.RunNumber</td>
+                                <td width="20%;">@Model.ReceivedAnalyzes[i].PatientRequestAnalysis.Gender</td>
+                                <td width="15%;">@UnitAge</td>
+                            </tr>
+                        </table>
+                    </li>
 
                         }
                 </ol>
@@ -46,7 +46,7 @@
                 <div class="row text-center">
                     <div class="col-md-12">
 
-                        <button type="button" class="btn btn-success" style="border-radius:0;">Run Test</button>
+                        <button type="button" class="btn btn-success" onclick="LoadUnitAndDevices(@Model.Unit.UnitId);" style="border-radius:0;">Reset</button>
 
 
                     </div>
@@ -61,32 +61,36 @@
                 @Html.HiddenFor(m => Model.Devices[i].Device.Capacity)
                 <div class="col-md-6">
                     <div class="col-md-12">
-                        <ol class="scrolll" data-draggable="target" onclick="SetSelectedAttribute(event);" 
+                        <span>@Model.Devices[i].Device.DeviceName</span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <ol class="scrolll" data-draggable="target" onclick="SetSelectedAttribute(event);"
                             id="@( "DeviceId_" + Model.Devices[i].Device.DeviceId)"
                             data-count-theme="@Model.Devices[i].Device.Capacity">
                             @*@{var Class = "ck-button";}
-                            @for (int j = 0; j < Model.Devices[i].Analyzes.Count; j++)
-                            {
-                                @Html.HiddenFor(m => Model.Devices[i].Analyzes[j].RequestedAnalysisID)
-                                var Age = Model.Devices[i].Analyzes[j].BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.Devices[i].Analyzes[j].BirthDate).Year).ToString() : String.Empty;
-                                if (j % 2 == 1)
+                                @for (int j = 0; j < Model.Devices[i].Analyzes.Count; j++)
                                 {
-                                    Class = "ck-buttonb";
-                                }
-                                else
-                                {
-                                    Class = "ck-button";
-                                }
-                                <li data-draggable="item" class="@Class" id="@("RequestedAnalysisID_" + Model.Devices[i].Analyzes[j].DeviceAnalysisId)"
-                                    draggable="true" aria-grabbed="false" tabindex="0">
-                                    @Model.Devices[i].Analyzes[j].AnalysisName  &nbsp; || &nbsp;
-                                    Run#: @Model.Devices[i].Analyzes[j].RunNumber    &nbsp; || &nbsp;
-                                    Gender: @Model.Devices[i].Analyzes[j].Gender        &nbsp; || &nbsp;
-                                    Age: @Age
+                                    @Html.HiddenFor(m => Model.Devices[i].Analyzes[j].RequestedAnalysisID)
+                                    var Age = Model.Devices[i].Analyzes[j].BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.Devices[i].Analyzes[j].BirthDate).Year).ToString() : String.Empty;
+                                    if (j % 2 == 1)
+                                    {
+                                        Class = "ck-buttonb";
+                                    }
+                                    else
+                                    {
+                                        Class = "ck-button";
+                                    }
+                                    <li data-draggable="item" class="@Class" id="@("RequestedAnalysisID_" + Model.Devices[i].Analyzes[j].DeviceAnalysisId)"
+                                        draggable="true" aria-grabbed="false" tabindex="0">
+                                        @Model.Devices[i].Analyzes[j].AnalysisName  &nbsp; || &nbsp;
+                                        Run#: @Model.Devices[i].Analyzes[j].RunNumber    &nbsp; || &nbsp;
+                                        Gender: @Model.Devices[i].Analyzes[j].Gender        &nbsp; || &nbsp;
+                                        Age: @Age
 
-                                </li>
+                                    </li>
 
-                            }*@
+                                }*@
                         </ol>
 
                     </div>

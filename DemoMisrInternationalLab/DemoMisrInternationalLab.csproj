@@ -172,6 +172,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LabController.cs" />
     <Compile Include="Controllers\ChemistController.cs" />
+    <Compile Include="Controllers\QCController.cs" />
     <Compile Include="Controllers\TestBarCodeController.cs" />
     <Compile Include="Controllers\TestDragController.cs" />
     <Compile Include="Global.asax.cs">
@@ -986,6 +987,10 @@
     <Content Include="Views\TestDrag\Test.cshtml" />
     <Content Include="Views\TestDrag\test2.cshtml" />
     <Content Include="Views\Lab\_OpenedPlans.cshtml" />
+    <Content Include="Views\QC\Index.cshtml" />
+    <Content Include="Views\QC\_QC.cshtml" />
+    <Content Include="Views\QC\_DoctorApply.cshtml" />
+    <Content Include="Views\QC\_PatientsRequests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1030,6 +1035,7 @@
     <EmbeddedResource Include="Resources\Status.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Status.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -84,7 +84,7 @@
           <Property Name="DeviceId" Type="int" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="ReceiveDate" Type="datetime" Nullable="false" />
-          <Property Name="PlanId" Type="int" />
+          <Property Name="PlanId" Type="int" Nullable="false" />
           <Property Name="RakeNumber" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DevicePlan">
@@ -852,6 +852,9 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_PatientRequ
             <PropertyRef Name="DoctorAnalyticEmployeeId" />
             <PropertyRef Name="DeviceId" />
             <PropertyRef Name="RakeNumber" />
+            <PropertyRef Name="PlanId" />
+            <PropertyRef Name="PlanNumber" />
+            <PropertyRef Name="TestDate" />
           </Key>
           <Property Name="RequestID" Type="int" Nullable="false" />
           <Property Name="AnalysisID" Type="int" Nullable="false" />
@@ -909,10 +912,12 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Patient_PatientRequest_PatientRequ
           <Property Name="DeviceDescription" Type="varchar" MaxLength="255" />
           <Property Name="IsDefalutUnitDevice" Type="bit" Nullable="false" />
           <Property Name="Capacity" Type="int" Nullable="false" />
-          <Property Name="PlanId" Type="int" />
           <Property Name="DoctorAnalyticEmployeeId" Type="int" Nullable="false" />
           <Property Name="DeviceId" Type="int" Nullable="false" />
           <Property Name="RakeNumber" Type="int" Nullable="false" />
+          <Property Name="PlanId" Type="int" Nullable="false" />
+          <Property Name="PlanNumber" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TestDate" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.PatientRequest_Analysis' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1279,7 +1284,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Plan_Device_Unit' does not have a 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DeviceAnalysis_DevicePlan">
-          <End Role="DevicePlan" Type="Self.DevicePlan" Multiplicity="0..1">
+          <End Role="DevicePlan" Type="Self.DevicePlan" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="DeviceAnalysis" Type="Self.DeviceAnalysis" Multiplicity="*" />
@@ -2274,10 +2279,12 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Plan_Device_Unit' does not have a 
     [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[DeviceDescription] AS [DeviceDescription], 
     [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[IsDefalutUnitDevice] AS [IsDefalutUnitDevice], 
     [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[Capacity] AS [Capacity], 
-    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[PlanId] AS [PlanId], 
     [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[DoctorAnalyticEmployeeId] AS [DoctorAnalyticEmployeeId], 
     [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[DeviceId] AS [DeviceId], 
-    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[RakeNumber] AS [RakeNumber]
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[RakeNumber] AS [RakeNumber], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[PlanId] AS [PlanId], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[PlanNumber] AS [PlanNumber], 
+    [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device].[TestDate] AS [TestDate]
     FROM [dbo].[Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device] AS [Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PatientRequest_Analysis" EntityType="Self.PatientRequest_Analysis" store:Type="Views" store:Schema="dbo">
@@ -3087,7 +3094,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Plan_Device_Unit' does not have a 
           <Property Name="DeviceId" Type="Int32" Nullable="false" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="ReceiveDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PlanId" Type="Int32" />
+          <Property Name="PlanId" Type="Int32" Nullable="false" />
           <Property Name="RakeNumber" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Device" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_Device" FromRole="DeviceAnalysi" ToRole="Device" />
           <NavigationProperty Name="DevicePlan" Relationship="DemoMisrIntModel.FK_DeviceAnalysis_DevicePlan" FromRole="DeviceAnalysi" ToRole="DevicePlan" />
@@ -3932,6 +3939,9 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Plan_Device_Unit' does not have a 
             <PropertyRef Name="DoctorAnalyticEmployeeId" />
             <PropertyRef Name="DeviceId" />
             <PropertyRef Name="RakeNumber" />
+            <PropertyRef Name="PlanId" />
+            <PropertyRef Name="PlanNumber" />
+            <PropertyRef Name="TestDate" />
           </Key>
           <Property Name="RequestID" Type="Int32" Nullable="false" />
           <Property Name="AnalysisID" Type="Int32" Nullable="false" />
@@ -3989,10 +3999,12 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Plan_Device_Unit' does not have a 
           <Property Name="DeviceDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="IsDefalutUnitDevice" Type="Boolean" Nullable="false" />
           <Property Name="Capacity" Type="Int32" Nullable="false" />
-          <Property Name="PlanId" Type="Int32" />
           <Property Name="DoctorAnalyticEmployeeId" Type="Int32" Nullable="false" />
           <Property Name="DeviceId" Type="Int32" Nullable="false" />
           <Property Name="RakeNumber" Type="Int32" Nullable="false" />
+          <Property Name="PlanId" Type="Int32" Nullable="false" />
+          <Property Name="PlanNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TestDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="PatientRequest_Analysis">
           <Key>
@@ -4463,7 +4475,7 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Plan_Device_Unit' does not have a 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DeviceAnalysis_DevicePlan">
-          <End Type="DemoMisrIntModel.DevicePlan" Role="DevicePlan" Multiplicity="0..1">
+          <End Type="DemoMisrIntModel.DevicePlan" Role="DevicePlan" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Type="DemoMisrIntModel.DeviceAnalysi" Role="DeviceAnalysi" Multiplicity="*" />
@@ -5718,10 +5730,12 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Plan_Device_Unit' does not have a 
           <EntitySetMapping Name="Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
             <EntityTypeMapping TypeName="DemoMisrIntModel.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
               <MappingFragment StoreEntitySet="Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device">
+                <ScalarProperty Name="TestDate" ColumnName="TestDate" />
+                <ScalarProperty Name="PlanNumber" ColumnName="PlanNumber" />
+                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
                 <ScalarProperty Name="RakeNumber" ColumnName="RakeNumber" />
                 <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
                 <ScalarProperty Name="DoctorAnalyticEmployeeId" ColumnName="DoctorAnalyticEmployeeId" />
-                <ScalarProperty Name="PlanId" ColumnName="PlanId" />
                 <ScalarProperty Name="Capacity" ColumnName="Capacity" />
                 <ScalarProperty Name="IsDefalutUnitDevice" ColumnName="IsDefalutUnitDevice" />
                 <ScalarProperty Name="DeviceDescription" ColumnName="DeviceDescription" />

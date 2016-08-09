@@ -1,7 +1,6 @@
 ﻿@{
-    ViewBag.Title = "Laboratory";
+    ViewBag.Title = "QC";
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,14 +24,13 @@
 
     <!-- Loading Custom Stylesheets -->
     <link href="~/css/custom.css" rel="stylesheet">
-    <!-- loading the drag drop css for drag and drop styles-->
     <link rel="stylesheet" href="~/css/dragdrop.css">
 
     <link rel="shortcut icon" href="~/images/favicon.ico">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
     <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
+    <script src="~/js/html5shiv.js"></script>
     <![endif]-->
 
 
@@ -54,10 +52,11 @@
 
     <!--Countup -->
     <link href="~/css/countup.css" rel="stylesheet" type="text/css">
+
+
     <!--content slider start -->
     <link rel="stylesheet" href="~/css/carouseller.css">
-   
-
+    <!--content slider end -->
 
 </head>
 <body>
@@ -99,67 +98,67 @@
                                   <a href="#" class="panel-close"><i class="fa fa-times"></i></a>
                                 </span>-->
                             </h3>
+                            <p class="ppp">Hi there. Need detailed project offer? No worries, just fill out our basic project Questionnaire and we’ll get back at you soon.</p>
                         </div>
                         <div class="panel-body">
-                            <div class="form-group" style="width:98%; margin-left:1%;">
-                                <div>
+                            <form action class="form-horizontal row-border">
 
-                                    <div class="row">
+                                <div class="form-group" style="width:98%; margin-left:1%;">
+                                    <div>
 
-                                        <div>
+                                        <div class="row">
 
-                                            <div class="panel-body ">
-                                                <ul id="myTab" class="nav nav-tabs">
-                                                    <li class="active"><a href="#lab" data-toggle="tab">Laboratory</a></li>
-                                                    <li class=""><a href="#workunit" data-toggle="tab">Work Unit</a></li>
-                                                    <li class=""><a href="#plans" data-toggle="tab">Plans</a></li>
-                                                    <li class=""><a href="#captureResult" id="CaptureResult_Link" data-toggle="tab">Capture Result</a></li>
-                                                </ul>
-                                                <div id="myTabContent" class="tab-content">
+                                            <div>
 
-                                                    <div class="tab-pane fade active in" id="lab">
-                                                        <p>
+                                                <div class="panel-body ">
+                                                    <ul id="myTab" class="nav nav-tabs">
+                                                        <li class="active"><a href="#qc" data-toggle="tab">QC</a></li>
+                                                        <li class=""><a href="#doctor-apply" data-toggle="tab">Doctor Apply</a></li>
+                                                    </ul>
+                                                    <div id="myTabContent" class="tab-content">
 
-                                                            @{Html.RenderPartial("_Lab");}
 
-                                                        </p>
+
+
+
+                                                        <div class="tab-pane fade active in scrolll" id="qc" style="height:520px;overflow-y:auto;overflow-x:hidden;">
+                                                            <p>
+
+                                                                @{Html.RenderPartial("_QC");}
+
+
+                                                            </p>
+                                                        </div>
+
+
+
+                                                        <div class="tab-pane fade" id="doctor-apply">
+                                                            <p>
+
+                                                                @{Html.RenderPartial("_DoctorApply");}
+
+
+                                                            </p>
+                                                        </div>
+
+
                                                     </div>
-
-                                                    <div class="tab-pane fade scrolll" id="workunit" style="height:520px; overflow-y:auto; overflow-x:hidden;">
-                                                        <p>
-                                                            @{Html.RenderAction("LoadWorkUnits");}
-                                                        </p>
-                                                    </div>
-
-
-                                                    <div class="tab-pane fade" id="plans">
-                                                        <p>
-                                                           @{Html.RenderPartial("_Plans");}
-                                                        </p>
-                                                    </div>
-                                                    <div class="tab-pane fade" id="captureResult">
-                                                        <p>
-                                                            @{Html.RenderAction("GetOpenedPlans");}
-                                                        </p>
-                                                    </div>
-
-
-
-
 
                                                 </div>
+
                                             </div>
 
-                                        </div>
 
+
+
+
+                                        </div>
                                     </div>
 
 
 
 
-
-                                </div>
-                            </div>
+                            </form>
                         </div> <!-- /panel body -->
                         <!-- panel footer -->
                     </div>
@@ -171,7 +170,7 @@
         <div class="right-sidebar right-sidebar-hidden">
             <div class="right-sidebar-holder">
 
-                @*@Demo part only The part from here can be removed till end of the @demo*@
+                 @*@Demo part only The part from here can be removed till end of the @demo*@  
                 <a href="login.html" class="btn btn-danger btn-block">Logout </a>
 
 
@@ -255,7 +254,7 @@
                     </li>
                     </li>
                 </ul>
-                @*/.@Demo part only The part to here can be removed*@
+                 @*/.@Demo part only The part to here can be removed*@   
                 <div id="bic_calendar_right" class="bg-white"></div>
 
                 <h4 class="page-header text-primary">Current Projects </h4>
@@ -394,6 +393,9 @@
     <script src="~/js/chosen.jquery.js"></script>
 
 
+    <script src="~/js/bootstrap-datatables.js"></script>
+    <script src="~/js/dataTables-custom.js"></script>
+
     <!-- Page Scripts  =============================-->
     <script src="~/js/jquery.pulsate.min.js"></script>
     <script src="~/js/forms-custom.js"></script>
@@ -411,10 +413,14 @@
     <script src="~/js/icheck/icheck.js"></script>
 
 
-    <script src="~/nicelabel/js/jquery.nicelabel.js"></script>
+    <script src="nicelabel/js/jquery.nicelabel.js"></script>
 
+    <script src="~/js/jquery.inputfile.js"></script>
 
-    @*<script src="~/js/dragdrop.js"></script>*@
+    <script src="~/js/dragdrop.js"></script>
+
+    <script src="~/js/jquery.countUp.js" type="text/javascript"></script>
+
 
 </body>
 </html>

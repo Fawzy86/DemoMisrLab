@@ -70,9 +70,11 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public string DeviceDescription { get; set; }
         public bool IsDefalutUnitDevice { get; set; }
         public int Capacity { get; set; }
-        public Nullable<int> PlanId { get; set; }
         public int DoctorAnalyticEmployeeId { get; set; }
         public int DeviceId { get; set; }
         public int RakeNumber { get; set; }
+        public int PlanId { get; set; }
+        public string PlanNumber { get; set; }
+        public System.DateTime TestDate { get; set; }
     }
 }

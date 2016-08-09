@@ -19,7 +19,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public int DeviceId { get; set; }
         public int EmployeeId { get; set; }
         public System.DateTime ReceiveDate { get; set; }
-        public Nullable<int> PlanId { get; set; }
+        public int PlanId { get; set; }
         public int RakeNumber { get; set; }
     
         public virtual Device Device { get; set; }
