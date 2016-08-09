@@ -1708,6 +1708,7 @@ namespace DemoMisrInternationalLab.Utilities
                                              where _Plan_Device_Unit.PlanId == a.PlanId
                                              orderby a.ReceiveDate
                                              select a).ToList();
+                        PlanView.IsOpened = PlanView.Analyzes.Any(a => a.StatusIdentifier == Resources.Status.AnalysisCaptureResult);
                     }
                 }
                 return PlanView;
@@ -1772,10 +1773,10 @@ namespace DemoMisrInternationalLab.Utilities
             {
                 using (DemoMisrIntEntities db = new DemoMisrIntEntities())
                 {
-                    
+
                     var _PatientRequestAnalysis = (from a in db.PatientRequestAnalysis
-                                             where a.RequestedAnalysisID == RequestedAnalysisId
-                                             select a).SingleOrDefault();
+                                                   where a.RequestedAnalysisID == RequestedAnalysisId
+                                                   select a).SingleOrDefault();
                     if (_PatientRequestAnalysis != null)
                     {
                         int EmployeeId = GetUserEmployeeId(UserName);
@@ -1785,10 +1786,10 @@ namespace DemoMisrInternationalLab.Utilities
                             RequestedAnalysisResult _RequestedAnalysisResult = new RequestedAnalysisResult()
                             {
                                 Description = String.Empty,
-                                EmployeeId=EmployeeId,
+                                EmployeeId = EmployeeId,
                                 RequestedAnalysisId = _PatientRequestAnalysis.RequestedAnalysisID,
-                                ResultDate=DateTime.Now,
-                                ResultValue=result
+                                ResultDate = DateTime.Now,
+                                ResultValue = result
                             };
                             _RequestedAnalysisResultList.Add(_RequestedAnalysisResult);
                         }
@@ -1796,7 +1797,8 @@ namespace DemoMisrInternationalLab.Utilities
                         {
                             db.RequestedAnalysisResults.AddRange(_RequestedAnalysisResultList);
                             db.SaveChanges();
-                            var RequestedAnalysisIdList = _RequestedAnalysisResultList.Select(a => a.RequestedAnalysisId).ToList();
+                            var RequestedAnalysisIdList = new List<int>();
+                            RequestedAnalysisIdList.Add(RequestedAnalysisId);
                             AddNewRequestAnalyzesStatus(RequestedAnalysisIdList, Resources.Status.AnalysisWaitingForReportApproved, UserName);
                         }
                     }
@@ -1808,5 +1810,6 @@ namespace DemoMisrInternationalLab.Utilities
                 throw new Exception(ex.Message);
             }
         }
+
     }
 }

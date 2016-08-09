@@ -19,7 +19,8 @@
 
 
 }
-@*@Scripts.Render("~/bundles/jqueryval")*@
+@Scripts.Render("~/bundles/jqueryval")
+<script src="~/js/carouseller.min.js"></script>
 <script type="text/javascript">
     ////////////////////////////////////////////////////////////
     $(document).ajaxStart(function () {
@@ -40,6 +41,11 @@
         catch (err) {
             alert(err.message);
         }
+    });
+    /////////////////////////////////////////////////
+    $('#Opened_Plans_Form').submit(function (ev) {
+        ev.preventDefault();
+        //do something
     });
     /////////////////////////////////////////////////////////////////
     $('#Opened_Plans_SelectedPlanId').change(function () {
@@ -94,9 +100,10 @@
         return false;
     }
     ////////////////////////////////////////////////////////////
-    function SaveResult(TablePrefix, RequestedAnalysisId) {
+    function SaveResult(PlanId, TablePrefix, RequestedAnalysisId) {
         try {
-            var form = $('#Capture_Result_Form');
+            var form = $(document.getElementById('Opened_Plans_Form'));
+            console.log(form);
             if (form.validate()) {
                 var tableElem = document.getElementById(TablePrefix + RequestedAnalysisId);
                 var Results = [];
@@ -115,20 +122,33 @@
                     async: true,
                     type: "POST",
                     url: "/Lab/SaveAnalysisReslut",//form.attr('action'),
-                    data: form.serialize() + "&RequestedAnalysisId=" + RequestedAnalysisId + "&Result=" + Results,
+                    data: form.serialize() + "&PlanId=" + PlanId + "&RequestedAnalysisId=" + RequestedAnalysisId + "&Result=" + Results,
                     success: function (data) {
                         if (data != null && data.length > 0) {
-                            $("#captureResult").html(data);
+                            LoadPlanAnalzes(data);
+                        } else {
+                            ReloadOpenedPlans();
                         }
                     },
                     error: function (xhr, desc, err) {
                         alert("Error: " + err.message + " " + desc + " " + xhr.responseText);
                     }
                 });
+            } else {
+                console.log("eeror");
             }
         }
         catch (err) {
             alert(err.message + err.description);
+        }
+    }
+    /////////////////////////////////////////////////
+    function ReloadOpenedPlans() {
+        try {
+            $("#captureResult").load('@Url.Action("GetOpenedPlans", "Lab")');
+        }
+        catch (err) {
+            alert(err.message);
         }
     }
 </script>

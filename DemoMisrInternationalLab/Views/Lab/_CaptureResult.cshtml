@@ -1,5 +1,5 @@
 ﻿@model List<DemoMisrInternationalLab.Models.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>
-<input type="hidden" id="TempHiddentText" class="form-control addrecord-input" value="temp">
+@*<input type="hidden" id="TempHiddentText" class="form-control addrecord-input" value="temp">*@
 <div id="fourd" class="carouseller">
     <a href="javascript:void(0)" class="carousel-button-left">‹</a>
     <div class="carousel-wrapper">
@@ -33,7 +33,7 @@
                         </table>
                         <div class="col-md-8 text-right">
                             <button type="button" class="btn btn-success" style="border-radius:0;"
-                                    onclick="SaveResult('RequestedAnalysisIdResultTable_',@Model[i].Analysis.RequestedAnalysisID);">
+                                    onclick="SaveResult(@Model[i].Analysis.PlanId,'RequestedAnalysisIdResultTable_',@Model[i].Analysis.RequestedAnalysisID);">
                                 Save
                             </button>
                         </div>
@@ -46,51 +46,23 @@
 </div>
 
 
-
 @Scripts.Render("~/bundles/jqueryval")
-<script src="~/js/carouseller.min.js"></script>
+@*<script src="~/js/carouseller.min.js"></script>*@
 <script type="text/javascript">
     ///////////////////////////////////////////////////////
     $(function () {
-        $(fourd).carouseller();
+        try {
+            $(fourd).carouseller();
+            $(".carousel-button-left").trigger('click');
+            $(".carousel-button-left").trigger('click');
+            $(".carousel-button-left").trigger('click');
+            $(".carousel-button-left").trigger('click');
+            $(".carousel-button-left").trigger('click');
+            $(".carousel-button-left").trigger('click');
+        } catch (err) {
+            console.log(err.message);
+        }
     });
-    function AddNewResult(ev) {
-        ev.preventDefault();
-        if (ev.keyCode == 13) {
-            var rowElem = ev.target.closest("tr");
-            var tableElem = rowElem.closest("table");
-            var rowCount = tableElem.rows.length;
-            if (rowElem.rowIndex == rowCount - 1) {/// Create new row
-                var newRow = tableElem.insertRow(rowCount);
-                var cell1 = newRow.insertCell(0);
-                cell1.innerHTML = "<input type='number' class='form-control addrecord-input' onkeyup='AddNewResult(event);'>";
-                newRow.getElementsByTagName("input")[0].focus();
-            } else {
-                tableElem.rows[rowElem.rowIndex + 1].getElementsByTagName("input")[0].focus();
-            }
-        }
-        else if (ev.keyCode == 46) {
-            var inputElem = ev.target;
-            if (inputElem.value == "") {
-                inputElem.select();
-                var inputElemValue = window.getSelection().toString();
-                if (inputElemValue.length == 0) {
-                    var rowElem = inputElem.closest("tr");
-                    var tableElem = rowElem.closest("table");
-                    var rowIndex = rowElem.rowIndex;
-                    if (rowIndex != 1) {
-                        tableElem.deleteRow(rowIndex);
-                        try {
-                            tableElem.rows[rowIndex].getElementsByTagName("input")[0].focus();
-                        } catch (err) {
-                            tableElem.rows[rowIndex - 1].getElementsByTagName("input")[0].focus();
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
 </script>
 
 

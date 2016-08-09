@@ -156,7 +156,6 @@ namespace DemoMisrInternationalLab.Controllers
                 }
                 DbFunctions.RunTestPlan(DeviceAnalyzes, HttpContext.User.Identity.Name);
                 return Content(String.Join(",", DeviceAnalyzes.Select(a => a.RequestedAnalysisId)));
-             //   return LoadUnitAndDevices(model.Device.UnitId);
             }
             return null;
         }
@@ -222,13 +221,21 @@ namespace DemoMisrInternationalLab.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveAnalysisReslut(FormCollection form, List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> model, string RequestedAnalysisId, string Result)
+        public ActionResult SaveAnalysisReslut(FormCollection form, PlansViewModel model, string PlanId, string RequestedAnalysisId, string Result)
         {
-            if (!String.IsNullOrWhiteSpace(RequestedAnalysisId) && !String.IsNullOrWhiteSpace(Result))
+            if (!String.IsNullOrWhiteSpace(PlanId) && !String.IsNullOrWhiteSpace(RequestedAnalysisId) && !String.IsNullOrWhiteSpace(Result))
             {
                 List<string> ResultList = Result.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 DbFunctions.SaveResultForRequestedAnalysis(Convert.ToInt32(RequestedAnalysisId), ResultList, HttpContext.User.Identity.Name);
-                return LoadAnalyzesForCaptureResult(model.FirstOrDefault().Analysis.PlanId.ToString());
+                PlanViewModel PlanView = DbFunctions.GetPlanDetails(Convert.ToInt32(PlanId));
+                if (PlanView.IsOpened)
+                {
+                    return Content(PlanId);
+                }
+                else
+                {
+                    return null;
+                }
             }
             return null;
         }

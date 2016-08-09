@@ -23,11 +23,11 @@
                         <td>
                             @if (plan.IsOpened)
                             {
-                                <a href="#captureResult" data-toggle="tab">Open</a>
+                                <a href="#captureResult" onclick="LoadPlanAnalzes(@plan.Plan.PlanId);" data-toggle="tab">Opened</a>
                             }
                             else
                             {
-                                <a href="#">Closed</a>
+                                <p>Closed</p>
                             }
                         </td>
                         <td>@plan.Plan.DeviceName </td>
