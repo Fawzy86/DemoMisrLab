@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApprovedByQC" xml:space="preserve">
+    <value>ApprovedByQC</value>
+  </data>
   <data name="CaptureResult" xml:space="preserve">
     <value>CaptureResult</value>
   </data>
@@ -155,9 +158,6 @@
   </data>
   <data name="RejectedByLab" xml:space="preserve">
     <value>RejectedByLab</value>
-  </data>
-  <data name="ReportedByQC" xml:space="preserve">
-    <value>ReportedByQC</value>
   </data>
   <data name="SavedByChemist" xml:space="preserve">
     <value>SavedByChemist</value>

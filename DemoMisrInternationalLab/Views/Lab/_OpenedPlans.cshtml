@@ -15,12 +15,12 @@
         <div class="col-md-2">
             <button type="button" class="btn btn-success" onclick="ReloadOpenedPlans();" style="border-radius:0;">Reset</button>
         </div>
-        
+
 
     </div>
-
-    <div id="Opened_Plan_Container"></div>
-
+  
+                <div id="Opened_Plan_Container"></div>
+      
 
 }
 @Scripts.Render("~/bundles/jqueryval")
@@ -46,6 +46,7 @@
             alert(err.message);
         }
     });
+   
     /////////////////////////////////////////////////
     function ReloadOpenedPlans() {
         try {

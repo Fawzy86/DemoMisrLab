@@ -1,0 +1,86 @@
+﻿@model DemoMisrInternationalLab.Models.PatientsRequestsAllViewModel
+@using DemoMisrInternationalLab.Resources
+@if (Model != null && Model.PatientRequestStatusWithAnalyzes.Any())
+{
+    for (int i = 0; i < Model.PatientRequestStatusWithAnalyzes.Count(); i++)
+    {
+        <div class="carousel-block" id="@("QCRequest_" + Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID)">
+            @{var Age = Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.BirthDate).Year).ToString() : String.Empty;}
+            <table class="table table-bordered table-record-qcleft">
+                <thead>
+                    <tr>
+                        <th colspan="2">Request Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="10%">Name</td>
+                        <td width="90%">
+                            @Model.PatientRequestStatusWithAnalyzes[i].PatientFullName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Gender</td>
+                        <td>
+                            @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.Gender
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Age</td>
+                        <td>@Age</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile</td>
+                        <td>
+                            @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.Mobile <br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td>
+                            @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.Phone<br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Address</td>
+                        <td>
+                            @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.Address <br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Priority</td>
+                        <td>
+                            @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.Priority <br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ref ID</td>
+                        <td>
+                            @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.ReferenceID<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>No of Analysis</td>
+                        <td>
+                            @{
+                                var Count = 0;
+                                try
+                                {
+                                    Count = (from p in @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalyzesWithStatuses
+                                             where p.PatientRequestAnalysisLastStatus.StatusIdentifier == Status.PendingForReporting
+                                             select p).Count();
+                                }
+                                catch { }
+                            }
+                            @Count from @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalysis.Count()
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Requestid : @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}
+

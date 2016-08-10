@@ -1,8 +1,22 @@
-﻿<div class="captureresult-list-qc">
+﻿<div id="QC_Result_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "QC_Result_Form" }))
+{
+<div class="captureresult-list-qc">
 
-    <div class="col-md-6"><select name="" class="form-control form-widthhh-full formtop-mobile"><option>View Single</option><option>View All</option></select></div>
+    <div class="col-md-6">
+        <select name="" class="form-control form-widthhh-full formtop-mobile">
+            <option>View All</option>
+            <option>View Single</option>
+        </select>
+    </div>
 
-    <div class="col-md-6"><select name="" class="form-control form-widthhh-full formtop-mobile"><option>View Related</option><option>View History</option></select></div>
+    <div class="col-md-6">
+        <select name="" class="form-control form-widthhh-full formtop-mobile">
+            <option>None</option>
+            <option>View Related</option>
+            <option>View History</option>
+        </select>
+    </div>
 
 </div>
 
@@ -11,208 +25,108 @@
     <div class="col-md-3">
 
         <div id="QC_Requests_fourd" class="carouseller">
-            <a href="javascript:void(0)" class="carousel-button-left">‹</a>
+            <a href="javascript:void(0)" class="carousel-button-left" onclick="GetPreviousRequest();">‹</a>
             <div class="carousel-wrapper">
                 <div class="carousel-items">
 
-                    @{Html.RenderAction("GetPatientRequests");}
+                    @{Html.RenderAction("GetPatientsRequestsPendingForReporting");}
 
                 </div>
             </div>
-            <a href="javascript:void(0)" class="carousel-button-right">›</a>
+            <a href="javascript:void(0)" class="carousel-button-right" onclick="GetNextRequest();">›</a>
         </div>
 
     </div>
 
     <div class="col-md-9">
 
-        <div id="QC_Results_fourd" class="carouseller qc-topmob">
-            <a href="javascript:void(0)" class="carousel-button-left">‹</a>
-            <div class="carousel-wrapper">
-                <div class="carousel-items">
-                    <div class="carousel-block">
-                        <table class="table table-bordered table-record-qcright" style="background-color:#f0f0f0;">
-                            <thead>
-                                <tr>
-                                    <th>Analysis FR21 </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            <td>
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input"><br>
-                                <a href="#"><i class="fa fa-refresh"></i></a> <a href="#"><i class="fa fa-edit"></i></a> <button type="button" class="btn btn-success btn-xs" style="border-radius:0;">Approved</button>
-                            </td>
-                            <div>
-
-                            </div> </td></tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="carousel-block">
-                        <table class="table table-bordered table-record-qcright">
-                            <thead>
-                                <tr>
-                                    <th>Analysis FR21 </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            <td><input type="text" class="form-control addrecord-input"></td>
-                            <div>
-
-                            </div> </td></tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="carousel-block">
-                        <table class="table table-bordered table-record-qcright">
-                            <thead>
-                                <tr>
-                                    <th>Analysis FR21 </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            <td>
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                            </td>
-                            <div>
-
-                            </div> </td></tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="carousel-block">
-                        <table class="table table-bordered table-record-qcright">
-                            <thead>
-                                <tr>
-                                    <th>Analysis FR21 </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            <td><input type="text" class="form-control addrecord-input"></td>
-                            <div>
-
-                            </div> </td></tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="carousel-block">
-                        <table class="table table-bordered table-record-qcright">
-                            <thead>
-                                <tr>
-                                    <th>Analysis FR21 </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            <td><input type="text" class="form-control addrecord-input"></td>
-                            <div>
-
-                            </div> </td></tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="carousel-block">
-                        <table class="table table-bordered table-record-qcright">
-                            <thead>
-                                <tr>
-                                    <th>Analysis FR21 </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            <td><input type="text" class="form-control addrecord-input"></td>
-                            <div>
-
-                            </div> </td></tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="carousel-block">
-                        <table class="table table-bordered table-record-qcright">
-                            <thead>
-                                <tr>
-                                    <th>Analysis FR21 </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            <td>
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                                <input type="text" class="form-control addrecord-input">
-                            </td>
-                            <div>
-
-                            </div> </td></tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="carousel-block">
-                        <table class="table table-bordered table-record-qcright">
-                            <thead>
-                                <tr>
-                                    <th>Analysis FR21 </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            <td><input type="text" class="form-control addrecord-input"></td>
-                            <div>
-
-                            </div> </td></tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-            </div>
-            <a href="javascript:void(0)" class="carousel-button-right">›</a>
+        <div id="AnalyzesResults_Container">
         </div>
 
     </div>
 
 </div>
+}
 <script src="~/js/carouseller.min.js"></script>
 <script type="text/javascript">
+    ////////////////////////////////////////////////////////////
+    $(document).ajaxStart(function () {
+        try {
+            $("#QC_Result_Form").prop('disabled', true);
+            $("#QC_Result_Loading").show();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    /////////////////////////////////////////////////////////
+    $(document).ajaxStop(function () {
+        try {
+            $("#QC_Result_Form").prop('disabled', true);
+            $("#QC_Result_Loading").hide();
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    //////////////////////////////////////////////////////
     $(function () {
         $(QC_Requests_fourd).carouseller();
-        $(QC_Results_fourd).carouseller();
+        GetCurrentRequest();
     });
+    /////////////////////////////////////////////
+    function GetPreviousRequest(){
+        console.log($('#QC_Requests_fourd .carousel-block').eq(-1)[0].id);
+        var PreviousElem = $('#QC_Requests_fourd .carousel-block').eq(-1)[0];
+        if (PreviousElem != null) {
+            var RequestId = PreviousElem.id;
+            if (RequestId.indexOf("QCRequest_") == 0) {
+                LoadAnalyzes(RequestId);
+            }
+        }
+    }
+    /////////////////////////////////////////////////
+    function GetNextRequest(){
+        console.log($('.carousel-block').eq(1)[0].id);
+        console.log($('#QC_Requests_fourd .carousel-block').eq(1)[0].id);
+        var NextElem = $('#QC_Requests_fourd .carousel-block').eq(1)[0];
+        if (NextElem != null) {
+            var RequestId = NextElem.id;
+            if (RequestId.indexOf("QCRequest_") == 0) {
+                LoadAnalyzes(RequestId);
+            }
+        }
+    }
+    /////////////////////////////////////////////////
+    function GetCurrentRequest() {
+        console.log($('.carousel-block').eq(0)[0].id);
+        console.log($('#QC_Requests_fourd .carousel-block').eq(0)[0].id);
+        var CurrentElem = $('#QC_Requests_fourd .carousel-block').eq(0)[0];
+        if (CurrentElem != null) {
+            var RequestId = CurrentElem.id;
+            if (RequestId.indexOf("QCRequest_") == 0) {
+                LoadAnalyzes(RequestId);
+            }
+        }
+    }
+    /////////////////////////////////////////////////
+    function LoadAnalyzes(RequestId) {
+        try {
+            $("#AnalyzesResults_Container").load('@Url.Action("GetPatientAnalyzesPendingForReporting", "QC")?RequestId=' + RequestId);
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    }
+    /////////////////////////////////////////////////////
+    function EditAnalysis(AnalysisIdResult) {
+        $(AnalysisIdResult).find("input[type='text']").each(function (index, elem) {
+            if (elem.getAttribute("disabled")) {
+                elem.removeAttribute("disabled");
+            }
+            else {
+                elem.setAttribute("disabled", 'disabled');
+            }
+        });
+    }
 </script>

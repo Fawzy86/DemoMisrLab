@@ -12,6 +12,7 @@ namespace DemoMisrInternationalLab.Models
         {
             PatientRequestAnalysisStatuses = new List<PatientRequestAnalysis_AllStatuses>();
             PatientRequestAnalysisLastStatus = new PatientRequestAnalysis_AllStatuses();
+            AnalysisResults = new List<RequestedAnalysisResult>();
         }
         List<PatientRequestAnalysis_AllStatuses> _PatientRequestAnalysisStatuses;
         public List<PatientRequestAnalysis_AllStatuses> PatientRequestAnalysisStatuses
@@ -26,6 +27,9 @@ namespace DemoMisrInternationalLab.Models
         }
 
         public PatientRequestAnalysis_AllStatuses PatientRequestAnalysisLastStatus { get; set; }
+
+
+        public List<RequestedAnalysisResult> AnalysisResults { get; set; }
 
 
         

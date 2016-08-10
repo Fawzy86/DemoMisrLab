@@ -19,10 +19,34 @@ namespace DemoMisrInternationalLab.Controllers
 
         public ActionResult GetPatientsRequestsPendingForReporting()
         {
-            PatientsRequestsAllViewModel PendingPatientRequest = new PatientsRequestsAllViewModel();
-       //     PendingPatientRequest.PatientRequestStatusWithAnalyzes = DbFunctions.GetPatientsRequestWithStatus(Resources.Status.PendingForSamplingForReporting);
-       //     return PartialView("_ReceivePatientRequest", PendingPatientRequest);
-            return null;
+            PatientsRequestsAllViewModel OpeningPatientRequest = new PatientsRequestsAllViewModel();
+            OpeningPatientRequest.PatientRequestStatusWithAnalyzes = DbFunctions.GetPatientsRequestByAnalysisStatus(Resources.Status.PendingForReporting);
+            return PartialView("_QCPatientsRequests", OpeningPatientRequest);
+        }
+
+
+        public ActionResult GetPatientAnalyzesPendingForReporting(string RequestId)
+        {
+            List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>();
+            if (!String.IsNullOrWhiteSpace(RequestId))
+            {
+                int _RequestId = 0;
+                if (RequestId.Contains("_"))
+                {
+                    var RequestIdArray = RequestId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
+                    Int32.TryParse(RequestIdArray[RequestIdArray.Length - 1], out _RequestId);
+                }
+                else
+                {
+                    Int32.TryParse(RequestId, out _RequestId);
+                }
+                if (_RequestId != 0)
+                {
+                    Analyzes = DbFunctions.GetPatientAnalyzesForReporting(_RequestId);
+                }
+            }
+            return PartialView("_QCAnalysisResult", Analyzes);
+
         }
 	}
 }

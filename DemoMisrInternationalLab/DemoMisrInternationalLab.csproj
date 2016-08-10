@@ -990,7 +990,8 @@
     <Content Include="Views\QC\Index.cshtml" />
     <Content Include="Views\QC\_QC.cshtml" />
     <Content Include="Views\QC\_DoctorApply.cshtml" />
-    <Content Include="Views\QC\_PatientsRequests.cshtml" />
+    <Content Include="Views\QC\_QCPatientsRequests.cshtml" />
+    <Content Include="Views\QC\_QCAnalysisResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

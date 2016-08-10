@@ -61,6 +61,15 @@ namespace DemoMisrInternationalLab.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ApprovedByQC.
+        /// </summary>
+        public static string ApprovedByQC {
+            get {
+                return ResourceManager.GetString("ApprovedByQC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CaptureResult.
         /// </summary>
         public static string CaptureResult {
@@ -174,15 +183,6 @@ namespace DemoMisrInternationalLab.Resources {
         public static string RejectedByLab {
             get {
                 return ResourceManager.GetString("RejectedByLab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ReportedByQC.
-        /// </summary>
-        public static string ReportedByQC {
-            get {
-                return ResourceManager.GetString("ReportedByQC", resourceCulture);
             }
         }
         
