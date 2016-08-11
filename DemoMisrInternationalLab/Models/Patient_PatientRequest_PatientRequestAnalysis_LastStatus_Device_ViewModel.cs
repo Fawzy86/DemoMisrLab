@@ -18,6 +18,8 @@ namespace DemoMisrInternationalLab.Models
 
         public List<RequestedAnalysisResult> AnalysisResults { get; set; }
 
+        public bool IsEditable { get; set; }
+
         public List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> RelatedAnalyzes { get; set; }
 
         

@@ -791,8 +791,10 @@
     <Property Name="RequestedAnalysisId" Type="Int32" Nullable="false" />
     <Property Name="ResultDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ResultValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DoctorResultValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="EmployeeId" Type="Int32" Nullable="false" />
     <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EditedByQC" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_RequestedAnalysisResult_Employee" FromRole="RequestedAnalysisResult" ToRole="Employee" />
     <NavigationProperty Name="PatientRequestAnalysi" Relationship="DemoMisrIntModel.FK_RequestedAnalysisResult_PatientRequestAnalysis" FromRole="RequestedAnalysisResult" ToRole="PatientRequestAnalysi" />
   </EntityType>

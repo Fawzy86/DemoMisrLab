@@ -1,0 +1,50 @@
+﻿@model List<DemoMisrInternationalLab.Models.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>
+@using DemoMisrInternationalLab.Resources
+@if (Model != null)
+{
+     <div class="table-scrollb">
+        <table class="table table-bordered" id="QC_Analyzes_Result_Table">
+            <thead>
+                <tr>
+                    <th width="7%">Ref ID</th>
+                    <th width="20%">Request Date</th>
+                    <th>Status</th>
+                    <th width="30%">Analysis Name</th>
+                    <th width="15%">Patient Name</th>
+                    <th width="7%">Gender</th>
+                    <th width="7%">Age</th>
+                    <th width="10%">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var analysis in Model)
+                {
+                var Age = analysis.Analysis.BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(analysis.Analysis.BirthDate).Year).ToString() : String.Empty;
+                <tr>
+                    <td>@analysis.Analysis.ReferenceID</td>
+                    <td>@analysis.Analysis.RequestDate</td>
+                    <td>
+                        @if (analysis.Analysis.StatusIdentifier==Status.PendingForReporting)
+                            {
+                        <a href="#" onclick="GoToOpenedAnalysis(event,@analysis.Analysis.RequestID.ToString());">
+                            <span style="color:red;">Opened</span>
+                        </a>
+                            }
+                            else
+                            {
+                            <span style="color:green;">Closed</span>
+                            }
+                    </td>
+                    <td>@analysis.Analysis.AnalysisName</td>
+                    <td>@analysis.Analysis.FirstName @analysis.Analysis.LastName </td>
+                    <td>@analysis.Analysis.Gender</td>
+                    <td>@Age</td>
+                    <td>
+                        
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -103,26 +103,12 @@ namespace DemoMisrInternationalLab.Controllers
                 foreach (var requestedAnalysisId in RequestedAnalyzesIdsArray)
                 {
                     var RequestedAnalysisIdArray = requestedAnalysisId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (RequestedAnalysisIdArray.Count() > 1)
-                    {
-                        RequestedAnalyzesIdsList.Add(Convert.ToInt32(RequestedAnalysisIdArray[1]));
-                    }
-                    else
-                    {
-                        RequestedAnalyzesIdsList.Add(Convert.ToInt32(RequestedAnalysisIdArray[0]));
-                    }
+                    RequestedAnalyzesIdsList.Add(Convert.ToInt32(RequestedAnalysisIdArray[RequestedAnalysisIdArray.Length - 1]));
                 }
 
                 int _DestinationDeviceId = 0;
                 var DestinationDeviceIdArray = DeviceId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
-                if (DestinationDeviceIdArray.Count() > 1)
-                {
-                    _DestinationDeviceId = Convert.ToInt32(DestinationDeviceIdArray[1]);
-                }
-                else
-                {
-                    _DestinationDeviceId = Convert.ToInt32(DestinationDeviceIdArray[0]);
-                }
+                _DestinationDeviceId = Convert.ToInt32(DestinationDeviceIdArray[DestinationDeviceIdArray.Length - 1]);
                 DeviceViewModel Device = new DeviceViewModel();
                 Device.Analyzes = (from a in model.ReceivedAnalyzes
                                    where RequestedAnalyzesIdsList.Contains(a.PatientRequestAnalysis.RequestedAnalysisID)
@@ -214,7 +200,7 @@ namespace DemoMisrInternationalLab.Controllers
         public ActionResult LoadAnalyzesForCaptureResult(string PlanId)
         {
             List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>();
-            Analyzes = DbFunctions.GetAnalysisForCaptureResult(Convert.ToInt32(PlanId));
+            Analyzes = DbFunctions.GetAnalyzesForCaptureResult(Convert.ToInt32(PlanId));
             return PartialView("_CaptureResult", Analyzes);
         }
 

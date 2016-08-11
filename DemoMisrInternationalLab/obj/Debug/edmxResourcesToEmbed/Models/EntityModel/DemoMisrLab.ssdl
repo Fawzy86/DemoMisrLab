@@ -388,8 +388,10 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PlanNumber' does not have a primar
     <Property Name="RequestedAnalysisId" Type="int" Nullable="false" />
     <Property Name="ResultDate" Type="datetime" Nullable="false" />
     <Property Name="ResultValue" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DoctorResultValue" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="EmployeeId" Type="int" Nullable="false" />
     <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EditedByQC" Type="bit" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.RequestNumber' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->

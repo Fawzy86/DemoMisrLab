@@ -18,8 +18,10 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public int RequestedAnalysisId { get; set; }
         public System.DateTime ResultDate { get; set; }
         public string ResultValue { get; set; }
+        public string DoctorResultValue { get; set; }
         public int EmployeeId { get; set; }
         public string Description { get; set; }
+        public bool EditedByQC { get; set; }
     
         public virtual Employee Employee { get; set; }
         public virtual PatientRequestAnalysi PatientRequestAnalysi { get; set; }

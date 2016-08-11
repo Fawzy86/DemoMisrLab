@@ -1,88 +1,104 @@
 ﻿@model List<DemoMisrInternationalLab.Models.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>
-<div id="QC_Results_fourd" class="carouseller qc-topmob">
-    <a href="javascript:void(0)" class="carousel-button-left">‹</a>
-    <div class="carousel-wrapper">
-        <div class="carousel-items">
-            @if (Model != null)
-            {
-                for (int i = 0; i < Model.Count; i++)
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "QC_Result_Form" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="QC_Results_fourd" class="carouseller qc-topmob">
+        <a href="javascript:void(0)" class="carousel-button-left">‹</a>
+        <div class="carousel-wrapper">
+            <div class="carousel-items">
+                @if (Model != null)
                 {
-                    @Html.HiddenFor(m => Model[i].Analysis.PlanId)
-                    @Html.HiddenFor(m => Model[i].Analysis.RequestedAnalysisID)
-
-                    <div class="carousel-block" id="@("AnalysisIdResult_" + Model[i].Analysis.RequestedAnalysisID)">
-                        <div class="col-md-12">
-                            <table class="table table-bordered table-record-qcright" style="background-color:#f0f0f0;">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div class="col-md-12">@Model[i].Analysis.AnalysisName</div>
-                                            <div class="col-md-6">@Model[i].Analysis.RunNumber</div>
-                                            <div class="col-md-6">@Model[i].Analysis.RakeNumber</div>
-                                            <div class="col-md-12">@Model[i].Analysis.DeviceName</div>
-                                            <div class="col-md-12">RequestId: @Model[i].Analysis.RequestID</div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @for (int j = 0; j < Model[i].AnalysisResults.Count; j++)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @Html.TextBoxFor(m => Model[i].AnalysisResults[j].ResultValue, new { @class = "form-control addrecord-input", @disabled = "disabled" })
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-12">
-                            <a href="#" onclick="RecycleAnalysis(AnalysisIdResult_@Model[i].Analysis.RequestedAnalysisID)"><i class="fa fa-refresh"></i></a>
-                            <a href="#" onclick="EditAnalysis(AnalysisIdResult_@Model[i].Analysis.RequestedAnalysisID);"><i class="fa fa-edit"></i></a>
-                            <button type="button" class="btn btn-success btn-xs" style="border-radius:0;"
-                                    onclick="ApprovedAnalysis(AnalysisIdResult_@Model[i].Analysis.RequestedAnalysisID)">
-                                Approved
-                            </button>
-                        </div>
-                    </div>
-                    foreach (var relatedAnalsis in Model[i].RelatedAnalyzes)
+                    for (int i = 0; i < Model.Count; i++)
                     {
-                        <div class="carousel-block">
+                        <div class="carousel-block" id="@("AnalysisIdResult_" + Model[i].Analysis.RequestedAnalysisID)" style="width:350px;">
+
                             <div class="col-md-12">
-                                <table class="table table-bordered table-record-qcright">
+                                <table>
+                                    <tr>
+                                        @Html.HiddenFor(m => Model[i].Analysis.RequestID)
+                                        @Html.HiddenFor(m => Model[i].Analysis.PlanId)
+                                        @Html.HiddenFor(m => Model[i].Analysis.DeviceId)
+                                        @Html.HiddenFor(m => Model[i].Analysis.RequestedAnalysisID)
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-bordered table-record-qcright" style="background-color:#f0f0f0;">
                                     <thead>
                                         <tr>
                                             <th>
-                                                <div class="col-md-12">@relatedAnalsis.Analysis.AnalysisName</div>
-                                                <div class="col-md-6">@relatedAnalsis.Analysis.RunNumber</div>
-                                                <div class="col-md-6">@relatedAnalsis.Analysis.RakeNumber</div>
-                                                <div class="col-md-12">@relatedAnalsis.Analysis.DeviceName</div>
-                                                <div class="col-md-12">RequestId: @relatedAnalsis.Analysis.RequestID</div>
+                                                <div class="col-md-12">@Model[i].Analysis.AnalysisName</div>
+                                                <div class="col-md-6">@Model[i].Analysis.RunNumber</div>
+                                                <div class="col-md-6">@Model[i].Analysis.RakeNumber</div>
+                                                <div class="col-md-12">@Model[i].Analysis.DeviceName</div>
+                                                <div class="col-md-12">RequestId: @Model[i].Analysis.RequestID</div>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @for (int k = 0; k < relatedAnalsis.AnalysisResults.Count; k++)
+                                        @for (int j = 0; j < Model[i].AnalysisResults.Count; j++)
                                         {
+                                            @Html.HiddenFor(m => Model[i].AnalysisResults[j].RequestedAnalysisResultId)
                                             <tr>
                                                 <td>
-                                                    @Html.TextBoxFor(m => relatedAnalsis.AnalysisResults[k].ResultValue, new { @class = "form-control addrecord-input", @disabled = "disabled" })
+                                                    @Html.TextBoxFor(m => Model[i].AnalysisResults[j].ResultValue,
+                                           new { @class = "form-control addrecord-input", @disabled = "disabled", @onkeyup = "MoveToNextReslut(event);" })
                                                 </td>
                                             </tr>
                                         }
                                     </tbody>
                                 </table>
                             </div>
+                            @if (Model[i].IsEditable)
+                            {
+                                <div class="col-md-12">
+                                    <a href="#" onclick="RecycleAnalysis(event, AnalysisIdResult_@Model[i].Analysis.RequestedAnalysisID)"><i class="fa fa-refresh"></i></a>
+                                    <a href="#" onclick="EditAnalysis(event, AnalysisIdResult_@Model[i].Analysis.RequestedAnalysisID);"><i class="fa fa-edit"></i></a>
+                                    <button type="button" class="btn btn-success btn-xs" style="border-radius:0;"
+                                            onclick="ApproveAnalysis(event, AnalysisIdResult_@Model[i].Analysis.RequestedAnalysisID)">
+                                        Approved
+                                    </button>
+                                </div>
+                            }
                         </div>
+                        foreach (var relatedAnalsis in Model[i].RelatedAnalyzes)
+                        {
+                            <div class="carousel-block" id="@("AnalysisIdResult_" + relatedAnalsis.Analysis.RequestedAnalysisID)" style="width:350px;">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered table-record-qcright">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div class="col-md-12">@relatedAnalsis.Analysis.AnalysisName</div>
+                                                    <div class="col-md-6">@relatedAnalsis.Analysis.RunNumber</div>
+                                                    <div class="col-md-6">@relatedAnalsis.Analysis.RakeNumber</div>
+                                                    <div class="col-md-12">@relatedAnalsis.Analysis.DeviceName</div>
+                                                    <div class="col-md-12">RequestId: @relatedAnalsis.Analysis.RequestID</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (int k = 0; k < relatedAnalsis.AnalysisResults.Count; k++)
+                                            {
+                                            <tr>
+                                                <td>
+                                                    @Html.TextBoxFor(m => relatedAnalsis.AnalysisResults[k].ResultValue, new { @class = "form-control addrecord-input", @disabled = "disabled" })
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+
                     }
-
                 }
-            }
+            </div>
         </div>
+        <a href="javascript:void(0)" class="carousel-button-right">›</a>
     </div>
-    <a href="javascript:void(0)" class="carousel-button-right">›</a>
-</div>
-
+}
 @Scripts.Render("~/bundles/jqueryval")
 <script type="text/javascript">
     $(function () {

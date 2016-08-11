@@ -393,8 +393,10 @@ warning 6002: The table/view 'DemoMisrInt.dbo.PlanNumber' does not have a primar
           <Property Name="RequestedAnalysisId" Type="int" Nullable="false" />
           <Property Name="ResultDate" Type="datetime" Nullable="false" />
           <Property Name="ResultValue" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DoctorResultValue" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EditedByQC" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DemoMisrInt.dbo.RequestNumber' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -3474,8 +3476,10 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Plan_Device_Unit' does not have a 
           <Property Name="RequestedAnalysisId" Type="Int32" Nullable="false" />
           <Property Name="ResultDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ResultValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DoctorResultValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EditedByQC" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Employee" Relationship="DemoMisrIntModel.FK_RequestedAnalysisResult_Employee" FromRole="RequestedAnalysisResult" ToRole="Employee" />
           <NavigationProperty Name="PatientRequestAnalysi" Relationship="DemoMisrIntModel.FK_RequestedAnalysisResult_PatientRequestAnalysis" FromRole="RequestedAnalysisResult" ToRole="PatientRequestAnalysi" />
         </EntityType>
@@ -5384,8 +5388,10 @@ warning 6002: The table/view 'DemoMisrInt.dbo.Plan_Device_Unit' does not have a 
           <EntitySetMapping Name="RequestedAnalysisResults">
             <EntityTypeMapping TypeName="DemoMisrIntModel.RequestedAnalysisResult">
               <MappingFragment StoreEntitySet="RequestedAnalysisResult">
+                <ScalarProperty Name="EditedByQC" ColumnName="EditedByQC" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="DoctorResultValue" ColumnName="DoctorResultValue" />
                 <ScalarProperty Name="ResultValue" ColumnName="ResultValue" />
                 <ScalarProperty Name="ResultDate" ColumnName="ResultDate" />
                 <ScalarProperty Name="RequestedAnalysisId" ColumnName="RequestedAnalysisId" />

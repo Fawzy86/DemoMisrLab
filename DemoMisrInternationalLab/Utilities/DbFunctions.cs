@@ -1751,7 +1751,7 @@ namespace DemoMisrInternationalLab.Utilities
                                 _Plan_Device_Unit = _Plan_Device_Unit.Union(MatchedbyRunNumber).GroupBy(p => p.PlanId).Select(p => p.FirstOrDefault());
 
                                 break;
-                            case "analysis":
+                            case "analysisname":
                                 //// Search by analysis name
                                 var DevicesIdsbyAnalysisName = (from p in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
                                                                 where p.AnalysisName.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
@@ -1847,7 +1847,7 @@ namespace DemoMisrInternationalLab.Utilities
         }
 
 
-        public static List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> GetAnalysisForCaptureResult(int PlanId)
+        public static List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> GetAnalyzesForCaptureResult(int PlanId)
         {
             try
             {
@@ -1893,7 +1893,9 @@ namespace DemoMisrInternationalLab.Utilities
                                 EmployeeId = EmployeeId,
                                 RequestedAnalysisId = _PatientRequestAnalysis.RequestedAnalysisID,
                                 ResultDate = DateTime.Now,
-                                ResultValue = result
+                                ResultValue = result,
+                                DoctorResultValue = result,
+                                EditedByQC = false
                             };
                             _RequestedAnalysisResultList.Add(_RequestedAnalysisResult);
                         }
@@ -1923,7 +1925,7 @@ namespace DemoMisrInternationalLab.Utilities
                 List<Patient_Request_Status_Analysis_ViewModel> PatientsRequests =new List<Patient_Request_Status_Analysis_ViewModel>();
                 using (DemoMisrIntEntities db = new DemoMisrIntEntities())
                 {
-                    var RequestsIds = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_AllStatuses
+                    var RequestsIds = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus
                                        where a.StatusIdentifier == AnalysisStatus
                                        select a.RequestID).Distinct().ToList();
                     if (RequestsIds.Any())
@@ -1950,39 +1952,74 @@ namespace DemoMisrInternationalLab.Utilities
         }
 
 
-        public static List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> GetPatientAnalyzesForReporting(int RequestId)
+        public static List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> GetAnalyzesForReporting(int RequestId, string ViewOption)
         {
             try
             {
                 List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>();
                 using (DemoMisrIntEntities db = new DemoMisrIntEntities())
                 {
-                    Analyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
-                                where a.StatusIdentifier == Resources.Status.PendingForReporting && a.RequestID == RequestId
-                                select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel()
-                                {
-                                    Analysis = a
-                                }).ToList();
-                    foreach (var analysis in Analyzes)
+                    if (!String.IsNullOrWhiteSpace(ViewOption) && ViewOption.ToLower().Trim().Contains("history"))
                     {
-                        analysis.AnalysisResults = (from r in db.RequestedAnalysisResults
-                                                    where r.RequestedAnalysisId == analysis.Analysis.RequestedAnalysisID
-                                                    select r).ToList();
-                        var RelatedRequestedAnalyzesIds = (from p in db.Patient_PatientRequest_PatientRequestAnalysis_AllStatuses
-                                                        where p.StatusIdentifier == Resources.Status.ApprovedByQC &&
-                                                        p.ReferenceID == analysis.Analysis.ReferenceID
-                                                        select p.RequestedAnalysisID).ToList();
-                        analysis.RelatedAnalyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
-                                                    where RelatedRequestedAnalyzesIds.Contains(a.RequestedAnalysisID)
-                                                    select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel()
-                                                    {
-                                                        Analysis = a
-                                                    }).ToList();
-                        foreach (var relatedAnalysis in analysis.RelatedAnalyzes)
+                        Patient _Patient = (from p in db.PatientRequests
+                                            where p.RequestID == RequestId
+                                            select p.Patient).FirstOrDefault();
+                        if (_Patient != null)
                         {
-                            relatedAnalysis.AnalysisResults = (from r in db.RequestedAnalysisResults
-                                                               where r.RequestedAnalysisId == relatedAnalysis.Analysis.RequestedAnalysisID
-                                                               select r).ToList();
+                            var RelatedRequestedAnalyzesIds = (from p in db.Patient_PatientRequest_PatientRequestAnalysis_AllStatuses
+                                                               where p.StatusIdentifier == Resources.Status.ApprovedByQC &&
+                                                               p.ReferenceID == _Patient.ReferenceID
+                                                               select p.RequestedAnalysisID).ToList();
+                            Analyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
+                                        where RelatedRequestedAnalyzesIds.Contains(a.RequestedAnalysisID)
+                                        select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel()
+                                        {
+                                            Analysis = a,
+                                            IsEditable = false
+                                        }).ToList();
+                            foreach (var analysis in Analyzes)
+                            {
+                                analysis.AnalysisResults = (from r in db.RequestedAnalysisResults
+                                                            where r.RequestedAnalysisId == analysis.Analysis.RequestedAnalysisID
+                                                            select r).ToList();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Analyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
+                                    where a.StatusIdentifier == Resources.Status.PendingForReporting && a.RequestID == RequestId
+                                    select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel()
+                                    {
+                                        Analysis = a,
+                                        IsEditable = true
+                                    }).ToList();
+                        foreach (var analysis in Analyzes)
+                        {
+                            analysis.AnalysisResults = (from r in db.RequestedAnalysisResults
+                                                        where r.RequestedAnalysisId == analysis.Analysis.RequestedAnalysisID
+                                                        select r).ToList();
+                            if (!String.IsNullOrWhiteSpace(ViewOption) && ViewOption.ToLower().Trim().Contains("relate"))
+                            {
+                                var RelatedRequestedAnalyzesIds = (from p in db.Patient_PatientRequest_PatientRequestAnalysis_AllStatuses
+                                                                   where p.StatusIdentifier == Resources.Status.ApprovedByQC &&
+                                                                   p.ReferenceID == analysis.Analysis.ReferenceID &&
+                                                                   p.AnalysisID == analysis.Analysis.AnalysisID
+                                                                   select p.RequestedAnalysisID).ToList();
+                                analysis.RelatedAnalyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
+                                                            where RelatedRequestedAnalyzesIds.Contains(a.RequestedAnalysisID)
+                                                            select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel()
+                                                            {
+                                                                Analysis = a,
+                                                                IsEditable = false
+                                                            }).ToList();
+                                foreach (var relatedAnalysis in analysis.RelatedAnalyzes)
+                                {
+                                    relatedAnalysis.AnalysisResults = (from r in db.RequestedAnalysisResults
+                                                                       where r.RequestedAnalysisId == relatedAnalysis.Analysis.RequestedAnalysisID
+                                                                       select r).ToList();
+                                }
+                            }
                         }
                     }
 
@@ -1994,5 +2031,141 @@ namespace DemoMisrInternationalLab.Utilities
                 throw new Exception(ex.Message);
             }
         }
+
+        public static void UpdateAnalysisResultsByQC(List<RequestedAnalysisResult> RequestedAnalysisResults, string UserName)
+        {
+            try
+            {
+                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                {
+                    if (RequestedAnalysisResults != null && RequestedAnalysisResults.Any())
+                    {
+                      //  int EmployeeId = GetUserEmployeeId(UserName);
+                        foreach (var analysisResults in RequestedAnalysisResults)
+                        {
+                            if (!String.IsNullOrWhiteSpace(analysisResults.ResultValue))
+                            {
+                                var _RequestedAnalysisResult = (from a in db.RequestedAnalysisResults
+                                                                where a.RequestedAnalysisResultId == analysisResults.RequestedAnalysisResultId
+                                                                select a).SingleOrDefault();
+                                if (_RequestedAnalysisResult != null)
+                                {
+                                    if (_RequestedAnalysisResult.ResultValue.ToLower().Trim() != analysisResults.ResultValue.ToLower().Trim())
+                                    {
+                                        _RequestedAnalysisResult.ResultValue = analysisResults.ResultValue;
+                                        _RequestedAnalysisResult.EditedByQC = true;
+                                        db.SaveChanges();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        public static List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> GetAnalyzesForQCReviewing(string SearchPattern,string SearchType, DateTime DateFrom, DateTime DateTo)
+        {
+            try
+            {
+                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                {
+                    List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>();
+                    IEnumerable<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device> _Analyzes_LastStatus = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device>();
+                    var RequestedAnalyzesIds = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_AllStatuses
+                                                where a.StatusIdentifier == Resources.Status.PendingForReporting
+                                                select a.RequestedAnalysisID).Distinct().ToList();
+                    var _Analyzes_LastStatus_AsQuerable = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device
+                                                           where RequestedAnalyzesIds.Contains(a.RequestedAnalysisID)
+                                                           select a);
+                    if (String.IsNullOrWhiteSpace(SearchPattern))
+                    {
+                        _Analyzes_LastStatus = (from a in _Analyzes_LastStatus_AsQuerable
+                                                select a);
+                    }
+                    else
+                    {
+                        if (String.IsNullOrWhiteSpace(SearchType))
+                        {
+                            SearchType = "RefId";
+                        }
+                        switch (SearchType.ToLower().Trim())
+                        {
+                            case "refid":
+                                int SearchRefId = 0;
+                                Int32.TryParse(SearchPattern.Trim(), out SearchRefId);
+                                var MatchedByRefId = (from p in _Analyzes_LastStatus_AsQuerable
+                                                      where p.ReferenceID == SearchRefId
+                                                      select p).AsEnumerable();
+                                _Analyzes_LastStatus = _Analyzes_LastStatus.Union(MatchedByRefId).GroupBy(p => p.RequestedAnalysisID).Select(p => p.FirstOrDefault());
+                                break;
+                            case "unit":
+                                var MatchedByUnit = (from p in _Analyzes_LastStatus_AsQuerable
+                                                     where p.UnitName.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
+                                                     select p);
+                                _Analyzes_LastStatus = _Analyzes_LastStatus.Union(MatchedByUnit).GroupBy(p => p.RequestedAnalysisID).Select(p => p.FirstOrDefault());
+                                break;
+                            case "device":
+                                var MatchedByDevice = (from p in _Analyzes_LastStatus_AsQuerable
+                                                       where p.DeviceName.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
+                                                       select p);
+                                _Analyzes_LastStatus = _Analyzes_LastStatus.Union(MatchedByDevice).GroupBy(p => p.RequestedAnalysisID).Select(p => p.FirstOrDefault());
+                                break;
+                            case "doctor":
+                                var MatchedByDoctor = (from p in _Analyzes_LastStatus_AsQuerable
+                                                       where (p.FirstName.Trim() + " " + (p.LastName == null ? "" : p.LastName.Trim())).ToLower().Contains(SearchPattern.Trim().ToLower())
+                                                       select p);
+                                _Analyzes_LastStatus = _Analyzes_LastStatus.Union(MatchedByDoctor).GroupBy(p => p.RequestedAnalysisID).Select(p => p.FirstOrDefault());
+                                break;
+                            case "runnumber":
+                                var MatchedbyRunNumber = (from p in _Analyzes_LastStatus_AsQuerable
+                                                          where p.RunNumber.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
+                                                          select p);
+                                _Analyzes_LastStatus = _Analyzes_LastStatus.Union(MatchedbyRunNumber).GroupBy(p => p.RequestedAnalysisID).Select(p => p.FirstOrDefault());
+
+                                break;
+                            case "analysisname":
+                                //// Search by analysis name
+                                var MatchedbyAnalysisName = (from p in _Analyzes_LastStatus_AsQuerable
+                                                             where p.AnalysisName.Trim().ToLower().Contains(SearchPattern.Trim().ToLower())
+                                                             select p);
+                                _Analyzes_LastStatus = _Analyzes_LastStatus.Union(MatchedbyAnalysisName).GroupBy(p => p.RequestedAnalysisID).Select(p => p.FirstOrDefault());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    //// Date range select
+                    Analyzes = (from p in _Analyzes_LastStatus
+                                where p.StatusDate >= DateFrom && p.StatusDate < DateTo
+                                select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel()
+                                {
+                                    Analysis = p
+                                }).ToList();
+
+                    foreach (var analysis in Analyzes)
+                    {
+                        analysis.AnalysisResults = (from r in db.RequestedAnalysisResults
+                                                    where r.RequestedAnalysisId == analysis.Analysis.RequestedAnalysisID
+                                                    select r).ToList();
+                    }
+
+                    
+                    return Analyzes;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

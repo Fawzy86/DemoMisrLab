@@ -112,8 +112,8 @@
 
                                                 <div class="panel-body ">
                                                     <ul id="myTab" class="nav nav-tabs">
-                                                        <li class="active"><a href="#qc" data-toggle="tab">QC</a></li>
-                                                        <li class=""><a href="#doctor-apply" data-toggle="tab">Doctor Apply</a></li>
+                                                        <li class="active"><a href="#qc" data-toggle="tab" id="Analyzes_Report_Link">QC</a></li>
+                                                        <li class=""><a href="#Analyzes-Revision" data-toggle="tab" id="Analyzes_Revision_Link">Analyzes Revision</a></li>
                                                     </ul>
                                                     <div id="myTabContent" class="tab-content">
 
@@ -132,10 +132,10 @@
 
 
 
-                                                        <div class="tab-pane fade" id="doctor-apply">
+                                                        <div class="tab-pane fade" id="Analyzes-Revision">
                                                             <p>
 
-                                                                @{Html.RenderPartial("_DoctorApply");}
+                                                                @{Html.RenderPartial("_Revision");}
 
 
                                                             </p>

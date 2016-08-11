@@ -64,7 +64,6 @@
     /////////////////////////////////////////////////////////////////
     $('#Opened_Plans_SelectedPlanId').change(function () {
         var SelectedPlanId = this.value;
-        console.log("Opened_Plans_SelectedPlanId: " + SelectedPlanId);
         LoadPlanAnalzes(SelectedPlanId);
     });
     //////////////////////////////////////////////////////////////////////
@@ -80,7 +79,7 @@
     ///////////////////////////////////////////////////////////
     function AddNewResult(ev) {
         ev.preventDefault();
-        if (ev.keyCode == 13) {
+        if (ev.keyCode == 13) { /// Enter button for new record
             var rowElem = ev.target.closest("tr");
             var tableElem = rowElem.closest("table");
             var rowCount = tableElem.rows.length;
@@ -93,7 +92,7 @@
                 tableElem.rows[rowElem.rowIndex + 1].getElementsByTagName("input")[0].focus();
             }
         }
-        else if (ev.keyCode == 46) {
+        else if (ev.keyCode == 46) { //// Delete button for delete the result record
             var inputElem = ev.target;
             if (inputElem.value == "") {
                 inputElem.select();

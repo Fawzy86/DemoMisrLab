@@ -405,8 +405,10 @@
     <EntitySetMapping Name="RequestedAnalysisResults">
       <EntityTypeMapping TypeName="DemoMisrIntModel.RequestedAnalysisResult">
         <MappingFragment StoreEntitySet="RequestedAnalysisResult">
+          <ScalarProperty Name="EditedByQC" ColumnName="EditedByQC" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="DoctorResultValue" ColumnName="DoctorResultValue" />
           <ScalarProperty Name="ResultValue" ColumnName="ResultValue" />
           <ScalarProperty Name="ResultDate" ColumnName="ResultDate" />
           <ScalarProperty Name="RequestedAnalysisId" ColumnName="RequestedAnalysisId" />

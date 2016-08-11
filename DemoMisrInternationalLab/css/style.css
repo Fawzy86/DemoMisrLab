@@ -1463,7 +1463,7 @@ ul.list-users > li .user-options > ul > li.bg-danger > a:hover {
 .captureresult-list-qc {
 	position: absolute;
     top: 150px;
-    z-index: 999999;
+    /*z-index: 999999;*/
     width: 52%;
     right: 27px;
 }	

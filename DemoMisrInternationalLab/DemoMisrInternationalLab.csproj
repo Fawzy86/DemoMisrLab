@@ -428,6 +428,7 @@
     <Compile Include="Security\AuthorizeRoleAttribute.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utilities\DbFunctions.cs" />
+    <Compile Include="Utilities\Helper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -989,9 +990,10 @@
     <Content Include="Views\Lab\_OpenedPlans.cshtml" />
     <Content Include="Views\QC\Index.cshtml" />
     <Content Include="Views\QC\_QC.cshtml" />
-    <Content Include="Views\QC\_DoctorApply.cshtml" />
+    <Content Include="Views\QC\_RevisionAnalyzes.cshtml" />
     <Content Include="Views\QC\_QCPatientsRequests.cshtml" />
     <Content Include="Views\QC\_QCAnalysisResult.cshtml" />
+    <Content Include="Views\QC\_Revision.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

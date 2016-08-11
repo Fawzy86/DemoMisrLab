@@ -1,132 +1,215 @@
 ﻿<div id="QC_Result_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
-@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "QC_Result_Form" }))
-{
-<div class="captureresult-list-qc">
+<div id="QC_Result_Div_Container">
+    <div class="captureresult-list-qc">
 
-    <div class="col-md-6">
-        <select name="" class="form-control form-widthhh-full formtop-mobile">
-            <option>View All</option>
-            <option>View Single</option>
-        </select>
+        @*<div class="col-md-6">
+                <select name="" class="form-control form-widthhh-full formtop-mobile">
+                    <option>View All</option>
+                    <option>View Single</option>
+                </select>
+            </div>*@
+
+        <div class="col-md-12">
+            <select name="" id="QCViewResultOption" class="form-control form-widthhh-full formtop-mobile">
+                <option value="">None</option>
+                <option value="Related">View Related</option>
+                <option value="History">View History</option>
+            </select>
+        </div>
+
     </div>
 
-    <div class="col-md-6">
-        <select name="" class="form-control form-widthhh-full formtop-mobile">
-            <option>None</option>
-            <option>View Related</option>
-            <option>View History</option>
-        </select>
-    </div>
+    <div class="row">
 
-</div>
+        <div class="col-md-3">
 
-<div class="row">
+            <div id="QC_Requests_fourd" class="carouseller">
+                <a href="javascript:void(0)" class="carousel-button-left" onclick="GetPreviousRequest();">‹</a>
+                <div class="carousel-wrapper">
+                    <div class="carousel-items" id="OpenedRequests_Container">
 
-    <div class="col-md-3">
+                        @{Html.RenderAction("GetPatientsRequestsPendingForReporting");}
 
-        <div id="QC_Requests_fourd" class="carouseller">
-            <a href="javascript:void(0)" class="carousel-button-left" onclick="GetPreviousRequest();">‹</a>
-            <div class="carousel-wrapper">
-                <div class="carousel-items">
-
-                    @{Html.RenderAction("GetPatientsRequestsPendingForReporting");}
-
+                    </div>
                 </div>
+                <a href="javascript:void(0)" class="carousel-button-right" onclick="GetNextRequest();">›</a>
             </div>
-            <a href="javascript:void(0)" class="carousel-button-right" onclick="GetNextRequest();">›</a>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-success" onclick="LoadRequests('');" style="border-radius:0;">Reload</button>
+            </div>
+
+        </div>
+
+        <div class="col-md-9">
+
+            <div id="AnalyzesResults_Container">
+            </div>
+
         </div>
 
     </div>
-
-    <div class="col-md-9">
-
-        <div id="AnalyzesResults_Container">
-        </div>
-
-    </div>
-
 </div>
-}
-<script src="~/js/carouseller.min.js"></script>
-<script type="text/javascript">
-    ////////////////////////////////////////////////////////////
-    $(document).ajaxStart(function () {
-        try {
-            $("#QC_Result_Form").prop('disabled', true);
-            $("#QC_Result_Loading").show();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    /////////////////////////////////////////////////////////
-    $(document).ajaxStop(function () {
-        try {
-            $("#QC_Result_Form").prop('disabled', true);
-            $("#QC_Result_Loading").hide();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    //////////////////////////////////////////////////////
-    $(function () {
-        $(QC_Requests_fourd).carouseller();
-        GetCurrentRequest();
-    });
-    /////////////////////////////////////////////
-    function GetPreviousRequest(){
-        console.log($('#QC_Requests_fourd .carousel-block').eq(-1)[0].id);
-        var PreviousElem = $('#QC_Requests_fourd .carousel-block').eq(-1)[0];
-        if (PreviousElem != null) {
-            var RequestId = PreviousElem.id;
-            if (RequestId.indexOf("QCRequest_") == 0) {
-                LoadAnalyzes(RequestId);
+    <script src="~/js/carouseller.min.js"></script>
+    <script type="text/javascript">
+        ////////////////////////////////////////////////////////////
+        $(document).ajaxStart(function () {
+            try {
+                $("#QC_Result_Div_Container").prop('disabled', true);
+                $("#QC_Result_Loading").show();
             }
-        }
-    }
-    /////////////////////////////////////////////////
-    function GetNextRequest(){
-        console.log($('.carousel-block').eq(1)[0].id);
-        console.log($('#QC_Requests_fourd .carousel-block').eq(1)[0].id);
-        var NextElem = $('#QC_Requests_fourd .carousel-block').eq(1)[0];
-        if (NextElem != null) {
-            var RequestId = NextElem.id;
-            if (RequestId.indexOf("QCRequest_") == 0) {
-                LoadAnalyzes(RequestId);
-            }
-        }
-    }
-    /////////////////////////////////////////////////
-    function GetCurrentRequest() {
-        console.log($('.carousel-block').eq(0)[0].id);
-        console.log($('#QC_Requests_fourd .carousel-block').eq(0)[0].id);
-        var CurrentElem = $('#QC_Requests_fourd .carousel-block').eq(0)[0];
-        if (CurrentElem != null) {
-            var RequestId = CurrentElem.id;
-            if (RequestId.indexOf("QCRequest_") == 0) {
-                LoadAnalyzes(RequestId);
-            }
-        }
-    }
-    /////////////////////////////////////////////////
-    function LoadAnalyzes(RequestId) {
-        try {
-            $("#AnalyzesResults_Container").load('@Url.Action("GetPatientAnalyzesPendingForReporting", "QC")?RequestId=' + RequestId);
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    }
-    /////////////////////////////////////////////////////
-    function EditAnalysis(AnalysisIdResult) {
-        $(AnalysisIdResult).find("input[type='text']").each(function (index, elem) {
-            if (elem.getAttribute("disabled")) {
-                elem.removeAttribute("disabled");
-            }
-            else {
-                elem.setAttribute("disabled", 'disabled');
+            catch (err) {
+                alert(err.message);
             }
         });
-    }
-</script>
+        /////////////////////////////////////////////////////////
+        $(document).ajaxStop(function () {
+            try {
+                $("#QC_Result_Div_Container").prop('disabled', true);
+                $("#QC_Result_Loading").hide();
+            }
+            catch (err) {
+                alert(err.message);
+            }
+        });
+        //////////////////////////////////////////////////////
+        $(function () {
+            $(QC_Requests_fourd).carouseller();
+            GetCurrentRequest();
+        });
+        //////////////////////////////////////////////////////
+        $("#QC_Result_Form").submit(function (ev) {
+            console.log(ev);
+            ev.preventDefault();
+        });
+        /////////////////////////////////////////////////
+        function LoadRequests(RequestId) {
+            try {
+                @*$("#OpenedRequests_Container").load('@Url.Action("GetPatientsRequestsPendingForReporting", "QC")?RequestId=' + RequestId).ajaxComplete(function () {
+                    GetCurrentRequest();
+                });*@
+                $.get('@Url.Action("GetPatientsRequestsPendingForReporting", "QC")?RequestId=' + RequestId, function (data) {
+                    $("#OpenedRequests_Container").html(data);
+                    $("#QCViewResultOption").val("");
+                    GetCurrentRequest();
+                });
+            }
+            catch (err) {
+                alert(err.message);
+            }
+        }
+        /////////////////////////////////////////////
+        function GetPreviousRequest() {
+
+            var PreviousElem = $('#QC_Requests_fourd .carousel-block').eq(-1)[0];
+            if (PreviousElem != null) {
+                var RequestId = PreviousElem.id;
+                if (RequestId.indexOf("QCRequest_") == 0) {
+                    LoadAnalyzesForReporting(RequestId);
+                }
+            }
+        }
+        /////////////////////////////////////////////////
+        function GetNextRequest() {
+            var NextElem = $('#QC_Requests_fourd .carousel-block').eq(1)[0];
+            if (NextElem != null) {
+                var RequestId = NextElem.id;
+                if (RequestId.indexOf("QCRequest_") == 0) {
+                    LoadAnalyzesForReporting(RequestId);
+                }
+            }
+        }
+        /////////////////////////////////////////////////
+        function GetCurrentRequest() {
+            var CurrentElem = $('#QC_Requests_fourd .carousel-block').eq(0)[0];
+            if (CurrentElem != null) {
+                var RequestId = CurrentElem.id;
+                if (RequestId.indexOf("QCRequest_") == 0) {
+                    LoadAnalyzesForReporting(RequestId);
+                }
+            }
+        }
+        /////////////////////////////////////////////////
+        $("#QCViewResultOption").on('change', function () {
+            GetCurrentRequest();
+        });
+        /////////////////////////////////////////////////
+        function LoadAnalyzesForReporting(RequestId) {
+            try {
+                var ViewOption = $(QCViewResultOption).val();
+                $("#AnalyzesResults_Container").load('@Url.Action("GetPatientAnalyzesPendingForReporting", "QC")?RequestId=' + RequestId + "&ViewOption=" + ViewOption);
+            }
+            catch (err) {
+                alert(err.message);
+            }
+        }
+        /////////////////////////////////////////////////////
+        function EditAnalysis(ev, AnalysisIdResult) {
+            ev.preventDefault();
+            $(AnalysisIdResult).find("input[type='text']").each(function (index, elem) {
+                if (elem.getAttribute("disabled")) {
+                    elem.removeAttribute("disabled");
+                }
+                else {
+                    elem.setAttribute("disabled", 'disabled');
+                }
+            });
+        }
+        //////////////////////////////////////////////////////
+        function MoveToNextReslut(ev) {
+            ev.preventDefault();
+            if (ev.keyCode == 13) { /// Enter button for new record
+                var rowElem = ev.target.closest("tr");
+                var tableElem = rowElem.closest("table");
+                var rowCount = tableElem.rows.length;
+                if (rowElem.rowIndex < rowCount - 1) {/// Move to next row
+                    tableElem.rows[rowElem.rowIndex + 1].getElementsByTagName("input")[0].focus();
+                } 
+            }
+            return false;
+        }
+        /////////////////////////////////////////////////////
+        function RecycleAnalysis(ev, AnalysisIdResult) {
+            ev.preventDefault();
+            var form = $("#QC_Result_Form");
+            console.log(form);
+            console.log(ev.target);
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "/QC/RecyleAnalysisResults",//form.attr('action'),
+                data: form.serialize() + "&RequestedAnalysisId=" + AnalysisIdResult.id,
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        $("#OpenedRequests_Container").html(data);
+                    }
+                    GetCurrentRequest();
+
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                }
+            });
+        }
+        /////////////////////////////////////////////////////
+        function ApproveAnalysis(ev, AnalysisIdResult) {
+            ev.preventDefault();
+            var form = $("#QC_Result_Form");
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "/QC/ApproveAnalysisResults",//form.attr('action'),
+                data: form.serialize() + "&RequestedAnalysisId=" + AnalysisIdResult.id,
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        $("#OpenedRequests_Container").html(data);
+                    }
+                    GetCurrentRequest();
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                }
+            });
+        }
+    </script>
