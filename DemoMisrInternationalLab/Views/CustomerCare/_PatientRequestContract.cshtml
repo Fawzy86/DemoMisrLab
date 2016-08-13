@@ -1,6 +1,5 @@
 ﻿@model DemoMisrInternationalLab.Models.PatientRequestViewModel
 @using DemoMisrInternationalLab.Resources
-<div id="Contract_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
 @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Contract_PatientRequest_Form", enctype = "multipart/form-data" }))
 {
     @*@Html.ValidationSummary("Invalid data")*@
@@ -355,26 +354,6 @@
 @Scripts.Render("~/bundles/jqueryval")
 <script src="~/js/forms-custom.js"></script>
 <script type="text/javascript">
-    $(document).ajaxStart(function () {
-        try {
-            $("#Contract_PatientRequest_Form").prop('disabled', true);
-            //$("#Contract_PatientRequest_Form").hide();
-            $("#Contract_Loading").show();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    $(document).ajaxStop(function () {
-        try {
-            $("#Contract_PatientRequest_Form").prop('disabled', true);
-            //$("#Contract_PatientRequest_Form").show();
-            $("#Contract_Loading").hide();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
     // $.validator.unobtrusive.parse($("#entirepatientinfoformdiv"));
     $(document).ready(function () {
         $('#Contract_Gender_text_radio > input').nicelabel();

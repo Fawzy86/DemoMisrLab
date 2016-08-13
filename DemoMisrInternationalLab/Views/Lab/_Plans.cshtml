@@ -1,5 +1,4 @@
-﻿<div id="Lab_Plans_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
-@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Lab_Plans_Form" }))
+﻿@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Lab_Plans_Form" }))
 {
     @Html.AntiForgeryToken()
     <div class="captureresult-listb">
@@ -50,26 +49,6 @@
     </div>
 }
 <script type="text/javascript">
-    ////////////////////////////////////////////////////////////
-    $(document).ajaxStart(function () {
-        try {
-            $("#Lab_Plans_Form").prop('disabled', true);
-            $("#Lab_Plans_Loading").show();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    /////////////////////////////////////////////////////////
-    $(document).ajaxStop(function () {
-        try {
-            $("#Lab_Plans_Form").prop('disabled', true);
-            $("#Lab_Plans_Loading").hide();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
     /////////////////////////////////
     $(function () {
 

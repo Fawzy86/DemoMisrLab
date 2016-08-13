@@ -1,5 +1,4 @@
 ﻿@model DemoMisrInternationalLab.Models.UnitsViewModel
-<div id="Work_Unit_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
 @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Work_Unit_Form" }))
 {
     @Html.AntiForgeryToken()
@@ -32,28 +31,6 @@
 
 @*@Scripts.Render("~/bundles/jqueryui")*@
 <script type="text/javascript">
-    ////////////////////////////////////////////////////////////
-    $(document).ajaxStart(function () {
-        try {
-            $("#Work_Unit_Form").prop('disabled', true);
-            //   $("#Chemist_Transactions_Form").hide();
-            $("#Work_Unit_Loading").show();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    /////////////////////////////////////////////////////////
-    $(document).ajaxStop(function () {
-        try {
-            $("#Work_Unit_Form").prop('disabled', true);
-            //   $("#Chemist_Transactions_Form").show();
-            $("#Work_Unit_Loading").hide();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
     /////////////////////////////////////////////////////////////////
     $('#Work_Unit_SelectedUnitId').change(function () {
         var SelectedUnitId = this.value;

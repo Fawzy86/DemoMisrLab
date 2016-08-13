@@ -1,5 +1,4 @@
-﻿<div id="QC_Result_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
-<div id="QC_Result_Div_Container">
+﻿<div id="QC_Result_Div_Container">
     <div class="captureresult-list-qc">
 
         @*<div class="col-md-6">
@@ -51,26 +50,6 @@
 </div>
     <script src="~/js/carouseller.min.js"></script>
     <script type="text/javascript">
-        ////////////////////////////////////////////////////////////
-        $(document).ajaxStart(function () {
-            try {
-                $("#QC_Result_Div_Container").prop('disabled', true);
-                $("#QC_Result_Loading").show();
-            }
-            catch (err) {
-                alert(err.message);
-            }
-        });
-        /////////////////////////////////////////////////////////
-        $(document).ajaxStop(function () {
-            try {
-                $("#QC_Result_Div_Container").prop('disabled', true);
-                $("#QC_Result_Loading").hide();
-            }
-            catch (err) {
-                alert(err.message);
-            }
-        });
         //////////////////////////////////////////////////////
         $(function () {
             $(QC_Requests_fourd).carouseller();

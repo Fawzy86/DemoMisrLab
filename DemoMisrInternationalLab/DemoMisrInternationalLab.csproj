@@ -556,6 +556,7 @@
     <Content Include="css\jquery.inputfile.css" />
     <Content Include="css\jRating.jquery.css" />
     <Content Include="css\lightbox.css" />
+    <Content Include="css\Loader.css" />
     <Content Include="css\login.css" />
     <Content Include="css\menuuu.css" />
     <Content Include="css\morris-0.4.3.min.css" />

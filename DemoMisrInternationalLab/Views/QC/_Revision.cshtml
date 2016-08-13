@@ -1,5 +1,4 @@
-﻿<div id="QC_Revision_Analyzes_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
-@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "QC_Revision_Analyzes_Form" }))
+﻿@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "QC_Revision_Analyzes_Form" }))
 {
     @Html.AntiForgeryToken()
     <div class="captureresult-listb">
@@ -50,26 +49,6 @@
     </div>
 }
 <script type="text/javascript">
-    ////////////////////////////////////////////////////////////
-    $(document).ajaxStart(function () {
-        try {
-            $("#QC_Revision_Analyzes_Form").prop('disabled', true);
-            $("#QC_Revision_Analyzes_Loading").show();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    /////////////////////////////////////////////////////////
-    $(document).ajaxStop(function () {
-        try {
-            $("#QC_Revision_Analyzes_Form").prop('disabled', true);
-            $("#QC_Revision_Analyzes_Loading").hide();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
     /////////////////////////////////
     $(function () {
 

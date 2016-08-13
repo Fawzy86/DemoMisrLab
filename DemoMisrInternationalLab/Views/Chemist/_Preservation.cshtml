@@ -1,5 +1,4 @@
 ﻿<div class="row">
-    <div id="Preservation_Samples_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
     <div class="col-md-12" id="Preservation_Samples_Div">
 
         <div class="row">
@@ -80,26 +79,6 @@
 
 </div>
 <script type="text/javascript">
-    $(document).ajaxStart(function () {
-        try {
-            $("#Preservation_Samples_Div").prop('disabled', true);
-            // $("#Receive_And_Sampling_Form").hide();
-            $("#Preservation_Samples_Loading").show();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    $(document).ajaxStop(function () {
-        try {
-            $("#Preservation_Samples_Div").prop('disabled', false);
-            // $("#Receive_And_Sampling_Form").show();
-            $("#Preservation_Samples_Loading").hide();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
     ////////////////////////////////////////////////////////////////
     $('#Save_Samples_Link').on('click', function (event) {
         try {

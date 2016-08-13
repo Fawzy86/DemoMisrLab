@@ -1,5 +1,4 @@
 ﻿<div class="row">
-    <div id="ReceiveAndSampling_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
     <div class="col-md-12" id="Receive_And_Sample_Div">
         <div class="col-md-4">
             <div id='external-events' class="sampling-heightc scrolll">
@@ -63,26 +62,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ajaxStart(function () {
-        try {
-            $("#Receive_And_Sample_Div").prop('disabled', true);
-           // $("#Receive_And_Sampling_Form").hide();
-            $("#ReceiveAndSampling_Loading").show();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    $(document).ajaxStop(function () {
-        try {
-            $("#Receive_And_Sample_Div").prop('disabled', false);
-           // $("#Receive_And_Sampling_Form").show();
-            $("#ReceiveAndSampling_Loading").hide();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
     ////////////////////////////////////////////////////////////////
     $(function () {
         $('#Receive_PatientRequest_Link').on('click', function (event) {

@@ -35,7 +35,8 @@ namespace DemoMisrInternationalLab
                       //"~/Content/bootstrap.css",
                       "~/css/bootstrap.css",
                       //"~/Content/site.css",
-                      "~/css/menuuu.css"));
+                      "~/css/menuuu.css",
+                      "~/css/Loader.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

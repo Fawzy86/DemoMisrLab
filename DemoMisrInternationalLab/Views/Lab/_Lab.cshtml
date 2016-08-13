@@ -1,5 +1,4 @@
-﻿<div id="Received_Analyzes_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
-@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Receive_Lab_Analyzes_Form" }))
+﻿@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Receive_Lab_Analyzes_Form" }))
 {
     <div class="row input-group">
 
@@ -28,28 +27,6 @@
     </div>
 }
 <script type="text/javascript">
-    ////////////////////////////////////////////////////////////
-    $(document).ajaxStart(function () {
-        try {
-            $("#Receive_Lab_Analyzes_Form").prop('disabled', true);
-            //   $("#Chemist_Transactions_Form").hide();
-            $("#Received_Analyzes_Loading").show();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    /////////////////////////////////////////////////////////
-    $(document).ajaxStop(function () {
-        try {
-            $("#Receive_Lab_Analyzes_Form").prop('disabled', true);
-            //   $("#Chemist_Transactions_Form").show();
-            $("#Received_Analyzes_Loading").hide();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
     /////////////////////////////////
     $(function () {
 

@@ -1,5 +1,4 @@
 ﻿@model DemoMisrInternationalLab.Models.PlansViewModel
-<div id="Opened_Plans_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
 @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Opened_Plans_Form" }))
 {
     @Html.AntiForgeryToken()
@@ -25,28 +24,7 @@
 }
 @Scripts.Render("~/bundles/jqueryval")
 <script src="~/js/carouseller.min.js"></script>
-<script type="text/javascript">
-    ////////////////////////////////////////////////////////////
-    $(document).ajaxStart(function () {
-        try {
-            $("#Opened_Plans_Form").prop('disabled', true);
-            $("#Opened_Plans_Loading").show();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    /////////////////////////////////////////////////////////
-    $(document).ajaxStop(function () {
-        try {
-            $("#Opened_Plans_Form").prop('disabled', true);
-            $("#Opened_Plans_Loading").hide();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-   
+<script type="text/javascript"> 
     /////////////////////////////////////////////////
     function ReloadOpenedPlans() {
         try {

@@ -16,16 +16,30 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render( "~/bundles/cascadebootstrap")
-
+    <link href="~/css/Loader.css" rel="stylesheet" />
 </head>
 <body>
+
+    <div class="overlayyy">
+        @*<div  style="display:none;"><i class="fa fa-spinner"></i></div>*@
+         <div class="loader"></div>
+    </div>
+    
     @{Html.RenderPartial("_Menu");}
     <div class="container body-content" id="container_body_content">
+       
         @RenderBody()
 
     </div>
     <script type="text/javascript">
-       
+        ////////////////////////////////////////////////////////////
+        $(document).ajaxStart(function () {
+            $(".overlayyy").show();
+        });
+        /////////////////////////////////////////////////////////
+        $(document).ajaxStop(function () {
+            $(".overlayyy").hide();
+        });
     </script>
     @RenderSection("scripts", required: false)
 </body>

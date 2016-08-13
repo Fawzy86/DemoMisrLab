@@ -1,6 +1,5 @@
 ﻿@model DemoMisrInternationalLab.Models.PatientRequestViewModel
 @using DemoMisrInternationalLab.Resources
-<div id="LabToLab_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
 @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "LabToLab_PatientRequest_Form", enctype = "multipart/form-data" }))
 {
     @*@Html.ValidationSummary("Invalid data")*@
@@ -356,26 +355,6 @@
 @Scripts.Render("~/bundles/jqueryval")
 <script src="~/js/forms-custom.js"></script>
 <script type="text/javascript">
-    $(document).ajaxStart(function () {
-        try {
-            $("#LabToLab_PatientRequest_Form").prop('disabled', true);
-            //$("#LabToLab_PatientRequest_Form").hide();
-            $("#LabToLab_Loading").show();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    $(document).ajaxStop(function () {
-        try {
-            $("#LabToLab_PatientRequest_Form").prop('disabled', true);
-            //$("#LabToLab_PatientRequest_Form").show();
-            $("#LabToLab_Loading").hide();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
     // $.validator.unobtrusive.parse($("#entirepatientinfoformdiv"));
     $(document).ready(function () {
         $('#LabToLab_Gender_text_radio > input').nicelabel();

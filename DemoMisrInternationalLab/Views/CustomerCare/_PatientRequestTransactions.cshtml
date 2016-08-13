@@ -1,5 +1,4 @@
-﻿<div id="CustomerCare_Transaction_Loading" style="display:none;"><i class="fa fa-spinner"></i></div>
-@using (Html.BeginForm("", "", FormMethod.Get, new { @id = "CustomerCare_Transaction_Form" }))
+﻿@using (Html.BeginForm("", "", FormMethod.Get, new { @id = "CustomerCare_Transaction_Form" }))
 {
     <div class="row">
         <div class="col-md-12">
@@ -35,28 +34,6 @@
     </div>
 }
 <script type="text/javascript">
-    ////////////////////////////////////////////////////////////
-    $(document).ajaxStart(function () {
-        try {
-            $("#CustomerCare_Transaction_Form").prop('disabled', true);
-            //    $("#CustomerCare_Transaction_Form").hide();
-            $("#CustomerCare_Transaction_Loading").show();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
-    /////////////////////////////////////////////////////////
-    $(document).ajaxStop(function () {
-        try {
-            $("#CustomerCare_Transaction_Form").prop('disabled', true);
-            //   $("#CustomerCare_Transaction_Form").show();
-            $("#CustomerCare_Transaction_Loading").hide();
-        }
-        catch (err) {
-            alert(err.message);
-        }
-    });
     /////////////////////////////////
     $(function () {
 

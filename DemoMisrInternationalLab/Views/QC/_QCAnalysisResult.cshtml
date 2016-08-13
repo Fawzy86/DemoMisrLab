@@ -28,10 +28,10 @@
                                         <tr>
                                             <th>
                                                 <div class="col-md-12">@Model[i].Analysis.AnalysisName</div>
-                                                <div class="col-md-6">@Model[i].Analysis.RunNumber</div>
-                                                <div class="col-md-6">@Model[i].Analysis.RakeNumber</div>
-                                                <div class="col-md-12">@Model[i].Analysis.DeviceName</div>
-                                                <div class="col-md-12">RequestId: @Model[i].Analysis.RequestID</div>
+                                                <div class="col-md-6">@Model[i].Analysis.DeviceName</div>
+                                                <div class="col-md-6">@Model[i].Analysis.RunNumber</div> 
+                                                <div class="col-md-12">@Model[i].Analysis.RequestDate</div>                                                                                             
+                                                <div class="col-md-12">Request #: @Model[i].Analysis.RequestNumber</div>
                                             </th>
                                         </tr>
                                     </thead>
@@ -70,10 +70,10 @@
                                             <tr>
                                                 <th>
                                                     <div class="col-md-12">@relatedAnalsis.Analysis.AnalysisName</div>
+                                                    <div class="col-md-6">@relatedAnalsis.Analysis.DeviceName</div>
                                                     <div class="col-md-6">@relatedAnalsis.Analysis.RunNumber</div>
-                                                    <div class="col-md-6">@relatedAnalsis.Analysis.RakeNumber</div>
-                                                    <div class="col-md-12">@relatedAnalsis.Analysis.DeviceName</div>
-                                                    <div class="col-md-12">RequestId: @relatedAnalsis.Analysis.RequestID</div>
+                                                    <div class="col-md-12">@relatedAnalsis.Analysis.RequestDate</div>
+                                                    <div class="col-md-12">Request #: @relatedAnalsis.Analysis.RequestNumber</div>
                                                 </th>
                                             </tr>
                                         </thead>
