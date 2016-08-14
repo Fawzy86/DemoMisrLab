@@ -29,15 +29,11 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public int RequestedAnalysisID { get; set; }
         public string AnalysisCode { get; set; }
         public string AnalysisName { get; set; }
-        public string NormalRange { get; set; }
         public int SampleTypeID { get; set; }
-        public decimal MinimumValue { get; set; }
-        public decimal MaximumValue { get; set; }
         public decimal CostPrice { get; set; }
         public System.DateTime RequestDate { get; set; }
         public Nullable<int> DoctorRefID { get; set; }
         public string Priority { get; set; }
-        public Nullable<int> OrganizationID { get; set; }
         public string RequestedRefID { get; set; }
         public string AttachmentSession { get; set; }
         public Nullable<decimal> ExtraDiscount { get; set; }
@@ -66,15 +62,24 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public string UnitDescription { get; set; }
         public int DeviceAnalysisId { get; set; }
         public System.DateTime ReceiveDate { get; set; }
-        public string DeviceName { get; set; }
-        public string DeviceDescription { get; set; }
-        public bool IsDefalutUnitDevice { get; set; }
-        public int Capacity { get; set; }
-        public int DoctorAnalyticEmployeeId { get; set; }
-        public int DeviceId { get; set; }
         public int RakeNumber { get; set; }
         public int PlanId { get; set; }
         public string PlanNumber { get; set; }
         public System.DateTime TestDate { get; set; }
+        public int DoctorAnalyticEmployeeId { get; set; }
+        public string DeviceName { get; set; }
+        public string DeviceCode { get; set; }
+        public string DeviceDescription { get; set; }
+        public int Capacity { get; set; }
+        public int DeviceId { get; set; }
+        public int OrganizationID { get; set; }
+        public string OrganizationName { get; set; }
+        public System.DateTime InsertionDate { get; set; }
+        public bool PatientCanReceiveResult { get; set; }
+        public int CategoryTypeID { get; set; }
+        public string CategoryTypeName { get; set; }
+        public int PackageID { get; set; }
+        public string PackageName { get; set; }
+        public string PackageDiscription { get; set; }
     }
 }

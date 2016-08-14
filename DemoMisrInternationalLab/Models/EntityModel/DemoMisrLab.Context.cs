@@ -28,8 +28,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         }
     
         public virtual DbSet<Analysis> Analyses { get; set; }
-        public virtual DbSet<AnalysisResult> AnalysisResults { get; set; }
-        public virtual DbSet<AnalysisResultStatu> AnalysisResultStatus { get; set; }
+        public virtual DbSet<AnalysisResultDetail> AnalysisResultDetails { get; set; }
         public virtual DbSet<CategoryType> CategoryTypes { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Condition> Conditions { get; set; }
@@ -64,15 +63,18 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public virtual DbSet<RejectionReason> RejectionReasons { get; set; }
         public virtual DbSet<RequestedAnalysisResult> RequestedAnalysisResults { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<SampleSeparation> SampleSeparations { get; set; }
         public virtual DbSet<SampleType> SampleTypes { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<UnitDevice> UnitDevices { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<PatientRefID> PatientRefIDs { get; set; }
         public virtual DbSet<PlanNumber> PlanNumbers { get; set; }
         public virtual DbSet<RequestNumber> RequestNumbers { get; set; }
         public virtual DbSet<RunNumber> RunNumbers { get; set; }
-        public virtual DbSet<Analysis_Unit_Device_Sample> Analysis_Unit_Device_Sample { get; set; }
+        public virtual DbSet<Analysis_Unit_Sample> Analysis_Unit_Sample { get; set; }
+        public virtual DbSet<AnalysisResult_Details> AnalysisResult_Details { get; set; }
         public virtual DbSet<Patient_PatientRequest> Patient_PatientRequest { get; set; }
         public virtual DbSet<Patient_PatientRequest_AllStatuses> Patient_PatientRequest_AllStatuses { get; set; }
         public virtual DbSet<Patient_PatientRequest_LastStatus> Patient_PatientRequest_LastStatus { get; set; }
@@ -84,6 +86,8 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public virtual DbSet<PatientRequestAnalysis_AllStatuses> PatientRequestAnalysis_AllStatuses { get; set; }
         public virtual DbSet<PatientRequestAnalysis_LastStatus> PatientRequestAnalysis_LastStatus { get; set; }
         public virtual DbSet<Plan_Device_Unit> Plan_Device_Unit { get; set; }
+        public virtual DbSet<Unit_Device> Unit_Device { get; set; }
+        public virtual DbSet<Unit_Device_SeparatedSample> Unit_Device_SeparatedSample { get; set; }
     
         public virtual ObjectResult<Nullable<int>> AddPatientRequest(Nullable<int> patientId, Nullable<int> doctorRefId, Nullable<int> organizationId, string comment, string priority, Nullable<decimal> paid, Nullable<decimal> totalOrganizationCost, Nullable<decimal> totalPatientCost, Nullable<decimal> extraDiscount, Nullable<decimal> extraCost, string attachmentSession, string analyzesIds)
         {

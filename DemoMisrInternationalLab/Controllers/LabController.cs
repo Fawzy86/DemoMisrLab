@@ -116,6 +116,7 @@ namespace DemoMisrInternationalLab.Controllers
                 Device.Device = (from d in model.Devices
                                  where d.Device.DeviceId == _DestinationDeviceId
                                  select d.Device).SingleOrDefault();
+                Device.Unit = model.Unit;
                 //  DeviceViewModel Device = DbFunctions.RunTestPlan(Convert.ToInt32(DeviceId));
                   return PartialView("_DevicePlanAnalyzes", Device);
             }
@@ -135,12 +136,11 @@ namespace DemoMisrInternationalLab.Controllers
                     ++RakeNumber;
                     DeviceAnalyzes.Add(new Models.EntityModel.DeviceAnalysi()
                     {
-                        DeviceId = childModel.Device.DeviceId,
                         RakeNumber = RakeNumber,
                         RequestedAnalysisId = deviceAnalysis.RequestedAnalysisID,
                     });
                 }
-                DbFunctions.RunTestPlan(DeviceAnalyzes, HttpContext.User.Identity.Name);
+                DbFunctions.RunTestPlan(DeviceAnalyzes, childModel.Unit.UnitId, childModel.Device.DeviceId, HttpContext.User.Identity.Name);
                 return Content(String.Join(",", DeviceAnalyzes.Select(a => a.RequestedAnalysisId)));
             }
             return null;
@@ -207,20 +207,27 @@ namespace DemoMisrInternationalLab.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveAnalysisReslut(FormCollection form, PlansViewModel model, string PlanId, string RequestedAnalysisId, string Result)
+        public ActionResult SaveAnalysisReslut(FormCollection form, PlansViewModel model,List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> childModel, string RequestedAnalysisId)
         {
-            if (!String.IsNullOrWhiteSpace(PlanId) && !String.IsNullOrWhiteSpace(RequestedAnalysisId) && !String.IsNullOrWhiteSpace(Result))
+            if (model != null && childModel != null && childModel.Any() && !String.IsNullOrWhiteSpace(RequestedAnalysisId))
             {
-                List<string> ResultList = Result.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                DbFunctions.SaveResultForRequestedAnalysis(Convert.ToInt32(RequestedAnalysisId), ResultList, HttpContext.User.Identity.Name);
-                PlanViewModel PlanView = DbFunctions.GetPlanDetails(Convert.ToInt32(PlanId));
-                if (PlanView.IsOpened)
+                int _RequestedAnalysisId = Convert.ToInt32(RequestedAnalysisId);
+                var RequestAnalysis = (from p in childModel
+                                       where p.Analysis.RequestedAnalysisID == _RequestedAnalysisId
+                                       select p).SingleOrDefault();
+                if (RequestAnalysis != null)
                 {
-                    return Content(PlanId);
-                }
-                else
-                {
-                    return null;
+                    DbFunctions.SaveResultForRequestedAnalysis(_RequestedAnalysisId, RequestAnalysis.AnalysisResultsDetails, HttpContext.User.Identity.Name);
+                    PlanViewModel PlanView = DbFunctions.GetPlanDetails(RequestAnalysis.Analysis.PlanId);
+                    if (PlanView.IsOpened)
+                    {
+                        // List<DemoMisrInternationalLab.Models.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>
+                        return Content(RequestAnalysis.Analysis.PlanId.ToString());
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
             return null;

@@ -31,10 +31,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public string RunNumber { get; set; }
         public string AnalysisCode { get; set; }
         public string AnalysisName { get; set; }
-        public string NormalRange { get; set; }
         public int SampleTypeID { get; set; }
-        public decimal MinimumValue { get; set; }
-        public decimal MaximumValue { get; set; }
         public decimal CostPrice { get; set; }
         public Nullable<decimal> ExtraDiscount { get; set; }
         public Nullable<decimal> ExtraCost { get; set; }

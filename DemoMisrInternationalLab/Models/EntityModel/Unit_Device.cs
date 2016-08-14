@@ -12,23 +12,16 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Analysis_Unit_Device_Sample
+    public partial class Unit_Device
     {
-        public int AnalysisID { get; set; }
-        public string AnalysisCode { get; set; }
-        public string AnalysisName { get; set; }
-        public string NormalRange { get; set; }
-        public decimal MinimumValue { get; set; }
-        public decimal MaximumValue { get; set; }
-        public decimal CostPrice { get; set; }
         public int DeviceId { get; set; }
         public string DeviceName { get; set; }
+        public string DeviceCode { get; set; }
+        public int Capacity { get; set; }
         public string DeviceDescription { get; set; }
-        public bool IsDefalutUnitDevice { get; set; }
-        public int SampleTypeID { get; set; }
-        public string SampleType { get; set; }
         public int UnitId { get; set; }
         public string UnitName { get; set; }
         public string UnitDescription { get; set; }
+        public bool IsDefaultDevice { get; set; }
     }
 }

@@ -10,10 +10,13 @@ namespace DemoMisrInternationalLab.Models
     {
         public DeviceViewModel()
         {
-            Device = new Device();
+            Device = new EntityModel.Device();
+            Unit = new EntityModel.Unit();
             Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus>();
         }
         public Device Device { get; set; }
+
+        public Unit Unit { get; set; }
         public List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus> Analyzes { get; set; }
     }
 }

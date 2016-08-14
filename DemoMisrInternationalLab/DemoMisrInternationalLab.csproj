@@ -179,6 +179,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AnalysisResultDetailsViewModel.cs" />
     <Compile Include="Models\AnalysisUnitDeviceViewModel.cs" />
     <Compile Include="Models\AnalysisViewModel.cs" />
     <Compile Include="Models\CitiesViewModel.cs" />
@@ -189,13 +190,13 @@
     <Compile Include="Models\EntityModel\Analysis.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EntityModel\AnalysisResult.cs">
+    <Compile Include="Models\EntityModel\AnalysisResultDetail.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EntityModel\AnalysisResultStatu.cs">
+    <Compile Include="Models\EntityModel\AnalysisResult_Details.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EntityModel\Analysis_Unit_Device_Sample.cs">
+    <Compile Include="Models\EntityModel\Analysis_Unit_Sample.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityModel\CategoryType.cs">
@@ -360,6 +361,9 @@
     <Compile Include="Models\EntityModel\RunNumber.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EntityModel\SampleSeparation.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EntityModel\SampleType.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
@@ -367,6 +371,15 @@
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityModel\Unit.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\UnitDevice.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Unit_Device.cs">
+      <DependentUpon>DemoMisrLab.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModel\Unit_Device_SeparatedSample.cs">
       <DependentUpon>DemoMisrLab.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityModel\User.cs">
@@ -379,6 +392,7 @@
     <Compile Include="Models\PatientRequestViewModel.cs" />
     <Compile Include="Models\PatientInfoViewModel.cs" />
     <Compile Include="Models\PatientRequest_Analysis_Status_ViewModel.cs" />
+    <Compile Include="Models\PatientRequest_Analyzes_History_ViewModel.cs" />
     <Compile Include="Models\PatientsRequestsAllViewModel.cs" />
     <Compile Include="Models\Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel.cs" />
     <Compile Include="Models\Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel.cs" />
@@ -657,6 +671,7 @@
     <Content Include="images\invoice.PNG" />
     <Content Include="images\invoiceee-logo.png" />
     <Content Include="images\invoiceee-signature.png" />
+    <Content Include="images\iso.png" />
     <Content Include="images\loading.gif" />
     <Content Include="images\logo-login.png" />
     <Content Include="images\next.png" />
@@ -995,6 +1010,7 @@
     <Content Include="Views\QC\_QCPatientsRequests.cshtml" />
     <Content Include="Views\QC\_QCAnalysisResult.cshtml" />
     <Content Include="Views\QC\_Revision.cshtml" />
+    <Content Include="Views\QC\_AnalysisDetailsReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

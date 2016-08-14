@@ -12,17 +12,12 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     using System;
     using System.Collections.Generic;
     
-    public partial class AnalysisResultStatu
+    public partial class SampleSeparation
     {
-        public int AnalysisResultStatusID { get; set; }
-        public int AnalysisResultID { get; set; }
-        public int EmployeeID { get; set; }
-        public int StatusID { get; set; }
-        public System.DateTime StatusDate { get; set; }
-        public string Comment { get; set; }
+        public int SeparatedSampleId { get; set; }
+        public string SeparatedSampleName { get; set; }
+        public int SampleId { get; set; }
     
-        public virtual AnalysisResult AnalysisResult { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual Status Status { get; set; }
+        public virtual SampleType SampleType { get; set; }
     }
 }

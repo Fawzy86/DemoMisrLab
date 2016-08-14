@@ -34,7 +34,6 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public string Comment { get; set; }
         public Nullable<int> DoctorRefID { get; set; }
         public string Priority { get; set; }
-        public Nullable<int> OrganizationID { get; set; }
         public string RequestedRefID { get; set; }
         public string AttachmentSession { get; set; }
         public int PatientID { get; set; }
@@ -43,5 +42,14 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public Nullable<decimal> TotalPatientCost { get; set; }
         public Nullable<decimal> TotalOrganizationCost { get; set; }
         public string RequestNumber { get; set; }
+        public int OrganizationID { get; set; }
+        public string OrganizationName { get; set; }
+        public System.DateTime InsertionDate { get; set; }
+        public bool PatientCanReceiveResult { get; set; }
+        public int PackageID { get; set; }
+        public string PackageName { get; set; }
+        public string PackageDiscription { get; set; }
+        public int CategoryTypeID { get; set; }
+        public string CategoryTypeName { get; set; }
     }
 }

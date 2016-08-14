@@ -12,27 +12,20 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Plan_Device_Unit
+    public partial class Unit_Device_SeparatedSample
     {
-        public int PlanId { get; set; }
-        public string PlanNumber { get; set; }
-        public System.DateTime TestDate { get; set; }
         public int DeviceId { get; set; }
         public string DeviceName { get; set; }
         public string DeviceCode { get; set; }
         public string DeviceDescription { get; set; }
         public int Capacity { get; set; }
+        public bool IsDefaultDevice { get; set; }
         public int UnitId { get; set; }
         public string UnitName { get; set; }
         public string UnitDescription { get; set; }
-        public int EmployeeID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public System.DateTime JobDate { get; set; }
-        public string Address { get; set; }
-        public System.DateTime BirthDay { get; set; }
-        public string Phone { get; set; }
-        public int CurrentBranchID { get; set; }
-        public int JobTitleID { get; set; }
+        public int SampleTypeID { get; set; }
+        public string SampleType { get; set; }
+        public string SeparatedSampleName { get; set; }
+        public int SeparatedSampleId { get; set; }
     }
 }

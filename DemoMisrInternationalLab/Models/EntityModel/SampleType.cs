@@ -17,11 +17,13 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public SampleType()
         {
             this.Analyses = new HashSet<Analysis>();
+            this.SampleSeparations = new HashSet<SampleSeparation>();
         }
     
         public int SampleTypeID { get; set; }
         public string SampleType1 { get; set; }
     
         public virtual ICollection<Analysis> Analyses { get; set; }
+        public virtual ICollection<SampleSeparation> SampleSeparations { get; set; }
     }
 }

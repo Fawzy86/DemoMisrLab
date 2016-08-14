@@ -16,6 +16,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     {
         public Analysis()
         {
+            this.AnalysisResultDetails = new HashSet<AnalysisResultDetail>();
             this.PackageCostLists = new HashSet<PackageCostList>();
             this.PatientRequestAnalysis = new HashSet<PatientRequestAnalysi>();
         }
@@ -23,15 +24,13 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public int AnalysisID { get; set; }
         public string AnalysisCode { get; set; }
         public string AnalysisName { get; set; }
-        public string NormalRange { get; set; }
         public int SampleTypeID { get; set; }
-        public decimal MinimumValue { get; set; }
-        public decimal MaximumValue { get; set; }
         public decimal CostPrice { get; set; }
-        public Nullable<int> UnitId { get; set; }
+        public int UnitId { get; set; }
     
         public virtual SampleType SampleType { get; set; }
         public virtual Unit Unit { get; set; }
+        public virtual ICollection<AnalysisResultDetail> AnalysisResultDetails { get; set; }
         public virtual ICollection<PackageCostList> PackageCostLists { get; set; }
         public virtual ICollection<PatientRequestAnalysi> PatientRequestAnalysis { get; set; }
     }

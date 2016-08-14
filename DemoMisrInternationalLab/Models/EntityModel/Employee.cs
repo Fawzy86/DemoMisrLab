@@ -16,8 +16,6 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     {
         public Employee()
         {
-            this.AnalysisResults = new HashSet<AnalysisResult>();
-            this.AnalysisResultStatus = new HashSet<AnalysisResultStatu>();
             this.DeviceAnalysis = new HashSet<DeviceAnalysi>();
             this.DevicePlans = new HashSet<DevicePlan>();
             this.NotDeliveredAnalysis = new HashSet<NotDeliveredAnalysi>();
@@ -44,8 +42,6 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public int CurrentBranchID { get; set; }
         public int JobTitleID { get; set; }
     
-        public virtual ICollection<AnalysisResult> AnalysisResults { get; set; }
-        public virtual ICollection<AnalysisResultStatu> AnalysisResultStatus { get; set; }
         public virtual ICollection<DeviceAnalysi> DeviceAnalysis { get; set; }
         public virtual ICollection<DevicePlan> DevicePlans { get; set; }
         public virtual JobTitle JobTitle { get; set; }

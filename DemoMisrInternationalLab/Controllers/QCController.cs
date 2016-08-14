@@ -39,7 +39,7 @@ namespace DemoMisrInternationalLab.Controllers
 
         public ActionResult GetPatientAnalyzesPendingForReporting(string RequestId, string ViewOption)
         {
-            List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>();
+            PatientRequest_Analyzes_History_ViewModel RequestAnalyzes = new PatientRequest_Analyzes_History_ViewModel();
             if (!String.IsNullOrWhiteSpace(RequestId))
             {
                 int _RequestId = 0;
@@ -47,43 +47,43 @@ namespace DemoMisrInternationalLab.Controllers
                 Int32.TryParse(RequestIdArray[RequestIdArray.Length - 1], out _RequestId);
                 if (_RequestId != 0)
                 {
-                    Analyzes = DbFunctions.GetAnalyzesForReporting(_RequestId, ViewOption);
+                    RequestAnalyzes = DbFunctions.GetAnalyzesForReporting(_RequestId, ViewOption);
                 }
             }
-            return PartialView("_QCAnalysisResult", Analyzes);
+            return PartialView("_QCAnalysisResult", RequestAnalyzes);
 
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RecyleAnalysisResults(FormCollection form, List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> model, string RequestedAnalysisId)
+        public ActionResult RecyleAnalysisResults(FormCollection form, PatientRequest_Analyzes_History_ViewModel model, string RequestedAnalysisId)
         {
-            if (model != null && !String.IsNullOrWhiteSpace(RequestedAnalysisId))
+            if (model != null && model.CurrentRequestAnalyzes !=null && model.CurrentRequestAnalyzes.Any() && !String.IsNullOrWhiteSpace(RequestedAnalysisId))
             {
                 var RequestedAnalysisIdArray = RequestedAnalysisId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
                 int _RequestedAnalysisId = Convert.ToInt32(RequestedAnalysisIdArray[RequestedAnalysisIdArray.Length - 1]);
                 DbFunctions.UpdateRequestedAnalyzesStatus(new List<int>() { _RequestedAnalysisId }, Resources.Status.RecycledByQC, HttpContext.User.Identity.Name);
                 //// For checking the pending request
-                return CheckPendingRequestForReporting(model, _RequestedAnalysisId);
+                return CheckPendingRequestForReporting(model.CurrentRequestAnalyzes, _RequestedAnalysisId);
             }
             return null;
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ApproveAnalysisResults(FormCollection form, List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> model, string RequestedAnalysisId)
+        public ActionResult ApproveAnalysisResults(FormCollection form, PatientRequest_Analyzes_History_ViewModel model, string RequestedAnalysisId)
         {
-            if (model != null && !String.IsNullOrWhiteSpace(RequestedAnalysisId))
+            if (model != null && model.CurrentRequestAnalyzes !=null && model.CurrentRequestAnalyzes.Any() && !String.IsNullOrWhiteSpace(RequestedAnalysisId))
             {
                 var RequestedAnalysisIdArray = RequestedAnalysisId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
                 int _RequestedAnalysisId = Convert.ToInt32(RequestedAnalysisIdArray[RequestedAnalysisIdArray.Length - 1]);
-                var AnalysisResults = (from p in model
+                var AnalysisResults = (from p in model.CurrentRequestAnalyzes
                                        where p.Analysis.RequestedAnalysisID == _RequestedAnalysisId
                                        select p.AnalysisResults).SingleOrDefault();
                 DbFunctions.UpdateAnalysisResultsByQC(AnalysisResults, HttpContext.User.Identity.Name);
                 DbFunctions.UpdateRequestedAnalyzesStatus(new List<int>() { _RequestedAnalysisId }, Resources.Status.ApprovedByQC, HttpContext.User.Identity.Name);
                 //// For checking the pending request
-                return CheckPendingRequestForReporting(model, _RequestedAnalysisId);
+                return CheckPendingRequestForReporting(model.CurrentRequestAnalyzes, _RequestedAnalysisId);
             }
             return null;
         }
@@ -138,6 +138,17 @@ namespace DemoMisrInternationalLab.Controllers
             List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel> Analyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel>();
             Analyzes = DbFunctions.GetAnalyzesForQCReviewing(SearchPattern, SearchType, DateFrom, DateTo);
             return PartialView("_RevisionAnalyzes", Analyzes);
+        }
+
+        public ActionResult GetAnalysisDetails(string RequestedAnalysisId)
+        {
+            Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel AnalysisDetails = new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel();
+            if (!String.IsNullOrWhiteSpace(RequestedAnalysisId))
+            {
+                AnalysisDetails = DbFunctions.GetAnalysisDetails(Convert.ToInt32(RequestedAnalysisId));
+                return PartialView("_AnalysisDetailsReport", AnalysisDetails);
+            }
+            return null;
         }
 
         #endregion

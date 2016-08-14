@@ -23,10 +23,12 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public string PlanNumber { get; set; }
         public System.DateTime TestDate { get; set; }
         public int EmployeeId { get; set; }
+        public int UnitId { get; set; }
         public int DeviceId { get; set; }
     
         public virtual Device Device { get; set; }
         public virtual ICollection<DeviceAnalysi> DeviceAnalysis { get; set; }
         public virtual Employee Employee { get; set; }
+        public virtual Unit Unit { get; set; }
     }
 }

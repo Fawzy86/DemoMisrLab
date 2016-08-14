@@ -16,7 +16,6 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     {
         public Status()
         {
-            this.AnalysisResultStatus = new HashSet<AnalysisResultStatu>();
             this.PatientRequestAnalysisStatus = new HashSet<PatientRequestAnalysisStatu>();
             this.PatientRequestStatus = new HashSet<PatientRequestStatu>();
         }
@@ -26,7 +25,6 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public string StatusName { get; set; }
         public string Description { get; set; }
     
-        public virtual ICollection<AnalysisResultStatu> AnalysisResultStatus { get; set; }
         public virtual ICollection<PatientRequestAnalysisStatu> PatientRequestAnalysisStatus { get; set; }
         public virtual ICollection<PatientRequestStatu> PatientRequestStatus { get; set; }
     }

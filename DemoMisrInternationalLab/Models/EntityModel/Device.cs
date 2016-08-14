@@ -16,19 +16,15 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     {
         public Device()
         {
-            this.DeviceAnalysis = new HashSet<DeviceAnalysi>();
             this.DevicePlans = new HashSet<DevicePlan>();
         }
     
         public int DeviceId { get; set; }
         public string DeviceName { get; set; }
+        public string DeviceCode { get; set; }
         public string DeviceDescription { get; set; }
-        public int UnitId { get; set; }
-        public bool IsDefalutUnitDevice { get; set; }
         public int Capacity { get; set; }
     
-        public virtual Unit Unit { get; set; }
-        public virtual ICollection<DeviceAnalysi> DeviceAnalysis { get; set; }
         public virtual ICollection<DevicePlan> DevicePlans { get; set; }
     }
 }

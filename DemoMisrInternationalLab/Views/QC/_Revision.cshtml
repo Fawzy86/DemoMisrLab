@@ -3,11 +3,11 @@
     @Html.AntiForgeryToken()
     <div class="captureresult-listb">
 
-        <div class="col-md-7 mar-botmob">
+        <div class="col-md-6 mar-botmob">
             <div class="input-group" style="margin-top:0;">
                 <div class="input-group-btn search-panel">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width:100%;">
-                        <span id="QC_Revision_Search_concept">Filter by</span> <span class="caret"></span>
+                        <span id="QC_Revision_Search_concept">Filter</span> <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#RefId">Reference ID</a></li>
@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-6">
 
             <div id="QC_Revision_Report_Range" class="pull-right" style="background: #fff; cursor: pointer; padding: 8px 10px; border: 1px solid #ccc; width: 100%">
                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
@@ -133,15 +133,17 @@
     ///////////////////////////////////////////////////////
     function GetAnalysisDetails(RequestedAnalysisId) {
         try {
+            console.log(RequestedAnalysisId);
             $.ajax({
                 cache: false,
                 async: true,
                 type: "GET",
-                url: "/Lab/GetAnalysisDetails?RequestedAnalysisId=" + RequestedAnalysisId,//form.attr('action'),
+                url: "/QC/GetAnalysisDetails?RequestedAnalysisId=" + RequestedAnalysisId,//form.attr('action'),
                 success: function (data) {
-                    console.log(data);
-                    $("#QC_Revision_Popup_Content").html(data);
-                    window.location.href = "#QC_Revision_Popup";
+                    if (data != null && data.length > 0) {
+                        $("#QC_Revision_Popup_Content").html(data);
+                        window.location.href = "#QC_Revision_Popup";
+                    }
                 },
                 error: function (xhr, desc, err) {
                     alert("Error: " + err.message + " " + desc.message + " " + xhr.responseText);

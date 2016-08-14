@@ -29,10 +29,7 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public int RequestedAnalysisID { get; set; }
         public string AnalysisCode { get; set; }
         public string AnalysisName { get; set; }
-        public string NormalRange { get; set; }
         public int SampleTypeID { get; set; }
-        public decimal MinimumValue { get; set; }
-        public decimal MaximumValue { get; set; }
         public decimal CostPrice { get; set; }
         public int PatientID { get; set; }
         public System.DateTime RequestDate { get; set; }

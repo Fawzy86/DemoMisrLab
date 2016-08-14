@@ -1,0 +1,153 @@
+﻿@model DemoMisrInternationalLab.Models.Patient_PatientRequest_PatientRequestAnalysis_LastStatus_Device_ViewModel
+@using DemoMisrInternationalLab.Resources
+@if (Model != null)
+{
+    <div class="input-group table-responsive">
+        <div class="qc-logo text-right"><img src="/images/logo-login.png" alt=""></div>
+        <table class="table">
+            <tbody>
+
+                <tr>
+
+                    <td width="100"></td>
+
+                    <td width="300">
+                        <table class="table table-nopadding">
+                            <tr>
+                                <td>Name</td>
+                                <td>:</td>
+                                <td>@Model.Analysis.FirstName @Model.Analysis.MiddleName @Model.Analysis.LastName</td>
+                            </tr>
+                            <tr>
+                                <td>Age</td>
+                                <td>:</td>
+                                <td>
+                                    @{
+    var Age = Model.Analysis.BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.Analysis.BirthDate).Year).ToString() : String.Empty;
+                                }
+                                @Age
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td>:</td>
+                            <td>@Model.Analysis.Gender</td>
+                        </tr>
+                        <tr>
+                            <td>Sample No.</td>
+                            <td>:</td>
+                            <td>@Model.Analysis.RequestNumber : @Model.Analysis.RunNumber</td>
+                        </tr>
+                    </table>
+                </td>
+
+
+                <td></td>
+
+                <td width="300">
+                    <table class="table table-nopadding">
+                        <tr>
+                            <td>Type</td>
+                            <td>:</td>
+                            <td>@Model.Analysis.CategoryTypeName</td>
+                        </tr>
+                        <tr>
+                            <td>By DR</td>
+                            <td>:</td>
+                            <td>kfjdslkfjsdlkfjslkdfjs</td>
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td>:</td>
+                            <td>@Model.Analysis.RequestDate</td>
+                        </tr>
+                        <tr>
+                            <td>Print Time</td>
+                            <td>:</td>
+                            <td>@Model.Analysis.StatusDate</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td width="200"></td>
+
+            </tr>
+
+        </tbody>
+    </table>
+
+
+    <div style="width:100%; height:1px; background-color:#6c6c6c; margin-bottom:20px;"></div>
+
+
+
+        <div class="table-scrollb">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="5" style="text-align:center;">@Model.Analysis.AnalysisName</th>
+                    </tr>
+
+                    <tr style="background-color:#e1e1e1;">
+                        <th style="padding:5px;">Setion Title</th>
+                        <th width="30%">Analysic Name</th>
+                        <th>Value </th>
+                        <th width="13%">Unit Of Measure</th>
+                        <th>Refence Range</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @for (int i = 0; i < @Model.AnalysisResults.Count; i++)
+            {
+                        <tr>
+                            <th style="padding:5px;">
+                                @if (i == 0 || @Model.AnalysisResults[i - 1].SectionTitle != @Model.AnalysisResults[i].SectionTitle)
+                                { 
+                                    @Model.AnalysisResults[i].SectionTitle
+                                }
+                            </th>
+                            <td width="30%">@Model.AnalysisResults[i].ResultTitle </td>
+                            <td>@Model.AnalysisResults[i].ResultValue </td>
+                            <td>@Model.AnalysisResults[i].UnitOfMeasure </td>
+                            <td>
+                                @if (Model.Analysis.Gender == Gender.Female)
+                        {
+                                    @Model.AnalysisResults[i].FemaleNormalRange
+                        }
+                        else
+                        {
+                                    @Model.AnalysisResults[i].MaleNormalRange
+                    }
+                            </td>
+                        </tr>
+            }
+                </tbody>
+            </table>
+        </div>
+
+</div>
+
+    <div class="input-group row qc-bottom">
+
+        <div class="col-md-3">
+
+            <ul class="qcul">
+
+                <li>Address: uhuhuhj ijij uhu uhuhuh</li>
+                <li>Tel: 025686654</li>
+                <li>Customer service to all</li>
+                <li>Tel: 013456678</li>
+                <li><div style="width:100%; height:1px; background-color:#6c6c6c;"></div></li>
+                <li>www.misrinternationallab.com</li>
+
+            </ul>
+
+        </div>
+
+        <div class="col-md-5 text-center"><img src="/images/approved.png" alt=""></div>
+
+        <div class="col-md-3 text-right isologo"><img src="/images/iso.png" alt=""> <img src="/images/iso.png" alt=""></div>
+
+    </div>
+}

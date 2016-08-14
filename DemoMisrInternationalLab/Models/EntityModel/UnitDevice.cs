@@ -12,19 +12,11 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Unit
+    public partial class UnitDevice
     {
-        public Unit()
-        {
-            this.Analyses = new HashSet<Analysis>();
-            this.DevicePlans = new HashSet<DevicePlan>();
-        }
-    
         public int UnitId { get; set; }
-        public string UnitName { get; set; }
-        public string UnitDescription { get; set; }
-    
-        public virtual ICollection<Analysis> Analyses { get; set; }
-        public virtual ICollection<DevicePlan> DevicePlans { get; set; }
+        public int DeviceId { get; set; }
+        public int SeparatedSampleId { get; set; }
+        public bool IsDefaultDevice { get; set; }
     }
 }

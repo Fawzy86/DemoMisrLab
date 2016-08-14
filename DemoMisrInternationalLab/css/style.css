@@ -1702,6 +1702,24 @@ div label input {
   float:left;
   width:100%;
   margin-top:15px;	  	
+  }
+.table-nopadding > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table-nopadding > thead > tr > td, .table-nopadding > tbody > tr > td, .table-nopadding > tfoot > tr > td {
+	padding:0;	
+
+}
+.qc-logo {
+	padding:5px;
+	
+}
+.qc-bottom {
+	position:absolute;
+	width:100%;
+	bottom:20px;
+	
+	
+}
+.qcul li {
+	font-size:11px;	
 	
 }
 .result-valueiteminput {
@@ -3778,3 +3796,8 @@ ul.icheck-buttons > li {
 }
 .qc-topmob {
 	margin-top:50px;		
+}
+.qc-bottom {
+	position:relative;
+	top:50px;
+

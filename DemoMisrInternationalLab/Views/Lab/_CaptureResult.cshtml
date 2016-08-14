@@ -4,40 +4,60 @@
     <div class="carousel-wrapper">
         <div class="carousel-items">
             @if (Model != null)
-{
-    for (int i = 0; i < Model.Count; i++)
-    {
-        <div class="carousel-block" style="width:350px;">
-            @Html.HiddenFor(m => Model[i].Analysis.PlanId)
-            @Html.HiddenFor(m => Model[i].Analysis.RequestedAnalysisID)
-            <table class="table table-bordered table-record" id="@("RequestedAnalysisIdResultTable_" + @Model[i].Analysis.RequestedAnalysisID)">
-                <thead>
-                    <tr>
-                        <th>
-                            <div class="col-md-12">@Model[i].Analysis.AnalysisName</div>
-                            <div class="col-md-6">@Model[i].Analysis.RunNumber</div>
-                            <div class="col-md-6">@Model[i].Analysis.RakeNumber</div>
-                            <div class="col-md-12">@Model[i].Analysis.DeviceName</div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <input type="number" class="form-control addrecord-input" onkeyup="AddNewResult(event);">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="col-md-8 text-right">
-                <button type="button" class="btn btn-success" style="border-radius:0;"
-                        onclick="SaveResult(@Model[i].Analysis.PlanId,'RequestedAnalysisIdResultTable_',@Model[i].Analysis.RequestedAnalysisID);">
-                    Save
-                </button>
-            </div>
-        </div>
-    }
-}
+            {
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    <div class="carousel-block" style="width:200px;">
+                        @Html.HiddenFor(m => Model[i].Analysis.PlanId)
+                        @Html.HiddenFor(m => Model[i].Analysis.RequestedAnalysisID)
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-record">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="col-md-12">@Model[i].Analysis.AnalysisCode</div>
+                                            <div class="col-md-6">@Model[i].Analysis.RunNumber</div>
+                                            <div class="col-md-6">@Model[i].Analysis.RakeNumber</div>
+                                            <div class="col-md-12">@Model[i].Analysis.DeviceName</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="col-md-12 table-scrollb">
+                            <table class="table table-bordered table-record" id="@("RequestedAnalysisIdResultTable_" + @Model[i].Analysis.RequestedAnalysisID)">
+                                <tbody>
+                                    @for (int j = 0; j < Model[i].AnalysisResultsDetails.Count; j++)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @Model[i].AnalysisResultsDetails[j].ResultDetails.ResultTitle
+                                            @if (Model[i].AnalysisResultsDetails[j].ResultDetails.DataType.ToLower().Trim() != "string")
+                                                {
+                                                @Html.TextBoxFor(m => Model[i].AnalysisResultsDetails[j].ResultValue, new { @type = "number", @class = "form-control addrecord-input", @onkeyup = "MoveToNextRow(event);" })
+                                                }
+                                                else
+                                                {
+                                                @Html.TextBoxFor(m => Model[i].AnalysisResultsDetails[j].ResultValue, new { @class = "form-control addrecord-input", @onkeyup = "MoveToNextRow(event);" })
+                                                }
+                                            @Html.HiddenFor(m => Model[i].AnalysisResultsDetails[j].ResultDetails.AnalysisDetailId)
+                                        </td>
+                                    </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12"><p></p></div>
+                        <div class="col-md-8 text-right">
+                            <button type="button" class="btn btn-success" style="border-radius:0;"
+                                    onclick="SaveResult('RequestedAnalysisIdResultTable_',@Model[i].Analysis.RequestedAnalysisID);">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                }
+            }
 
         </div>
     </div>
@@ -49,17 +69,7 @@
 <script type="text/javascript">
     ///////////////////////////////////////////////////////
     $(function () {
-        try {
-            $(CaptureResult_fourd).carouseller();
-            //$(".carousel-button-left").trigger('click');
-            //$(".carousel-button-left").trigger('click');
-            //$(".carousel-button-left").trigger('click');
-            //$(".carousel-button-left").trigger('click');
-            //$(".carousel-button-left").trigger('click');
-            //$(".carousel-button-left").trigger('click');
-        } catch (err) {
-            console.log(err.message);
-        }
+        $(CaptureResult_fourd).carouseller();
     });
 </script>
 

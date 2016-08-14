@@ -12,8 +12,18 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     using System;
     using System.Collections.Generic;
     
-    public partial class RequestedAnalysisResult
+    public partial class AnalysisResult_Details
     {
+        public int AnalysisDetailId { get; set; }
+        public string ResultTitle { get; set; }
+        public string Description { get; set; }
+        public string UnitOfMeasure { get; set; }
+        public string MinimumValue { get; set; }
+        public string MaximumValue { get; set; }
+        public string MaleNormalRange { get; set; }
+        public string FemaleNormalRange { get; set; }
+        public string DataType { get; set; }
+        public string SectionTitle { get; set; }
         public int RequestedAnalysisResultId { get; set; }
         public int RequestedAnalysisId { get; set; }
         public System.DateTime ResultDate { get; set; }
@@ -21,10 +31,11 @@ namespace DemoMisrInternationalLab.Models.EntityModel
         public string DoctorResultValue { get; set; }
         public int EmployeeId { get; set; }
         public bool EditedByQC { get; set; }
-        public Nullable<int> AnalysisDetailId { get; set; }
-    
-        public virtual AnalysisResultDetail AnalysisResultDetail { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual PatientRequestAnalysi PatientRequestAnalysi { get; set; }
+        public int AnalysisID { get; set; }
+        public string AnalysisCode { get; set; }
+        public string AnalysisName { get; set; }
+        public decimal CostPrice { get; set; }
+        public int UnitId { get; set; }
+        public int SampleTypeID { get; set; }
     }
 }

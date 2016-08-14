@@ -16,13 +16,11 @@ namespace DemoMisrInternationalLab.Models.EntityModel
     {
         public int DeviceAnalysisId { get; set; }
         public int RequestedAnalysisId { get; set; }
-        public int DeviceId { get; set; }
         public int EmployeeId { get; set; }
         public System.DateTime ReceiveDate { get; set; }
         public int PlanId { get; set; }
         public int RakeNumber { get; set; }
     
-        public virtual Device Device { get; set; }
         public virtual DevicePlan DevicePlan { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual PatientRequestAnalysi PatientRequestAnalysi { get; set; }

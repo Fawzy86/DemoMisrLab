@@ -55,67 +55,41 @@
         }
     }
     ///////////////////////////////////////////////////////////
-    function AddNewResult(ev) {
-        ev.preventDefault();
-        if (ev.keyCode == 13) { /// Enter button for new record
-            var rowElem = ev.target.closest("tr");
-            var tableElem = rowElem.closest("table");
-            var rowCount = tableElem.rows.length;
-            if (rowElem.rowIndex == rowCount - 1) {/// Create new row
-                var newRow = tableElem.insertRow(rowCount);
-                var cell1 = newRow.insertCell(0);
-                cell1.innerHTML = "<input type='number' class='form-control addrecord-input' onkeyup='AddNewResult(event);'>";
-                newRow.getElementsByTagName("input")[0].focus();
-            } else {
-                tableElem.rows[rowElem.rowIndex + 1].getElementsByTagName("input")[0].focus();
-            }
-        }
-        else if (ev.keyCode == 46) { //// Delete button for delete the result record
-            var inputElem = ev.target;
-            if (inputElem.value == "") {
-                inputElem.select();
-                var inputElemValue = window.getSelection().toString();
-                if (inputElemValue.length == 0) {
-                    var rowElem = inputElem.closest("tr");
-                    var tableElem = rowElem.closest("table");
-                    var rowIndex = rowElem.rowIndex;
-                    if (rowIndex != 1) {
-                        tableElem.deleteRow(rowIndex);
-                        try {
-                            tableElem.rows[rowIndex].getElementsByTagName("input")[0].focus();
-                        } catch (err) {
-                            tableElem.rows[rowIndex - 1].getElementsByTagName("input")[0].focus();
-                        }
-                    }
+    function MoveToNextRow(ev) {
+        try {
+            ev.preventDefault();
+            if (ev.keyCode == 13) { /// Enter button for new record
+                var rowElem = ev.target.closest("tr");
+                var tableElem = rowElem.closest("table");
+                var rowCount = tableElem.rows.length;
+                if (rowElem.rowIndex < rowCount - 1) {/// Move to next row
+                    tableElem.rows[rowElem.rowIndex + 1].getElementsByTagName("input")[0].focus();
                 }
             }
+        } catch (err) {
+            console.log(err.message);
         }
         return false;
     }
     ////////////////////////////////////////////////////////////
-    function SaveResult(PlanId, TablePrefix, RequestedAnalysisId) {
+    function SaveResult(TablePrefix, RequestedAnalysisId) {
         try {
             var form = $(document.getElementById('Opened_Plans_Form'));
-            console.log(form);
             if (form.validate()) {
                 var tableElem = document.getElementById(TablePrefix + RequestedAnalysisId);
-                var Results = [];
                 for (i = 0; i < tableElem.getElementsByTagName("input").length; i++) {
                     var inputText = tableElem.getElementsByTagName("input")[i];
                     if (inputText.value == "") {
                         inputText.focus();
                         return;
                     }
-                    else {
-                        Results.push(inputText.value);
-                    }
                 }
                 $.ajax({
                     cache: false,
                     async: true,
                     type: "POST",
-                    url: "/Lab/SaveAnalysisReslut",//form.attr('action'),
-                    data: form.serialize() + "&PlanId=" + PlanId + "&RequestedAnalysisId=" + RequestedAnalysisId + "&Result=" + Results,
+                    url: "/Lab/SaveAnalysisReslut",
+                    data: form.serialize() +  "&RequestedAnalysisId=" + RequestedAnalysisId,
                     success: function (data) {
                         if (data != null && data.length > 0) {
                             LoadPlanAnalzes(data);

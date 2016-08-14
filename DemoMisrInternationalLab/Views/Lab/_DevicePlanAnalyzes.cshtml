@@ -5,12 +5,12 @@
     @*@Html.AntiForgeryToken()*@
     if (Model != null && Model.Analyzes.Any())
     {
-        @Html.HiddenFor(m => Model.Device.UnitId)
         @Html.HiddenFor(m => Model.Device.DeviceId)
+        @Html.HiddenFor(m => Model.Unit.UnitId)
         for (int i = 0; i < Model.Analyzes.Count; i++)
         {
             @Html.HiddenFor(m => Model.Analyzes[i].RequestedAnalysisID)
-            @Html.HiddenFor(m => Model.Analyzes[i].AnalysisName)
+            @Html.HiddenFor(m => Model.Analyzes[i].AnalysisCode)
             @Html.HiddenFor(m => Model.Analyzes[i].RunNumber)
             @Html.HiddenFor(m => Model.Analyzes[i].Gender)
             @Html.HiddenFor(m => Model.Analyzes[i].BirthDate)
@@ -22,7 +22,7 @@
                 <thead>
                     <tr style="BACKGROUND-COLOR: #1C598F;COLOR: #FFF;">
                         <td>Run #</td>
-                        <th>Analysis Name</th>
+                        <th>Analysis Code</th>
                         <th>Gender</th>
                         <th>Age</th>
                         <th>Request Date</th>
@@ -36,7 +36,7 @@
                         var Age = Model.Analyzes[i].BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.Analyzes[i].BirthDate).Year).ToString() : String.Empty;
                         <tr>
                             <td>@Html.DisplayFor(m => Model.Analyzes[i].RunNumber)</td>
-                            <td>@Html.DisplayFor(m => Model.Analyzes[i].AnalysisName)</td>
+                            <td>@Html.DisplayFor(m => Model.Analyzes[i].AnalysisCode)</td>
                             <td>@Html.DisplayFor(m => Model.Analyzes[i].Gender)</td>
                             <td>@Age</td>
                             <td>@Html.DisplayFor(m => Model.Analyzes[i].RequestDate)</td>
