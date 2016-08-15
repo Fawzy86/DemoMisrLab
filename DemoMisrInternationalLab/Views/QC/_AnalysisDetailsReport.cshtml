@@ -24,110 +24,133 @@
                                 <td>
                                     @{
     var Age = Model.Analysis.BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.Analysis.BirthDate).Year).ToString() : String.Empty;
-                                }
-                                @Age
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gender</td>
-                            <td>:</td>
-                            <td>@Model.Analysis.Gender</td>
-                        </tr>
-                        <tr>
-                            <td>Sample No.</td>
-                            <td>:</td>
-                            <td>@Model.Analysis.RequestNumber : @Model.Analysis.RunNumber</td>
-                        </tr>
-                    </table>
-                </td>
+                                    }
+                                    @Age
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Gender</td>
+                                <td>:</td>
+                                <td>@Model.Analysis.Gender</td>
+                            </tr>
+                            <tr>
+                                <td>Sample No.</td>
+                                <td>:</td>
+                                <td>@Model.Analysis.RequestNumber : @Model.Analysis.RunNumber</td>
+                            </tr>
+                        </table>
+                    </td>
 
 
-                <td></td>
+                    <td></td>
 
-                <td width="300">
-                    <table class="table table-nopadding">
-                        <tr>
-                            <td>Type</td>
-                            <td>:</td>
-                            <td>@Model.Analysis.CategoryTypeName</td>
-                        </tr>
-                        <tr>
-                            <td>By DR</td>
-                            <td>:</td>
-                            <td>kfjdslkfjsdlkfjslkdfjs</td>
-                        </tr>
-                        <tr>
-                            <td>Date</td>
-                            <td>:</td>
-                            <td>@Model.Analysis.RequestDate</td>
-                        </tr>
-                        <tr>
-                            <td>Print Time</td>
-                            <td>:</td>
-                            <td>@Model.Analysis.StatusDate</td>
-                        </tr>
-                    </table>
-                </td>
+                    <td width="300">
+                        <table class="table table-nopadding">
+                            <tr>
+                                <td>Type</td>
+                                <td>:</td>
+                                <td>@Model.Analysis.CategoryTypeName</td>
+                            </tr>
+                            <tr>
+                                <td>By DR</td>
+                                <td>:</td>
+                                <td>
+                                    @if (Model.PatientDoctorReference != null)
+                                    {
+                                        @Model.PatientDoctorReference.DoctorName
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Date</td>
+                                <td>:</td>
+                                <td>@Model.Analysis.RequestDate</td>
+                            </tr>
+                            <tr>
+                                <td>Print Time</td>
+                                <td>:</td>
+                                <td>@Model.Analysis.StatusDate</td>
+                            </tr>
+                        </table>
+                    </td>
 
-                <td width="200"></td>
+                    <td width="200"></td>
 
-            </tr>
+                </tr>
 
-        </tbody>
-    </table>
-
-
-    <div style="width:100%; height:1px; background-color:#6c6c6c; margin-bottom:20px;"></div>
+            </tbody>
+        </table>
 
 
+        <div style="width:100%; height:1px; background-color:#6c6c6c; margin-bottom:20px;"></div>
 
-        <div class="table-scrollb">
+
+
+        <div class="table-scroll">
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th colspan="5" style="text-align:center;">@Model.Analysis.AnalysisName</th>
                     </tr>
-
+                    @{
+                        var SectionsTitles = (from a in Model.AnalysisResults
+                                              where !String.IsNullOrWhiteSpace(a.SectionTitle)
+                                              select a.SectionTitle).ToList();
+                    }
                     <tr style="background-color:#e1e1e1;">
-                        <th style="padding:5px;">Setion Title</th>
-                        <th width="30%">Analysic Name</th>
+                        @if (SectionsTitles.Any())
+                        {
+                            <th style="padding:5px;">Section Title</th>
+                        }
+                        <th width="30%">Result Label</th>
                         <th>Value </th>
-                        <th width="13%">Unit Of Measure</th>
+                        <th width="20%">Unit Of Measure</th>
                         <th>Refence Range</th>
                     </tr>
                 </thead>
                 <tbody>
 
                     @for (int i = 0; i < @Model.AnalysisResults.Count; i++)
-            {
+                    {
                         <tr>
-                            <th style="padding:5px;">
-                                @if (i == 0 || @Model.AnalysisResults[i - 1].SectionTitle != @Model.AnalysisResults[i].SectionTitle)
+                            @if (SectionsTitles.Any())
+                            {
+                                <th style="padding:5px;">
+                                    @if (i == 0 || @Model.AnalysisResults[i - 1].SectionTitle != @Model.AnalysisResults[i].SectionTitle)
+                                    {
+                                        @Model.AnalysisResults[i].SectionTitle
+                                    }
+                                </th>
+                            }
+                            <td width="30%">
+                                @if(!String.IsNullOrWhiteSpace(Model.AnalysisResults[i].ResultTitle))
                                 { 
-                                    @Model.AnalysisResults[i].SectionTitle
+                                    @Model.AnalysisResults[i].ResultTitle 
                                 }
-                            </th>
-                            <td width="30%">@Model.AnalysisResults[i].ResultTitle </td>
+                                else
+                                {
+                                    @Model.AnalysisResults[i].AnalysisCode 
+                                }
+                            </td>
                             <td>@Model.AnalysisResults[i].ResultValue </td>
                             <td>@Model.AnalysisResults[i].UnitOfMeasure </td>
                             <td>
                                 @if (Model.Analysis.Gender == Gender.Female)
-                        {
+                                {
                                     @Model.AnalysisResults[i].FemaleNormalRange
-                        }
-                        else
-                        {
+                                }
+                                else
+                                {
                                     @Model.AnalysisResults[i].MaleNormalRange
-                    }
+                                }
                             </td>
                         </tr>
-            }
+                    }
                 </tbody>
             </table>
         </div>
 
-</div>
-
+    </div>
     <div class="input-group row qc-bottom">
 
         <div class="col-md-3">

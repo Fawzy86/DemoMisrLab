@@ -1712,9 +1712,9 @@ div label input {
 	
 }
 .qc-bottom {
-	position:absolute;
+	position:relative;
 	width:100%;
-	bottom:20px;
+	bottom:0px;
 	
 	
 }

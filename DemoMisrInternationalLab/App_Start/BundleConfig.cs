@@ -34,7 +34,7 @@ namespace DemoMisrInternationalLab
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       //"~/Content/bootstrap.css",
                       "~/css/bootstrap.css",
-                      //"~/Content/site.css",
+                      "~/Content/site.css",
                       "~/css/menuuu.css",
                       "~/css/Loader.css"));
 

@@ -6,13 +6,13 @@
     <table class="table table-bordered" id="Transactions_Table">
         <thead>
             <tr>
-                <th width="10%">Request #</th>
+                <th width="9%">Request #</th>
                 <th width="7%">Category</th>
                 <th width="25%">Name</th>
                 <th>Phone</th>
                 <th width="40%">Analysis</th>
                 <th width="10%">Total Due</th>
-                <th width="20%">Date</th>
+                <th width="26%">Date</th>
                 <th>Invoice</th>
             </tr>
         </thead>
@@ -31,7 +31,7 @@
                             var AnalyzesList = String.Empty;
                             if (Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalysis != null && Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalysis.Any())
                             {
-                                 AnalyzesList = String.Join(", ", Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalysis.Select(a => a.AnalysisName));
+                                 AnalyzesList = String.Join(", ", Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAnalysis.Select(a => a.AnalysisCode));
                             }
                             @AnalyzesList
                         }

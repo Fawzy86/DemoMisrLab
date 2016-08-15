@@ -32,14 +32,14 @@
                                     <tr>
                                         <td>
                                             @Model[i].AnalysisResultsDetails[j].ResultDetails.ResultTitle
-                                            @if (Model[i].AnalysisResultsDetails[j].ResultDetails.DataType.ToLower().Trim() != "string")
+                                            @*@if (Model[i].AnalysisResultsDetails[j].ResultDetails.DataType.ToLower().Trim() != "string")
                                                 {
                                                 @Html.TextBoxFor(m => Model[i].AnalysisResultsDetails[j].ResultValue, new { @type = "number", @class = "form-control addrecord-input", @onkeyup = "MoveToNextRow(event);" })
                                                 }
-                                                else
-                                                {
+                                                else*@
+                                                @*{*@
                                                 @Html.TextBoxFor(m => Model[i].AnalysisResultsDetails[j].ResultValue, new { @class = "form-control addrecord-input", @onkeyup = "MoveToNextRow(event);" })
-                                                }
+                                                @*}*@
                                             @Html.HiddenFor(m => Model[i].AnalysisResultsDetails[j].ResultDetails.AnalysisDetailId)
                                         </td>
                                     </tr>

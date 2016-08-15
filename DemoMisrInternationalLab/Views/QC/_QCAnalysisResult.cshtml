@@ -27,7 +27,7 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                <div class="col-md-12">@Model.CurrentRequestAnalyzes[i].Analysis.AnalysisName</div>
+                                                <div class="col-md-12">@Model.CurrentRequestAnalyzes[i].Analysis.AnalysisCode</div>
                                                 <div class="col-md-6">@Model.CurrentRequestAnalyzes[i].Analysis.DeviceName</div>
                                                 <div class="col-md-6">@Model.CurrentRequestAnalyzes[i].Analysis.RunNumber</div>
                                                 <div class="col-md-12">@Model.CurrentRequestAnalyzes[i].Analysis.RequestDate</div>
@@ -40,9 +40,9 @@
                                         {
                                             @Html.HiddenFor(m => Model.CurrentRequestAnalyzes[i].AnalysisResults[j].RequestedAnalysisResultId)
                                             <tr>
-                                                <td>
+                                                <td>@Model.CurrentRequestAnalyzes[i].AnalysisResults[j].ResultTitle
                                                     @Html.TextBoxFor(m => Model.CurrentRequestAnalyzes[i].AnalysisResults[j].ResultValue,
-                                           new { @class = "form-control addrecord-input", @disabled = "disabled", @onkeyup = "MoveToNextReslut(event);" })
+                                                    new { @class = "form-control addrecord-input", @disabled = "disabled", @onkeyup = "MoveToNextReslut(event);" })
                                                 </td>
                                             </tr>
                                         }
@@ -69,7 +69,7 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    <div class="col-md-12">@relatedAnalsis.Analysis.AnalysisName</div>
+                                                    <div class="col-md-12">@relatedAnalsis.Analysis.AnalysisCode</div>
                                                     <div class="col-md-6">@relatedAnalsis.Analysis.DeviceName</div>
                                                     <div class="col-md-6">@relatedAnalsis.Analysis.RunNumber</div>
                                                     <div class="col-md-12">@relatedAnalsis.Analysis.RequestDate</div>
@@ -81,7 +81,7 @@
                                             @for (int k = 0; k < relatedAnalsis.AnalysisResults.Count; k++)
                                             {
                                                 <tr>
-                                                    <td>
+                                                    <td>@relatedAnalsis.AnalysisResults[k].ResultTitle
                                                         @Html.TextBoxFor(m => relatedAnalsis.AnalysisResults[k].ResultValue, new { @class = "form-control addrecord-input", @disabled = "disabled" })
                                                     </td>
                                                 </tr>
@@ -113,7 +113,7 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                <div class="col-md-12">@Model.HistoryRequestAnalyzes[i].Analysis.AnalysisName</div>
+                                                <div class="col-md-12">@Model.HistoryRequestAnalyzes[i].Analysis.AnalysisCode</div>
                                                 <div class="col-md-6">@Model.HistoryRequestAnalyzes[i].Analysis.DeviceName</div>
                                                 <div class="col-md-6">@Model.HistoryRequestAnalyzes[i].Analysis.RunNumber</div>
                                                 <div class="col-md-12">@Model.HistoryRequestAnalyzes[i].Analysis.RequestDate</div>
@@ -126,7 +126,7 @@
                                         {
                                             @Html.HiddenFor(m => Model.HistoryRequestAnalyzes[i].AnalysisResults[j].RequestedAnalysisResultId)
                                             <tr>
-                                                <td>
+                                                <td>@Model.HistoryRequestAnalyzes[i].AnalysisResults[j].ResultTitle
                                                     @Html.TextBoxFor(m => Model.HistoryRequestAnalyzes[i].AnalysisResults[j].ResultValue,
                                            new { @class = "form-control addrecord-input", @disabled = "disabled", @onkeyup = "MoveToNextReslut(event);" })
                                                 </td>

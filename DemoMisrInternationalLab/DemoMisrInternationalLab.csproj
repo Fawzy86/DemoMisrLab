@@ -577,6 +577,7 @@
     <Content Include="css\nestable.css" />
     <Content Include="css\nvd3.css" />
     <Content Include="css\prettify.min.css" />
+    <Content Include="css\print.css" />
     <Content Include="css\responsive.css" />
     <Content Include="css\smart_wizard.css" />
     <Content Include="css\smart_wizard_vertical.css" />

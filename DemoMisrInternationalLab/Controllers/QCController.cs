@@ -1,4 +1,5 @@
 ﻿using DemoMisrInternationalLab.Models;
+using DemoMisrInternationalLab.Security;
 using DemoMisrInternationalLab.Utilities;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace DemoMisrInternationalLab.Controllers
 {
+    [AuthorizeRoles("DoctorApply")]
     public class QCController : Controller
     {
         //

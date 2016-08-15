@@ -183,7 +183,7 @@ namespace DemoMisrInternationalLab.Utilities
             {
                 using (DemoMisrIntEntities db = new DemoMisrIntEntities())
                 {
-                    if (NewDoctorRef.DoctorsSpecializations.SelectedDoctorSpecializationID != 0)
+                    if (NewDoctorRef.DoctorsSpecializations.SelectedDoctorSpecializationID == 0)
                     {
                         throw new Exception("The specialization is missing");
                     }
@@ -1361,8 +1361,8 @@ namespace DemoMisrInternationalLab.Utilities
                                                   join an in db.PatientRequestAnalysis_AllStatuses
                                                   on p.RequestID equals an.RequestID
                                                   where p.RequestDate >= DateFrom && p.RequestDate < DateTo &&
-                                                        p.StatusIdentifier == Resources.Status.ReceivedForSampling &&
-                                                        an.StatusIdentifier == Resources.Status.ReceivedForSampling
+                                                        p.StatusIdentifier != Resources.Status.ReceivedForSampling &&
+                                                        an.StatusIdentifier != Resources.Status.PendingForSampling
                                                   select p).Distinct().ToList();
 
 
@@ -2199,6 +2199,10 @@ namespace DemoMisrInternationalLab.Utilities
                         PatientAnalysis.AnalysisResults = (from r in db.AnalysisResult_Details
                                                            where r.RequestedAnalysisId == PatientAnalysis.Analysis.RequestedAnalysisID
                                                            select r).ToList();
+
+                        PatientAnalysis.PatientDoctorReference = (from d in db.DoctorRefs
+                                                                  where d.DoctorRefID == PatientAnalysis.Analysis.DoctorRefID
+                                                                  select d).SingleOrDefault();
 
                         PatientAnalysis.AnalysisResultsDetails = (from a in db.AnalysisResultDetails
                                                                   where a.AnalysisId == PatientAnalysis.Analysis.AnalysisID
