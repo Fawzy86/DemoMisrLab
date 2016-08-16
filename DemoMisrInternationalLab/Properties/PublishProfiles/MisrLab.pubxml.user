@@ -13,7 +13,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/15/2016 13:25:42</publishTime>
     </File>
     <File Include="bin/DemoMisrInternationalLab.dll">
-      <publishTime>08/15/2016 13:52:20</publishTime>
+      <publishTime>08/16/2016 13:40:43</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>06/15/2016 13:25:44</publishTime>
@@ -497,6 +497,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="css/prettify.min.css">
       <publishTime>04/14/2014 10:22:42</publishTime>
+    </File>
+    <File Include="css/print.css">
+      <publishTime>08/15/2016 17:14:23</publishTime>
     </File>
     <File Include="css/responsive.css">
       <publishTime>04/14/2014 10:22:42</publishTime>
@@ -1452,6 +1455,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/bootstrap.min.js">
       <publishTime>06/15/2016 13:25:30</publishTime>
     </File>
+    <File Include="Scripts/Common/print.js">
+      <publishTime>08/16/2016 12:02:17</publishTime>
+    </File>
     <File Include="Scripts/CustomerCare/ClosePatientRequestResultPopup.js">
       <publishTime>07/21/2016 17:03:15</publishTime>
     </File>
@@ -1537,22 +1543,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/15/2016 13:25:44</publishTime>
     </File>
     <File Include="Views/Chemist/Index.cshtml">
-      <publishTime>07/27/2016 17:03:27</publishTime>
+      <publishTime>08/15/2016 16:33:57</publishTime>
+    </File>
+    <File Include="Views/Chemist/_BarcodePrintPreview.cshtml">
+      <publishTime>08/16/2016 12:32:07</publishTime>
     </File>
     <File Include="Views/Chemist/_ChemistTransactions.cshtml">
       <publishTime>08/15/2016 10:42:19</publishTime>
     </File>
     <File Include="Views/Chemist/_PendingAnalyzesForSampling.cshtml">
-      <publishTime>08/15/2016 10:40:16</publishTime>
+      <publishTime>08/16/2016 13:11:18</publishTime>
     </File>
     <File Include="Views/Chemist/_Preservation.cshtml">
       <publishTime>08/13/2016 12:25:14</publishTime>
     </File>
     <File Include="Views/Chemist/_ReceivePatientRequest.cshtml">
-      <publishTime>07/27/2016 11:12:56</publishTime>
+      <publishTime>08/16/2016 13:10:40</publishTime>
     </File>
     <File Include="Views/Chemist/_ReceiveRequestAndSample.cshtml">
-      <publishTime>08/13/2016 12:25:39</publishTime>
+      <publishTime>08/16/2016 12:17:38</publishTime>
     </File>
     <File Include="Views/Chemist/_SampledAnalyzesAfterReceive.cshtml">
       <publishTime>08/15/2016 10:38:43</publishTime>
@@ -1609,10 +1618,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/15/2016 10:34:14</publishTime>
     </File>
     <File Include="Views/CustomerCare/_Reports.cshtml">
-      <publishTime>07/31/2016 12:58:45</publishTime>
+      <publishTime>08/15/2016 14:17:43</publishTime>
     </File>
     <File Include="Views/CustomerCare/_Transactions.cshtml">
-      <publishTime>08/14/2016 18:29:20</publishTime>
+      <publishTime>08/15/2016 14:23:51</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>07/21/2016 13:01:56</publishTime>
@@ -1708,7 +1717,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/21/2016 12:17:07</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutNew.cshtml">
-      <publishTime>08/13/2016 12:22:50</publishTime>
+      <publishTime>08/16/2016 11:00:53</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>06/20/2016 15:32:36</publishTime>
@@ -1717,7 +1726,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/11/2016 11:18:55</publishTime>
     </File>
     <File Include="Views/TestBarCode/Index.cshtml">
-      <publishTime>07/05/2016 09:42:03</publishTime>
+      <publishTime>08/16/2016 11:04:49</publishTime>
+    </File>
+    <File Include="Views/TestBarCode/_BarcodePrintPreview.cshtml">
+      <publishTime>08/16/2016 12:31:24</publishTime>
     </File>
     <File Include="Views/TestDrag/Index.cshtml">
       <publishTime>08/03/2016 12:26:31</publishTime>
@@ -1738,7 +1750,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/21/2016 13:02:59</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/15/2016 12:12:27</publishTime>
+      <publishTime>08/16/2016 13:40:45</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -300,7 +300,7 @@ namespace DemoMisrInternationalLab.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.ErrorMessage = ex.Message;
+                    ViewBag.ErrorMessage = ex.Message + Environment.NewLine + ex.TargetSite;
                     return PartialView("_Error");
                 }
             }

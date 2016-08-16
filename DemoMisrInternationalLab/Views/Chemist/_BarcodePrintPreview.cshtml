@@ -1,0 +1,19 @@
+﻿@model List<DemoMisrInternationalLab.Models.BarcodeViewModel>
+@foreach (var barcodeData in Model)
+{
+    <table>
+        <tr>
+            <td>
+                <img src="@barcodeData.BarcodeImageData" />
+            </td>
+            <td width="20px;"></td>
+            <td>
+                @barcodeData.PatientName  <br />
+                @barcodeData.AnalysisCode <br />
+                @barcodeData.RequestNumber <span>:</span>  @barcodeData.RunNumber <br />
+                @barcodeData.SampleType
+            </td>
+        </tr>
+    </table>
+    <br /><br /><br />
+}

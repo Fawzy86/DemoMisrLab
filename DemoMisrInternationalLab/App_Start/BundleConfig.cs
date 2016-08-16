@@ -81,6 +81,8 @@ namespace DemoMisrInternationalLab
             */
             bundles.Add(new StyleBundle("~/CustomerCare/CloseResultPopup").Include(
                 "~/Scripts/CustomerCare/ClosePatientRequestResultPopup.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/common").Include("~/Scripts/Common/print.js"));
         }
     }
 }

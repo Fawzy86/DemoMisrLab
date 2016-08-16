@@ -1,9 +1,12 @@
 ﻿using DemoMisrInternationalLab.Models;
 using DemoMisrInternationalLab.Security;
 using DemoMisrInternationalLab.Utilities;
+using MessagingToolkit.QRCode.Codec;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -20,6 +23,7 @@ namespace DemoMisrInternationalLab.Controllers
             return View();
         }
 
+        #region Receive & Sample
         public ActionResult GetPendingPatientRequest()
         {
             PatientsRequestsAllViewModel PendingPatientRequest = new PatientsRequestsAllViewModel();
@@ -57,24 +61,64 @@ namespace DemoMisrInternationalLab.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SampleSelectedRequestAnalyzes(FormCollection form, PatientRequestAnalysisViewModel model)//, PatientRequestAnalysisViewModel model)
         {
-
             if (model.SelectedRequestAnalyzesIDs != null && model.SelectedRequestAnalyzesIDs.Any())
             {
-
                  DbFunctions.UpdateRequestedAnalyzesStatus(model.SelectedRequestAnalyzesIDs, Resources.Status.ReceivedForSampling, HttpContext.User.Identity.Name);
-               // List<PatientRequestAnalysis_LastStatus> PatientRequestAnalyzes = DbFunctions.GetRequestAnalyzesWithStatus(Resources.Status.AnalysisSampled);
-               // return PatientRequestAnalyzes;
+                 var RequestedAnalyzes = DbFunctions.GetAnalyzesDetails(model.SelectedRequestAnalyzesIDs);
+                 return GetBarcodesToPrint(RequestedAnalyzes);
             }
             return null;
         }
 
+        public ActionResult GetBarcodesToPrint(List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel> RequestedAnalyzes)
+        {
 
-           
+            if (RequestedAnalyzes != null && RequestedAnalyzes.Any())
+            {
+                QRCodeEncoder Encoder = null;
+                StringBuilder BarcodeData = null;
+                List<BarcodeViewModel> BarcodesList = new List<BarcodeViewModel>();
+                foreach (var analyzes in RequestedAnalyzes)
+                {
+                    Encoder = new QRCodeEncoder();
+                    BarcodeData = new StringBuilder();
+                    string PatientName = analyzes.PatientRequestAnalysis.FirstName + " " + analyzes.PatientRequestAnalysis.MiddleName + " " + analyzes.PatientRequestAnalysis.LastName;
+                    BarcodeData.Append(PatientName + Environment.NewLine);
+                    string Age = analyzes.PatientRequestAnalysis.BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(analyzes.PatientRequestAnalysis.BirthDate).Year).ToString() : String.Empty;
+                    BarcodeData.Append(analyzes.PatientRequestAnalysis.Gender + Environment.NewLine);
+                    BarcodeData.Append(Age + Environment.NewLine);
+                    BarcodeData.Append(analyzes.PatientRequestAnalysis.AnalysisCode + Environment.NewLine);
+                    BarcodeData.Append(analyzes.PatientRequestAnalysis.RequestNumber + " : " + analyzes.PatientRequestAnalysis.RunNumber + Environment.NewLine);
+                    BarcodeData.Append(analyzes.PatientRequestAnalysis.SampleType);
+                    var Img = Encoder.Encode(BarcodeData.ToString());
+                    using (MemoryStream Stream = new MemoryStream())
+                    {
+                        Img = new System.Drawing.Bitmap(Img, new System.Drawing.Size(75, 75));
+                        Img.Save(Stream, System.Drawing.Imaging.ImageFormat.Png);
+                        Stream.Close();
+                        byte[] ImageByteArray = Stream.ToArray();
+                        string ImageBase64Data = Convert.ToBase64String(ImageByteArray);
+                        string ImageDataURL = string.Format("data:image/png;base64,{0}", ImageBase64Data);
+                        BarcodesList.Add(new BarcodeViewModel()
+                        {
+                            BarcodeImageData = ImageDataURL,
+                            AnalysisCode = analyzes.PatientRequestAnalysis.AnalysisCode,
+                            PatientName = PatientName,
+                            RequestNumber = analyzes.PatientRequestAnalysis.RequestNumber,
+                            RunNumber = analyzes.PatientRequestAnalysis.RunNumber,
+                            SampleType = analyzes.PatientRequestAnalysis.SampleType
+                        });
+                    }
+                }
+                return PartialView("_BarcodePrintPreview", BarcodesList);
+            }
+            return null;
+        }
+        #endregion
 
         /// Preservation Actions//////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
+        #region Preservation
         public ActionResult GetSampledRequestAnalyzesForPreservation()
         {
             PatientRequestAnalysisViewModel SampledRequestAnalyzes = new PatientRequestAnalysisViewModel();
@@ -144,8 +188,11 @@ namespace DemoMisrInternationalLab.Controllers
             }
             return null;
         }
+        #endregion
 
         /////////////////////////////////////////////////////////////////////////////////
+
+        #region Transactions
         public ActionResult LoadTransactions(string SearchPattern, string DateRange)
         {
             PatientsRequestsAllViewModel PatientRequestStatus = new PatientsRequestsAllViewModel();
@@ -166,5 +213,6 @@ namespace DemoMisrInternationalLab.Controllers
             PatientRequestStatus.PatientRequestStatusWithAnalyzes = DbFunctions.GetPatientsRequestTransactionsForChemist(SearchPattern, DateFrom, DateTo);
             return PartialView("_Transaction", PatientRequestStatus);
         }
-	}
+        #endregion
+    }
 }

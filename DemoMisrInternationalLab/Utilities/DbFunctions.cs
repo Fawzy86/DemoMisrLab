@@ -2221,5 +2221,27 @@ namespace DemoMisrInternationalLab.Utilities
             }
         }
 
+        public static List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel> GetAnalyzesDetails(List<int> RequestedAnalyzesIds)
+        {
+            try
+            {
+                List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel> RequestedAnalyzes = new List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel>();
+                using (DemoMisrIntEntities db = new DemoMisrIntEntities())
+                {
+                    RequestedAnalyzes = (from a in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus
+                                       where RequestedAnalyzesIds.Contains(a.RequestedAnalysisID)
+                                       select new Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel()
+                                       {
+                                           PatientRequestAnalysis = a
+                                       }).ToList();
+                    return RequestedAnalyzes;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

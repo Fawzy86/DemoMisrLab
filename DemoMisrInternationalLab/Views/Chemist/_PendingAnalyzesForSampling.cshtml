@@ -2,34 +2,32 @@
 @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Pending_Analyzes_ForSampling_Form" }))
 {
     @Html.AntiForgeryToken()
-    <div id="TEmppp">
-        @if (Model.PatientRequestAnalyzes != null)
+    if (Model.PatientRequestAnalyzes != null)
+    {
+        for (int i = 0; i < Model.PatientRequestAnalyzes.Count; i++)
         {
-            for (int i = 0; i < Model.PatientRequestAnalyzes.Count; i++)
-            {
-                @Html.HiddenFor(x => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID)
-                <div class="ck-button">
-                    <label>
-                        <input type="checkbox" name="SelectedRequestAnalyzesIDs"
-                               id="@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID"
-                               value="@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID"
-                               @{if (Model.SelectedRequestAnalyzesIDs.Contains(@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID)) { <text> checked='checked' </text>                      } } />
+            @Html.HiddenFor(x => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID)
+            <div class="ck-button">
+                <label>
+                    <input type="checkbox" name="SelectedRequestAnalyzesIDs"
+                           id="@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID"
+                           value="@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID"
+                           @{if (Model.SelectedRequestAnalyzesIDs.Contains(@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID)) { <text> checked='checked' </text>                       } } />
 
-                        <span>
+                    <span>
 
-                            <table width="100%">
+                        <table width="100%">
 
-                                <tr>
-                                    <td width="18%">@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestNumber)</td>
-                                    <td width="82%">@Html.DisplayFor(x => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.AnalysisCode)</td>
-                                </tr>
+                            <tr>
+                                <td width="25%">@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestNumber)</td>
+                                <td width="68%">@Html.DisplayFor(x => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.AnalysisCode)</td>
+                                <td width="7%"></td>
+                            </tr>
 
-                            </table>
-                        </span>
-                    </label>
-                </div>
-            }
-            <a href="#" onclick="Print();">Print from here</a>
+                        </table>
+                    </span>
+                </label>
+            </div>
         }
-    </div>
+    }
 }
