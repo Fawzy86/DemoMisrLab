@@ -1361,7 +1361,7 @@ namespace DemoMisrInternationalLab.Utilities
                                                   join an in db.PatientRequestAnalysis_AllStatuses
                                                   on p.RequestID equals an.RequestID
                                                   where p.RequestDate >= DateFrom && p.RequestDate < DateTo &&
-                                                        p.StatusIdentifier != Resources.Status.ReceivedForSampling &&
+                                                        p.StatusIdentifier != Resources.Status.PendingForSampling &&
                                                         an.StatusIdentifier != Resources.Status.PendingForSampling
                                                   select p).Distinct().ToList();
 
