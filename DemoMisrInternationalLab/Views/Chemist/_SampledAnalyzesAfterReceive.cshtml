@@ -12,11 +12,16 @@
                     <table width="100%">
 
                         <tr>
-                            <td width="18%">
+                            <td width="23%">
                                 @*@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestNumber) :*@
-                                @Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RunNumber)
+                                <span style="font-size:11px">  @Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestNumber)</span>
                             </td>
-                            <td width="82%">@Html.DisplayFor(x => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.AnalysisCode)</td>
+                            <td >
+                            <span style="font-size:12px">@Html.DisplayFor(x => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.AnalysisCode)</span>
+                            </td>
+                            <td>
+                                <span style="font-size:12px">@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RunNumber)</span>
+                            </td>
                         </tr>
 
                     </table>

@@ -36,14 +36,7 @@
                         <td>@plan.Analyzes.Count </td>
                         <td>@plan.Plan.FirstName @plan.Plan.LastName</td>
                         <td>
-                            @Html.ActionLink("Show", "", new
-                               {
-                                   PlanId = @plan.Plan.PlanId
-                               },
-                               new
-                               {
-                                   onclick = "return GetPlanDetails('" + @plan.Plan.PlanId + "');"
-                               })
+                            <a href="#" onclick="GetPlanDetails(@plan.Plan.PlanId);">Show</a>
                         </td>
                     </tr>
                 }

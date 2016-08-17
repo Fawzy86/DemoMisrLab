@@ -5,6 +5,7 @@
 
             <div class="col-md-4">
                 <div id='external-events' class="sampling-heightc scrolll">
+                    Samples
                     <ul class="list-group text-center">
                         <li>
 
@@ -36,19 +37,20 @@
 
 
             <div class="col-md-3">
-
                 <div id='external-events' class="sampling-heightd scrolll">
+                    Preservation
                     <div id="Save_Samples_Container">
                         @{Html.RenderAction("GetSavedSampledRequestAnalyzes");}
                     </div>
                 </div>
-
+                
                 <div id='external-events' class="sampling-heightdd scrolll">
+                    Transferred
                     <div id="Transferred_Samples_Container">
                         @{Html.RenderAction("GetTransferredSampledRequestAnalyzes");}
                     </div>
                 </div>
-
+                
             </div>
 
 
@@ -65,6 +67,7 @@
 
             <div class="col-md-3">
                 <div id='external-events' class="sampling-heightc scrolll">
+                    Lab
                     <div id="Lab_Samples_Container">
                         @{Html.RenderAction("GetLabbedSampledRequestAnalyzes");}
                     </div>

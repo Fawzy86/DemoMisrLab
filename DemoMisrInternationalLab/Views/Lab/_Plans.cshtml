@@ -139,7 +139,6 @@
                 type: "GET",
                 url: "/Lab/GetPlanDetails?PlanId=" + PlanId,//form.attr('action'),
                 success: function (data) {
-                    console.log(data);
                     $("#Plan_Details_Popup_Content").html(data);
                     window.location.href = "#Plan_Details_Popup";
                 },

@@ -138,7 +138,7 @@
                 cache: false,
                 async: true,
                 type: "GET",
-                url: "/QC/GetAnalysisDetails?RequestedAnalysisId=" + RequestedAnalysisId,//form.attr('action'),
+                url: "/QC/GetAnalysisDetails?RequestedAnalysisId=" + RequestedAnalysisId,
                 success: function (data) {
                     if (data != null && data.length > 0) {
                         $("#QC_Revision_Popup_Content").html(data);
@@ -146,7 +146,8 @@
                     }
                 },
                 error: function (xhr, desc, err) {
-                    alert("Error: " + err.message + " " + desc.message + " " + xhr.responseText);
+                    alert('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText
+                        + ' ' + desc + ' ' + err.message);
                 }
             });
         }

@@ -306,8 +306,23 @@ namespace DemoMisrInternationalLab.Controllers
             }
             else
             {
+                if (model != null)
+                {
+                    if (!String.IsNullOrWhiteSpace(Category))
+                    {
+                        if (Category != Resources.CategoryType.Individual && model.Organizations.SelectedOrganizationID == 0)
+                        {
+                            ModelState.AddModelError("Category", Category + " selection is required");
+                        }
+                    }
+                    if (model.Analyzes.SelectedAnalyzesIDs == null || !model.Analyzes.SelectedAnalyzesIDs.Any())
+                    {
+                        ModelState.AddModelError("Analyzes", "Select one analysis at least");
+                    }
+                }
                 var AllErrors = ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage);
-                ViewBag.ErrorMessage = String.Join(Environment.NewLine, AllErrors);
+                string Errors = String.Join(Environment.NewLine + "<br />", AllErrors);
+                ViewBag.ErrorMessage = Errors;
                 return PartialView("_Error");
             }
         }

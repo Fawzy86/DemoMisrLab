@@ -57,3 +57,4 @@ C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrIntern
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.csproj.GenerateResource.Cache
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.dll
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.pdb
+C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.csprojResolveAssemblyReference.cache

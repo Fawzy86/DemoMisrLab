@@ -40,14 +40,7 @@
                     <td>@analysis.Analysis.Gender</td>
                     <td>@Age</td>
                     <td>
-                        @Html.ActionLink("Show", "", new
-                               {
-                                   RequestedAnalysisId = @analysis.Analysis.RequestedAnalysisID
-                               },
-                               new
-                               {
-                                   onclick = "return GetAnalysisDetails('" + @analysis.Analysis.RequestedAnalysisID + "');"
-                               })
+                        <a href="#" onclick="GetAnalysisDetails(@analysis.Analysis.RequestedAnalysisID)">Show</a>
                     </td>
                 </tr>
                 }

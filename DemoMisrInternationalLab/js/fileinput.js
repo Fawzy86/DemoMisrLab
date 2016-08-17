@@ -613,10 +613,12 @@
             var self = this, $el = self.$element, t;
             $.each(options, function (key, value) {
                 switch (key) {
-                    case 'minFileCount':
                     case 'maxFileCount':
                     case 'maxFileSize':
                         self[key] = getNum(value);
+                        break;
+                    case 'minFileCount':
+                        self[key] = 1;
                         break;
                     default:
                         self[key] = value;

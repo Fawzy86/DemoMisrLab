@@ -48,6 +48,12 @@ namespace DemoMisrInternationalLab.Models
         {
             if (_PatientRequestAnalysisStatuses != null && _PatientRequestAnalysisStatuses.Any())
             {
+                var LabReceiveStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.ReceivedForAnalysising).FirstOrDefault();
+                if (LabReceiveStatus != null)
+                {
+                    EndLabbedDate = LabReceiveStatus.StatusDate.ToString("dd/MM/yyyy hh:mm tt");
+                }
+
                 var LabbedStatus = _PatientRequestAnalysisStatuses.Where(s => s.StatusIdentifier == Resources.Status.PendingForAnalysising).FirstOrDefault();
                 if (LabbedStatus != null)
                 {

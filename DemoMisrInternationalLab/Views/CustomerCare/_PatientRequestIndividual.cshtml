@@ -196,21 +196,27 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <td style="background-color:#61aee2; color:#fff;">+ Discount</td>
-                            <td style="background-color:#dddddd; color:#999999;">+ Cost</td>
+                            <td style="background-color:#61aee2; color:#fff;">+ Discount (%)</td>
+                            <td style="background-color:#dddddd; color:#999999;">Extra Charge</td>
                         </tr>
                         <tr>
                             <td style="background-color:#fff; color:#ccc;">
-                                @Html.TextBoxFor(m => Model.ExtraDiscount, new { @class = "form-control form-widthhh-summary", 
-                                                                                 @id="Individual_ExtraDiscount",
-                                                                                 @placeholder = @Html.DisplayNameFor(m => Model.ExtraDiscount), 
-                                                                                 @onchange = "IndividualCalculateTotalAnalyzesCost();" })
+                                @Html.TextBoxFor(m => Model.ExtraDiscount, new
+                           {
+                               @class = "form-control form-widthhh-summary",
+                               @id = "Individual_ExtraDiscount",
+                               @placeholder = @Html.DisplayNameFor(m => Model.ExtraDiscount),
+                               @onchange = "IndividualCalculateTotalAnalyzesCost();"
+                           })
                             </td>
                             <td style="background-color:#fff; color:#ccc;">
-                                @Html.TextBoxFor(m => Model.ExtraCost, new { @class = "form-control form-widthhh-summary",
-                                                                             @id = "Individual_ExtraCost",
-                                                                             @placeholder = @Html.DisplayNameFor(m => Model.ExtraCost), 
-                                                                             @onchange = "IndividualCalculateTotalAnalyzesCost();" })
+                                @Html.TextBoxFor(m => Model.ExtraCost, new
+                           {
+                               @class = "form-control form-widthhh-summary",
+                               @id = "Individual_ExtraCost",
+                               @placeholder = @Html.DisplayNameFor(m => Model.ExtraCost),
+                               @onchange = "IndividualCalculateTotalAnalyzesCost();"
+                           })
                             </td>
                         </tr>
                     </tbody>
@@ -233,10 +239,13 @@
                         <tr>
                             <td width="66.9%" style="background-color:#dddddd; color:#999999;">Paid </td>
                             <td width="33.1%" style="background-color:#de8650; color:#fff;">
-                                @Html.TextBoxFor(m => Model.Paid, new { @id = "Individual_Paid",
-                                                                        @class = "form-control form-widthhh-summaryb", 
-                                                                        @placeholder = @Html.DisplayNameFor(m => Model.Paid), 
-                                                                        @onchange = "IndividualCalculateTotalAnalyzesCost();" })
+                                @Html.TextBoxFor(m => Model.Paid, new
+                           {
+                               @id = "Individual_Paid",
+                               @class = "form-control form-widthhh-summaryb",
+                               @placeholder = @Html.DisplayNameFor(m => Model.Paid),
+                               @onchange = "IndividualCalculateTotalAnalyzesCost();"
+                           })
                             </td>
                         </tr>
                     </tbody>
@@ -245,7 +254,7 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <td width="66.9%" style="background-color:#dddddd; color:#999999;">Remain </td>
+                            <td width="66.9%" style="background-color:#dddddd; color:#999999;">Due Sum</td>
                             @Html.HiddenFor(m => Model.Remain, new { @id = "Individual_Remain" })
                             <td width="33.1%" style="background-color:#de8650; color:#fff;" id="Individual_Remain_Display">0</td>
                         </tr>
@@ -275,22 +284,23 @@
                     </a>
                     <div id="Individual_Upload_Attachment_Popup" class="overlay">
                         <div class="popup">
-                            <a class="close" href="#">&times;</a>
+                            @*<a class="close" href="#">&times;</a>*@
 
                             <div class="contentt">
 
                                 <input id="Individual_Upload_AttachmentFile" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
-
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-success" onclick="ClosePopup();" style="border-radius:0;">Close</button>
+                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-sm-6 col-xs-6 id-img"><a href="#"><i class="fa fa-picture-o"></i></a></div>
 
-                   
-                </div>
+
+            </div>
 
 
 
@@ -426,8 +436,10 @@
         type: "POST",
         allowedFileExtensions: ['jpg', 'png', 'gif'],
         overwriteInitial: false,
+        minFileCount: 1,
         maxFileSize: 1000,
         maxFilesNum: 10,
+
         //allowedFileTypes: ['image', 'video', 'flash'],
         slugCallback: function (filename) {
             return filename.replace('(', '_').replace(']', '_');
@@ -442,7 +454,7 @@
                 window.location.href = "#Individual_Upload_Attachment_Popup";
             }
             else {
-                if (form.valid()) {
+             //   if (form.valid()) {
                     $.ajax({
                         cache: false,
                         async: true,
@@ -456,7 +468,7 @@
                             alert("Error: " + err + " " + desc + " " + xhr.responseText);
                         }
                     });
-                }
+             //   }
             }
         }
         catch (err) {
@@ -492,7 +504,7 @@
                     }
                     else {
                         TotalAfterCharges -= parseFloat(ExtraDiscount);
-                    }               
+                    }
                 }
                 Remain = TotalAfterCharges;
 
@@ -502,11 +514,11 @@
                 }
             }
             //// Total after charge
-            $("#Individual_Total_AfterCharges").val(TotalAfterCharges);
-            $("#Individual_Total_AfterCharges_Display").html(TotalAfterCharges);
+            $("#Individual_Total_AfterCharges").val(TotalAfterCharges.toFixed(2));
+            $("#Individual_Total_AfterCharges_Display").html(TotalAfterCharges.toFixed(2));
             //// Remain
-            $("#Individual_Remain").val(Remain);
-            $("#Individual_Remain_Display").html(Remain);
+            $("#Individual_Remain").val(Remain.toFixed(2));
+            $("#Individual_Remain_Display").html(Remain.toFixed(2));
         }
         catch (err) {
             alert(err.message);
@@ -521,6 +533,9 @@
             alert(err.message);
         }
     }
-
+    ////////////////////////////////////////////////////////////////////
+    function ClosePopup() {
+        window.location.href = "#";
+    }
 
 </script>

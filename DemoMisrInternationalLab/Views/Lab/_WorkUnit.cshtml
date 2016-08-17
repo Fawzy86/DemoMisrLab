@@ -56,9 +56,12 @@
             // store a ref. on the dragged elem
             console.log("dragstart");
             var SelectedItems = [];
+            SelectedItems.push(ev.target.id);
             $.each($('#' + ev.target.parentNode.id + ' li'), function (i, val) {
                 if (val.getAttribute('aria-grabbed') == 'true') {
-                    SelectedItems.push(val.id);
+                    if (SelectedItems.indexOf(val.id) == -1) {
+                        SelectedItems.push(val.id);
+                    }
                 }
             });
             ev.dataTransfer.setData("RequestedAnalyzesIds", SelectedItems);
@@ -109,6 +112,11 @@
                 else if (ev.target.id.indexOf("DeviceId_") == 0) {
                     DragAnalyzesToDevice(ev, RequestedAnalyzesIds);
                 }
+                //// clear the selection
+                ClearSelection(ev.target);
+                //// Reset the items class
+                ResetItemsClass(ev.target);
+                
             }
             catch (err) {
                 alert(err.message + err.description);
@@ -149,6 +157,7 @@
     ////////////////////////////////////////////////////////////////////
     function SetSelectedAttribute(ev) {
         var node = ev.target;
+        console.log(node);
         if (node.nodeName.toLowerCase() == 'tr' || node.nodeName.toLowerCase() == 'td' || node.nodeName.toLowerCase() == 'table') {
             node = $(node).closest('li')[0];
         }
@@ -162,13 +171,28 @@
         }
 
         if (node != null && node.getAttribute('data-draggable') == 'item') {
-            node.setAttribute('aria-grabbed', 'true');
+            if (node.getAttribute('aria-grabbed') == "true") {
+                node.setAttribute('aria-grabbed', 'false');
+            } else {
+                node.setAttribute('aria-grabbed', 'true');
+            }
         }
     }
     ////////////////////////////////////////////////////////////////////
     function ClearSelection(parentNode) {
         $.each(parentNode.children, function (index, child) {
             child.setAttribute('aria-grabbed', 'false');
+        });
+    }
+    /////////////////////////////////////////////////////////////
+    function ResetItemsClass(parentNode) {
+        $.each(parentNode.children, function (index, child) {
+            if (index % 2 == 1) {
+                child.className = "ck-buttonb";
+            }
+            else {
+                child.className = "ck-button";
+            }
         });
     }
     //////////////////////////////////////////////////////////////

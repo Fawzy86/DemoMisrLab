@@ -6,14 +6,14 @@
     <table class="table table-bordered" id="Transactions_Table">
         <thead>
             <tr>
-                <th width="9%">Request #</th>
-                <th width="7%">Category</th>
-                <th width="25%">Name</th>
-                <th>Phone</th>
-                <th width="40%">Analysis</th>
-                <th width="10%">Total Due</th>
-                <th width="26%">Date</th>
-                <th>Invoice</th>
+                <th width="90px">Request #</th>
+                <th width="50px">Category</th>
+                <th>Name</th>
+                <th width="90px">Phone</th>
+                <th >Analysis</th>
+                <th width="80px">Total Due</th>
+                <th width="130px">Date</th>
+                <th width="115px">Invoice</th>
             </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@
                         }
                     </td>
                     <td>@Model.PatientRequestStatusWithAnalyzes[i].TotalDue</td>
-                    <td>@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestDate</td>
+                    <td>@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestDate.ToString("MM-dd-yy hh:mm t")</td>
                     <td align="center" style="word-spacing:10px;">
                         <a href='@Url.Action("OpenInvoice", "CustomerCare", new { RequestID = @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID })' target="_blank"><i class="fa fa-credit-card"></i></a>
                         <a href="#Display_Report_Popup"><i class="fa fa-eye"></i></a>

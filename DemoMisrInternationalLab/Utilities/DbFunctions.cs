@@ -1358,11 +1358,15 @@ namespace DemoMisrInternationalLab.Utilities
 
                     //// Date range select
                     _PatientRequest_LastStatus = (from p in _PatientRequest_LastStatus
-                                                  join an in db.PatientRequestAnalysis_AllStatuses
+                                                  join an in db.Patient_PatientRequest_PatientRequestAnalysis_LastStatus
                                                   on p.RequestID equals an.RequestID
-                                                  where p.RequestDate >= DateFrom && p.RequestDate < DateTo &&
+                                                  where an.StatusDate >= DateFrom && an.StatusDate < DateTo &&
                                                         p.StatusIdentifier != Resources.Status.PendingForSampling &&
-                                                        an.StatusIdentifier != Resources.Status.PendingForSampling
+                                                        (an.StatusIdentifier == Resources.Status.ReceivedForSampling ||
+                                                        an.StatusIdentifier == Resources.Status.SavedByChemist ||
+                                                        an.StatusIdentifier == Resources.Status.TransferredByChemist ||
+                                                        an.StatusIdentifier == Resources.Status.PendingForAnalysising ||
+                                                        an.StatusIdentifier == Resources.Status.ReceivedForAnalysising)
                                                   select p).Distinct().ToList();
 
 
