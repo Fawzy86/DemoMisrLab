@@ -5,7 +5,7 @@
     for (int i = 0; i < Model.PatientRequestAnalyzes.Count; i++)
     {
 
-        <div class="ck-buttonb">
+        <div class="ck-buttonb" tabindex="0" onclick="PrintAnalysisBarcode(@Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestedAnalysisID);">
             <label>
 
                 <span>
@@ -16,8 +16,8 @@
                                 @*@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestNumber) :*@
                                 <span style="font-size:11px">  @Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestNumber)</span>
                             </td>
-                            <td >
-                            <span style="font-size:12px">@Html.DisplayFor(x => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.AnalysisCode)</span>
+                            <td>
+                                <span style="font-size:12px">@Html.DisplayFor(x => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.AnalysisCode)</span>
                             </td>
                             <td>
                                 <span style="font-size:12px">@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RunNumber)</span>

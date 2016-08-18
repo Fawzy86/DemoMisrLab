@@ -47,6 +47,7 @@ C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\Microsoft.Owin.Secur
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\Microsoft.Owin.Security.Google.xml
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.csprojResolveAssemblyReference.cache
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.Resources.CategoryType.resources
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.Resources.Gender.resources
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.Resources.JobTitle.resources
@@ -57,4 +58,4 @@ C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrIntern
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.csproj.GenerateResource.Cache
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.dll
 C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.pdb
-C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.csprojResolveAssemblyReference.cache
+C:\Projects\GitLab\DemoMisrLab\DemoMisrInternationalLab\obj\Debug\DemoMisrInternationalLab.Resources.Path.resources

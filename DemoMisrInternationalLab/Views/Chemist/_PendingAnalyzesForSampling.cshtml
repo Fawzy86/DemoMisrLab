@@ -19,8 +19,12 @@
                         <table width="100%">
 
                             <tr>
-                                <td width="25%">@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestNumber)</td>
-                                <td width="68%">@Html.DisplayFor(x => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.AnalysisCode)</td>
+                                <td width="25%">
+                                    <span style="font-size:11px">@Html.DisplayTextFor(m => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.RequestNumber)</span>
+                                </td>
+                                <td width="68%">
+                                    <span style="font-size:12px">@Html.DisplayFor(x => Model.PatientRequestAnalyzes[i].PatientRequestAnalysis.AnalysisCode)</span>
+                                </td>
                                 <td width="7%"></td>
                             </tr>
 

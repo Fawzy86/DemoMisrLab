@@ -39,6 +39,7 @@
                     <td>@Model.PatientRequestStatusWithAnalyzes[i].TotalDue</td>
                     <td>@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestDate.ToString("MM-dd-yy hh:mm t")</td>
                     <td align="center" style="word-spacing:10px;">
+                        <a href="#" onclick="GetPatientRequestPayment(@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID);">Edit</a>
                         <a href='@Url.Action("OpenInvoice", "CustomerCare", new { RequestID = @Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestID })' target="_blank"><i class="fa fa-credit-card"></i></a>
                         <a href="#Display_Report_Popup"><i class="fa fa-eye"></i></a>
                         <a href="#Print_Report_Popup"><i class="fa fa-print"></i></a>

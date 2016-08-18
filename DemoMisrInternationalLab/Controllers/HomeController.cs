@@ -14,7 +14,13 @@ namespace DemoMisrInternationalLab.Controllers
         public ActionResult Index()
         {
           //  return View();
-            return View("Dashboard");
+          //  return View("Dashboard");
+            return View("Navigation");
+        }
+
+        public ActionResult Dashboard()
+        {     //  return View();
+            return View();
         }
 
         public ActionResult About()

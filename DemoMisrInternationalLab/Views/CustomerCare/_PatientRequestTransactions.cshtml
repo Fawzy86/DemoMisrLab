@@ -30,6 +30,13 @@
             <div class="input-group table-responsive" id="Transaction_Container">
                 @{Html.RenderAction("LoadTransactions");}
             </div>
+            <div id="Payment_Popup" class="overlay">
+                <div class=" popup">
+                    <a class="close" href="#">&times;</a>
+                    <div class="contentt" id="Payment_Popup_Content">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 }
@@ -99,6 +106,56 @@
                     $(val).show();
                 }
             });
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    });
+    /////////////////////////////////////////////////////////////
+    function GetPatientRequestPayment(RequestId) {
+        try {
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "/CustomerCare/GetPatientRequestPayment?RequestId=" + RequestId,
+                success: function (data) {
+                    if (data.length > 0) {
+                        $('#Payment_Popup_Content').html(data);
+                        window.location.href = "#Payment_Popup";
+                    }
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                }
+            });
+        }
+        catch (err) {
+            alert(err.message);
+        }
+    }
+    ////////////////////////////////////////////////////////
+    $('#Request_Payment_Form').on('submit', function (ev) {
+        try {
+            event.preventDefault();
+            var form = $(this);
+            if (form.valid()) {
+                $.ajax({
+                    cache: false,
+                    async: true,
+                    type: "POST",
+                    url: "/CustomerCare/SubmitNewRequestPayment",//form.attr('action'),
+                    data: form.serialize(),
+                    success: function (data) {
+                        if (data.length > 0) {
+                            ClosePopup();
+                        }
+                    },
+                    error: function (xhr, desc, err) {
+                        alert("Error: " + err + " " + desc + " " + xhr.responseText);
+                    }
+                });
+            }
         }
         catch (err) {
             alert(err.message);

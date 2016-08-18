@@ -30,11 +30,15 @@ namespace DemoMisrInternationalLab.Models
         public string RequestPriority { get; set; }
         public decimal ExtraDiscount { get; set; }
         public decimal ExtraCost { get; set; }
-        public decimal Paid { get; set; }
+        public decimal PaidAmount { get; set; }
         public decimal TotalAfterCharges { get; set; }
-        public decimal Remain { get; set; }
 
+        private decimal _Remain;
+        public decimal Remain { get; set; }
+        public decimal NewPaymentAmount { get; set; }
         public string AttachmentSession { get; set; }
+
+        public int RequestId { get; set; }
         
     }
 }

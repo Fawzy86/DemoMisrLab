@@ -211,7 +211,7 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <td style="background-color:#61aee2; color:#fff;">+ Discount (%)</td>
+                            <td style="background-color:#61aee2; color:#fff;">+ Discount (%) - (Exact)</td>
                             <td style="background-color:#dddddd; color:#999999;">Extra Charge</td>
                         </tr>
                         <tr>
@@ -254,11 +254,11 @@
                         <tr>
                             <td width="66.9%" style="background-color:#dddddd; color:#999999;">Paid </td>
                             <td width="33.1%" style="background-color:#de8650; color:#fff;">
-                                @Html.TextBoxFor(m => Model.Paid, new
+                                @Html.TextBoxFor(m => Model.NewPaymentAmount, new
                            {
                                @id = "Contract_Paid",
                                @class = "form-control form-widthhh-summaryb",
-                               @placeholder = @Html.DisplayNameFor(m => Model.Paid),
+                               @placeholder = @Html.DisplayNameFor(m => Model.NewPaymentAmount),
                                @onchange = "ContractCalculateTotalAnalyzesCost();"
                            })
                             </td>
@@ -425,7 +425,7 @@
                     cache: false,
                     async: true,
                     type: "GET",
-                    url: "/CustomerCare/GetAnalyzesCost?analyzesIDs=" + SelectedAnalyzesIDs,//form.attr('action'),
+                    url: "/CustomerCare/GetAnalyzesCost?analyzesIDs=" + SelectedAnalyzesIDs + "&OrganizationId=" + $(Contract_Organizations_SelectedOrganizationID).val(),//form.attr('action'),
                     success: function (data) {
                         $("#Contract_Total_Before_Charges").val(data);
                         ContractCalculateTotalAnalyzesCost();

@@ -14,8 +14,10 @@ namespace DemoMisrInternationalLab.Models
             PatientRequestAnalysis = new List<PatientRequest_Analysis>();
             PatientRequestAnalyzesWithStatuses = new List<PatientRequest_Analysis_Status_ViewModel>();
             PatientRequestPayments = new List<PatientRequest_Payment>();
+            PatientRequestAllStatuses = new List<Patient_PatientRequest_AllStatuses>();
         }
         public Patient_PatientRequest_LastStatus PatientRequestStatus { get; set; }
+        public List<Patient_PatientRequest_AllStatuses> PatientRequestAllStatuses { get; set; }
         public List<PatientRequest_Analysis> PatientRequestAnalysis { get; set; }
         public List<PatientRequest_Analysis_Status_ViewModel> PatientRequestAnalyzesWithStatuses { get; set; }
         public List<PatientRequest_Payment> PatientRequestPayments { get; set; }

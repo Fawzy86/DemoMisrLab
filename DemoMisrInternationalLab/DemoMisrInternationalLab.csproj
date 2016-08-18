@@ -425,6 +425,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Package.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Path.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Path.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Priority.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -584,6 +589,7 @@
     <Content Include="css\smart_wizard_vertical.css" />
     <Content Include="css\style.css" />
     <Content Include="css\timeline.css" />
+    <Content Include="css\tooltip.css" />
     <Content Include="dist\css\example.css" />
     <Content Include="dist\css\simplePop.css" />
     <Content Include="dist\js\example-min.js" />
@@ -1016,6 +1022,8 @@
     <Content Include="Views\QC\_AnalysisDetailsReport.cshtml" />
     <Content Include="Views\TestBarCode\_BarcodePrintPreview.cshtml" />
     <Content Include="Views\Chemist\_BarcodePrintPreview.cshtml" />
+    <Content Include="Views\CustomerCare\_RequestPayment.cshtml" />
+    <Content Include="Views\Home\Navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1048,6 +1056,10 @@
     <EmbeddedResource Include="Resources\Package.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Package.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Path.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Path.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Priority.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

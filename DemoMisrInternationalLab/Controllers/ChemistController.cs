@@ -63,54 +63,61 @@ namespace DemoMisrInternationalLab.Controllers
         {
             if (model.SelectedRequestAnalyzesIDs != null && model.SelectedRequestAnalyzesIDs.Any())
             {
-                 DbFunctions.UpdateRequestedAnalyzesStatus(model.SelectedRequestAnalyzesIDs, Resources.Status.ReceivedForSampling, HttpContext.User.Identity.Name);
-                 var RequestedAnalyzes = DbFunctions.GetAnalyzesDetails(model.SelectedRequestAnalyzesIDs);
-                 return GetBarcodesToPrint(RequestedAnalyzes);
+                DbFunctions.UpdateRequestedAnalyzesStatus(model.SelectedRequestAnalyzesIDs, Resources.Status.ReceivedForSampling, HttpContext.User.Identity.Name);
+                //return RedirectToAction("GetBarcodesToPrint", new { RequestedAnalyzesIds = String.Join(",", model.SelectedRequestAnalyzesIDs) });
+                return GetBarcodesToPrint(String.Join(",", model.SelectedRequestAnalyzesIDs));
             }
-            return null;
+            else
+            {
+                return null;
+            }
         }
 
-        public ActionResult GetBarcodesToPrint(List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel> RequestedAnalyzes)
+        public ActionResult GetBarcodesToPrint(string RequestedAnalyzesIds)
         {
-
-            if (RequestedAnalyzes != null && RequestedAnalyzes.Any())
+            if (!String.IsNullOrWhiteSpace(RequestedAnalyzesIds))
             {
-                QRCodeEncoder Encoder = null;
-                StringBuilder BarcodeData = null;
-                List<BarcodeViewModel> BarcodesList = new List<BarcodeViewModel>();
-                foreach (var analyzes in RequestedAnalyzes)
+                var RequestedAnalyzesIdsList = RequestedAnalyzesIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(r => Convert.ToInt32(r)).ToList();
+                List<Patient_PatientRequest_PatientRequestAnalysis_LastStatus_ViewModel> RequestedAnalyzes = DbFunctions.GetAnalyzesDetails(RequestedAnalyzesIdsList);
+                if (RequestedAnalyzes != null && RequestedAnalyzes.Any())
                 {
-                    Encoder = new QRCodeEncoder();
-                    BarcodeData = new StringBuilder();
-                    string PatientName = analyzes.PatientRequestAnalysis.FirstName + " " + analyzes.PatientRequestAnalysis.MiddleName + " " + analyzes.PatientRequestAnalysis.LastName;
-                    BarcodeData.Append(PatientName + Environment.NewLine);
-                    string Age = analyzes.PatientRequestAnalysis.BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(analyzes.PatientRequestAnalysis.BirthDate).Year).ToString() : String.Empty;
-                    BarcodeData.Append(analyzes.PatientRequestAnalysis.Gender + Environment.NewLine);
-                    BarcodeData.Append(Age + Environment.NewLine);
-                    BarcodeData.Append(analyzes.PatientRequestAnalysis.AnalysisCode + Environment.NewLine);
-                    BarcodeData.Append(analyzes.PatientRequestAnalysis.RequestNumber + " : " + analyzes.PatientRequestAnalysis.RunNumber + Environment.NewLine);
-                    BarcodeData.Append(analyzes.PatientRequestAnalysis.SampleType);
-                    var Img = Encoder.Encode(BarcodeData.ToString());
-                    using (MemoryStream Stream = new MemoryStream())
+                    QRCodeEncoder Encoder = null;
+                    StringBuilder BarcodeData = null;
+                    List<BarcodeViewModel> BarcodesList = new List<BarcodeViewModel>();
+                    foreach (var analyzes in RequestedAnalyzes)
                     {
-                        Img = new System.Drawing.Bitmap(Img, new System.Drawing.Size(75, 75));
-                        Img.Save(Stream, System.Drawing.Imaging.ImageFormat.Png);
-                        Stream.Close();
-                        byte[] ImageByteArray = Stream.ToArray();
-                        string ImageBase64Data = Convert.ToBase64String(ImageByteArray);
-                        string ImageDataURL = string.Format("data:image/png;base64,{0}", ImageBase64Data);
-                        BarcodesList.Add(new BarcodeViewModel()
+                        Encoder = new QRCodeEncoder();
+                        BarcodeData = new StringBuilder();
+                        string PatientName = analyzes.PatientRequestAnalysis.FirstName + " " + analyzes.PatientRequestAnalysis.MiddleName + " " + analyzes.PatientRequestAnalysis.LastName;
+                        BarcodeData.Append(PatientName + Environment.NewLine);
+                        string Age = analyzes.PatientRequestAnalysis.BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(analyzes.PatientRequestAnalysis.BirthDate).Year).ToString() : String.Empty;
+                        BarcodeData.Append(analyzes.PatientRequestAnalysis.Gender + Environment.NewLine);
+                        BarcodeData.Append(Age + Environment.NewLine);
+                        BarcodeData.Append(analyzes.PatientRequestAnalysis.AnalysisCode + Environment.NewLine);
+                        BarcodeData.Append(analyzes.PatientRequestAnalysis.RequestNumber + " : " + analyzes.PatientRequestAnalysis.RunNumber + Environment.NewLine);
+                        BarcodeData.Append(analyzes.PatientRequestAnalysis.SampleType);
+                        var Img = Encoder.Encode(BarcodeData.ToString());
+                        using (MemoryStream Stream = new MemoryStream())
                         {
-                            BarcodeImageData = ImageDataURL,
-                            AnalysisCode = analyzes.PatientRequestAnalysis.AnalysisCode,
-                            PatientName = PatientName,
-                            RequestNumber = analyzes.PatientRequestAnalysis.RequestNumber,
-                            RunNumber = analyzes.PatientRequestAnalysis.RunNumber,
-                            SampleType = analyzes.PatientRequestAnalysis.SampleType
-                        });
+                            Img = new System.Drawing.Bitmap(Img, new System.Drawing.Size(75, 75));
+                            Img.Save(Stream, System.Drawing.Imaging.ImageFormat.Png);
+                            Stream.Close();
+                            byte[] ImageByteArray = Stream.ToArray();
+                            string ImageBase64Data = Convert.ToBase64String(ImageByteArray);
+                            string ImageDataURL = string.Format("data:image/png;base64,{0}", ImageBase64Data);
+                            BarcodesList.Add(new BarcodeViewModel()
+                            {
+                                BarcodeImageData = ImageDataURL,
+                                AnalysisCode = analyzes.PatientRequestAnalysis.AnalysisCode,
+                                PatientName = PatientName,
+                                RequestNumber = analyzes.PatientRequestAnalysis.RequestNumber,
+                                RunNumber = analyzes.PatientRequestAnalysis.RunNumber,
+                                SampleType = analyzes.PatientRequestAnalysis.SampleType
+                            });
+                        }
                     }
+                    return PartialView("_BarcodePrintPreview", BarcodesList);
                 }
-                return PartialView("_BarcodePrintPreview", BarcodesList);
             }
             return null;
         }

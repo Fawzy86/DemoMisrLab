@@ -26,20 +26,20 @@ namespace DemoMisrInternationalLab.Controllers
 
         public ActionResult loadPatientRequestIndividual()
         {
-            PatientRequestViewModel PatientRequest =  GetPatientRequestView();
+            PatientRequestViewModel PatientRequest = Helper.GetPatientRequestView();
             return PartialView("_PatientRequestIndividual", PatientRequest);
         }
 
         public ActionResult loadPatientRequestContract()
         {
-            PatientRequestViewModel PatientRequest =  GetPatientRequestView();
+            PatientRequestViewModel PatientRequest =  Helper.GetPatientRequestView();
             PatientRequest.Organizations.OrganizationsList =  DbFunctions.GetOrganizationsByCategoryType(Resources.CategoryType.Contract);
             return PartialView("_PatientRequestContract", PatientRequest);
         }
 
         public ActionResult loadPatientRequestLabToLab()
         {
-            PatientRequestViewModel PatientRequest =  GetPatientRequestView();
+            PatientRequestViewModel PatientRequest = Helper.GetPatientRequestView();
             PatientRequest.Organizations.OrganizationsList =  DbFunctions.GetOrganizationsByCategoryType(Resources.CategoryType.LabToLab);
             return PartialView("_PatientRequestLabToLab", PatientRequest);
         }
@@ -59,7 +59,7 @@ namespace DemoMisrInternationalLab.Controllers
 
         public ActionResult loadInvoices()
         {
-            PatientRequestViewModel PatientRequest =  GetPatientRequestView();
+            PatientRequestViewModel PatientRequest =  Helper.GetPatientRequestView();
             return PartialView("_Invoices", PatientRequest);
         }
 
@@ -68,56 +68,6 @@ namespace DemoMisrInternationalLab.Controllers
             PatientsRequestsAllViewModel PatientRequestStatus = new PatientsRequestsAllViewModel();
             PatientRequestStatus.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestTransactionsForCustomerCare(null, new DateTime(1986, 1, 1), new DateTime(2020, 1, 1));
             return PartialView("_Reports", PatientRequestStatus);
-        }
-
-        [NonAction]
-        private PatientRequestViewModel GetPatientRequestView()
-        {
-            PatientRequestViewModel PatientRequest = new PatientRequestViewModel();
-            //// Get Provinces
-            PatientRequest.PatientInfo.Provinces.ProvincesList =  DbFunctions.GetProvinces();
-            //// Get DoctorsRef
-            PatientRequest.DoctorsRef.DoctorsRefList =   DbFunctions.GetDoctorsRef();
-            //// Get Analyzes
-            PatientRequest.Analyzes.AnalyzesList =  DbFunctions.GetAnalyzes();
-            PatientRequest.AttachmentSession = Guid.NewGuid().ToString("N");
-            return PatientRequest;
-        }
-
-        [NonAction]
-        private PatientInfoViewModel GetPatientInfo(int? patientID)
-        {
-            PatientInfoViewModel _Patient = new PatientInfoViewModel();
-            _Patient.Provinces.ProvincesList =  DbFunctions.GetProvinces();
-            if (patientID != null && patientID != 0)
-            {
-                var MatchedPatient =  DbFunctions.GetPatient(patientID.Value);
-                if (MatchedPatient != null)
-                {
-                    _Patient.PatientID = MatchedPatient.PatientID;
-                    _Patient.Address = MatchedPatient.Address;
-                    if (MatchedPatient.BirthDate != new DateTime())
-                    {
-                        _Patient.BirthDate = MatchedPatient.BirthDate;
-                        _Patient.Age = (DateTime.Now.Year - MatchedPatient.BirthDate.Value.Year).ToString();
-                    }
-                    _Patient.Email = MatchedPatient.Email;
-                    _Patient.FirstName = MatchedPatient.FirstName;
-                    _Patient.LastName = MatchedPatient.LastName;
-                    _Patient.MiddleName = MatchedPatient.MiddleName;
-                    _Patient.Gender = MatchedPatient.Gender;
-                    _Patient.Mobile = MatchedPatient.Mobile;
-                    _Patient.Phone = MatchedPatient.Phone;
-                    _Patient.ReferenceID = MatchedPatient.ReferenceID;
-                    _Patient.RegisteredDate = MatchedPatient.RegisteredDate;
-                    _Patient.NationalID = MatchedPatient.NationalID;
-                    if (MatchedPatient.CityID != null && MatchedPatient.CityID != 0)
-                    {
-                        _Patient.Provinces.SelectedProvinceID = MatchedPatient.City.ProvinceID;
-                    }
-                }
-            }
-            return _Patient;
         }
 
         [HttpPost]
@@ -195,12 +145,17 @@ namespace DemoMisrInternationalLab.Controllers
             }
         }
 
-        public decimal GetAnalyzesCost(string analyzesIDs)
+        public decimal GetAnalyzesCost(string analyzesIDs,string OrganizationId)
         {
             decimal TotalCost = 0;
             if (!String.IsNullOrWhiteSpace(analyzesIDs))
             {
-                TotalCost =  DbFunctions.GetAnalyzesCost(analyzesIDs, Resources.Package.Individual);
+                int _OrganizationId = 0;
+                if (!String.IsNullOrWhiteSpace(OrganizationId))
+                {
+                    Int32.TryParse(OrganizationId, out _OrganizationId);
+                }
+                TotalCost = DbFunctions.GetAnalyzesCost(analyzesIDs, _OrganizationId);
             }
             return TotalCost;
         }
@@ -287,8 +242,9 @@ namespace DemoMisrInternationalLab.Controllers
                     List<PatientRequest> MatchedPatients = DbFunctions.GetMatchingPatients(model.PatientInfo);
 
                     model.PatientInfo.PatientID = DbFunctions.AddNewPatient(model.PatientInfo, HttpContext.User.Identity.Name);
-                    AddPatientRequest(model, HttpContext.User.Identity.Name);
-                    MoveAttachments(model.AttachmentSession);
+                    PatientRequestInputsDataModel PatientRequestInputs = Helper.SetPatientRequestInputs(model);
+                    DbFunctions.AddPatientRequest(PatientRequestInputs, HttpContext.User.Identity.Name);
+                    Helper.MoveAttachments(Path.Combine(Server.MapPath(Resources.Path.TempAttachmentsPath), model.AttachmentSession), Server.MapPath(Resources.Path.AttachmentsPath));
 
                     if (MatchedPatients.Any())
                     {
@@ -327,47 +283,7 @@ namespace DemoMisrInternationalLab.Controllers
             }
         }
 
-        [NonAction]
-        private string AddPatientRequest(PatientRequestViewModel model,  string UserName)
-        {
-            PatientRequestInputsDataModel PatientRequestInputs = new PatientRequestInputsDataModel();
-            PatientRequestInputs.AnalyzesIDs = model.Analyzes.SelectedAnalyzesIDs;
-            PatientRequestInputs.Comment = null;
-            PatientRequestInputs.DoctorRefID = model.DoctorsRef.SelectedDoctorRefID;
-            PatientRequestInputs.OrganizationID = model.Organizations.SelectedOrganizationID;
-            PatientRequestInputs.Paid = model.Paid;
-            PatientRequestInputs.PatientID = model.PatientInfo.PatientID;
-            PatientRequestInputs.Priority = model.RequestPriority;
-            PatientRequestInputs.TotalOrganizationCost = 0;
-            PatientRequestInputs.TotalPatientCost = model.TotalAfterCharges;
-            PatientRequestInputs.ExtraCost = model.ExtraCost;
-            PatientRequestInputs.ExtraDiscount = model.ExtraDiscount;
-            PatientRequestInputs.AttachmentSession = model.AttachmentSession;
-            return  DbFunctions.AddPatientRequest(PatientRequestInputs, UserName);
-        }
 
-        [NonAction]
-        private void MoveAttachments(string AttachmentSession)
-        {
-            string AttachmentSessionDirPath = Path.Combine(Server.MapPath("~/Uploads/TempSession"), AttachmentSession);
-            if (Directory.Exists(AttachmentSessionDirPath))
-            {
-                DirectoryInfo AttachmentSessionDirInfo = new DirectoryInfo(AttachmentSessionDirPath);
-                if (AttachmentSessionDirInfo.GetFiles().Any())
-                {
-                    string SubmittedRequestDirPath = Path.Combine(Server.MapPath("~/Uploads/SubmittedRequest"), AttachmentSession);
-                    if (!Directory.Exists(SubmittedRequestDirPath))
-                    {
-                        Directory.CreateDirectory(SubmittedRequestDirPath);
-                    }
-                    foreach (var file in AttachmentSessionDirInfo.GetFiles())
-                    {
-                        System.IO.File.Copy(file.FullName, Path.Combine(SubmittedRequestDirPath, file.Name), true);
-                    }
-                    Directory.Delete(AttachmentSessionDirPath, true);
-                }
-            }
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -418,6 +334,27 @@ namespace DemoMisrInternationalLab.Controllers
             }
             PatientRequestStatus.PatientRequestStatusWithAnalyzes =  DbFunctions.GetPatientsRequestTransactionsForCustomerCare(SearchPattern, DateFrom, DateTo);
             return PartialView("_Transactions", PatientRequestStatus);
+        }
+
+        public ActionResult GetPatientRequestPayment(int RequestId)
+        {
+            if (RequestId != 0)
+            {
+                PatientRequestViewModel PatientRequest = new PatientRequestViewModel();
+                PatientRequest = DbFunctions.GetCustomerCarePatientRequest(RequestId);
+                return PartialView("_RequestPayment", PatientRequest);
+            }
+            return null;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitNewRequestPayment(FormCollection form, PatientRequestViewModel model)
+        {
+            if (model != null && ModelState.IsValid)
+            { 
+            }
+            return null;
         }
 
         public ActionResult OpenInvoice(int RequestID)

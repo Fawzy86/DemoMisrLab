@@ -8,7 +8,11 @@ namespace DemoMisrInternationalLab.Models
 {
     public class AnalyzesViewModel
     {
-        public List<AnalysisViewModel> AnalyzesList = new List<AnalysisViewModel>();
+        public AnalyzesViewModel()
+        {
+            AnalyzesList = new List<AnalysisViewModel>();
+        }
+        public List<AnalysisViewModel> AnalyzesList { get; set; }
 
         public List<Int32> SelectedAnalyzesIDs { get; set; }
 

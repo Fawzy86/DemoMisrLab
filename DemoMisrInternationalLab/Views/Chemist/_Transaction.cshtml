@@ -14,7 +14,22 @@
                                 Date: <span style="color:#ffe6d7;">@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestDate.Date.ToString("yyyy-MM-dd")</span>
                                 <span style="padding-left:2px;">-</span><span style="padding-left:2px;">Time : <span style="color:#ffe6d7;">@Model.PatientRequestStatusWithAnalyzes[i].PatientRequestStatus.RequestDate.ToString("hh:mm tt")</span></span>
                             </th>
-                            <th width="24%" colspan="2">Patient Name : <span style="color:#ffe6d7;">@Model.PatientRequestStatusWithAnalyzes[i].PatientFullName</span></th>
+                            <th width="24%" >
+                                Patient Name : <span style="color:#ffe6d7;">@Model.PatientRequestStatusWithAnalyzes[i].PatientFullName</span>
+                            </th>
+                            <th>
+                                @{
+                                    var ReceviedStatus = (from p in Model.PatientRequestStatusWithAnalyzes[i].PatientRequestAllStatuses
+                                                          where p.StatusIdentifier == Status.ReceivedForSampling
+                                                          select p).FirstOrDefault();
+                                    string ReceivedDate = String.Empty;
+                                    if (ReceviedStatus != null)
+                                    {
+                                        ReceivedDate = ReceviedStatus.StatusDate.ToString("yyyy-MM-dd - hh:mm tt");
+                                    }
+                                }
+                                Received: <span style="color:#ffe6d7;">@ReceivedDate</span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>

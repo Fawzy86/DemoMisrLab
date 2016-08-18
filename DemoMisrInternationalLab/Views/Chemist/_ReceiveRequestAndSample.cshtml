@@ -172,6 +172,25 @@
             alert(err.message);
         }
     }
+    //////////////////////////////////////////////////////////////
+    function PrintAnalysisBarcode(RequestedAnalysisId) {
+        try {
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "Get",
+                url: "/Chemist/GetBarcodesToPrint?RequestedAnalyzesIds=" + RequestedAnalysisId,
+                success: function (data) {
+                    PrintData(data);
+                },
+                error: function (xhr, desc, err) {
+                    alert("Error: " + err.message + " " + desc + " " + xhr.responseText);
+                }
+            });
+        } catch (err) {
+            alert(err.message);
+        }
+    }
 
 </script>
 

@@ -1,0 +1,77 @@
+﻿@model DemoMisrInternationalLab.Models.PatientRequestViewModel
+@using DemoMisrInternationalLab.Resources
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "Request_Payment_Form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => Model.RequestId)
+    <div class="contentt">
+
+        <h4 class="panel-titleb col-md-12" style="left:0;">Payment</h4>
+        <div class="col-md-12">
+            <table>
+                <tbody>
+                    <tr>
+                        <td width="100px">Name</td>
+                        <td>
+                            @Html.DisplayTextFor(m => Model.PatientInfo.FirstName) @Html.DisplayTextFor(m => Model.PatientInfo.MiddleName) @Html.DisplayTextFor(m => Model.PatientInfo.LastName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Gender</td>
+                        <td>
+                            @Html.DisplayTextFor(m => Model.PatientInfo.Gender)
+                        </td>
+                    </tr>
+                    <tr>
+                        @{var Age = Model.PatientInfo.BirthDate != null ? (DateTime.Now.Year - Convert.ToDateTime(Model.PatientInfo.BirthDate).Year).ToString() : String.Empty;}
+                        <td>Age</td>
+                        <td>@Html.DisplayTextFor(m => Age)</td>
+                    </tr>
+                    <tr>
+                        <td>Analyzes</td>
+                        <td>
+                            @{
+                                string AnalyzesCodes = String.Join(", ", Model.Analyzes.AnalyzesList.Select(a => a.Analysis.AnalysisCode));
+                            }
+                            @Html.DisplayTextFor(m => AnalyzesCodes)<br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total amount</td>
+                        <td>
+                            @Html.HiddenFor(m => Model.TotalAfterCharges)
+                            @Html.DisplayTextFor(m => Model.TotalAfterCharges)<br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Paid</td>
+                        <td>
+                            @Html.HiddenFor(m => Model.PaidAmount)
+                            @Html.DisplayTextFor(m => Model.PaidAmount) <br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Due amount</td>
+                        <td>
+                            @Html.HiddenFor(m => Model.Remain)
+                            @Html.DisplayTextFor(m => Model.Remain)<br />
+                        </td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td style="align-content:inherit">Will Pay</td>
+                        <td>
+                            @Html.TextBoxFor(m => Model.NewPaymentAmount,new {@class="form-control form-widthhh-popup", @placeholder="Will pay"})<br>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-success" style="border-radius:0; margin-top:20px;">Submit</button>
+            <button type="button" class="btn btn-success" onclick="ClosePopup();" style="border-radius:0; margin-top:20px;">Cancel</button>
+        </div>
+    </div>
+}
