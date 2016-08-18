@@ -501,7 +501,7 @@ namespace DemoMisrInternationalLab.Utilities
                     if (!String.IsNullOrWhiteSpace(NewPatient.Age))
                     {
                         int YearOfBirth = DateTime.Now.Year - Convert.ToInt32(Math.Round(Convert.ToDecimal(NewPatient.Age)));
-                        _Patient.BirthDate = new DateTime(YearOfBirth, 1, 1);
+                        _Patient.BirthDate = new DateTime(YearOfBirth, 6, 1);
                     }
                     if (!String.IsNullOrWhiteSpace(NewPatient.SelectedCityID))
                     {
